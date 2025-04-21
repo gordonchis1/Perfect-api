@@ -1,0 +1,21 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --background: #020617;
+  --primary-text-color: #ffffff;
+  --borders: #8c8c8c;
+  --hover: #1e293b;
+  --accent-background: #3b82f6;
+}
+
+.theme-light {
+  --background: #fff;
+}
+
+body {
+  background: var(--background);
+}
