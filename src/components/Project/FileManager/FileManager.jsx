@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { FSNode, VirtualFileSystem } from "../../../utils/ProjectFileObject";
 import "./FileManager.css";
 import FileManagerDirElement from "./FileManagerElement/FileManagerDirElement";
@@ -11,14 +10,14 @@ import FileManagerDirElement from "./FileManagerElement/FileManagerDirElement";
 // TODO: hacer una funcion para mover archivos un drag and drop
 export default function FileManager({ project }) {
   const vfs = new VirtualFileSystem(project.content.root);
-  console.log(vfs);
+
   return (
     <div className="filemanager-container">
       <FileManagerDirElement
-        node={vfs.getDirByPath(vfs.root.name)}
+        node={vfs.root}
         isOpen={vfs.root.isOpen}
+        vfs={vfs}
       />
-      <button onClick={() => console.log(vfs)}>refresh</button>
     </div>
   );
 }
