@@ -28,7 +28,6 @@ function ResizeContainer({
       const leftPosition = (100 * event.pageX) / containerWidth;
       const rightPosition = 100 - leftPosition;
       const maxLeft = (containerWidth * maxWidthOfLeftContainer) / 100;
-      console.log(leftPosition);
 
       handler.style.left = `min(max(${minWidthOfLeftContainer + diff}px, ${
         leftPosition + diffPct

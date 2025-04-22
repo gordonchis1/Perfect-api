@@ -42,7 +42,7 @@ export default function Project() {
             resizeColor={"var(--borders)"}
             defaultWidth={14}
             maxWidthOfLeftContainer={14}
-            minWidthOfLeftContainer={300}
+            minWidthOfLeftContainer={200}
             containerWidth={width}
           >
             <ResizeContainer.LeftContainer>

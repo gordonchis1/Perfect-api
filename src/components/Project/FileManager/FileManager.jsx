@@ -1,6 +1,7 @@
 import { FSNode, VirtualFileSystem } from "../../../utils/ProjectFileObject";
 import "./FileManager.css";
-import FileManagerDirElement from "./FileManagerElement/FileManagerDirElement";
+import FileManagerDirElement from "./FileManagerElement/FileManagerDirElement/FileManagerDirElement";
+import FileManagerElement from "./FileManagerElement/FileManagerElement";
 
 // FileManager Elmenent resive un nodo de vfs por props tambien resive isOpen y lo almacena en un estado
 // al cerrar updateamos el documento para guardar los isOpen
@@ -13,11 +14,7 @@ export default function FileManager({ project }) {
 
   return (
     <div className="filemanager-container">
-      <FileManagerDirElement
-        node={vfs.root}
-        isOpen={vfs.root.isOpen}
-        vfs={vfs}
-      />
+      <FileManagerElement node={vfs.root} vfs={vfs} />
     </div>
   );
 }
