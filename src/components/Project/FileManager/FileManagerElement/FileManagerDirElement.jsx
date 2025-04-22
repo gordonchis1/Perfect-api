@@ -4,6 +4,8 @@ import {
   FSNode,
   VirtualFileSystem,
 } from "../../../../utils/ProjectFileObject";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFile, faFolder } from "@fortawesome/free-regular-svg-icons";
 
 // TODO: cambiar el nombre del archivo y del componente por FileManagerElement
 export default function FileManagerDirElement({ node }) {
@@ -19,6 +21,7 @@ export default function FileManagerDirElement({ node }) {
     const childrens = node.getChildrens();
     return (
       <div className="filemanager-element-container">
+        <FontAwesomeIcon icon={faFolder}></FontAwesomeIcon>
         <p onClick={handleToggle}>{node.name}</p>
         {node.isOpen &&
           childrens.map((element) => {
@@ -29,6 +32,11 @@ export default function FileManagerDirElement({ node }) {
       </div>
     );
   } else {
-    return <p>{node.name}</p>;
+    return (
+      <p>
+        <FontAwesomeIcon icon={faFile} />
+        {node.name}
+      </p>
+    );
   }
 }
