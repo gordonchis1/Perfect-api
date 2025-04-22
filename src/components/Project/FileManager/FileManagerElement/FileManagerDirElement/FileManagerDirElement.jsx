@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import "./FileManagerDirElement.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFolderClosed,
   faFolderOpen,
 } from "@fortawesome/free-regular-svg-icons";
 import FileManagerElement from "../FileManagerElement";
+import "./FileManagerDirElement.css";
 
 export default function FileManagerDirElement({ node, vfs }) {
   const [, forceUpdate] = useState(false);

@@ -1,5 +1,6 @@
 import FileManagerDirElement from "./FileManagerDirElement/FileManagerDirElement";
 import FileManagerFileElement from "./FileManagerFileElement/FileManagerFileElement";
+import "./FileManagerElement.css";
 
 export default function FileManagerElement({ node, vfs }) {
   if (node.type === "dir") {
