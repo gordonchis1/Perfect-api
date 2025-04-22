@@ -75,6 +75,36 @@ export class VirtualFileSystem {
 
     return current.type === "file" ? current : null;
   }
+
+  getAbsolutePath(node, currentPath = "") {
+    if (node === this.root) {
+      return "/" + currentPath;
+    }
+
+    const parentNode = this.getParentNode(node);
+    currentPath = node.name + (currentPath ? "/" + currentPath : "");
+
+    return this.getAbsolutePath(parentNode, currentPath);
+  }
+
+  getParentNode(node) {
+    let parentNode = null;
+
+    const searchParent = (currentNode) => {
+      if (!currentNode.children) return;
+
+      for (const child of currentNode.children) {
+        if (child === node) {
+          parentNode = currentNode;
+          return;
+        }
+        searchParent(child);
+      }
+    };
+
+    searchParent(this.root);
+    return parentNode;
+  }
 }
 
 export class FSNode {
