@@ -7,8 +7,12 @@ import {
 import FileManagerElement from "../FileManagerElement";
 import "./FileManagerDirElement.css";
 
-export default function FileManagerDirElement({ node, vfs }) {
-  const [, forceUpdate] = useState(false);
+export default function FileManagerDirElement({
+  node,
+  vfs,
+  onContextMenu,
+  update,
+}) {
   const [absolutePath, setAbsolutePath] = useState(undefined);
 
   useEffect(() => {
@@ -18,13 +22,17 @@ export default function FileManagerDirElement({ node, vfs }) {
   const handleToggle = (e) => {
     e.stopPropagation();
     node.toggleIsOpen();
-    forceUpdate((prev) => !prev);
+    update();
   };
 
   const childrens = node.getChildrens();
   return (
     <div className="filemanager-element-container">
-      <div className="filemanager-element" onClick={handleToggle}>
+      <div
+        className="filemanager-element"
+        onClick={handleToggle}
+        onContextMenu={(event) => onContextMenu(event)}
+      >
         <FontAwesomeIcon icon={node.isOpen ? faFolderOpen : faFolderClosed} />
         <p className="filemanager-element_name">{node.name}</p>
       </div>
