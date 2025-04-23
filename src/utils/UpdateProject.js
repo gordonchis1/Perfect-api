@@ -1,5 +1,6 @@
 import { readTextFile, writeTextFile } from "@tauri-apps/plugin-fs";
 import { getProjectPathById } from "./getProjects";
+import { updateLastUpdateDate } from "./updateProjectsFile";
 
 export default async function UpdateProject(newContent, id) {
   if (!id) throw new Error("Invalid Id");
@@ -13,6 +14,7 @@ export default async function UpdateProject(newContent, id) {
     updatedFile.content = JSON.parse(JSON.stringify(newContent));
 
     await writeTextFile(path, JSON.stringify(updatedFile));
+    await updateLastUpdateDate(id);
     console.log(`Project ${id} updated successfully`);
   } catch (error) {
     console.log(error);
