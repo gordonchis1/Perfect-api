@@ -1,10 +1,11 @@
 import { useRef } from "react";
 import useClickAway from "../../../../Hooks/useClickAway";
 import "./FileManagerContextMenu.css";
-import { File } from "../../../../utils/ProjectFileObject";
+import { Directory, File } from "../../../../utils/ProjectFileObject";
 import UpdateProject from "../../../../utils/UpdateProject";
 import { useParams } from "react-router";
 // TODO agregar el id de el project a un contexto
+// TODO: componetizar las opciones
 export default function FileManagerContextMenu({
   node,
   updateNodeState,
@@ -19,6 +20,12 @@ export default function FileManagerContextMenu({
 
   const handleAddFile = () => {
     node.addChild(new File("New file"));
+    UpdateProject(vfs, id);
+    updateNodeState({ ...node });
+  };
+
+  const handleAddDir = () => {
+    node.addChild(new Directory("New directory", true));
     UpdateProject(vfs, id);
     updateNodeState({ ...node });
   };
@@ -47,6 +54,9 @@ export default function FileManagerContextMenu({
         >
           rename
         </button>
+      )}
+      {node.type === "dir" && (
+        <button onClick={handleAddDir}>Add directory</button>
       )}
     </div>
   );
