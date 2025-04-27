@@ -5,7 +5,6 @@ export default function useClickAway(ref, handler) {
     const listener = (event) => {
       const el = ref?.current;
       if (!el || el.contains(event.target)) {
-        console.log(event.target);
         return;
       }
 
