@@ -7,6 +7,7 @@ import {
 import FileManagerElement from "../FileManagerElement";
 import "./FileManagerDirElement.css";
 import { VirtualFileSystem } from "../../../../../utils/ProjectFileObject";
+import FileManagerRenameForm from "../../FileManagerRenameForm/FileManagerRenameForm";
 
 export default function FileManagerDirElement({
   node,
@@ -37,7 +38,12 @@ export default function FileManagerDirElement({
       >
         <FontAwesomeIcon icon={node.isOpen ? faFolderOpen : faFolderClosed} />
         {nodeState.isRename ? (
-          "rename"
+          <FileManagerRenameForm
+            node={node}
+            nodeState={nodeState}
+            updateNodeState={updateNodeState}
+            vfs={vfs}
+          />
         ) : (
           <p className="filemanager-element_name">{node.name}</p>
         )}

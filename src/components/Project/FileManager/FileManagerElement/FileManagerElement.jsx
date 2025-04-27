@@ -54,6 +54,7 @@ export default function FileManagerElement({ node, vfs }) {
         />
       ) : (
         <FileManagerFileElement
+          updateNodeState={updateNodeState}
           node={node}
           vfs={vfs}
           onContextMenu={handleContextMenu}

@@ -5,10 +5,11 @@
   display: flex;
   gap: 10px;
   padding: 10px 0 10px 20px;
+  align-items: center;
 }
 
 .filemanager-element:hover {
-  background: red;
+  background: var(--hover);
 }
 
 .filemanager-element_name {
@@ -16,4 +17,5 @@
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   font-size: 20px;
   color: var(--primary-text-color);
+  user-select: none;
 }

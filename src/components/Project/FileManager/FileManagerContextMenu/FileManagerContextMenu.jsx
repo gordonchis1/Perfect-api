@@ -28,6 +28,7 @@ export default function FileManagerContextMenu({
       ref={menuRef}
       className="filemanager-contextmenu"
       style={{ top: `${y}px`, left: `${x}px` }}
+      onContextMenu={(event) => event.preventDefault()}
     >
       {node.type == "dir" && (
         <button
@@ -37,9 +38,11 @@ export default function FileManagerContextMenu({
           New file
         </button>
       )}
-      {node.type === "file" && (
+      {node.name !== "/" && (
         <button
-          onClick={() => console.log("rename")}
+          onClick={() => {
+            updateNodeState({ ...node, isRename: true });
+          }}
           className="filemanager-contextmenu-option"
         >
           rename
