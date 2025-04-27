@@ -132,11 +132,29 @@ export class Directory extends FSNode {
     this.children = [];
     this.isOpen = isOpen;
   }
+  getParentNode(vfs, node) {
+    if (!(vfs instanceof VirtualFileSystem))
+      throw new Error("The vfs is not a instance of VirtualFileSystem");
+
+    console.log(node);
+
+    return vfs.getParentNode(node);
+  }
   addChild(node) {
     if (!(node instanceof FSNode)) {
       console.error("You can only add instance of File or Direcotry");
     }
+    let sameNameFiles = 0;
+    let baseName = node.name;
 
+    this.children.forEach((child) => {
+      if (child.name === node.name || child.name.startsWith(baseName + " (")) {
+        sameNameFiles++;
+      }
+    });
+    if (sameNameFiles !== 0) {
+      node.name = `${node.name} (${sameNameFiles})`;
+    }
     this.children.push(node);
   }
   getChildrens() {
