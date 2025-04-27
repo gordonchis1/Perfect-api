@@ -11,8 +11,8 @@ const defaultContextMenu = {
 };
 
 export default function FileManagerElement({ node, vfs }) {
-  const [, forceUpdate] = useState(false);
   const [contextMenu, setContextMenu] = useState(defaultContextMenu);
+  const [nodeState, setNodeState] = useState({ ...node, isRename: false });
 
   const handleContextMenu = (event) => {
     event.preventDefault();
@@ -26,8 +26,8 @@ export default function FileManagerElement({ node, vfs }) {
     });
   };
 
-  const update = () => {
-    forceUpdate((prev) => !prev);
+  const updateNodeState = (updatedNode) => {
+    setNodeState(updatedNode);
   };
 
   const closeContextMenu = () => setContextMenu(defaultContextMenu);
@@ -36,6 +36,8 @@ export default function FileManagerElement({ node, vfs }) {
     <>
       {contextMenu.show && (
         <FileManagerContextMenu
+          updateNodeState={updateNodeState}
+          vfs={vfs}
           node={node}
           x={contextMenu.x}
           y={contextMenu.y}
@@ -44,9 +46,10 @@ export default function FileManagerElement({ node, vfs }) {
       )}
       {node.type === "dir" ? (
         <FileManagerDirElement
+          updateNodeState={updateNodeState}
+          nodeState={nodeState}
           node={node}
           vfs={vfs}
-          update={update}
           onContextMenu={handleContextMenu}
         />
       ) : (
@@ -54,6 +57,7 @@ export default function FileManagerElement({ node, vfs }) {
           node={node}
           vfs={vfs}
           onContextMenu={handleContextMenu}
+          nodeState={nodeState}
         />
       )}
     </>
