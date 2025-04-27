@@ -4,3 +4,12 @@
   justify-content: center;
   max-width: 100%;
 }
+
+.filemanager-element-content {
+  display: flex;
+  gap: 10px;
+}
+
+/* .filemanager-dir-childs-container {
+  padding-left: 20px;
+} */

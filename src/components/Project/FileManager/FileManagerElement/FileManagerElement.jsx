@@ -1,7 +1,7 @@
 import FileManagerDirElement from "./FileManagerDirElement/FileManagerDirElement";
 import FileManagerFileElement from "./FileManagerFileElement/FileManagerFileElement";
 import "./FileManagerElement.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FileManagerContextMenu from "../FileManagerContextMenu/FileManagerContextMenu";
 
 const defaultContextMenu = {
@@ -13,6 +13,17 @@ const defaultContextMenu = {
 export default function FileManagerElement({ node, vfs }) {
   const [contextMenu, setContextMenu] = useState(defaultContextMenu);
   const [nodeState, setNodeState] = useState({ ...node, isRename: false });
+  const [level, setLevel] = useState(undefined);
+
+  useEffect(() => {
+    const absolutePath = vfs.getAbsolutePath(node);
+
+    if (absolutePath !== "/") {
+      setLevel(absolutePath.split("/").length);
+    } else {
+      setLevel([""].length);
+    }
+  }, []);
 
   const handleContextMenu = (event) => {
     event.preventDefault();
@@ -51,9 +62,11 @@ export default function FileManagerElement({ node, vfs }) {
           node={node}
           vfs={vfs}
           onContextMenu={handleContextMenu}
+          level={level}
         />
       ) : (
         <FileManagerFileElement
+          level={level}
           updateNodeState={updateNodeState}
           node={node}
           vfs={vfs}

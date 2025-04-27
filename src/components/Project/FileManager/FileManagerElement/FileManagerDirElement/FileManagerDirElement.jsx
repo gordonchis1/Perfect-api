@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFolderClosed,
@@ -15,13 +14,8 @@ export default function FileManagerDirElement({
   onContextMenu,
   nodeState,
   updateNodeState,
+  level,
 }) {
-  const [absolutePath, setAbsolutePath] = useState(undefined);
-
-  useEffect(() => {
-    setAbsolutePath(vfs.getAbsolutePath(node));
-  }, [node, vfs]);
-
   const handleToggle = (e) => {
     e.stopPropagation();
     node.toggleIsOpen();
@@ -33,27 +27,32 @@ export default function FileManagerDirElement({
     <div className="filemanager-element-container">
       <div
         className="filemanager-element"
+        style={{ paddingLeft: `${level * 20}px` }}
         onClick={handleToggle}
         onContextMenu={(event) => onContextMenu(event)}
       >
-        <FontAwesomeIcon icon={node.isOpen ? faFolderOpen : faFolderClosed} />
-        {nodeState.isRename ? (
-          <FileManagerRenameForm
-            node={node}
-            nodeState={nodeState}
-            updateNodeState={updateNodeState}
-            vfs={vfs}
-          />
-        ) : (
-          <p className="filemanager-element_name">{node.name}</p>
-        )}
+        <div className="filemanager-element-content">
+          <FontAwesomeIcon icon={node.isOpen ? faFolderOpen : faFolderClosed} />
+          {nodeState.isRename ? (
+            <FileManagerRenameForm
+              node={node}
+              nodeState={nodeState}
+              updateNodeState={updateNodeState}
+              vfs={vfs}
+            />
+          ) : (
+            <p className="filemanager-element_name">{node.name}</p>
+          )}
+        </div>
       </div>
-      {node.isOpen &&
-        childrens.map((element) => {
-          return (
-            <FileManagerElement key={element.name} node={element} vfs={vfs} />
-          );
-        })}
+      <div className="filemanager-dir-childs-container">
+        {node.isOpen &&
+          childrens.map((element) => {
+            return (
+              <FileManagerElement key={element.name} node={element} vfs={vfs} />
+            );
+          })}
+      </div>
     </div>
   );
 }
