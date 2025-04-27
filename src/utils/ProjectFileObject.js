@@ -155,7 +155,12 @@ export class Directory extends FSNode {
     if (sameNameFiles !== 0) {
       node.name = `${node.name} (${sameNameFiles})`;
     }
-    this.children.push(node);
+
+    if (node.type === "file") {
+      this.children.push(node);
+    } else {
+      this.children.unshift(node);
+    }
   }
   getChildrens() {
     return this.children;
