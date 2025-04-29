@@ -14,16 +14,19 @@ export default function FileManagerElement({ node, vfs }) {
   const [contextMenu, setContextMenu] = useState(defaultContextMenu);
   const [nodeState, setNodeState] = useState({ ...node, isRename: false });
   const [level, setLevel] = useState(undefined);
+  const [absolutePath, setAbsolutePath] = useState();
 
   useEffect(() => {
     const absolutePath = vfs.getAbsolutePath(node);
+
+    setAbsolutePath(absolutePath);
 
     if (absolutePath !== "/") {
       setLevel(absolutePath.split("/").length);
     } else {
       setLevel([""].length);
     }
-  }, []);
+  }, [vfs, node]);
 
   const handleContextMenu = (event) => {
     event.preventDefault();
@@ -63,6 +66,7 @@ export default function FileManagerElement({ node, vfs }) {
       )}
       {node.type === "dir" ? (
         <FileManagerDirElement
+          absolutePath={absolutePath}
           updateNodeState={updateNodeState}
           nodeState={nodeState}
           node={node}
