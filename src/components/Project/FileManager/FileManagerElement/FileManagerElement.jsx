@@ -37,6 +37,12 @@ export default function FileManagerElement({ node, vfs }) {
     });
   };
 
+  useEffect(() => {
+    if (nodeState?.isRename) {
+      setContextMenu(defaultContextMenu);
+    }
+  }, [nodeState]);
+
   const updateNodeState = (updatedNode) => {
     setNodeState(updatedNode);
   };
