@@ -105,6 +105,23 @@ export class VirtualFileSystem {
     searchParent(this.root);
     return parentNode;
   }
+  remove(node) {
+    if (!(node instanceof FSNode)) return;
+
+    const parentNode = this.getParentNode(node);
+    const childrensOfParentNode = parentNode.children;
+
+    const indexOfDeletedChildren = childrensOfParentNode.findIndex(
+      (children) => children.name === node.name
+    );
+
+    if (indexOfDeletedChildren === -1)
+      throw new Error("Error searching for node in the parent node");
+
+    parentNode.children.splice(indexOfDeletedChildren, 1);
+
+    return node;
+  }
 }
 
 export class FSNode {
