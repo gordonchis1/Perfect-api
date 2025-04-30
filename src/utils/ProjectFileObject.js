@@ -122,6 +122,16 @@ export class VirtualFileSystem {
 
     return node;
   }
+
+  move(node, to) {
+    if (!(node instanceof FSNode)) return;
+
+    const nodeToMove = this.remove(node);
+
+    const toDirectory = this.getDirByPath(to);
+
+    toDirectory.addChild(nodeToMove);
+  }
 }
 
 export class FSNode {
