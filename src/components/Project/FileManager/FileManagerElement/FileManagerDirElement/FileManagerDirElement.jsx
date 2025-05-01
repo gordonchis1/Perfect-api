@@ -7,6 +7,8 @@ import FileManagerElement from "../FileManagerElement";
 import "./FileManagerDirElement.css";
 import FileManagerRenameForm from "../../FileManagerRenameForm/FileManagerRenameForm";
 import { useRef, useState } from "react";
+import UpdateProject from "../../../../../utils/UpdateProject";
+import { useParams } from "react-router";
 
 export default function FileManagerDirElement({
   node,
@@ -19,6 +21,7 @@ export default function FileManagerDirElement({
   updateVfs,
 }) {
   const [draggin, setDraggin] = useState(false);
+  const { id } = useParams();
 
   const handleToggle = (e) => {
     if (node.name === "/") return;
@@ -98,8 +101,17 @@ export default function FileManagerDirElement({
 
       const path = filemanagerElementContainerBelow[1].getAttribute("path");
 
-      // vfs.move(node, path);
-      // updateNodeState({ ...node });
+      updateVfs((clonedVfs) => {
+        if (node.type === "dir") {
+          const clonedNode = clonedVfs.getDirByPath(absolutePath);
+          clonedVfs.move(clonedNode, path);
+        } else {
+          const clonedNode = clonedVfs.getFileByPath(absolutePath);
+          clonedVfs.move(clonedNode, path);
+        }
+        UpdateProject(clonedVfs, id);
+        // updateNodeState({ ...node });
+      });
 
       document
         .querySelectorAll(".hover-drag-and-drop")
