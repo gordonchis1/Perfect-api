@@ -132,6 +132,28 @@ export class VirtualFileSystem {
 
     toDirectory.addChild(nodeToMove);
   }
+
+  toJSON(node = this.root) {
+    const base = {
+      name: node.name,
+      type: node.type,
+      isOpen: node.isOpen,
+    };
+
+    if (node.type === "file") {
+      base.content = node.content;
+    } else if (node.type === "dir") {
+      base.children = node.children.map((child) => this.toJSON(child));
+    }
+
+    return base;
+  }
+
+  clone() {
+    const json = this.toJSON();
+
+    return new VirtualFileSystem(json);
+  }
 }
 
 export class FSNode {
