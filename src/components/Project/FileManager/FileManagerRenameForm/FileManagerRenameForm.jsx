@@ -7,9 +7,10 @@ import "./FileManagerRenameForm.css";
 
 export default function FileManagerRenameForm({
   node,
-  vfs,
   updateNodeState,
   nodeState,
+  updateVfs,
+  absolutePath,
 }) {
   const inputRef = useRef(null);
   const { id } = useParams();
@@ -23,9 +24,17 @@ export default function FileManagerRenameForm({
     if (event.target.value === "" || event.target.value === node.name) {
       return;
     } else {
-      node.rename(event.target.value);
+      updateVfs((clonedVfs) => {
+        if (node.type == "dir") {
+          const clonedNode = clonedVfs.getDirByPath(absolutePath);
+          clonedNode.rename(event.target.value);
+        } else {
+          const clonedNode = clonedVfs.getFileByPath(absolutePath);
+          clonedNode.rename(event.target.value);
+        }
+        UpdateProject(clonedVfs, id);
+      });
     }
-    UpdateProject(vfs, id);
   };
 
   useEffect(() => {

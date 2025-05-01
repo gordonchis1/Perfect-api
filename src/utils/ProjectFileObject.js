@@ -137,7 +137,7 @@ export class VirtualFileSystem {
     const base = {
       name: node.name,
       type: node.type,
-      isOpen: node.isOpen,
+      isOpen: node.name === "/" ? true : node.isOpen,
     };
 
     if (node.type === "file") {

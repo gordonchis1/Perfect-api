@@ -7,8 +7,6 @@ import FileManagerElement from "../FileManagerElement";
 import "./FileManagerDirElement.css";
 import FileManagerRenameForm from "../../FileManagerRenameForm/FileManagerRenameForm";
 import { useRef, useState } from "react";
-import UpdateProject from "../../../../../utils/UpdateProject";
-import { useParams } from "react-router";
 
 export default function FileManagerDirElement({
   node,
@@ -18,15 +16,17 @@ export default function FileManagerDirElement({
   updateNodeState,
   level,
   absolutePath,
+  updateVfs,
 }) {
-  const { id } = useParams();
   const [draggin, setDraggin] = useState(false);
 
   const handleToggle = (e) => {
     if (node.name === "/") return;
     e.stopPropagation();
-    node.toggleIsOpen();
-    updateNodeState({ ...node });
+    updateVfs((clonedVfs) => {
+      const clonedNode = clonedVfs.getDirByPath(absolutePath);
+      clonedNode.toggleIsOpen();
+    });
   };
 
   const childrens = node.getChildrens();
@@ -98,10 +98,8 @@ export default function FileManagerDirElement({
 
       const path = filemanagerElementContainerBelow[1].getAttribute("path");
 
-      // TODO: forzar el update de vfs
-      vfs.move(node, path);
-      updateNodeState({ ...node });
-      UpdateProject(vfs, id);
+      // vfs.move(node, path);
+      // updateNodeState({ ...node });
 
       document
         .querySelectorAll(".hover-drag-and-drop")
@@ -136,7 +134,9 @@ export default function FileManagerDirElement({
           <FontAwesomeIcon icon={node.isOpen ? faFolderOpen : faFolderClosed} />
           {nodeState.isRename ? (
             <FileManagerRenameForm
+              absolutePath={absolutePath}
               node={node}
+              updateVfs={updateVfs}
               nodeState={nodeState}
               updateNodeState={updateNodeState}
               vfs={vfs}
@@ -153,7 +153,12 @@ export default function FileManagerDirElement({
         {node.isOpen &&
           childrens.map((element) => {
             return (
-              <FileManagerElement key={element.name} node={element} vfs={vfs} />
+              <FileManagerElement
+                key={element.name}
+                node={element}
+                vfs={vfs}
+                updateVfs={updateVfs}
+              />
             );
           })}
       </div>

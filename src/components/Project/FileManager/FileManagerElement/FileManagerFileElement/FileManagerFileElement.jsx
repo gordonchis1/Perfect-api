@@ -6,11 +6,12 @@ import FileManagerRenameForm from "../../FileManagerRenameForm/FileManagerRename
 
 export default function FileManagerFileElement({
   node,
-  vfs,
   onContextMenu,
   nodeState,
   updateNodeState,
   level,
+  updateVfs,
+  absolutePath,
 }) {
   return (
     <div
@@ -22,10 +23,11 @@ export default function FileManagerFileElement({
         <FontAwesomeIcon icon={node.isOpen ? faFileSolidIcon : faFile} />
         {nodeState?.isRename ? (
           <FileManagerRenameForm
+            absolutePath={absolutePath}
             node={node}
             nodeState={nodeState}
-            vfs={vfs}
             updateNodeState={updateNodeState}
+            updateVfs={updateVfs}
           />
         ) : (
           <p className="filemanager-element_name">{node.name}</p>

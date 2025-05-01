@@ -10,7 +10,7 @@ const defaultContextMenu = {
   y: 0,
 };
 
-export default function FileManagerElement({ node, vfs }) {
+export default function FileManagerElement({ node, vfs, updateVfs }) {
   const [contextMenu, setContextMenu] = useState(defaultContextMenu);
   const [nodeState, setNodeState] = useState({ ...node, isRename: false });
   const [level, setLevel] = useState(undefined);
@@ -62,6 +62,8 @@ export default function FileManagerElement({ node, vfs }) {
           x={contextMenu.x}
           y={contextMenu.y}
           closeContextMenu={closeContextMenu}
+          updateVfs={updateVfs}
+          absolutePath={absolutePath}
         />
       )}
       {node.type === "dir" ? (
@@ -73,15 +75,17 @@ export default function FileManagerElement({ node, vfs }) {
           vfs={vfs}
           onContextMenu={handleContextMenu}
           level={level}
+          updateVfs={updateVfs}
         />
       ) : (
         <FileManagerFileElement
+          absolutePath={absolutePath}
           level={level}
           updateNodeState={updateNodeState}
           node={node}
-          vfs={vfs}
           onContextMenu={handleContextMenu}
           nodeState={nodeState}
+          updateVfs={updateVfs}
         />
       )}
     </>

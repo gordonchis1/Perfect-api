@@ -12,22 +12,27 @@ export default function FileManagerContextMenu({
   x,
   y,
   closeContextMenu,
-  vfs,
+  updateVfs,
+  absolutePath,
 }) {
   const { id } = useParams();
   const menuRef = useRef(null);
   useClickAway(menuRef, closeContextMenu);
 
   const handleAddFile = () => {
-    node.addChild(new File("New file"));
-    UpdateProject(vfs, id);
-    updateNodeState({ ...node });
+    updateVfs((clonedVfs) => {
+      const clonedNode = clonedVfs.getDirByPath(absolutePath);
+      clonedNode.addChild(new File("New File"));
+      UpdateProject(clonedVfs, id);
+    });
   };
 
   const handleAddDir = () => {
-    node.addChild(new Directory("New directory", true));
-    UpdateProject(vfs, id);
-    updateNodeState({ ...node });
+    updateVfs((clonedVfs) => {
+      const clonedNode = clonedVfs.getDirByPath(absolutePath);
+      clonedNode.addChild(new Directory("New directory", true));
+      UpdateProject(clonedVfs, id);
+    });
   };
 
   return (

@@ -4,14 +4,13 @@ import { updateLastUpdateDate } from "./updateProjectsFile";
 
 export default async function UpdateProject(newContent, id) {
   if (!id) throw new Error("Invalid Id");
-
   try {
     const path = await getProjectPathById(id);
     const originalFile = await readTextFile(path);
     const originalParseFile = await JSON.parse(originalFile);
 
     const updatedFile = originalParseFile;
-    updatedFile.content = JSON.parse(JSON.stringify(newContent));
+    updatedFile.content = newContent.toJSON();
 
     await writeTextFile(path, JSON.stringify(updatedFile));
     await updateLastUpdateDate(id);
