@@ -5,9 +5,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import FileManagerElement from "../FileManagerElement";
 import "./FileManagerDirElement.css";
-import { VirtualFileSystem } from "../../../../../utils/ProjectFileObject";
 import FileManagerRenameForm from "../../FileManagerRenameForm/FileManagerRenameForm";
 import { useRef, useState } from "react";
+import UpdateProject from "../../../../../utils/UpdateProject";
+import { useParams } from "react-router";
 
 export default function FileManagerDirElement({
   node,
@@ -18,6 +19,7 @@ export default function FileManagerDirElement({
   level,
   absolutePath,
 }) {
+  const { id } = useParams();
   const [draggin, setDraggin] = useState(false);
 
   const handleToggle = (e) => {
@@ -84,8 +86,23 @@ export default function FileManagerDirElement({
       );
     };
 
-    const handleMouseUp = () => {
+    const handleMouseUp = (event) => {
       setDraggin(false);
+      const { clientX, clientY } = event;
+
+      const elementBelow = document.elementsFromPoint(clientX, clientY);
+
+      const filemanagerElementContainerBelow = elementBelow.filter((el) =>
+        el.classList.contains("filemanager-element-container")
+      );
+
+      const path = filemanagerElementContainerBelow[1].getAttribute("path");
+
+      // TODO: forzar el update de vfs
+      vfs.move(node, path);
+      updateNodeState({ ...node });
+      UpdateProject(vfs, id);
+
       document
         .querySelectorAll(".hover-drag-and-drop")
         .forEach((el) => el.classList.remove("hover-drag-and-drop"));
