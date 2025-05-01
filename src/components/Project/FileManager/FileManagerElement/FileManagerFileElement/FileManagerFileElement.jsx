@@ -13,25 +13,23 @@ export default function FileManagerFileElement({
   level,
 }) {
   return (
-    <div className="filemanager-element-container">
-      <div
-        className="filemanager-element"
-        style={{ paddingLeft: `${level * 20}px` }}
-        onContextMenu={onContextMenu}
-      >
-        <div className="filemanager-element-content">
-          <FontAwesomeIcon icon={node.isOpen ? faFileSolidIcon : faFile} />
-          {nodeState?.isRename ? (
-            <FileManagerRenameForm
-              node={node}
-              nodeState={nodeState}
-              vfs={vfs}
-              updateNodeState={updateNodeState}
-            />
-          ) : (
-            <p className="filemanager-element_name">{node.name}</p>
-          )}
-        </div>
+    <div
+      className="filemanager-element"
+      style={{ paddingLeft: `${level * 20}px` }}
+      onContextMenu={onContextMenu}
+    >
+      <div className="filemanager-element-content">
+        <FontAwesomeIcon icon={node.isOpen ? faFileSolidIcon : faFile} />
+        {nodeState?.isRename ? (
+          <FileManagerRenameForm
+            node={node}
+            nodeState={nodeState}
+            vfs={vfs}
+            updateNodeState={updateNodeState}
+          />
+        ) : (
+          <p className="filemanager-element_name">{node.name}</p>
+        )}
       </div>
     </div>
   );

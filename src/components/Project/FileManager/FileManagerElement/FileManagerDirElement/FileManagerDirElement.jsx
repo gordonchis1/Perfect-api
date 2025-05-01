@@ -49,6 +49,28 @@ export default function FileManagerDirElement({
           handlePreventClick,
           true
         );
+
+        const elementBelow = document.elementsFromPoint(clientX, clientY);
+
+        const filemanagerElementContainerBelow = elementBelow.filter((el) =>
+          el.classList.contains("filemanager-element-container")
+        );
+
+        if (filemanagerElementContainerBelow[1]) {
+          if (
+            !filemanagerElementContainerBelow[1].classList.contains(
+              "hover-drag-and-drop"
+            )
+          ) {
+            document
+              .querySelectorAll(".hover-drag-and-drop")
+              .forEach((el) => el.classList.remove("hover-drag-and-drop"));
+
+            filemanagerElementContainerBelow[1].classList.add(
+              "hover-drag-and-drop"
+            );
+          }
+        }
       }
     };
 
@@ -64,6 +86,9 @@ export default function FileManagerDirElement({
 
     const handleMouseUp = () => {
       setDraggin(false);
+      document
+        .querySelectorAll(".hover-drag-and-drop")
+        .forEach((el) => el.classList.remove("hover-drag-and-drop"));
       document.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseup", handleMouseUp);
     };
@@ -81,6 +106,7 @@ export default function FileManagerDirElement({
           ? { position: "absolute", opacity: ".8", background: "var(--hover)" }
           : {}
       }
+      path={absolutePath ? absolutePath : ""}
     >
       <div
         className="filemanager-element"
@@ -88,7 +114,6 @@ export default function FileManagerDirElement({
         onClick={handleToggle}
         onMouseDown={handleOnMouseDown}
         onContextMenu={(event) => onContextMenu(event)}
-        path={absolutePath ? absolutePath : ""}
       >
         <div className="filemanager-element-content">
           <FontAwesomeIcon icon={node.isOpen ? faFolderOpen : faFolderClosed} />

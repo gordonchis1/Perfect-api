@@ -10,6 +10,10 @@
   gap: 10px;
 }
 
+.hover-drag-and-drop {
+  background: var(--hover);
+}
+
 /* .filemanager-dir-childs-container {
   padding-left: 20px;
 } */
