@@ -99,19 +99,20 @@ export default function FileManagerDirElement({
         el.classList.contains("filemanager-element-container")
       );
 
-      const path = filemanagerElementContainerBelow[1].getAttribute("path");
+      const path = filemanagerElementContainerBelow[1]?.getAttribute("path");
 
-      updateVfs((clonedVfs) => {
-        if (node.type === "dir") {
-          const clonedNode = clonedVfs.getDirByPath(absolutePath);
-          clonedVfs.move(clonedNode, path);
-        } else {
-          const clonedNode = clonedVfs.getFileByPath(absolutePath);
-          clonedVfs.move(clonedNode, path);
-        }
-        UpdateProject(clonedVfs, id);
-        // updateNodeState({ ...node });
-      });
+      if (path) {
+        updateVfs((clonedVfs) => {
+          if (node.type === "dir") {
+            const clonedNode = clonedVfs.getDirByPath(absolutePath);
+            clonedVfs.move(clonedNode, path);
+          } else {
+            const clonedNode = clonedVfs.getFileByPath(absolutePath);
+            clonedVfs.move(clonedNode, path);
+          }
+          UpdateProject(clonedVfs, id);
+        });
+      }
 
       document
         .querySelectorAll(".hover-drag-and-drop")

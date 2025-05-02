@@ -34,7 +34,7 @@ export async function createNewProjectFile(newProject) {
     const projectTemplate = {
       id: newProject.id,
       name: newProject.name,
-      content: new VirtualFileSystem(),
+      content: new VirtualFileSystem().toJSON(),
     };
 
     await writeTextFile(projectPath, JSON.stringify(projectTemplate));
