@@ -191,18 +191,31 @@ export class Directory extends FSNode {
   }
   addChild(node) {
     if (!(node instanceof FSNode)) {
-      console.error("You can only add instance of File or Direcotry");
+      console.error("You can only add instance of File or Directory");
+      return;
     }
-    let sameNameFiles = 0;
+
     let baseName = node.name;
+    let maxSuffix = -1;
+
+    const extractNameAndSuffix = (name) => {
+      const match = name.match(/^(.*?)(?: \((\d+)\))?$/);
+      return [match[1], match[2] !== undefined ? parseInt(match[2], 10) : null];
+    };
 
     this.children.forEach((child) => {
-      if (child.name === node.name || child.name.startsWith(baseName + " (")) {
-        sameNameFiles++;
+      const [childBase, suffix] = extractNameAndSuffix(child.name);
+      if (childBase === baseName) {
+        if (suffix === null) {
+          maxSuffix = Math.max(maxSuffix, 0);
+        } else {
+          maxSuffix = Math.max(maxSuffix, suffix);
+        }
       }
     });
-    if (sameNameFiles !== 0) {
-      node.name = `${node.name} (${sameNameFiles})`;
+
+    if (maxSuffix >= 0) {
+      node.name = `${baseName} (${maxSuffix + 1})`;
     }
 
     if (node.type === "file") {
@@ -211,6 +224,7 @@ export class Directory extends FSNode {
       this.children.unshift(node);
     }
   }
+
   getChildrens() {
     return this.children;
   }
