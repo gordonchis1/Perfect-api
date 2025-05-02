@@ -92,6 +92,8 @@ export default function FileManagerDirElement({
     const handleMouseUp = (event) => {
       setDraggin(false);
       const { clientX, clientY } = event;
+      const diffX = Math.abs(clientX - startX);
+      const diffY = Math.abs(clientY - startY);
 
       const elementBelow = document.elementsFromPoint(clientX, clientY);
 
@@ -101,7 +103,7 @@ export default function FileManagerDirElement({
 
       const path = filemanagerElementContainerBelow[1]?.getAttribute("path");
 
-      if (path) {
+      if (path && (diffX > 5 || diffY > 5)) {
         updateVfs((clonedVfs) => {
           if (node.type === "dir") {
             const clonedNode = clonedVfs.getDirByPath(absolutePath);
