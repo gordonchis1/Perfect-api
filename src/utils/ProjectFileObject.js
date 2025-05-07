@@ -1,3 +1,5 @@
+// TODO: poner los directorios primero luego usar orden alfabetico y si es igual el nombre usar el ultimo numero
+
 export class VirtualFileSystem {
   constructor(jsonData = null) {
     if (jsonData) {
@@ -218,11 +220,7 @@ export class Directory extends FSNode {
       node.name = `${baseName} (${maxSuffix + 1})`;
     }
 
-    if (node.type === "file") {
-      this.children.push(node);
-    } else {
-      this.children.unshift(node);
-    }
+    this.children.push(node);
   }
 
   getChildrens() {
