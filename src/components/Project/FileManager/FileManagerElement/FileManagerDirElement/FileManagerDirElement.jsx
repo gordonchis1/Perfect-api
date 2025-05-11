@@ -39,7 +39,11 @@ export default function FileManagerDirElement({
       ref={FilemanagerElementContainerRef}
       style={
         draggin
-          ? { position: "absolute", opacity: ".8", background: "var(--hover)" }
+          ? {
+              position: "absolute",
+              opacity: ".8",
+              background: "var(--hover)",
+            }
           : {}
       }
       path={absolutePath ? absolutePath : ""}
@@ -52,7 +56,9 @@ export default function FileManagerDirElement({
         setDraggin={setDraggin}
         updateVfs={updateVfs}
         onClick={handleToggle}
-        style={{ paddingLeft: `${level * 20}px` }}
+        style={{
+          paddingLeft: `${level * 20}px`,
+        }}
         onContextMenu={(event) => onContextMenu(event)}
       >
         <div className="filemanager-element-content">

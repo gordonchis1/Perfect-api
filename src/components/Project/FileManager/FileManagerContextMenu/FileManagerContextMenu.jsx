@@ -4,8 +4,15 @@ import "./FileManagerContextMenu.css";
 import { Directory, File } from "../../../../utils/ProjectFileObject";
 import UpdateProject from "../../../../utils/UpdateProject";
 import { useParams } from "react-router";
+import FileManagerContextMenuOption from "./FileMangerContextMenuOption/FileManagerContextMenuOption";
+import {
+  faFileCirclePlus,
+  faFolderPlus,
+  faPenToSquare,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
+
 // TODO agregar el id de el project a un contexto
-// TODO: componetizar las opciones
 // TODO: Agregar una pantalla de confirmacion de remove
 export default function FileManagerContextMenu({
   node,
@@ -19,15 +26,6 @@ export default function FileManagerContextMenu({
   const { id } = useParams();
   const menuRef = useRef(null);
   useClickAway(menuRef, closeContextMenu);
-
-  const handleAddFile = () => {
-    updateVfs((clonedVfs) => {
-      const clonedNode = clonedVfs.getDirByPath(absolutePath);
-      clonedNode.addChild(new File("New File"));
-      UpdateProject(clonedVfs, id);
-    });
-    closeContextMenu();
-  };
 
   const handleAddDir = () => {
     updateVfs((clonedVfs) => {
@@ -51,6 +49,15 @@ export default function FileManagerContextMenu({
     });
   };
 
+  const handleAddFile = () => {
+    updateVfs((clonedVfs) => {
+      const clonedNode = clonedVfs.getDirByPath(absolutePath);
+      clonedNode.addChild(new File("New File"));
+      UpdateProject(clonedVfs, id);
+    });
+    closeContextMenu();
+  };
+
   return (
     <div
       ref={menuRef}
@@ -58,29 +65,36 @@ export default function FileManagerContextMenu({
       style={{ top: `${y}px`, left: `${x}px` }}
       onContextMenu={(event) => event.preventDefault()}
     >
-      {node.type == "dir" && (
-        <button
-          onClick={handleAddFile}
-          className="filemanager-contextmenu-option"
-        >
-          New file
-        </button>
-      )}
+      <FileManagerContextMenuOption
+        optionFor="dir"
+        text={"Nuevo Archivo"}
+        node={node}
+        icon={faFileCirclePlus}
+        onClick={handleAddFile}
+      />
+      <FileManagerContextMenuOption
+        optionFor="dir"
+        text={"Agregar Directorio"}
+        node={node}
+        icon={faFolderPlus}
+        onClick={handleAddDir}
+      />
       {node.name !== "/" && (
         <>
-          <button
-            onClick={() => {
-              updateNodeState({ ...node, isRename: true });
-            }}
-            className="filemanager-contextmenu-option"
-          >
-            rename
-          </button>
-          <button onClick={handleRemove}>Remove</button>
+          <FileManagerContextMenuOption
+            node={node}
+            text={"Renombrar"}
+            icon={faPenToSquare}
+            onClick={() => updateNodeState({ ...node, isRename: true })}
+          />
+          <FileManagerContextMenuOption
+            node={node}
+            text={"Remover"}
+            icon={faTrash}
+            onClick={handleRemove}
+            color={"red"}
+          />
         </>
-      )}
-      {node.type === "dir" && (
-        <button onClick={handleAddDir}>Add directory</button>
       )}
     </div>
   );
