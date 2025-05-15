@@ -7,6 +7,7 @@ import { getProjectById } from "../../utils/getProjects";
 import FileManager from "./FileManager/FileManager";
 import ResizeContainer from "../Global/ResizeContainer/ResizeContainer";
 import useWidthObserver from "../../Hooks/useWidthObserver";
+import FileManagerProvider from "../../providers/FileManager/FileManagerProvider";
 
 export default function Project() {
   const { id } = useParams();
@@ -34,26 +35,28 @@ export default function Project() {
   // TODO: add loading state
   // TODO: Add error state
   return (
-    <div className="project-container" ref={container}>
-      {project && (
-        <>
-          <ProjectHeader project={project} />
-          <ResizeContainer
-            resizeColor={"var(--borders)"}
-            defaultWidth={14}
-            maxWidthOfLeftContainer={14}
-            minWidthOfLeftContainer={200}
-            containerWidth={width}
-          >
-            <ResizeContainer.LeftContainer>
-              <FileManager project={project} />
-            </ResizeContainer.LeftContainer>
-            <ResizeContainer.RightContainer>
-              <TabsContainer></TabsContainer>
-            </ResizeContainer.RightContainer>
-          </ResizeContainer>
-        </>
-      )}
-    </div>
+    <FileManagerProvider>
+      <div className="project-container" ref={container}>
+        {project && (
+          <>
+            <ProjectHeader project={project} />
+            <ResizeContainer
+              resizeColor={"var(--borders)"}
+              defaultWidth={14}
+              maxWidthOfLeftContainer={14}
+              minWidthOfLeftContainer={200}
+              containerWidth={width}
+            >
+              <ResizeContainer.LeftContainer>
+                <FileManager project={project} />
+              </ResizeContainer.LeftContainer>
+              <ResizeContainer.RightContainer>
+                <TabsContainer></TabsContainer>
+              </ResizeContainer.RightContainer>
+            </ResizeContainer>
+          </>
+        )}
+      </div>
+    </FileManagerProvider>
   );
 }

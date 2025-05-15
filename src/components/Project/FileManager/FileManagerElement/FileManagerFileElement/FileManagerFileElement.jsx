@@ -5,18 +5,21 @@ import "./FileManagerFileElement.css";
 import FileManagerRenameForm from "../../FileManagerRenameForm/FileManagerRenameForm";
 import { useRef, useState } from "react";
 import FileManagerDraggableElement from "../FileManagerDraggableElement/FileManagerDraggableElement";
+import useFileManagerContext from "../../../../../Hooks/FileManager/useFileMangerContext";
 
 export default function FileManagerFileElement({
   node,
   onContextMenu,
   nodeState,
   updateNodeState,
-  level,
   updateVfs,
-  absolutePath,
 }) {
   const FilemanagerElementContainerRef = useRef(null);
   const [draggin, setDraggin] = useState(false);
+
+  const [state] = useFileManagerContext();
+  const absolutePath = state.getAbsolutePath(node);
+  const level = absolutePath.split("/").length;
 
   return (
     <div

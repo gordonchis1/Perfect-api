@@ -8,6 +8,8 @@ import "./FileManagerDirElement.css";
 import FileManagerRenameForm from "../../FileManagerRenameForm/FileManagerRenameForm";
 import { useRef, useState } from "react";
 import FileManagerDraggableElement from "../FileManagerDraggableElement/FileManagerDraggableElement";
+import useFileManagerContext from "../../../../../Hooks/FileManager/useFileMangerContext";
+import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../../providers/FileManager/reducer";
 
 export default function FileManagerDirElement({
   node,
@@ -15,18 +17,20 @@ export default function FileManagerDirElement({
   onContextMenu,
   nodeState,
   updateNodeState,
-  level,
-  absolutePath,
   updateVfs,
 }) {
   const [draggin, setDraggin] = useState(false);
+  const [state, dispatch] = useFileManagerContext();
+
+  const absolutePath = state.getAbsolutePath(node);
+  const level = absolutePath.split("/").length;
 
   const handleToggle = (e) => {
     if (node.name === "/") return;
     e.stopPropagation();
-    updateVfs((clonedVfs) => {
-      const clonedNode = clonedVfs.getDirByPath(absolutePath);
-      clonedNode.toggleIsOpen();
+    dispatch({
+      type: FILEMANAGER_REDUCER_ACTIONS.toggleIsOpen,
+      payload: absolutePath,
     });
   };
 
@@ -57,7 +61,7 @@ export default function FileManagerDirElement({
         updateVfs={updateVfs}
         onClick={handleToggle}
         style={{
-          paddingLeft: `${level * 20}px`,
+          paddingLeft: node.name !== "/" ? `${level * 20}px` : "20px",
         }}
         onContextMenu={(event) => onContextMenu(event)}
       >

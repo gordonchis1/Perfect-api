@@ -11,6 +11,7 @@ import {
   faPenToSquare,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
+import useFileManagerContext from "../../../../Hooks/FileManager/useFileMangerContext";
 
 // TODO agregar el id de el project a un contexto
 // TODO: Agregar una pantalla de confirmacion de remove
@@ -21,11 +22,13 @@ export default function FileManagerContextMenu({
   y,
   closeContextMenu,
   updateVfs,
-  absolutePath,
 }) {
   const { id } = useParams();
   const menuRef = useRef(null);
   useClickAway(menuRef, closeContextMenu);
+
+  const [state] = useFileManagerContext();
+  const absolutePath = state.getAbsolutePath(node);
 
   const handleAddDir = () => {
     updateVfs((clonedVfs) => {
