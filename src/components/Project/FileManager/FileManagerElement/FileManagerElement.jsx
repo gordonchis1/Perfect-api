@@ -4,6 +4,8 @@ import "./FileManagerElement.css";
 import { useEffect, useState } from "react";
 import FileManagerContextMenu from "../FileManagerContextMenu/FileManagerContextMenu";
 
+// Todo: despues refactorizar el estado para usar un estado global para evitar props drilling
+
 const defaultContextMenu = {
   show: false,
   x: 0,
