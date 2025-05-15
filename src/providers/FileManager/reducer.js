@@ -1,4 +1,3 @@
-import FileManager from "../../components/Project/FileManager/FileManager";
 import {
   Directory,
   File,

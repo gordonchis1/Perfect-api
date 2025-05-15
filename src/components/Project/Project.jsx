@@ -7,6 +7,7 @@ import ResizeContainer from "../Global/ResizeContainer/ResizeContainer";
 import useWidthObserver from "../../Hooks/useWidthObserver";
 import FileManagerProvider from "../../providers/FileManager/FileManagerProvider";
 import ProjectProvider from "../../providers/Project/ProjectProvider";
+import FilesProvider from "../../providers/FilesProvider/FilesProvider";
 
 export default function Project() {
   const container = useRef(null);
@@ -24,25 +25,27 @@ export default function Project() {
     <>
       {isMounted && (
         <ProjectProvider>
-          <FileManagerProvider>
-            <div className="project-container" ref={container}>
-              <ProjectHeader />
-              <ResizeContainer
-                resizeColor={"var(--borders)"}
-                defaultWidth={14}
-                maxWidthOfLeftContainer={14}
-                minWidthOfLeftContainer={200}
-                containerWidth={width}
-              >
-                <ResizeContainer.LeftContainer>
-                  <FileManager />
-                </ResizeContainer.LeftContainer>
-                <ResizeContainer.RightContainer>
-                  <TabsContainer></TabsContainer>
-                </ResizeContainer.RightContainer>
-              </ResizeContainer>
-            </div>
-          </FileManagerProvider>
+          <FilesProvider>
+            <FileManagerProvider>
+              <div className="project-container" ref={container}>
+                <ProjectHeader />
+                <ResizeContainer
+                  resizeColor={"var(--borders)"}
+                  defaultWidth={14}
+                  maxWidthOfLeftContainer={14}
+                  minWidthOfLeftContainer={200}
+                  containerWidth={width}
+                >
+                  <ResizeContainer.LeftContainer>
+                    <FileManager />
+                  </ResizeContainer.LeftContainer>
+                  <ResizeContainer.RightContainer>
+                    <TabsContainer />
+                  </ResizeContainer.RightContainer>
+                </ResizeContainer>
+              </div>
+            </FileManagerProvider>
+          </FilesProvider>
         </ProjectProvider>
       )}
     </>
