@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import "./FileManagerRenameForm.css";
 import useFileManagerContext from "../../../../Hooks/FileManager/useFileMangerContext";
 import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../providers/FileManager/reducer";
+import useProjectContext from "../../../../Hooks/FileManager/useProjectContext";
 
 export default function FileManagerRenameForm({
   node,
@@ -14,6 +15,7 @@ export default function FileManagerRenameForm({
 }) {
   const inputRef = useRef(null);
   const [state, dispatch] = useFileManagerContext();
+  const { id } = useProjectContext();
 
   const absolutePath = state.getAbsolutePath(node);
 
@@ -32,6 +34,7 @@ export default function FileManagerRenameForm({
           type: node.type,
           newName: event.target.value,
           path: absolutePath,
+          id,
         },
       });
     }

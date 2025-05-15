@@ -1,6 +1,6 @@
-import { useParams } from "react-router";
 import useFileManagerContext from "../../../../../Hooks/FileManager/useFileMangerContext";
 import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../../providers/FileManager/reducer";
+import useProjectContext from "../../../../../Hooks/FileManager/useProjectContext";
 
 export default function FileManagerDraggableElement({
   children,
@@ -10,7 +10,7 @@ export default function FileManagerDraggableElement({
   setDraggin,
   ...props
 }) {
-  const { id } = useParams();
+  const { id } = useProjectContext();
   const [state, dispatch] = useFileManagerContext();
   const absolutePath = state.getAbsolutePath(node);
 
@@ -85,7 +85,7 @@ export default function FileManagerDraggableElement({
       if (path && (diffX > 5 || diffY > 5)) {
         dispatch({
           type: FILEMANAGER_REDUCER_ACTIONS.move,
-          payload: { moveElement: absolutePath, to: path, type: node.type },
+          payload: { moveElement: absolutePath, to: path, type: node.type, id },
         });
       }
 

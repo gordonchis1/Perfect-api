@@ -13,6 +13,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import useFileManagerContext from "../../../../Hooks/FileManager/useFileMangerContext";
 import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../providers/FileManager/reducer";
+import useProjectContext from "../../../../Hooks/FileManager/useProjectContext";
 
 // TODO agregar el id de el project a un contexto
 // TODO: Agregar una pantalla de confirmacion de remove
@@ -23,6 +24,7 @@ export default function FileManagerContextMenu({
   y,
   closeContextMenu,
 }) {
+  const { id } = useProjectContext();
   const menuRef = useRef(null);
   useClickAway(menuRef, closeContextMenu);
 
@@ -32,7 +34,7 @@ export default function FileManagerContextMenu({
   const handleAddDir = () => {
     dispatch({
       type: FILEMANAGER_REDUCER_ACTIONS.addDir,
-      payload: absolutePath,
+      payload: { path: absolutePath, id },
     });
     closeContextMenu();
   };
@@ -40,7 +42,7 @@ export default function FileManagerContextMenu({
   const handleRemove = () => {
     dispatch({
       type: FILEMANAGER_REDUCER_ACTIONS.remove,
-      payload: { type: node.type, path: absolutePath },
+      payload: { type: node.type, path: absolutePath, id },
     });
     closeContextMenu();
   };
@@ -48,7 +50,7 @@ export default function FileManagerContextMenu({
   const handleAddFile = () => {
     dispatch({
       type: FILEMANAGER_REDUCER_ACTIONS.addFile,
-      payload: absolutePath,
+      payload: { path: absolutePath, id },
     });
     closeContextMenu();
   };

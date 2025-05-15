@@ -4,6 +4,7 @@ import {
   File,
   VirtualFileSystem,
 } from "../../utils/ProjectFileObject";
+import UpdateProject from "../../utils/UpdateProject";
 
 export const FILEMANAGER_REDUCER_ACTIONS = {
   init: "init",
@@ -15,7 +16,6 @@ export const FILEMANAGER_REDUCER_ACTIONS = {
   rename: "rename",
 };
 
-// TODO: add updateProject local for all cases needed
 const fileManagerReducer = (state, action) => {
   const { type, payload } = action;
 
@@ -25,7 +25,6 @@ const fileManagerReducer = (state, action) => {
     }
     case FILEMANAGER_REDUCER_ACTIONS.toggleIsOpen: {
       if (state instanceof VirtualFileSystem) {
-        // TODO: hacer una funcion para cloanr el nodo y el vfs
         const clonedVfs = state.clone();
         const clonedNode = clonedVfs.getDirByPath(payload);
         clonedNode.toggleIsOpen();
@@ -34,16 +33,18 @@ const fileManagerReducer = (state, action) => {
       return state;
     }
     case FILEMANAGER_REDUCER_ACTIONS.addDir: {
+      const { id, path } = payload;
       if (state instanceof VirtualFileSystem) {
         const clonedVfs = state.clone();
-        const clonedNode = clonedVfs.getDirByPath(payload);
+        const clonedNode = clonedVfs.getDirByPath(path);
         clonedNode.addChild(new Directory("New directory", true));
+        UpdateProject(clonedVfs, id);
         return clonedVfs;
       }
       return state;
     }
     case FILEMANAGER_REDUCER_ACTIONS.remove: {
-      const { type, path } = payload;
+      const { type, path, id } = payload;
       if (state instanceof VirtualFileSystem) {
         const clonedVfs = state.clone();
         if (type === "dir") {
@@ -53,21 +54,24 @@ const fileManagerReducer = (state, action) => {
           const clonedFile = clonedVfs.getFileByPath(path);
           clonedVfs.remove(clonedFile);
         }
+        UpdateProject(clonedVfs, id);
         return clonedVfs;
       }
       return state;
     }
     case FILEMANAGER_REDUCER_ACTIONS.addFile: {
+      const { id, path } = payload;
       if (state instanceof VirtualFileSystem) {
         const clonedVfs = state.clone();
-        const clonedNode = clonedVfs.getDirByPath(payload);
+        const clonedNode = clonedVfs.getDirByPath(path);
         clonedNode.addChild(new File("New File"));
+        UpdateProject(clonedVfs, id);
         return clonedVfs;
       }
       return state;
     }
     case FILEMANAGER_REDUCER_ACTIONS.move: {
-      const { moveElement, to, type } = payload;
+      const { moveElement, to, type, id } = payload;
       if (state instanceof VirtualFileSystem) {
         const clonedVfs = state.clone();
         if (type === "dir") {
@@ -77,12 +81,13 @@ const fileManagerReducer = (state, action) => {
           const clonedFile = clonedVfs.getFileByPath(moveElement);
           clonedVfs.move(clonedFile, to);
         }
+        UpdateProject(clonedVfs, id);
         return clonedVfs;
       }
       return state;
     }
     case FILEMANAGER_REDUCER_ACTIONS.rename: {
-      const { type, newName, path } = payload;
+      const { type, newName, path, id } = payload;
       if (state instanceof VirtualFileSystem) {
         const clonedVfs = state.clone();
         if (type === "dir") {
@@ -92,6 +97,7 @@ const fileManagerReducer = (state, action) => {
           const clonedFile = clonedVfs.getFileByPath(path);
           clonedFile.rename(newName);
         }
+        UpdateProject(clonedVfs, id);
         return clonedVfs;
       }
       return state;
