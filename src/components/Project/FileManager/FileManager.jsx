@@ -8,15 +8,13 @@ export default function FileManager() {
   const [state] = useFileManagerContext();
 
   return (
-    <>
+    <div
+      className="filemanager-container"
+      onContextMenu={(event) => event.preventDefault()}
+    >
       {state !== undefined && (
-        <div
-          className="filemanager-container"
-          onContextMenu={(event) => event.preventDefault()}
-        >
-          <FileManagerElement node={state.root} vfs={state} />
-        </div>
+        <FileManagerElement node={state.root} vfs={state} />
       )}
-    </>
+    </div>
   );
 }

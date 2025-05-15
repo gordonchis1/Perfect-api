@@ -3,6 +3,7 @@
   max-width: 100%;
   overflow-x: hidden;
   height: 100%;
+  min-width: 100%;
   background: transparent;
   color: white;
   font-size: 29px;

@@ -1,28 +1,16 @@
 import TabsContainer from "./Tabs/TabsContainer/TabsContainer";
 import "./Project.css";
 import ProjectHeader from "./ProjectHeader/ProjectHeader";
-import { useParams } from "react-router";
 import { useEffect, useRef, useState } from "react";
-import { getProjectById } from "../../utils/getProjects";
 import FileManager from "./FileManager/FileManager";
 import ResizeContainer from "../Global/ResizeContainer/ResizeContainer";
 import useWidthObserver from "../../Hooks/useWidthObserver";
 import FileManagerProvider from "../../providers/FileManager/FileManagerProvider";
+import ProjectProvider from "../../providers/Project/ProjectProvider";
 
 export default function Project() {
-  const { id } = useParams();
-  const [project, setProject] = useState(undefined);
   const container = useRef(null);
   const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    const getProject = async () => {
-      const project = await getProjectById(id);
-      setProject(project);
-    };
-
-    getProject();
-  }, []);
 
   useEffect(() => {
     setIsMounted(true);
@@ -33,24 +21,30 @@ export default function Project() {
   });
 
   return (
-    <FileManagerProvider>
-      <div className="project-container" ref={container}>
-        <ProjectHeader project={project} />
-        <ResizeContainer
-          resizeColor={"var(--borders)"}
-          defaultWidth={14}
-          maxWidthOfLeftContainer={14}
-          minWidthOfLeftContainer={200}
-          containerWidth={width}
-        >
-          <ResizeContainer.LeftContainer>
-            <FileManager />
-          </ResizeContainer.LeftContainer>
-          <ResizeContainer.RightContainer>
-            <TabsContainer></TabsContainer>
-          </ResizeContainer.RightContainer>
-        </ResizeContainer>
-      </div>
-    </FileManagerProvider>
+    <>
+      {isMounted && (
+        <ProjectProvider>
+          <FileManagerProvider>
+            <div className="project-container" ref={container}>
+              <ProjectHeader />
+              <ResizeContainer
+                resizeColor={"var(--borders)"}
+                defaultWidth={14}
+                maxWidthOfLeftContainer={14}
+                minWidthOfLeftContainer={200}
+                containerWidth={width}
+              >
+                <ResizeContainer.LeftContainer>
+                  <FileManager />
+                </ResizeContainer.LeftContainer>
+                <ResizeContainer.RightContainer>
+                  <TabsContainer></TabsContainer>
+                </ResizeContainer.RightContainer>
+              </ResizeContainer>
+            </div>
+          </FileManagerProvider>
+        </ProjectProvider>
+      )}
+    </>
   );
 }

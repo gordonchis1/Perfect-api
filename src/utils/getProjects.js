@@ -30,6 +30,22 @@ export async function getProjectPathById(id) {
   }
 }
 
+export async function getProjectFromProjectsFileById(id) {
+  if (!id) throw new Error("Id is not valid");
+
+  try {
+    const projects = await getProjects();
+    const projectMetaData = projects.find((project) => project.id === id);
+
+    if (projectMetaData === undefined)
+      throw new Error(`Project ${id} dont found`);
+
+    return projectMetaData;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 export async function getProjectById(id) {
   if (!id) throw new Error("Id is not valid");
 
