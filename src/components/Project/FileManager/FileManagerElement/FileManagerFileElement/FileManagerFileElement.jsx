@@ -12,7 +12,6 @@ export default function FileManagerFileElement({
   onContextMenu,
   nodeState,
   updateNodeState,
-  updateVfs,
 }) {
   const FilemanagerElementContainerRef = useRef(null);
   const [draggin, setDraggin] = useState(false);
@@ -33,10 +32,8 @@ export default function FileManagerFileElement({
     >
       <FileManagerDraggableElement
         FilemanagerElementContainerRef={FilemanagerElementContainerRef}
-        absolutePath={absolutePath}
         draggin={draggin}
         setDraggin={setDraggin}
-        updateVfs={updateVfs}
         node={node}
         style={{ paddingLeft: `${level * 20}px` }}
         onContextMenu={onContextMenu}
@@ -45,11 +42,9 @@ export default function FileManagerFileElement({
           <FontAwesomeIcon icon={node.isOpen ? faFileSolidIcon : faFile} />
           {nodeState?.isRename ? (
             <FileManagerRenameForm
-              absolutePath={absolutePath}
               node={node}
               nodeState={nodeState}
               updateNodeState={updateNodeState}
-              updateVfs={updateVfs}
             />
           ) : (
             <p className="filemanager-element_name">{node.name}</p>

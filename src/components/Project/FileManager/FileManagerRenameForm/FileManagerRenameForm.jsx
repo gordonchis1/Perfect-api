@@ -4,16 +4,18 @@ import { useParams } from "react-router";
 import useClickAway from "../../../../Hooks/useClickAway";
 import { useEffect } from "react";
 import "./FileManagerRenameForm.css";
+import useFileManagerContext from "../../../../Hooks/FileManager/useFileMangerContext";
+import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../providers/FileManager/reducer";
 
 export default function FileManagerRenameForm({
   node,
   updateNodeState,
   nodeState,
-  updateVfs,
-  absolutePath,
 }) {
   const inputRef = useRef(null);
-  const { id } = useParams();
+  const [state, dispatch] = useFileManagerContext();
+
+  const absolutePath = state.getAbsolutePath(node);
 
   useClickAway(inputRef, () => {
     inputRef.current.blur();
@@ -24,15 +26,13 @@ export default function FileManagerRenameForm({
     if (event.target.value === "" || event.target.value === node.name) {
       return;
     } else {
-      updateVfs((clonedVfs) => {
-        if (node.type == "dir") {
-          const clonedNode = clonedVfs.getDirByPath(absolutePath);
-          clonedNode.rename(event.target.value);
-        } else {
-          const clonedNode = clonedVfs.getFileByPath(absolutePath);
-          clonedNode.rename(event.target.value);
-        }
-        UpdateProject(clonedVfs, id);
+      dispatch({
+        type: FILEMANAGER_REDUCER_ACTIONS.rename,
+        payload: {
+          type: node.type,
+          newName: event.target.value,
+          path: absolutePath,
+        },
       });
     }
   };

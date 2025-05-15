@@ -13,11 +13,9 @@ import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../../providers/FileManage
 
 export default function FileManagerDirElement({
   node,
-  vfs,
   onContextMenu,
   nodeState,
   updateNodeState,
-  updateVfs,
 }) {
   const [draggin, setDraggin] = useState(false);
   const [state, dispatch] = useFileManagerContext();
@@ -55,10 +53,8 @@ export default function FileManagerDirElement({
       <FileManagerDraggableElement
         node={node}
         FilemanagerElementContainerRef={FilemanagerElementContainerRef}
-        absolutePath={absolutePath}
         draggin={draggin}
         setDraggin={setDraggin}
-        updateVfs={updateVfs}
         onClick={handleToggle}
         style={{
           paddingLeft: node.name !== "/" ? `${level * 20}px` : "20px",
@@ -69,12 +65,9 @@ export default function FileManagerDirElement({
           <FontAwesomeIcon icon={node.isOpen ? faFolderOpen : faFolderClosed} />
           {nodeState.isRename ? (
             <FileManagerRenameForm
-              absolutePath={absolutePath}
               node={node}
-              updateVfs={updateVfs}
               nodeState={nodeState}
               updateNodeState={updateNodeState}
-              vfs={vfs}
             />
           ) : (
             <p className="filemanager-element_name">{node.name}</p>
@@ -87,14 +80,7 @@ export default function FileManagerDirElement({
       >
         {node.isOpen &&
           childrens.map((element) => {
-            return (
-              <FileManagerElement
-                key={element.name}
-                node={element}
-                vfs={vfs}
-                updateVfs={updateVfs}
-              />
-            );
+            return <FileManagerElement key={element.name} node={element} />;
           })}
       </div>
     </div>

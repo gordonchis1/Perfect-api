@@ -12,6 +12,7 @@ import {
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import useFileManagerContext from "../../../../Hooks/FileManager/useFileMangerContext";
+import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../providers/FileManager/reducer";
 
 // TODO agregar el id de el project a un contexto
 // TODO: Agregar una pantalla de confirmacion de remove
@@ -21,42 +22,33 @@ export default function FileManagerContextMenu({
   x,
   y,
   closeContextMenu,
-  updateVfs,
 }) {
-  const { id } = useParams();
   const menuRef = useRef(null);
   useClickAway(menuRef, closeContextMenu);
 
-  const [state] = useFileManagerContext();
+  const [state, dispatch] = useFileManagerContext();
   const absolutePath = state.getAbsolutePath(node);
 
   const handleAddDir = () => {
-    updateVfs((clonedVfs) => {
-      const clonedNode = clonedVfs.getDirByPath(absolutePath);
-      clonedNode.addChild(new Directory("New directory", true));
-      UpdateProject(clonedVfs, id);
+    dispatch({
+      type: FILEMANAGER_REDUCER_ACTIONS.addDir,
+      payload: absolutePath,
     });
     closeContextMenu();
   };
 
   const handleRemove = () => {
-    updateVfs((clonedVfs) => {
-      if (node.type === "dir") {
-        const clonedNode = clonedVfs.getDirByPath(absolutePath);
-        clonedVfs.remove(clonedNode);
-      } else {
-        const clonedNode = clonedVfs.getFileByPath(absolutePath);
-        clonedVfs.remove(clonedNode);
-      }
-      UpdateProject(clonedVfs, id);
+    dispatch({
+      type: FILEMANAGER_REDUCER_ACTIONS.remove,
+      payload: { type: node.type, path: absolutePath },
     });
+    closeContextMenu();
   };
 
   const handleAddFile = () => {
-    updateVfs((clonedVfs) => {
-      const clonedNode = clonedVfs.getDirByPath(absolutePath);
-      clonedNode.addChild(new File("New File"));
-      UpdateProject(clonedVfs, id);
+    dispatch({
+      type: FILEMANAGER_REDUCER_ACTIONS.addFile,
+      payload: absolutePath,
     });
     closeContextMenu();
   };

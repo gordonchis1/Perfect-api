@@ -1,13 +1,10 @@
-import useVirtualFileSystem from "../../../Hooks/FileManager/UseVirtualFileSystem";
 import "./FileManager.css";
 import FileManagerElement from "./FileManagerElement/FileManagerElement";
 import useFileManagerContext from "../../../Hooks/FileManager/useFileMangerContext";
 
 // TODO: encontrar una forma de siempre guardar los elementos de una misma forma en el objeto
 // ! ordenar los elementos por primero directorios luego los archivos ordenados en orden alfabetico
-export default function FileManager({ project }) {
-  const { vfs, updateVfs } = useVirtualFileSystem(project.content);
-
+export default function FileManager() {
   const [state] = useFileManagerContext();
 
   return (
@@ -17,11 +14,7 @@ export default function FileManager({ project }) {
           className="filemanager-container"
           onContextMenu={(event) => event.preventDefault()}
         >
-          <FileManagerElement
-            node={state.root}
-            vfs={state}
-            updateVfs={updateVfs}
-          />
+          <FileManagerElement node={state.root} vfs={state} />
         </div>
       )}
     </>

@@ -32,30 +32,24 @@ export default function Project() {
     ref: isMounted ? container : { current: null },
   });
 
-  // TODO: add loading state
-  // TODO: Add error state
   return (
     <FileManagerProvider>
       <div className="project-container" ref={container}>
-        {project && (
-          <>
-            <ProjectHeader project={project} />
-            <ResizeContainer
-              resizeColor={"var(--borders)"}
-              defaultWidth={14}
-              maxWidthOfLeftContainer={14}
-              minWidthOfLeftContainer={200}
-              containerWidth={width}
-            >
-              <ResizeContainer.LeftContainer>
-                <FileManager project={project} />
-              </ResizeContainer.LeftContainer>
-              <ResizeContainer.RightContainer>
-                <TabsContainer></TabsContainer>
-              </ResizeContainer.RightContainer>
-            </ResizeContainer>
-          </>
-        )}
+        <ProjectHeader project={project} />
+        <ResizeContainer
+          resizeColor={"var(--borders)"}
+          defaultWidth={14}
+          maxWidthOfLeftContainer={14}
+          minWidthOfLeftContainer={200}
+          containerWidth={width}
+        >
+          <ResizeContainer.LeftContainer>
+            <FileManager />
+          </ResizeContainer.LeftContainer>
+          <ResizeContainer.RightContainer>
+            <TabsContainer></TabsContainer>
+          </ResizeContainer.RightContainer>
+        </ResizeContainer>
       </div>
     </FileManagerProvider>
   );

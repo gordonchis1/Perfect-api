@@ -1,18 +1,18 @@
-import { useEffect } from "react";
-import UpdateProject from "../../../../../utils/UpdateProject";
 import { useParams } from "react-router";
+import useFileManagerContext from "../../../../../Hooks/FileManager/useFileMangerContext";
+import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../../providers/FileManager/reducer";
 
 export default function FileManagerDraggableElement({
   children,
-  absolutePath,
   node,
-  updateVfs,
   FilemanagerElementContainerRef,
   draggin,
   setDraggin,
   ...props
 }) {
   const { id } = useParams();
+  const [state, dispatch] = useFileManagerContext();
+  const absolutePath = state.getAbsolutePath(node);
 
   const handleOnMouseDown = (event) => {
     const originalWidth = FilemanagerElementContainerRef.current.clientWidth;
@@ -83,15 +83,9 @@ export default function FileManagerDraggableElement({
       const path = filemanagerElementContainerBelow[1]?.getAttribute("path");
 
       if (path && (diffX > 5 || diffY > 5)) {
-        updateVfs((clonedVfs) => {
-          if (node.type === "dir") {
-            const clonedNode = clonedVfs.getDirByPath(absolutePath);
-            clonedVfs.move(clonedNode, path);
-          } else {
-            const clonedNode = clonedVfs.getFileByPath(absolutePath);
-            clonedVfs.move(clonedNode, path);
-          }
-          UpdateProject(clonedVfs, id);
+        dispatch({
+          type: FILEMANAGER_REDUCER_ACTIONS.move,
+          payload: { moveElement: absolutePath, to: path, type: node.type },
         });
       }
 
