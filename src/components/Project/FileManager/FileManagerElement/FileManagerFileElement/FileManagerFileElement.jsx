@@ -6,6 +6,8 @@ import FileManagerRenameForm from "../../FileManagerRenameForm/FileManagerRename
 import { useRef, useState } from "react";
 import FileManagerDraggableElement from "../FileManagerDraggableElement/FileManagerDraggableElement";
 import useFileManagerContext from "../../../../../Hooks/FileManager/useFileMangerContext";
+import useFilesContext from "../../../../../Hooks/useFilesContext";
+import { FILES_REDUCER_ACTIONS } from "../../../../../providers/FilesProvider/reducer";
 
 export default function FileManagerFileElement({
   node,
@@ -19,6 +21,8 @@ export default function FileManagerFileElement({
   const [state] = useFileManagerContext();
   const absolutePath = state.getAbsolutePath(node);
   const level = absolutePath.split("/").length;
+
+  const [filesState, dispatch] = useFilesContext();
 
   return (
     <div
@@ -37,6 +41,17 @@ export default function FileManagerFileElement({
         node={node}
         style={{ paddingLeft: `${level * 20}px` }}
         onContextMenu={onContextMenu}
+        onClick={() => {
+          if (filesState.some((file) => file.name === node.name)) return;
+          dispatch({
+            type: FILES_REDUCER_ACTIONS.openFile,
+            payload: {
+              path: absolutePath,
+              content: node.content,
+              name: node.name,
+            },
+          });
+        }}
       >
         <div className="filemanager-element-content">
           <FontAwesomeIcon icon={node.isOpen ? faFileSolidIcon : faFile} />

@@ -7,8 +7,11 @@ const filesReducer = (state, action) => {
 
   switch (type) {
     case FILES_REDUCER_ACTIONS.openFile: {
-      return state;
+      const { path, content, name } = payload;
+      return [...state, { path, content, name }];
     }
+    default:
+      return state;
   }
 };
 
