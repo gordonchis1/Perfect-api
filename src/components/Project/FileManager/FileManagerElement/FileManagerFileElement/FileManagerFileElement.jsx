@@ -49,6 +49,7 @@ export default function FileManagerFileElement({
               path: absolutePath,
               content: node.content,
               name: node.name,
+              currentTab: true,
             },
           });
         }}

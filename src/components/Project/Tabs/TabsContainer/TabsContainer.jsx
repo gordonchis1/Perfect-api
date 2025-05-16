@@ -1,4 +1,5 @@
 import useFilesContext from "../../../../Hooks/useFilesContext";
+import OpenTab from "./OpenTab/OpenTab";
 import "./TabsContainer.css";
 
 export default function TabsContainer() {
@@ -7,7 +8,7 @@ export default function TabsContainer() {
   return (
     <div className="tabs-container">
       {files.map((file) => (
-        <p key={file.path}>{file.name}</p>
+        <OpenTab file={file} key={file.path} />
       ))}
     </div>
   );
