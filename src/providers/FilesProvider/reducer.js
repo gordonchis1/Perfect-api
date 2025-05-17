@@ -9,29 +9,29 @@ const filesReducer = (state, action) => {
 
   switch (type) {
     case FILES_REDUCER_ACTIONS.openFile: {
-      const { path, content, name, currentTab } = payload;
-      const newState = [...state, { path, content, name, currentTab }];
+      const { path, content, name, currentTab, id } = payload;
+      const newState = [...state, { path, content, name, currentTab, id }];
 
       newState.forEach((file) => {
-        if (file.path !== path) file["currentTab"] = false;
+        if (file.id !== id) file["currentTab"] = false;
       });
 
       return newState;
     }
     case FILES_REDUCER_ACTIONS.changeCurrentTab: {
-      const { path } = payload;
+      const { id } = payload;
       const newState = [...state];
       newState.forEach((file) => {
-        if (file.path === path) file["currentTab"] = true;
+        if (file.id === id) file["currentTab"] = true;
         else file["currentTab"] = false;
       });
       return newState;
     }
     case FILES_REDUCER_ACTIONS.closeFile: {
-      const { path } = payload;
+      const { id } = payload;
       const newState = [...state];
 
-      const idx = newState.findIndex((file) => file.path === path);
+      const idx = newState.findIndex((file) => file.id === id);
       const deltedElement = newState.splice(idx, 1);
 
       if (newState.length === 0) return newState;

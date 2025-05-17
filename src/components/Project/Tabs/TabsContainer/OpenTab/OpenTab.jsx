@@ -10,9 +10,10 @@ export default function OpenTab({ file }) {
     <div
       className={`tabs_open-tab ${file.currentTab ? "tabs_current-tab" : ""}`}
       onClick={() => {
+        if (file.currentTab) return;
         dispatch({
           type: FILES_REDUCER_ACTIONS.changeCurrentTab,
-          payload: { path: file.path },
+          payload: { id: file.id },
         });
       }}
     >
@@ -24,7 +25,7 @@ export default function OpenTab({ file }) {
           event.stopPropagation();
           dispatch({
             type: FILES_REDUCER_ACTIONS.closeFile,
-            payload: { path: file.path },
+            payload: { id: file.id },
           });
         }}
       >

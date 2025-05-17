@@ -6,6 +6,7 @@ import useFileManagerContext from "../../../../Hooks/FileManager/useFileMangerCo
 import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../providers/FileManager/reducer";
 import useProjectContext from "../../../../Hooks/FileManager/useProjectContext";
 
+// TODO: evitar que pueda crear un nombre de archivo o de directorio con el mismo que la raiz /
 export default function FileManagerRenameForm({
   node,
   updateNodeState,

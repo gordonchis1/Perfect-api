@@ -1,4 +1,5 @@
 // TODO: poner los directorios primero luego usar orden alfabetico y si es igual el nombre usar el ultimo numero
+// TODO: cambiar donde se identfica por el id
 
 import { nanoid } from "nanoid";
 

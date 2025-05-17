@@ -7,7 +7,6 @@ import useFileManagerContext from "../../../Hooks/FileManager/useFileMangerConte
 export default function FileManager() {
   const [state] = useFileManagerContext();
 
-  console.log(state);
   return (
     <div
       className="filemanager-container"
