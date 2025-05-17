@@ -4,38 +4,40 @@ export const FILES_REDUCER_ACTIONS = {
   closeFile: "closeFile",
 };
 
-// TODO: cambiar estado por un objeto con el array de opentabs y currentTab que sea el id de la currentTab
 const filesReducer = (state, action) => {
   const { type, payload } = action;
 
   switch (type) {
     case FILES_REDUCER_ACTIONS.openFile: {
       const { path, content, name, currentTab, id } = payload;
-      const newState = [...state, { path, content, name, currentTab, id }];
+      const newState = [
+        ...state.openFiles,
+        { path, content, name, currentTab, id },
+      ];
 
       newState.forEach((file) => {
         if (file.id !== id) file["currentTab"] = false;
       });
 
-      return newState;
+      return { currentFile: id, openFiles: newState };
     }
     case FILES_REDUCER_ACTIONS.changeCurrentTab: {
       const { id } = payload;
-      const newState = [...state];
+      const newState = [...state.openFiles];
       newState.forEach((file) => {
         if (file.id === id) file["currentTab"] = true;
         else file["currentTab"] = false;
       });
-      return newState;
+      return { currentFile: id, openFiles: newState };
     }
     case FILES_REDUCER_ACTIONS.closeFile: {
       const { id } = payload;
-      const newState = [...state];
+      const newState = [...state.openFiles];
 
       const idx = newState.findIndex((file) => file.id === id);
       const deltedElement = newState.splice(idx, 1);
 
-      if (newState.length === 0) return newState;
+      if (newState.length === 0) return { ...state, openFiles: newState };
 
       if (deltedElement[0].currentTab) {
         if (!(idx - 1 < 0)) {
@@ -45,7 +47,7 @@ const filesReducer = (state, action) => {
         }
       }
 
-      return newState;
+      return { ...state, openFiles: newState };
     }
     default:
       return state;

@@ -42,10 +42,11 @@ export default function FileManagerFileElement({
         node={node}
         style={{
           paddingLeft: `${level * 20}px`,
+          background: filesState.currentFile === node.id ? "var(--hover)" : "",
         }}
         onContextMenu={onContextMenu}
         onClick={() => {
-          if (filesState.some((file) => file.id === node.id)) {
+          if (filesState.openFiles.some((file) => file.id === node.id)) {
             dispatch({
               type: FILES_REDUCER_ACTIONS.changeCurrentTab,
               payload: { id: node.id },

@@ -7,7 +7,7 @@ export default function TabsContainer() {
   console.log(files);
   return (
     <div className="tabs-container">
-      {files.map((file) => (
+      {files.openFiles.map((file) => (
         <OpenTab file={file} key={file.path} />
       ))}
     </div>
