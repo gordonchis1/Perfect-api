@@ -3,9 +3,12 @@ import "./OpenTab.css";
 import { faClose, faFile } from "@fortawesome/free-solid-svg-icons";
 import useFilesContext from "../../../../../Hooks/useFilesContext";
 import { FILES_REDUCER_ACTIONS } from "../../../../../providers/FilesProvider/reducer";
+import useFileManagerContext from "../../../../../Hooks/FileManager/useFileMangerContext";
+import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../../providers/FileManager/reducer";
 
 export default function OpenTab({ file }) {
   const [, dispatch] = useFilesContext();
+  const [, fileManagerDispatch] = useFileManagerContext();
   return (
     <div
       className={`tabs_open-tab ${file.currentTab ? "tabs_current-tab" : ""}`}
@@ -26,6 +29,10 @@ export default function OpenTab({ file }) {
           dispatch({
             type: FILES_REDUCER_ACTIONS.closeFile,
             payload: { id: file.id },
+          });
+          fileManagerDispatch({
+            type: FILEMANAGER_REDUCER_ACTIONS.toggleIsOpen,
+            payload: { path: file.path, type: "file" },
           });
         }}
       >

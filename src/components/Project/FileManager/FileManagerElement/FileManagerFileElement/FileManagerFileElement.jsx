@@ -8,6 +8,7 @@ import FileManagerDraggableElement from "../FileManagerDraggableElement/FileMana
 import useFileManagerContext from "../../../../../Hooks/FileManager/useFileMangerContext";
 import useFilesContext from "../../../../../Hooks/useFilesContext";
 import { FILES_REDUCER_ACTIONS } from "../../../../../providers/FilesProvider/reducer";
+import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../../providers/FileManager/reducer";
 
 export default function FileManagerFileElement({
   node,
@@ -18,7 +19,7 @@ export default function FileManagerFileElement({
   const FilemanagerElementContainerRef = useRef(null);
   const [draggin, setDraggin] = useState(false);
 
-  const [state] = useFileManagerContext();
+  const [state, fileManagerDispatch] = useFileManagerContext();
   const absolutePath = state.getAbsolutePath(node);
   const level = absolutePath.split("/").length;
 
@@ -39,20 +40,33 @@ export default function FileManagerFileElement({
         draggin={draggin}
         setDraggin={setDraggin}
         node={node}
-        style={{ paddingLeft: `${level * 20}px` }}
+        style={{
+          paddingLeft: `${level * 20}px`,
+        }}
         onContextMenu={onContextMenu}
         onClick={() => {
-          if (filesState.some((file) => file.id === node.id)) return;
-          dispatch({
-            type: FILES_REDUCER_ACTIONS.openFile,
-            payload: {
-              path: absolutePath,
-              content: node.content,
-              name: node.name,
-              currentTab: true,
-              id: node.id,
-            },
-          });
+          if (filesState.some((file) => file.id === node.id)) {
+            dispatch({
+              type: FILES_REDUCER_ACTIONS.changeCurrentTab,
+              payload: { id: node.id },
+            });
+          } else {
+            fileManagerDispatch({
+              type: FILEMANAGER_REDUCER_ACTIONS.toggleIsOpen,
+              payload: { path: absolutePath, type: node.type },
+            });
+
+            dispatch({
+              type: FILES_REDUCER_ACTIONS.openFile,
+              payload: {
+                path: absolutePath,
+                content: node.content,
+                name: node.name,
+                currentTab: true,
+                id: node.id,
+              },
+            });
+          }
         }}
       >
         <div className="filemanager-element-content">

@@ -28,7 +28,7 @@ export default function FileManagerDirElement({
     e.stopPropagation();
     dispatch({
       type: FILEMANAGER_REDUCER_ACTIONS.toggleIsOpen,
-      payload: absolutePath,
+      payload: { path: absolutePath, type: node.type },
     });
   };
 

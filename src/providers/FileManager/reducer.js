@@ -23,10 +23,16 @@ const fileManagerReducer = (state, action) => {
       return new VirtualFileSystem(payload);
     }
     case FILEMANAGER_REDUCER_ACTIONS.toggleIsOpen: {
+      const { path, type } = payload;
       if (state instanceof VirtualFileSystem) {
         const clonedVfs = state.clone();
-        const clonedNode = clonedVfs.getDirByPath(payload);
-        clonedNode.toggleIsOpen();
+        if (type === "dir") {
+          const clonedNode = clonedVfs.getDirByPath(path);
+          clonedNode.toggleIsOpen();
+        } else {
+          const clonedNode = clonedVfs.getFileByPath(path);
+          clonedNode.toggleIsOpen();
+        }
         return clonedVfs;
       }
       return state;

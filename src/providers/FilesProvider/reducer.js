@@ -4,6 +4,7 @@ export const FILES_REDUCER_ACTIONS = {
   closeFile: "closeFile",
 };
 
+// TODO: cambiar estado por un objeto con el array de opentabs y currentTab que sea el id de la currentTab
 const filesReducer = (state, action) => {
   const { type, payload } = action;
 
@@ -37,10 +38,10 @@ const filesReducer = (state, action) => {
       if (newState.length === 0) return newState;
 
       if (deltedElement[0].currentTab) {
-        if (!idx - 1 < newState.length) {
+        if (!(idx - 1 < 0)) {
           newState[idx - 1].currentTab = true;
         } else {
-          newState[newState.length - 1].currentTab = true;
+          newState[idx].currentTab = true;
         }
       }
 
