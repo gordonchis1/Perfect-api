@@ -35,7 +35,10 @@ export async function createNewProjectFile(newProject) {
       id: newProject.id,
       name: newProject.name,
       content: new VirtualFileSystem().toJSON(),
-      state: [],
+      state: {
+        openFiles: [],
+        currentFile: "",
+      },
     };
 
     await writeTextFile(projectPath, JSON.stringify(projectTemplate));
