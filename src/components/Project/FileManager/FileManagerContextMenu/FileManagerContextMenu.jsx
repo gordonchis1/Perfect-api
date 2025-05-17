@@ -1,9 +1,6 @@
 import { useRef } from "react";
 import useClickAway from "../../../../Hooks/useClickAway";
 import "./FileManagerContextMenu.css";
-import { Directory, File } from "../../../../utils/ProjectFileObject";
-import UpdateProject from "../../../../utils/UpdateProject";
-import { useParams } from "react-router";
 import FileManagerContextMenuOption from "./FileMangerContextMenuOption/FileManagerContextMenuOption";
 import {
   faFileCirclePlus,

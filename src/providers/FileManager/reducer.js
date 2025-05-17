@@ -3,7 +3,7 @@ import {
   File,
   VirtualFileSystem,
 } from "../../utils/ProjectFileObject";
-import UpdateProject from "../../utils/UpdateProject";
+import { UpdateProjectContent } from "../../utils/UpdateProject";
 
 export const FILEMANAGER_REDUCER_ACTIONS = {
   init: "init",
@@ -43,7 +43,7 @@ const fileManagerReducer = (state, action) => {
         const clonedVfs = state.clone();
         const clonedNode = clonedVfs.getDirByPath(path);
         clonedNode.addChild(new Directory("New directory", true));
-        UpdateProject(clonedVfs, id);
+        UpdateProjectContent(clonedVfs, id);
         return clonedVfs;
       }
       return state;
@@ -59,7 +59,7 @@ const fileManagerReducer = (state, action) => {
           const clonedFile = clonedVfs.getFileByPath(path);
           clonedVfs.remove(clonedFile);
         }
-        UpdateProject(clonedVfs, id);
+        UpdateProjectContent(clonedVfs, id);
         return clonedVfs;
       }
       return state;
@@ -70,7 +70,7 @@ const fileManagerReducer = (state, action) => {
         const clonedVfs = state.clone();
         const clonedNode = clonedVfs.getDirByPath(path);
         clonedNode.addChild(new File("New File"));
-        UpdateProject(clonedVfs, id);
+        UpdateProjectContent(clonedVfs, id);
         return clonedVfs;
       }
       return state;
@@ -86,7 +86,7 @@ const fileManagerReducer = (state, action) => {
           const clonedFile = clonedVfs.getFileByPath(moveElement);
           clonedVfs.move(clonedFile, to);
         }
-        UpdateProject(clonedVfs, id);
+        UpdateProjectContent(clonedVfs, id);
         return clonedVfs;
       }
       return state;
@@ -102,7 +102,7 @@ const fileManagerReducer = (state, action) => {
           const clonedFile = clonedVfs.getFileByPath(path);
           clonedFile.rename(newName);
         }
-        UpdateProject(clonedVfs, id);
+        UpdateProjectContent(clonedVfs, id);
         return clonedVfs;
       }
       return state;

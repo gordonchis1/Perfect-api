@@ -2,7 +2,7 @@ import { readTextFile, writeTextFile } from "@tauri-apps/plugin-fs";
 import { getProjectPathById } from "./getProjects";
 import { updateLastUpdateDate } from "./updateProjectsFile";
 
-export default async function UpdateProject(newContent, id) {
+export async function UpdateProjectContent(newContent, id) {
   if (!id) throw new Error("Invalid Id");
   try {
     const path = await getProjectPathById(id);
