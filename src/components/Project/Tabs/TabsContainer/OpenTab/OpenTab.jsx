@@ -20,7 +20,13 @@ export default function OpenTab({ file }) {
       <span>{file.name}</span>
       <button
         className="tabs_open-tab-close-button"
-        onClick={(event) => event.stopPropagation()}
+        onClick={(event) => {
+          event.stopPropagation();
+          dispatch({
+            type: FILES_REDUCER_ACTIONS.closeFile,
+            payload: { path: file.path },
+          });
+        }}
       >
         <FontAwesomeIcon icon={faClose} />
       </button>

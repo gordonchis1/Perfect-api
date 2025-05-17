@@ -1,5 +1,7 @@
 .tabs_open-tab {
-  width: fit-content;
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: auto;
   color: var(--primary-text-color);
   display: flex;
   align-items: center;
@@ -19,6 +21,7 @@
 
 .tabs_current-tab {
   background: var(--hover) !important;
+  font-weight: 600;
 }
 
 .tabs_open-tab-close-button {

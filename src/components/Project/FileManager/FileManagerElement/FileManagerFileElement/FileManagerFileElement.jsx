@@ -42,7 +42,7 @@ export default function FileManagerFileElement({
         style={{ paddingLeft: `${level * 20}px` }}
         onContextMenu={onContextMenu}
         onClick={() => {
-          if (filesState.some((file) => file.name === node.name)) return;
+          if (filesState.some((file) => file.path === absolutePath)) return;
           dispatch({
             type: FILES_REDUCER_ACTIONS.openFile,
             payload: {

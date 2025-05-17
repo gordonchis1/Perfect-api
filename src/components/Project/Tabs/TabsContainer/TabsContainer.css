@@ -5,4 +5,5 @@
   border-bottom: 1px solid var(--borders);
   display: flex;
   padding-left: 3px;
+  overflow-x: auto;
 }

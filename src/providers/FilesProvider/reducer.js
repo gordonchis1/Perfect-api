@@ -1,6 +1,7 @@
 export const FILES_REDUCER_ACTIONS = {
   openFile: "openFile",
   changeCurrentTab: "changeCurrentTab",
+  closeFile: "closeFile",
 };
 
 const filesReducer = (state, action) => {
@@ -24,6 +25,25 @@ const filesReducer = (state, action) => {
         if (file.path === path) file["currentTab"] = true;
         else file["currentTab"] = false;
       });
+      return newState;
+    }
+    case FILES_REDUCER_ACTIONS.closeFile: {
+      const { path } = payload;
+      const newState = [...state];
+
+      const idx = newState.findIndex((file) => file.path === path);
+      const deltedElement = newState.splice(idx, 1);
+
+      if (newState.length === 0) return newState;
+
+      if (deltedElement[0].currentTab) {
+        if (!idx - 1 < newState.length) {
+          newState[idx - 1].currentTab = true;
+        } else {
+          newState[newState.length - 1].currentTab = true;
+        }
+      }
+
       return newState;
     }
     default:
