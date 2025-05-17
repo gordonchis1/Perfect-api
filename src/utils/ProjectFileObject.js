@@ -1,5 +1,7 @@
 // TODO: poner los directorios primero luego usar orden alfabetico y si es igual el nombre usar el ultimo numero
 
+import { nanoid } from "nanoid";
+
 export class VirtualFileSystem {
   constructor(jsonData = null) {
     if (jsonData) {
@@ -10,9 +12,14 @@ export class VirtualFileSystem {
   }
   _buildFromJson(node) {
     if (node.type === "file") {
-      return new File(node.name, node.content);
+      return new File(node.name, node.content, node.isOpen, node.id);
     } else if (node.type === "dir") {
-      const dir = new Directory(node.name, node.isOpen);
+      const dir = new Directory(
+        node.name,
+        node.isOpen,
+        node.dirConfig,
+        node.id
+      );
       for (const child of node.children || []) {
         dir.addChild(this._buildFromJson(child));
       }
@@ -140,6 +147,7 @@ export class VirtualFileSystem {
       name: node.name,
       type: node.type,
       isOpen: node.name === "/" ? true : node.isOpen,
+      id: node.id,
     };
 
     if (node.type === "file") {
@@ -159,11 +167,11 @@ export class VirtualFileSystem {
 }
 
 export class FSNode {
-  constructor(name, type, dirConfig = {}, isOpen = false) {
+  constructor(name, type, isOpen = false, id) {
     this.name = name;
     this.type = type;
-    this.dirConfig = dirConfig;
     this.isOpen = isOpen;
+    this.id = id;
   }
 
   rename(newName) {
@@ -178,10 +186,10 @@ export class FSNode {
 }
 
 export class Directory extends FSNode {
-  constructor(name, isOpen = false) {
-    super(name, "dir");
+  constructor(name, isOpen = false, dirConfig = {}, id = nanoid()) {
+    super(name, "dir", isOpen, id);
+    this.dirConfig = dirConfig;
     this.children = [];
-    this.isOpen = isOpen;
   }
   getParentNode(vfs, node) {
     if (!(vfs instanceof VirtualFileSystem))
@@ -232,9 +240,8 @@ export class Directory extends FSNode {
 }
 
 export class File extends FSNode {
-  constructor(name, content = "", isOpen = false) {
-    super(name, "file");
-    this.isOpen = isOpen;
+  constructor(name, content = "", isOpen = false, id = nanoid()) {
+    super(name, "file", isOpen, id);
     this.content = content;
   }
 }

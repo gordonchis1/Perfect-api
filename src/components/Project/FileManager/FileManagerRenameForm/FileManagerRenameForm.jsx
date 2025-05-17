@@ -1,6 +1,4 @@
-import { useRef } from "react";
-import UpdateProject from "../../../../utils/UpdateProject";
-import { useParams } from "react-router";
+import { useRef, useState } from "react";
 import useClickAway from "../../../../Hooks/useClickAway";
 import { useEffect } from "react";
 import "./FileManagerRenameForm.css";
@@ -15,6 +13,7 @@ export default function FileManagerRenameForm({
 }) {
   const inputRef = useRef(null);
   const [state, dispatch] = useFileManagerContext();
+  const [, fileDispatch] = useFileManagerContext();
   const { id } = useProjectContext();
 
   const absolutePath = state.getAbsolutePath(node);
