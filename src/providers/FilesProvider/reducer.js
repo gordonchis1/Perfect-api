@@ -37,17 +37,21 @@ const filesReducer = (state, action) => {
       const idx = newState.findIndex((file) => file.id === id);
       const deltedElement = newState.splice(idx, 1);
 
-      if (newState.length === 0) return { ...state, openFiles: newState };
+      if (newState.length === 0)
+        return { currentFile: "", openFiles: newState };
 
+      let newCurrentTab = "";
       if (deltedElement[0].currentTab) {
         if (!(idx - 1 < 0)) {
           newState[idx - 1].currentTab = true;
+          newCurrentTab = newState[idx - 1].id;
         } else {
           newState[idx].currentTab = true;
+          newCurrentTab = newState[idx].id;
         }
       }
 
-      return { ...state, openFiles: newState };
+      return { currentFile: newCurrentTab, openFiles: newState };
     }
     default:
       return state;

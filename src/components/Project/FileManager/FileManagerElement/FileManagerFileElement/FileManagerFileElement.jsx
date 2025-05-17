@@ -46,7 +46,9 @@ export default function FileManagerFileElement({
         }}
         onContextMenu={onContextMenu}
         onClick={() => {
+          if (filesState.currentFile === node.id) return;
           if (filesState.openFiles.some((file) => file.id === node.id)) {
+            console.log("hola mundo");
             dispatch({
               type: FILES_REDUCER_ACTIONS.changeCurrentTab,
               payload: { id: node.id },
