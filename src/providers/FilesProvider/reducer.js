@@ -1,13 +1,38 @@
+import { VirtualFileSystem } from "../../utils/ProjectFileObject";
+
 export const FILES_REDUCER_ACTIONS = {
   openFile: "openFile",
   changeCurrentTab: "changeCurrentTab",
   closeFile: "closeFile",
+  init: "init",
 };
 
 const filesReducer = (state, action) => {
   const { type, payload } = action;
 
   switch (type) {
+    case FILES_REDUCER_ACTIONS.init: {
+      const { fileManager, initState } = payload;
+      if (fileManager instanceof VirtualFileSystem) {
+        const newState = { currentFile: initState.currentFile, openFiles: [] };
+
+        initState.openFiles.forEach((fileId) => {
+          const fileFromVfs = fileManager.getNodeById(fileId);
+          const path = fileManager.getAbsolutePath(fileFromVfs);
+
+          newState.openFiles.push({
+            path,
+            content: fileFromVfs.content,
+            name: fileFromVfs.name,
+            currentTab: fileId === newState.currentFile ? true : false,
+            id: fileFromVfs.id,
+          });
+        });
+
+        return newState;
+      }
+      return state;
+    }
     case FILES_REDUCER_ACTIONS.openFile: {
       const { path, content, name, currentTab, id } = payload;
       const newState = [

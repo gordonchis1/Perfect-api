@@ -25,8 +25,8 @@ export default function Project() {
     <>
       {isMounted && (
         <ProjectProvider>
-          <FilesProvider>
-            <FileManagerProvider>
+          <FileManagerProvider>
+            <FilesProvider>
               <div className="project-container" ref={container}>
                 <ProjectHeader />
                 <ResizeContainer
@@ -44,8 +44,8 @@ export default function Project() {
                   </ResizeContainer.RightContainer>
                 </ResizeContainer>
               </div>
-            </FileManagerProvider>
-          </FilesProvider>
+            </FilesProvider>
+          </FileManagerProvider>
         </ProjectProvider>
       )}
     </>

@@ -165,6 +165,18 @@ export class VirtualFileSystem {
 
     return new VirtualFileSystem(json);
   }
+  getNodeById(id, currentNode = this.root) {
+    if (currentNode.id === id) return currentNode;
+
+    if (currentNode.type === "dir") {
+      for (const child of currentNode.children) {
+        const result = this.getNodeById(id, child);
+        if (result) return result;
+      }
+    }
+
+    return null;
+  }
 }
 
 export class FSNode {

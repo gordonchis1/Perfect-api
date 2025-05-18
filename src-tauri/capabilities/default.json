@@ -4,6 +4,8 @@
   "description": "enables the default permissions",
   "windows": ["main"],
   "permissions": [
+    "core:window:allow-destroy",
+    "core:window:allow-close",
     "core:default",
     "fs:allow-document-write",
     "fs:allow-document-read",
