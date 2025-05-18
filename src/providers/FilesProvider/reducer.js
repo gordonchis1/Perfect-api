@@ -5,6 +5,7 @@ export const FILES_REDUCER_ACTIONS = {
   changeCurrentTab: "changeCurrentTab",
   closeFile: "closeFile",
   init: "init",
+  update: "update",
 };
 
 const filesReducer = (state, action) => {
@@ -77,6 +78,36 @@ const filesReducer = (state, action) => {
       }
 
       return { currentFile: newCurrentTab, openFiles: newState };
+    }
+    case FILES_REDUCER_ACTIONS.update: {
+      const { vfs } = payload;
+      const newState = { openFiles: [], currentFile: "" };
+      if (vfs instanceof VirtualFileSystem) {
+        state.openFiles.forEach((file) => {
+          const node = vfs.getNodeById(file.id);
+
+          if (node !== null) {
+            const absolutePath = vfs.getAbsolutePath(node);
+            newState.openFiles.push({
+              path: absolutePath,
+              content: node.content,
+              name: node.name,
+              currentTab: file.currentTab,
+              id: node.id,
+            });
+            if (node.id === state.currentFile) {
+              newState.currentFile = node.id;
+            }
+          }
+        });
+        if (newState.openFiles.length !== 0 && !newState.currentFile) {
+          newState.currentFile =
+            newState.openFiles[newState.openFiles.length - 1].id;
+          newState.openFiles[newState.openFiles.length - 1].currentTab = true;
+        }
+        return newState;
+      }
+      return state;
     }
     default:
       return state;
