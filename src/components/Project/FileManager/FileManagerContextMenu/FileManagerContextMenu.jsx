@@ -12,8 +12,8 @@ import useFileManagerContext from "../../../../Hooks/FileManager/useFileMangerCo
 import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../providers/FileManager/reducer";
 import useProjectContext from "../../../../Hooks/FileManager/useProjectContext";
 
-// TODO agregar el id de el project a un contexto
 // TODO: Agregar una pantalla de confirmacion de remove
+// TODO: open tab when create new file
 export default function FileManagerContextMenu({
   node,
   updateNodeState,

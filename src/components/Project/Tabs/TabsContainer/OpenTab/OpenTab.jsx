@@ -6,6 +6,7 @@ import { FILES_REDUCER_ACTIONS } from "../../../../../providers/FilesProvider/re
 import useFileManagerContext from "../../../../../Hooks/FileManager/useFileMangerContext";
 import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../../providers/FileManager/reducer";
 
+// TODO: add context menu for close rename and delete
 export default function OpenTab({ file }) {
   const [, dispatch] = useFilesContext();
   const [, fileManagerDispatch] = useFileManagerContext();
