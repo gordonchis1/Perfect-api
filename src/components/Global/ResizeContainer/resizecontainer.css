@@ -13,7 +13,6 @@
 
 .rezise-handler {
   user-select: none;
-  height: 100%;
   overflow: hidden;
   width: 2px;
   cursor: e-resize;

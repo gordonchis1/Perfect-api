@@ -27,22 +27,24 @@ export default function Project() {
         <ProjectProvider>
           <FileManagerProvider>
             <FilesProvider>
-              <div className="project-container" ref={container}>
+              <div className="project-wrapper">
                 <ProjectHeader />
-                <ResizeContainer
-                  resizeColor={"var(--borders)"}
-                  defaultWidth={14}
-                  maxWidthOfLeftContainer={14}
-                  minWidthOfLeftContainer={200}
-                  containerWidth={width}
-                >
-                  <ResizeContainer.LeftContainer>
-                    <FileManager />
-                  </ResizeContainer.LeftContainer>
-                  <ResizeContainer.RightContainer>
-                    <TabsContainer />
-                  </ResizeContainer.RightContainer>
-                </ResizeContainer>
+                <div className="project-container" ref={container}>
+                  <ResizeContainer
+                    resizeColor={"var(--borders)"}
+                    defaultWidth={14}
+                    maxWidthOfLeftContainer={14}
+                    minWidthOfLeftContainer={200}
+                    containerWidth={width}
+                  >
+                    <ResizeContainer.LeftContainer>
+                      <FileManager />
+                    </ResizeContainer.LeftContainer>
+                    <ResizeContainer.RightContainer>
+                      <TabsContainer />
+                    </ResizeContainer.RightContainer>
+                  </ResizeContainer>
+                </div>
               </div>
             </FilesProvider>
           </FileManagerProvider>

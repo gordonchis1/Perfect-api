@@ -66,6 +66,7 @@ function ResizeContainer({
         reziseHandler.current.style.left = `${
           leftContainerRef.current.offsetWidth + diff
         }px`;
+        reziseHandler.current.style.height = `${container.current.offsetHeight}px`;
       };
 
       let onResize = () => {
