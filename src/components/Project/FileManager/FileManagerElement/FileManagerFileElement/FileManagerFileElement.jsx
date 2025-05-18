@@ -48,7 +48,6 @@ export default function FileManagerFileElement({
         onClick={() => {
           if (filesState.currentFile === node.id) return;
           if (filesState.openFiles.some((file) => file.id === node.id)) {
-            console.log("hola mundo");
             dispatch({
               type: FILES_REDUCER_ACTIONS.changeCurrentTab,
               payload: { id: node.id },
@@ -73,7 +72,13 @@ export default function FileManagerFileElement({
         }}
       >
         <div className="filemanager-element-content">
-          <FontAwesomeIcon icon={node.isOpen ? faFileSolidIcon : faFile} />
+          <FontAwesomeIcon
+            icon={
+              filesState.openFiles.some((file) => file.id === node.id)
+                ? faFileSolidIcon
+                : faFile
+            }
+          />
           {nodeState?.isRename ? (
             <FileManagerRenameForm
               node={node}
