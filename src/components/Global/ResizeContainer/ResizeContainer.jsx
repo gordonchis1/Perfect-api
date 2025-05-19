@@ -2,7 +2,6 @@ import { cloneElement, forwardRef, useRef } from "react";
 import "./resizecontainer.css";
 import { Children, useEffect } from "react";
 
-// ! Arreglar bug de resize handler
 // TODO: Agregar la opcion de esconder el contenido
 function ResizeContainer({
   children,
@@ -62,11 +61,13 @@ function ResizeContainer({
   useEffect(() => {
     if (leftContainerRef.current) {
       let changeHolderPositonOnResize = () => {
-        const diff = container.current.getBoundingClientRect().left;
-        reziseHandler.current.style.left = `${
-          leftContainerRef.current.offsetWidth + diff
-        }px`;
-        reziseHandler.current.style.height = `${container.current.offsetHeight}px`;
+        if (container.current) {
+          const diff = container.current.getBoundingClientRect().left;
+          reziseHandler.current.style.left = `${
+            leftContainerRef.current.offsetWidth + diff
+          }px`;
+          reziseHandler.current.style.height = `${container.current.offsetHeight}px`;
+        }
       };
 
       let onResize = () => {
