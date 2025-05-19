@@ -42,7 +42,7 @@ export default function OpenTab({ file }) {
       }}
     >
       <OpenTabContextMenu
-        id={file.id}
+        file={file}
         contextMenu={contextMenu}
         closeContextMenu={closeContextMenu}
       />
