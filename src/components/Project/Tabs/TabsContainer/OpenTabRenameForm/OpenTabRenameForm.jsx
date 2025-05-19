@@ -12,6 +12,7 @@ export default function OpenTabRenameForm({ setIsRename, isRename, file }) {
   const handleChange = (event) => {
     event.preventDefault();
     setIsRename(false);
+    if (event.target.value === "" || event.target.value === file.name) return;
     if (fileManagerState) {
       const node = fileManagerState.getNodeById(file.id);
       if (node) {

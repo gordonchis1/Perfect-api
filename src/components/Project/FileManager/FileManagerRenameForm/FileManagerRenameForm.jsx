@@ -36,7 +36,6 @@ export default function FileManagerRenameForm({
           id,
         },
       });
-      console.log(state);
     }
   };
 
