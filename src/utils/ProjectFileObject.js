@@ -253,7 +253,7 @@ export class Directory extends FSNode {
 }
 
 export class File extends FSNode {
-  constructor(name, content = "", isOpen = false, id = nanoid()) {
+  constructor(name, content = {}, isOpen = false, id = nanoid()) {
     super(name, "file", isOpen, id);
     this.content = content;
   }
