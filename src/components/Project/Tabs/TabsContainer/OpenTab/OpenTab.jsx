@@ -5,14 +5,34 @@ import useFilesContext from "../../../../../Hooks/useFilesContext";
 import { FILES_REDUCER_ACTIONS } from "../../../../../providers/FilesProvider/reducer";
 import useFileManagerContext from "../../../../../Hooks/FileManager/useFileMangerContext";
 import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../../providers/FileManager/reducer";
+import { useState } from "react";
+import OpenTabContextMenu from "../../OpenTabsContextMenu/OpenTabsContextMenu";
+
+const defaultContextMenuState = {
+  x: 0,
+  y: 0,
+  show: false,
+};
 
 // TODO: add context menu for close rename and delete
 export default function OpenTab({ file }) {
   const [, dispatch] = useFilesContext();
   const [, fileManagerDispatch] = useFileManagerContext();
+  const [contextMenu, setContextMenu] = useState(defaultContextMenuState);
+
+  const openContextMenu = (event) => {
+    event.preventDefault();
+    setContextMenu({ x: event.clientX, y: event.clientY, show: true });
+  };
+
+  const closeContextMenu = () => {
+    setContextMenu(defaultContextMenuState);
+  };
+
   return (
     <div
       className={`tabs_open-tab ${file.currentTab ? "tabs_current-tab" : ""}`}
+      onContextMenu={openContextMenu}
       onClick={() => {
         if (file.currentTab) return;
         dispatch({
@@ -21,6 +41,11 @@ export default function OpenTab({ file }) {
         });
       }}
     >
+      <OpenTabContextMenu
+        id={file.id}
+        contextMenu={contextMenu}
+        closeContextMenu={closeContextMenu}
+      />
       <FontAwesomeIcon icon={faFile} />
       <span>{file.name}</span>
       <button

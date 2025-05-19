@@ -1,0 +1,15 @@
+.open-tab-contextmenu-option {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--primary-font-color);
+  font-size: 18px;
+  padding: 10px;
+  border-radius: 4px;
+  gap: 16px;
+  display: flex;
+}
+
+.open-tab-contextmenu-option:hover {
+  background: var(--hover);
+}
