@@ -8,6 +8,7 @@ import useWidthObserver from "../../Hooks/useWidthObserver";
 import FileManagerProvider from "../../providers/FileManager/FileManagerProvider";
 import ProjectProvider from "../../providers/Project/ProjectProvider";
 import FilesProvider from "../../providers/FilesProvider/FilesProvider";
+import MainContentTab from "./MainContentTab/MainContentTab";
 
 export default function Project() {
   const container = useRef(null);
@@ -42,6 +43,7 @@ export default function Project() {
                     </ResizeContainer.LeftContainer>
                     <ResizeContainer.RightContainer>
                       <TabsContainer />
+                      <MainContentTab />
                     </ResizeContainer.RightContainer>
                   </ResizeContainer>
                 </div>
