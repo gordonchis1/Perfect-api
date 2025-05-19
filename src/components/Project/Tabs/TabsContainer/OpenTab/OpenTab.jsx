@@ -7,6 +7,7 @@ import useFileManagerContext from "../../../../../Hooks/FileManager/useFileMange
 import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../../providers/FileManager/reducer";
 import { useState } from "react";
 import OpenTabContextMenu from "../../OpenTabsContextMenu/OpenTabsContextMenu";
+import OpenTabRenameForm from "../OpenTabRenameForm/OpenTabRenameForm";
 
 const defaultContextMenuState = {
   x: 0,
@@ -19,6 +20,7 @@ export default function OpenTab({ file }) {
   const [, dispatch] = useFilesContext();
   const [, fileManagerDispatch] = useFileManagerContext();
   const [contextMenu, setContextMenu] = useState(defaultContextMenuState);
+  const [isRename, setIsRename] = useState(false);
 
   const openContextMenu = (event) => {
     event.preventDefault();
@@ -45,9 +47,18 @@ export default function OpenTab({ file }) {
         file={file}
         contextMenu={contextMenu}
         closeContextMenu={closeContextMenu}
+        setIsRename={setIsRename}
       />
       <FontAwesomeIcon icon={faFile} />
-      <span>{file.name}</span>
+      {isRename ? (
+        <OpenTabRenameForm
+          setIsRename={setIsRename}
+          isRename={isRename}
+          file={file}
+        />
+      ) : (
+        <span>{file.name}</span>
+      )}
       <button
         className="tabs_open-tab-close-button"
         onClick={(event) => {

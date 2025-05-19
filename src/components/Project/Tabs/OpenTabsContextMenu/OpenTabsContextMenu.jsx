@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import useClickAway from "../../../../Hooks/useClickAway";
 import "./OpenTabsContextMenu.css";
-import { faClose } from "@fortawesome/free-solid-svg-icons";
+import { faClose, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import useFilesContext from "../../../../Hooks/useFilesContext";
 import { FILES_REDUCER_ACTIONS } from "../../../../providers/FilesProvider/reducer";
 import OpenTabsContextMenuOption from "./OpenTabsContextMenuOption/OpenTabsContextMenuOption";
@@ -12,6 +12,7 @@ export default function OpenTabContextMenu({
   file,
   contextMenu,
   closeContextMenu,
+  setIsRename,
 }) {
   const containerRef = useRef(null);
   const [, dispatchFile] = useFilesContext();
@@ -31,6 +32,11 @@ export default function OpenTabContextMenu({
       payload: { path: file.path, type: "file" },
     });
   };
+  const handleRename = (event) => {
+    event.stopPropagation();
+    setIsRename(true);
+    closeContextMenu();
+  };
 
   return (
     <>
@@ -40,6 +46,11 @@ export default function OpenTabContextMenu({
           ref={containerRef}
           style={{ left: `${contextMenu.x}px`, top: `${contextMenu.y}px` }}
         >
+          <OpenTabsContextMenuOption
+            icon={faPenToSquare}
+            text={"Renombrar"}
+            onClick={handleRename}
+          />
           <OpenTabsContextMenuOption
             icon={faClose}
             onClick={handleCloseFile}
