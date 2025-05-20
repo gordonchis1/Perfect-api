@@ -35,25 +35,23 @@ export default function MainContentTab() {
   }, [fileManagerContext, filesContext]);
 
   return (
-    <>
+    <div className="main-content-tab_container" ref={container}>
       {currentNode && (
-        <div className="main-content-tab_container" ref={container}>
-          <ResizeContainer
-            resizeColor={"var(--borders)"}
-            defaultWidth={60}
-            containerWidth={width}
-            minWidthOfLeftContainer={800}
-            maxWidthOfLeftContainer={70}
-          >
-            <ResizeContainer.LeftContainer>
-              <h1>{currentNode.name}</h1>
-            </ResizeContainer.LeftContainer>
-            <ResizeContainer.RightContainer>
-              <h1>{currentNode.name}</h1>
-            </ResizeContainer.RightContainer>
-          </ResizeContainer>
-        </div>
+        <ResizeContainer
+          resizeColor={"var(--borders)"}
+          defaultWidth={60}
+          containerWidth={width}
+          minWidthOfLeftContainer={800}
+          maxWidthOfLeftContainer={70}
+        >
+          <ResizeContainer.LeftContainer>
+            <h1>{currentNode.name}</h1>
+          </ResizeContainer.LeftContainer>
+          <ResizeContainer.RightContainer>
+            <h1>{currentNode.name}</h1>
+          </ResizeContainer.RightContainer>
+        </ResizeContainer>
       )}
-    </>
+    </div>
   );
 }

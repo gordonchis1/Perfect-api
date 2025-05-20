@@ -42,8 +42,10 @@ export default function Project() {
                       <FileManager />
                     </ResizeContainer.LeftContainer>
                     <ResizeContainer.RightContainer>
-                      <TabsContainer />
-                      <MainContentTab />
+                      <div className="workspace-container">
+                        <TabsContainer />
+                        <MainContentTab />
+                      </div>
                     </ResizeContainer.RightContainer>
                   </ResizeContainer>
                 </div>

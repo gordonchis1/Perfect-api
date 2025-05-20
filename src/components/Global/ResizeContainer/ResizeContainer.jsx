@@ -1,6 +1,7 @@
 import { cloneElement, forwardRef, useRef } from "react";
 import "./resizecontainer.css";
 import { Children, useEffect } from "react";
+import { width } from "@fortawesome/free-regular-svg-icons/faAddressBook";
 
 // TODO: Agregar la opcion de esconder el contenido
 function ResizeContainer({
@@ -22,25 +23,31 @@ function ResizeContainer({
 
     const drag = (event) => {
       const diff = container.current.getBoundingClientRect().left;
-      const diffPct = (diff / window.innerWidth) * 100;
 
-      const leftPosition = (100 * event.pageX) / containerWidth;
+      const leftPosition = (100 * event.pageX) / window.innerWidth;
       const rightPosition = 100 - leftPosition;
       const maxLeft = (containerWidth * maxWidthOfLeftContainer) / 100;
 
-      handler.style.left = `min(max(${minWidthOfLeftContainer + diff}px, ${
-        leftPosition + diffPct
-      }%), ${maxLeft + diff}px)`;
+      const relativeToContainerLeftPosition =
+        (100 * (event.pageX - diff)) / containerWidth;
 
-      containerDiv.style.gridTemplateColumns = `minmax(${minWidthOfLeftContainer}px, ${leftPosition}%) minmax(${
+      const relativeToContainerRigthPosition =
+        100 - relativeToContainerLeftPosition;
+
+      handler.style.left = `min(max(${
+        minWidthOfLeftContainer + diff
+      }px, ${leftPosition}%), ${maxLeft + diff}px)`;
+
+      containerDiv.style.gridTemplateColumns = `minmax(${minWidthOfLeftContainer}px, ${relativeToContainerLeftPosition}%) minmax(${
         100 - maxWidthOfLeftContainer
-      }%,${rightPosition}%)`;
+      }%,${relativeToContainerRigthPosition}%)`;
     };
 
     const stopDrag = () => {
       document.removeEventListener("mousemove", drag);
       document.removeEventListener("mouseup", stopDrag);
-      const diff = window.innerWidth - containerWidth;
+      const diff = container.current.getBoundingClientRect().left;
+
       reziseHandler.current.style.left = `${
         leftContainerRef.current.offsetWidth + diff
       }px`;
@@ -126,7 +133,11 @@ function ResizeContainer({
 const RightContainer = forwardRef(({ children, className }, ref) => {
   return (
     <div
-      style={{ width: "100%", height: "100%", maxHeight: "100%" }}
+      style={{
+        width: "100%",
+        height: "100%",
+        maxHeight: "100%",
+      }}
       ref={ref}
       className={className}
     >
