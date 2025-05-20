@@ -5,10 +5,8 @@ import { useEffect, useRef, useState } from "react";
 import FileManager from "./FileManager/FileManager";
 import ResizeContainer from "../Global/ResizeContainer/ResizeContainer";
 import useWidthObserver from "../../Hooks/useWidthObserver";
-import FileManagerProvider from "../../providers/FileManager/FileManagerProvider";
-import ProjectProvider from "../../providers/Project/ProjectProvider";
-import FilesProvider from "../../providers/FilesProvider/FilesProvider";
-import MainContentTab from "./MainContentTab/MainContentTab";
+import ProjectProviders from "./ProjectProviders";
+import WorkspaceContainer from "./Workspace/WorkspaceContainer";
 
 export default function Project() {
   const container = useRef(null);
@@ -25,34 +23,30 @@ export default function Project() {
   return (
     <>
       {isMounted && (
-        <ProjectProvider>
-          <FileManagerProvider>
-            <FilesProvider>
-              <div className="project-wrapper">
-                <ProjectHeader />
-                <div className="project-container" ref={container}>
-                  <ResizeContainer
-                    resizeColor={"var(--borders)"}
-                    defaultWidth={14}
-                    maxWidthOfLeftContainer={14}
-                    minWidthOfLeftContainer={200}
-                    containerWidth={width}
-                  >
-                    <ResizeContainer.LeftContainer>
-                      <FileManager />
-                    </ResizeContainer.LeftContainer>
-                    <ResizeContainer.RightContainer>
-                      <div className="workspace-container">
-                        <TabsContainer />
-                        <MainContentTab />
-                      </div>
-                    </ResizeContainer.RightContainer>
-                  </ResizeContainer>
-                </div>
-              </div>
-            </FilesProvider>
-          </FileManagerProvider>
-        </ProjectProvider>
+        <ProjectProviders>
+          <div className="project-wrapper">
+            <ProjectHeader />
+            <div className="project-container" ref={container}>
+              <ResizeContainer
+                resizeColor={"var(--borders)"}
+                defaultWidth={14}
+                maxWidthOfLeftContainer={14}
+                minWidthOfLeftContainer={200}
+                containerWidth={width}
+              >
+                <ResizeContainer.LeftContainer>
+                  <FileManager />
+                </ResizeContainer.LeftContainer>
+                <ResizeContainer.RightContainer>
+                  <div className="workspace-container">
+                    <TabsContainer />
+                    <WorkspaceContainer />
+                  </div>
+                </ResizeContainer.RightContainer>
+              </ResizeContainer>
+            </div>
+          </div>
+        </ProjectProviders>
       )}
     </>
   );

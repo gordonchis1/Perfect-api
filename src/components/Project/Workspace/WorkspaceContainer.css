@@ -1,6 +1,5 @@
-.main-content-tab_container {
+.workspace_container {
   width: 100%;
   color: var(--primary-text-color);
-  background-color: red;
   flex: 1;
 }

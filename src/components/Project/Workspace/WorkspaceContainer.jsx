@@ -1,13 +1,15 @@
 import { useEffect, useState, useRef } from "react";
 import useFileManagerContext from "../../../Hooks/FileManager/useFileMangerContext";
 import useFilesContext from "../../../Hooks/useFilesContext";
-import "./MainContentTab.css";
+import "./WorkspaceContainer.css";
 import { VirtualFileSystem } from "../../../utils/ProjectFileObject";
 import ResizeContainer from "../../Global/ResizeContainer/ResizeContainer";
 import useWidthObserver from "../../../Hooks/useWidthObserver";
+import WorkspaceInputContainer from "./WorkspaceInput/WorkspaceInputContainer";
 
 // TODO: remove content from files context use filemanger content insted
-export default function MainContentTab() {
+// Todo: cambiar el estado de current node para un estado global solo para workspace
+export default function WorkspaceContainer() {
   const [filesContext] = useFilesContext();
   const [fileManagerContext] = useFileManagerContext();
   const [currentNode, setCurrentNode] = useState(undefined);
@@ -35,17 +37,17 @@ export default function MainContentTab() {
   }, [fileManagerContext, filesContext]);
 
   return (
-    <div className="main-content-tab_container" ref={container}>
+    <div className="workspace_container" ref={container}>
       {currentNode && (
         <ResizeContainer
           resizeColor={"var(--borders)"}
           defaultWidth={60}
           containerWidth={width}
           minWidthOfLeftContainer={800}
-          maxWidthOfLeftContainer={70}
+          maxWidthOfLeftContainer={80}
         >
           <ResizeContainer.LeftContainer>
-            <h1>{currentNode.name}</h1>
+            <WorkspaceInputContainer currentNode={currentNode} />
           </ResizeContainer.LeftContainer>
           <ResizeContainer.RightContainer>
             <h1>{currentNode.name}</h1>
