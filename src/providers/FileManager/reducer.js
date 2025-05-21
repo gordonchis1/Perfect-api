@@ -13,6 +13,7 @@ export const FILEMANAGER_REDUCER_ACTIONS = {
   move: "move",
   addFile: "addFile",
   rename: "rename",
+  updateContent: "updateContent",
 };
 
 const fileManagerReducer = (state, action) => {
@@ -103,6 +104,20 @@ const fileManagerReducer = (state, action) => {
           clonedFile.rename(newName);
         }
         UpdateProjectContent(clonedVfs, id);
+        return clonedVfs;
+      }
+      return state;
+    }
+    case FILEMANAGER_REDUCER_ACTIONS.updateContent: {
+      const { newContent, nodeId, projectId } = payload;
+
+      if (state instanceof VirtualFileSystem) {
+        const clonedVfs = state.clone();
+        const node = clonedVfs.getNodeById(nodeId);
+        node.updateContent(newContent);
+
+        UpdateProjectContent(clonedVfs, projectId);
+
         return clonedVfs;
       }
       return state;

@@ -4,11 +4,18 @@ import { workspaceTypeInput } from "../../../../../utils/constants/WorkspaceInpu
 import "./WorkSpaceInputFormUrlContainer.css";
 import { useRef, useState } from "react";
 import useClickAway from "../../../../../Hooks/useClickAway";
+import useFilemanagerContenxt from "../../../../../Hooks/FileManager/useFileMangerContext";
+import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../../providers/FileManager/reducer";
+import useFilesContext from "../../../../../Hooks/useFilesContext";
+import useProjectContext from "../../../../../Hooks/FileManager/useProjectContext";
 
 export default function WorkSpaceInputUrlContainer({ content }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [, fileManagerDispatch] = useFilemanagerContenxt();
+  const [filesState] = useFilesContext();
   const optionsContainerRef = useRef(null);
   useClickAway(optionsContainerRef, () => setIsOpen(false));
+  const { id } = useProjectContext();
 
   const handleOpenOptions = () => {
     setIsOpen(!isOpen);
@@ -17,6 +24,15 @@ export default function WorkSpaceInputUrlContainer({ content }) {
   const indexOfCurrentType = workspaceTypeInput.findIndex(
     ({ type }) => content.type === type
   );
+
+  const updateContent = (type) => {
+    const newContent = content;
+    newContent.type = type;
+    fileManagerDispatch({
+      type: FILEMANAGER_REDUCER_ACTIONS.updateContent,
+      payload: { nodeId: filesState.currentFile, newContent, projectId: id },
+    });
+  };
 
   return (
     <div className="workspace-input_form-url" ref={optionsContainerRef}>
@@ -38,13 +54,14 @@ export default function WorkSpaceInputUrlContainer({ content }) {
         <div className="workspace-input-form-url_types-options-container">
           {workspaceTypeInput.map((option) => {
             return (
-              <div
+              <button
                 className="workspace-input-form-url_types-option"
                 key={option.type}
                 style={{ color: option.color }}
+                onClick={() => updateContent(option.type)}
               >
-                {option.type}
-              </div>
+                <span>{option.type}</span>
+              </button>
             );
           })}
         </div>

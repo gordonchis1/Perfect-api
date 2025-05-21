@@ -263,4 +263,8 @@ export class File extends FSNode {
     super(name, "file", isOpen, id);
     this.content = content;
   }
+  updateContent(newContent) {
+    this.content = newContent;
+    return newContent;
+  }
 }
