@@ -1,11 +1,12 @@
 import "./WorkspaceInputContainer.css";
+import WorkSpaceInputUrlContainer from "./WorkSpaceInputFormContainer/WorkSpaceInputFormUrlContainer";
 
 export default function WorkspaceInputContainer({ currentNode }) {
+  const { content } = currentNode;
+
   return (
     <div className="workspace-input_container">
-      <div className="workspace-input_form-url">
-        <></>
-      </div>
+      <WorkSpaceInputUrlContainer content={content} />
     </div>
   );
 }

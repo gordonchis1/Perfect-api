@@ -1,5 +1,4 @@
-.workspace-input_form-url {
-  height: 60px;
+.workspace-input_container {
   width: 100%;
-  border-bottom: 1px solid var(--borders);
+  height: 100%;
 }
