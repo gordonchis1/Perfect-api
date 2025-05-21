@@ -8,8 +8,9 @@ import { workspaceTypeInput } from "../../../../../../utils/constants/WorkspaceI
 import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../../../providers/FileManager/reducer";
 import useClickAway from "../../../../../../Hooks/useClickAway";
 import "./WorkSpaceInputFormTypeSelector.css";
+import useWorkSpaceContentContext from "../../../../../../Hooks/WorkSpace/useWorkSpaceContentContext";
 
-export default function WorkSpaceInputFormTypeSelector({ content }) {
+export default function WorkSpaceInputFormTypeSelector() {
   const { id } = useProjectContext();
   const [filesState] = useFilesContext();
   const [isOpen, setIsOpen] = useState(false);
@@ -18,6 +19,7 @@ export default function WorkSpaceInputFormTypeSelector({ content }) {
   useClickAway(InputFormSelectorRef, () => {
     setIsOpen(false);
   });
+  const [content] = useWorkSpaceContentContext();
 
   const handleOpenOptions = () => {
     setIsOpen(!isOpen);
@@ -28,7 +30,10 @@ export default function WorkSpaceInputFormTypeSelector({ content }) {
   );
 
   const updateContent = (type) => {
-    if (content.type === type) return;
+    if (content.type === type) {
+      setIsOpen(false);
+      return;
+    }
     const newContent = content;
     newContent.type = type;
     fileManagerDispatch({

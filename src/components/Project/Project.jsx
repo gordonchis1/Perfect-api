@@ -7,6 +7,7 @@ import ResizeContainer from "../Global/ResizeContainer/ResizeContainer";
 import useWidthObserver from "../../Hooks/useWidthObserver";
 import ProjectProviders from "./ProjectProviders";
 import WorkspaceContainer from "./Workspace/WorkspaceContainer";
+import WorkSpaceContentProvider from "../../providers/WorkSpaceContent/WorkSpaceContentProvider";
 
 export default function Project() {
   const container = useRef(null);
@@ -38,10 +39,12 @@ export default function Project() {
                   <FileManager />
                 </ResizeContainer.LeftContainer>
                 <ResizeContainer.RightContainer>
-                  <div className="workspace-container">
-                    <TabsContainer />
-                    <WorkspaceContainer />
-                  </div>
+                  <WorkSpaceContentProvider>
+                    <div className="workspace-container">
+                      <TabsContainer />
+                      <WorkspaceContainer />
+                    </div>
+                  </WorkSpaceContentProvider>
                 </ResizeContainer.RightContainer>
               </ResizeContainer>
             </div>

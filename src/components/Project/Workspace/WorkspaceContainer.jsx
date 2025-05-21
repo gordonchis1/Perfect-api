@@ -1,18 +1,15 @@
 import { useEffect, useState, useRef } from "react";
-import useFileManagerContext from "../../../Hooks/FileManager/useFileMangerContext";
 import useFilesContext from "../../../Hooks/useFilesContext";
 import "./WorkspaceContainer.css";
-import { VirtualFileSystem } from "../../../utils/ProjectFileObject";
 import ResizeContainer from "../../Global/ResizeContainer/ResizeContainer";
 import useWidthObserver from "../../../Hooks/useWidthObserver";
 import WorkspaceInputContainer from "./WorkspaceInput/WorkspaceInputContainer";
+import WorkSpaceContentProvider from "../../../providers/WorkSpaceContent/WorkSpaceContentProvider";
+import useWorkSpaceContentContext from "../../../Hooks/WorkSpace/useWorkSpaceContentContext";
 
 // TODO: remove content from files context use filemanger content insted
-// Todo: cambiar el estado de current node para un estado global solo para workspace
 export default function WorkspaceContainer() {
-  const [filesContext] = useFilesContext();
-  const [fileManagerContext] = useFileManagerContext();
-  const [currentNode, setCurrentNode] = useState(undefined);
+  const [content] = useWorkSpaceContentContext();
 
   const container = useRef(null);
   const [isMounted, setIsMounted] = useState(false);
@@ -25,20 +22,9 @@ export default function WorkspaceContainer() {
     ref: isMounted ? container : { current: null },
   });
 
-  useEffect(() => {
-    if (
-      fileManagerContext &&
-      fileManagerContext instanceof VirtualFileSystem &&
-      filesContext.currentFile
-    ) {
-      const node = fileManagerContext.getNodeById(filesContext.currentFile);
-      setCurrentNode(node);
-    }
-  }, [fileManagerContext, filesContext]);
-
   return (
     <div className="workspace_container" ref={container}>
-      {currentNode && (
+      {content && (
         <ResizeContainer
           resizeColor={"var(--borders)"}
           defaultWidth={60}
@@ -47,11 +33,9 @@ export default function WorkspaceContainer() {
           maxWidthOfLeftContainer={80}
         >
           <ResizeContainer.LeftContainer>
-            <WorkspaceInputContainer currentNode={currentNode} />
+            <WorkspaceInputContainer />
           </ResizeContainer.LeftContainer>
-          <ResizeContainer.RightContainer>
-            <h1>{currentNode.name}</h1>
-          </ResizeContainer.RightContainer>
+          <ResizeContainer.RightContainer></ResizeContainer.RightContainer>
         </ResizeContainer>
       )}
     </div>
