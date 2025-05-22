@@ -21,7 +21,11 @@ export default function WorkSpaceInputFormUrlButtonRun() {
         projectId: id,
       },
     });
+
+    const start = performance.now();
     const response = await fetch(content.url, { method: content.type });
+    const end = performance.now();
+    console.log(`Tiempo de respuesta: ${end - start} ms`);
     const parseResponse = await response.json();
   };
 
