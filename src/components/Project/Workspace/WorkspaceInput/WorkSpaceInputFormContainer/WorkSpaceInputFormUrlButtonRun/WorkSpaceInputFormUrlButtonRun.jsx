@@ -1,0 +1,33 @@
+import useWorkSpaceContentContext from "../../../../../../Hooks/WorkSpace/useWorkSpaceContentContext";
+import useFilesContext from "../../../../../../Hooks/useFilesContext";
+import useProjectContext from "../../../../../../Hooks/FileManager/useProjectContext";
+import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../../../providers/FileManager/reducer";
+import useFileManagerContext from "../../../../../../Hooks/FileManager/useFileMangerContext";
+
+export default function WorkSpaceInputFormUrlButtonRun() {
+  const [content] = useWorkSpaceContentContext();
+  const [filesState] = useFilesContext();
+  const [, dispatchFileManagerState] = useFileManagerContext();
+  const { id } = useProjectContext();
+
+  const handleRun = async () => {
+    if (!content.url) return;
+
+    dispatchFileManagerState({
+      type: FILEMANAGER_REDUCER_ACTIONS.updateContent,
+      payload: {
+        newContent: content,
+        nodeId: filesState.currentFile,
+        projectId: id,
+      },
+    });
+    const response = await fetch(content.url, { method: content.type });
+    const parseResponse = await response.json();
+  };
+
+  return (
+    <button className="workspace-input-form_run-button" onClick={handleRun}>
+      Run
+    </button>
+  );
+}

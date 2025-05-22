@@ -18,11 +18,17 @@ export default function WorkSpaceContentProvider({ children }) {
       filesContext.currentFile
     ) {
       const node = fileManagerContext.getNodeById(filesContext.currentFile);
-      const content = node.content;
-
-      dispatch({ type: WORKSPACE_CONTENT_TYPES.init, payload: { content } });
+      if (node) {
+        const content = node.content;
+        dispatch({ type: WORKSPACE_CONTENT_TYPES.init, payload: { content } });
+      }
+    } else {
+      dispatch({
+        type: WORKSPACE_CONTENT_TYPES.init,
+        payload: { content: undefined },
+      });
     }
-  }, [fileManagerContext, filesContext]);
+  }, [fileManagerContext, filesContext.currentFile]);
 
   return (
     <WorkSpaceContentContext.Provider value={[state, dispatch]}>

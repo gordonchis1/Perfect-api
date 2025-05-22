@@ -15,7 +15,6 @@ const defaultContextMenuState = {
   show: false,
 };
 
-// TODO: add context menu for close rename and delete
 export default function OpenTab({ file }) {
   const [, dispatch] = useFilesContext();
   const [, fileManagerDispatch] = useFileManagerContext();

@@ -1,10 +1,8 @@
 import { useEffect, useState, useRef } from "react";
-import useFilesContext from "../../../Hooks/useFilesContext";
 import "./WorkspaceContainer.css";
 import ResizeContainer from "../../Global/ResizeContainer/ResizeContainer";
 import useWidthObserver from "../../../Hooks/useWidthObserver";
 import WorkspaceInputContainer from "./WorkspaceInput/WorkspaceInputContainer";
-import WorkSpaceContentProvider from "../../../providers/WorkSpaceContent/WorkSpaceContentProvider";
 import useWorkSpaceContentContext from "../../../Hooks/WorkSpace/useWorkSpaceContentContext";
 
 // TODO: remove content from files context use filemanger content insted

@@ -1,7 +1,6 @@
 import { cloneElement, forwardRef, useRef } from "react";
 import "./resizecontainer.css";
 import { Children, useEffect } from "react";
-import { width } from "@fortawesome/free-regular-svg-icons/faAddressBook";
 
 // TODO: Agregar la opcion de esconder el contenido
 function ResizeContainer({

@@ -14,6 +14,7 @@ export const FILEMANAGER_REDUCER_ACTIONS = {
   addFile: "addFile",
   rename: "rename",
   updateContent: "updateContent",
+  updateContentWithoutSaving: "updateContentWithoutSaving",
 };
 
 const fileManagerReducer = (state, action) => {
@@ -118,6 +119,18 @@ const fileManagerReducer = (state, action) => {
 
         UpdateProjectContent(clonedVfs, projectId);
 
+        return clonedVfs;
+      }
+      return state;
+    }
+    case FILEMANAGER_REDUCER_ACTIONS.updateContentWithoutSaving: {
+      const { newContent, nodeId } = payload;
+
+      if (state instanceof VirtualFileSystem) {
+        const clonedVfs = state.clone();
+        const node = clonedVfs.getNodeById(nodeId);
+
+        node.updateContent(newContent);
         return clonedVfs;
       }
       return state;

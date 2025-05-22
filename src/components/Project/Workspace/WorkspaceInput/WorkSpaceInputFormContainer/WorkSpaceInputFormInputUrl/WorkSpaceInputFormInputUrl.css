@@ -1,0 +1,14 @@
+.workspace-input-form_url-input {
+  flex: 1;
+  background: transparent;
+  outline: none;
+  padding: 0 20px;
+  font-size: 20px;
+  color: var(--primary-text-color);
+  border: none;
+  transition: border 0.2s ease;
+}
+
+.workspace-input-form_url-input:focus {
+  border: 2px solid blue;
+}
