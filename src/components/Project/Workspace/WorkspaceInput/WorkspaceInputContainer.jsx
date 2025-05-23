@@ -1,10 +1,11 @@
 import "./WorkspaceInputContainer.css";
 import WorkSpaceInputUrlContainer from "./WorkSpaceInputFormContainer/WorkSpaceInputFormUrlContainer";
 import MultipleContainer from "../../../Global/MultipleContainer/MultipleContainer";
+import WorkSpaceInputUrlFormerContainer from "./WorkSpaceInputUrlFormer/WorkSpaceInputUrlFormerContainer";
 
 const multipleContainerContainers = {
   URL: {
-    component: <h1>Hola mundo url</h1>,
+    component: <WorkSpaceInputUrlFormerContainer />,
   },
   body: {
     component: <h1>Hola mundo body</h1>,

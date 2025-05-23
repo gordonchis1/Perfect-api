@@ -32,7 +32,9 @@ export default function MultipleContainer({
           );
         })}
       </div>
-      {objectContainers[container].component}
+      <div className="multiple-container_body-container">
+        {objectContainers[container].component}
+      </div>
     </div>
   );
 }
