@@ -9,11 +9,11 @@ export default function WorkSpaceInputFormInputUrl() {
   const [content] = useWorkSpaceContentContext();
   const [filesState] = useFilesContext();
   const [, dispatchFileManagerState] = useFileManagerContext();
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState(content.url.inputUrl);
   const [isValidUrl, setIsValidUrl] = useState(true);
 
   useEffect(() => {
-    if (filesState.currentFile && content.url.inputUrl !== inputValue) {
+    if (filesState.currentFile) {
       setInputValue(content.url.inputUrl || "");
     }
   }, [filesState, content.url.inputUrl]);
@@ -24,6 +24,7 @@ export default function WorkSpaceInputFormInputUrl() {
 
   useEffect(() => {
     if (!filesState.currentFile) return;
+    if (inputValue === undefined) return;
 
     let newParseUrl = inputValue;
 

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { faCheck, faCopy } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useWorkSpaceContentContext from "../../../../../../Hooks/WorkSpace/useWorkSpaceContentContext";
@@ -7,6 +7,7 @@ import "./WorkSpaceInputUrlFormerUrlPreview.css";
 export default function WorkSpaceInputUrlFormerUrlPreview() {
   const [isCopied, setIsCopied] = useState(false);
   const [content] = useWorkSpaceContentContext();
+  const [isValidUrl, setIsValidUrl] = useState(true);
 
   const handleCopyUrlPreview = async () => {
     try {
@@ -21,8 +22,20 @@ export default function WorkSpaceInputUrlFormerUrlPreview() {
     }
   };
 
+  useEffect(() => {
+    try {
+      new URL(content.url.parseUrl);
+      setIsValidUrl(true);
+    } catch {
+      setIsValidUrl(false);
+    }
+  }, [content.url.parseUrl]);
+
   return (
-    <div className="workspace-input-url-former_preview-url-container">
+    <div
+      className="workspace-input-url-former_preview-url-container"
+      style={{ border: isValidUrl ? "" : "1px solid red" }}
+    >
       <div className="preview-url-title-container">
         URL vista previa
         <button
