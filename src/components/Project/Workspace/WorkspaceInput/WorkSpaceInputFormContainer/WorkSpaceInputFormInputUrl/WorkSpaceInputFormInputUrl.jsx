@@ -10,9 +10,10 @@ export default function WorkSpaceInputFormInputUrl() {
   const [filesState] = useFilesContext();
   const [, dispatchFileManagerState] = useFileManagerContext();
   const [inputValue, setInputValue] = useState("");
+  const [isValidUrl, setIsValidUrl] = useState(true);
 
   useEffect(() => {
-    if (filesState.currentFile) {
+    if (filesState.currentFile && content.url.inputUrl !== inputValue) {
       setInputValue(content.url.inputUrl || "");
     }
   }, [filesState, content.url.inputUrl]);
@@ -22,29 +23,45 @@ export default function WorkSpaceInputFormInputUrl() {
   };
 
   useEffect(() => {
+    if (!filesState.currentFile) return;
+
+    let newParseUrl = inputValue;
+
     try {
       const url = new URL(inputValue);
+      newParseUrl = url.href;
+
       const params = new URLSearchParams(url.search);
-      dispatchFileManagerState({
-        type: FILEMANAGER_REDUCER_ACTIONS.updateContentWithoutSaving,
-        payload: {
-          nodeId: filesState.currentFile,
-          newContent: {
-            ...content,
-            url: {
-              ...content.url,
-              inputUrl: inputValue,
-              parseUrl: url.href,
-            },
-          },
-        },
-      });
+
       for (const [key, value] of params.entries()) {
         console.log(key, value);
       }
+      setIsValidUrl(true);
     } catch {
-      console.log("url invalid");
+      setIsValidUrl(false);
     }
+
+    if (
+      content.url.inputUrl === inputValue &&
+      content.url.parseUrl === newParseUrl
+    ) {
+      return;
+    }
+
+    dispatchFileManagerState({
+      type: FILEMANAGER_REDUCER_ACTIONS.updateContentWithoutSaving,
+      payload: {
+        nodeId: filesState.currentFile,
+        newContent: {
+          ...content,
+          url: {
+            ...content.url,
+            inputUrl: inputValue,
+            parseUrl: newParseUrl,
+          },
+        },
+      },
+    });
   }, [inputValue]);
 
   return (
@@ -54,6 +71,7 @@ export default function WorkSpaceInputFormInputUrl() {
       placeholder="URL"
       value={inputValue}
       className="workspace-input-form_url-input"
+      style={{ border: isValidUrl ? "" : "1px solid red" }}
     />
   );
 }
