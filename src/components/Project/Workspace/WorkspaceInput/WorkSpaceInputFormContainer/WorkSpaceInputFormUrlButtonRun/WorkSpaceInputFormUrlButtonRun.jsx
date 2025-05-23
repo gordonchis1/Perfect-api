@@ -11,7 +11,7 @@ export default function WorkSpaceInputFormUrlButtonRun() {
   const { id } = useProjectContext();
 
   const handleRun = async () => {
-    if (!content.url) return;
+    if (!content.url.parseUrl) return;
 
     dispatchFileManagerState({
       type: FILEMANAGER_REDUCER_ACTIONS.updateContent,
@@ -23,10 +23,13 @@ export default function WorkSpaceInputFormUrlButtonRun() {
     });
 
     const start = performance.now();
-    const response = await fetch(content.url, { method: content.type });
+    const response = await fetch(content.url.parseUrl, {
+      method: content.type,
+    });
     const end = performance.now();
     console.log(`Tiempo de respuesta: ${end - start} ms`);
     const parseResponse = await response.json();
+    console.log(parseResponse);
   };
 
   return (

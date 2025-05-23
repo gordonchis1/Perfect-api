@@ -10,7 +10,7 @@ export default function WorkSpaceInputUrlFormerUrlPreview() {
 
   const handleCopyUrlPreview = async () => {
     try {
-      await navigator.clipboard.writeText(content.url);
+      await navigator.clipboard.writeText(content.url.url);
       setIsCopied(true);
       setTimeout(() => {
         setIsCopied(false);
@@ -45,7 +45,9 @@ export default function WorkSpaceInputUrlFormerUrlPreview() {
           )}
         </button>
       </div>
-      <div className="preview-url_preview-url-container">{content.url}</div>
+      <div className="preview-url_preview-url-container">
+        {content.url.parseUrl}
+      </div>
     </div>
   );
 }

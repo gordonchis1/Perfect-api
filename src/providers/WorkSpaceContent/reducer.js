@@ -17,7 +17,7 @@ const workSpaceContentReducer = (state, action) => {
     case WORKSPACE_CONTENT_TYPES.changeUrl: {
       const { newUrl } = payload;
 
-      return { ...state, url: newUrl };
+      return { ...state, url: { ...state.url, url: newUrl } };
     }
   }
 };

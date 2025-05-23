@@ -1,4 +1,8 @@
 export const fileContentDefault = {
   type: "GET",
-  url: "",
+  url: {
+    inputUrl: "",
+    parseUrl: "",
+    queryParams: [],
+  },
 };
