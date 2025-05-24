@@ -12,6 +12,8 @@
   --context-menu-background: #020617;
   --accent-background: #3b82f6;
   --focused-background: #1c2738;
+  --play-button-background: #2bff00;
+  --play-button-color: #000;
 }
 
 .theme-light {
