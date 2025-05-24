@@ -27,17 +27,11 @@ export default function WorkSpaceInputFormInputUrl() {
     if (inputValue === undefined) return;
 
     let newParseUrl = inputValue;
-    let queryParams = [];
 
     try {
       const url = new URL(inputValue);
       newParseUrl = url.href;
 
-      const params = new URLSearchParams(url.search);
-
-      for (const [key, value] of params.entries()) {
-        queryParams.push({ key, value, isActive: true });
-      }
       setIsValidUrl(true);
     } catch {
       setIsValidUrl(false);
@@ -60,7 +54,6 @@ export default function WorkSpaceInputFormInputUrl() {
             ...content.url,
             inputUrl: inputValue,
             parseUrl: newParseUrl,
-            queryParams,
           },
         },
       },
