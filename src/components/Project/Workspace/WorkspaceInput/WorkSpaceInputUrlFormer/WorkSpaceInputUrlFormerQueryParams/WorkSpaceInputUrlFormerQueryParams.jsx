@@ -4,6 +4,8 @@ import "./WorkSpaceInputUrlFormerQueryParams.css";
 import useFileManagerContext from "../../../../../../Hooks/FileManager/useFileMangerContext";
 import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../../../providers/FileManager/reducer";
 import useFilesContext from "../../../../../../Hooks/useFilesContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const defaultQueryObject = {
   key: "",
@@ -19,9 +21,9 @@ export default function WorkSpaceInputUrlFormerQueryParams() {
 
   useEffect(() => {
     if (filesState.currentFile) {
-      setQuerys(content.url.queryParams || []);
+      setQuerys(content.url.queryParams);
     }
-  }, [filesState.currentFile, content.url.queryParams]);
+  }, [filesState, content.url]);
 
   const handleChangeQuery = (type, newValue, index) => {
     const updatedQuerys = [...querys];
@@ -34,8 +36,6 @@ export default function WorkSpaceInputUrlFormerQueryParams() {
   };
 
   useEffect(() => {
-    if (querys.length === 0) return;
-
     try {
       const url = new URL(content.url.inputUrl);
       const params = new URLSearchParams(url.search);
@@ -77,6 +77,12 @@ export default function WorkSpaceInputUrlFormerQueryParams() {
     setQuerys(updatedQuerys);
   };
 
+  const handleDeleteQuery = (index) => {
+    const updatedQuerys = [...querys];
+    updatedQuerys.splice(index, 1);
+    setQuerys(updatedQuerys);
+  };
+
   return (
     <div className="workspace-input-url-former_query-params-container">
       <span className="query-params_title">Query params</span>
@@ -104,6 +110,9 @@ export default function WorkSpaceInputUrlFormerQueryParams() {
                 checked={query.isActive}
                 onChange={() => handleChangeisActive(index)}
               />
+              <button onClick={() => handleDeleteQuery(index)}>
+                <FontAwesomeIcon icon={faTrash} />
+              </button>
             </div>
           );
         })}
