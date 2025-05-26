@@ -23,9 +23,30 @@ export default function WorkSpaceInputFormUrlButtonRun() {
       },
     });
 
+    dispatchFileManagerState({
+      type: FILEMANAGER_REDUCER_ACTIONS.updateContentWithoutSaving,
+      payload: {
+        nodeId: filesState.currentFile,
+        newContent: {
+          ...content,
+          isRuning: true,
+        },
+      },
+    });
+
     const start = performance.now();
     const response = await fetch(content.url.parseUrl, {
       method: content.type,
+    });
+    dispatchFileManagerState({
+      type: FILEMANAGER_REDUCER_ACTIONS.updateContentWithoutSaving,
+      payload: {
+        nodeId: filesState.currentFile,
+        newContent: {
+          ...content,
+          isRuning: false,
+        },
+      },
     });
     const end = performance.now();
     console.log(`Tiempo de respuesta: ${end - start} ms`);

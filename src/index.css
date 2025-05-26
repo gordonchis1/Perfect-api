@@ -14,6 +14,9 @@
   --focused-background: #1c2738;
   --play-button-background: #2bff00;
   --play-button-color: #000;
+  --error: #ff0000;
+  --success: #00ff00;
+  --inactive: #8c8c8c;
 }
 
 .theme-light {

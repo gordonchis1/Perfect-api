@@ -9,6 +9,7 @@ import useFileManagerContext from "../../../../../Hooks/FileManager/useFileMange
 import useFilesContext from "../../../../../Hooks/useFilesContext";
 import { FILES_REDUCER_ACTIONS } from "../../../../../providers/FilesProvider/reducer";
 import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../../providers/FileManager/reducer";
+import IsRuningIndicator from "../../../../Global/IsRuningIndicator/IsRuningIndicator";
 
 export default function FileManagerFileElement({
   node,
@@ -72,6 +73,7 @@ export default function FileManagerFileElement({
         }}
       >
         <div className="filemanager-element-content">
+          <IsRuningIndicator isRuning={node.content.isRuning} />
           <FontAwesomeIcon
             icon={
               filesState.openFiles.some((file) => file.id === node.id)

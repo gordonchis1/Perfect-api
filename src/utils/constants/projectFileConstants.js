@@ -5,4 +5,5 @@ export const fileContentDefault = {
     parseUrl: "",
     queryParams: [],
   },
+  isRuning: false,
 };

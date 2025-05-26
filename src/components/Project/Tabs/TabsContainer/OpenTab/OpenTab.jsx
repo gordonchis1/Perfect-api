@@ -8,6 +8,7 @@ import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../../providers/FileManage
 import { useState } from "react";
 import OpenTabContextMenu from "../../OpenTabsContextMenu/OpenTabsContextMenu";
 import OpenTabRenameForm from "../OpenTabRenameForm/OpenTabRenameForm";
+import IsRuningIndicator from "../../../../Global/IsRuningIndicator/IsRuningIndicator";
 
 const defaultContextMenuState = {
   x: 0,
@@ -48,6 +49,7 @@ export default function OpenTab({ file }) {
         closeContextMenu={closeContextMenu}
         setIsRename={setIsRename}
       />
+      <IsRuningIndicator isRuning={file.content.isRuning} size="10px" />
       <FontAwesomeIcon icon={faFile} />
       {isRename ? (
         <OpenTabRenameForm
