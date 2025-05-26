@@ -1,0 +1,29 @@
+.url-former-query-params_is-active-label-checkbox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.url-former-query-params_is-active-checkbox {
+  display: none;
+}
+
+.url-fomer-query-params_is-active-custom-checkbox {
+  width: 20px;
+  height: 20px;
+  margin: 0 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  border: 1px solid var(--borders);
+  transition: background 0.3s ease, color 0.3s ease;
+  cursor: pointer;
+}
+
+.url-former-query-params_is-active-checkbox:checked
+  + .url-fomer-query-params_is-active-custom-checkbox {
+  background: var(--accent-background);
+  color: var(--primary-text-color);
+  font-size: 14px;
+}

@@ -7,6 +7,9 @@ import useFilesContext from "../../../../../../Hooks/useFilesContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAdd, faTrash } from "@fortawesome/free-solid-svg-icons";
 import UrlFormerQueryParamsOption from "./UrlFormerQueryParamsOption/UrlFormerQueryParamsOption";
+import UrlFormerQueryParamsInput from "./UrlFormerQueryParamsInput/UrlFormerQueryParamsInput";
+import UrlFormerQueryParamsIsActiveCheckbox from "./UrlFormerQueryParamsIsActiveCheckbox/UrlFormerQueryParamsIsActiveCheckbox";
+import UrlFormerQueryParamsDeleteQueryButton from "./UrlFormerQueryParamsDeleteQueryButton/UrlFormerQueryParamsDeleteQueryButton";
 
 const defaultQueryObject = {
   key: "",
@@ -25,16 +28,6 @@ export default function WorkSpaceInputUrlFormerQueryParams() {
       setQuerys(content.url.queryParams);
     }
   }, [filesState, content.url]);
-
-  const handleChangeQuery = (type, newValue, index) => {
-    const updatedQuerys = [...querys];
-    updatedQuerys[index][type] = newValue;
-    setQuerys(updatedQuerys);
-  };
-
-  const handleAddquery = () => {
-    setQuerys((prev) => [...prev, { ...defaultQueryObject }]);
-  };
 
   useEffect(() => {
     try {
@@ -73,16 +66,8 @@ export default function WorkSpaceInputUrlFormerQueryParams() {
     }
   }, [querys]);
 
-  const handleChangeisActive = (index) => {
-    const updatedQuerys = [...querys];
-    updatedQuerys[index].isActive = !updatedQuerys[index].isActive;
-    setQuerys(updatedQuerys);
-  };
-
-  const handleDeleteQuery = (index) => {
-    const updatedQuerys = [...querys];
-    updatedQuerys.splice(index, 1);
-    setQuerys(updatedQuerys);
+  const handleAddquery = () => {
+    setQuerys((prev) => [...prev, { ...defaultQueryObject }]);
   };
 
   return (
@@ -104,29 +89,32 @@ export default function WorkSpaceInputUrlFormerQueryParams() {
       <div className="query-params_params-container">
         {querys.map((query, index) => {
           return (
-            <div key={index}>
-              <input
-                value={query.key}
-                type="text"
-                onChange={(event) =>
-                  handleChangeQuery("key", event.target.value, index)
-                }
+            <div key={index} className="query-params_query-container">
+              <UrlFormerQueryParamsInput
+                index={index}
+                query={query}
+                querys={querys}
+                setQuerys={setQuerys}
+                inputModifier="key"
               />
-              <input
-                value={query.value}
-                type="text"
-                onChange={(event) =>
-                  handleChangeQuery("value", event.target.value, index)
-                }
+              <UrlFormerQueryParamsInput
+                index={index}
+                query={query}
+                querys={querys}
+                setQuerys={setQuerys}
+                inputModifier="value"
               />
-              <input
-                type="checkbox"
-                checked={query.isActive}
-                onChange={() => handleChangeisActive(index)}
+              <UrlFormerQueryParamsIsActiveCheckbox
+                index={index}
+                query={query}
+                querys={querys}
+                setQuerys={setQuerys}
               />
-              <button onClick={() => handleDeleteQuery(index)}>
-                <FontAwesomeIcon icon={faTrash} />
-              </button>
+              <UrlFormerQueryParamsDeleteQueryButton
+                index={index}
+                querys={querys}
+                setQuerys={setQuerys}
+              />
             </div>
           );
         })}
