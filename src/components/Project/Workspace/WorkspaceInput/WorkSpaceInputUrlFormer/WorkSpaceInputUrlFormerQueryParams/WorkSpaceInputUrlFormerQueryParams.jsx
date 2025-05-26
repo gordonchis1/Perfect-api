@@ -5,7 +5,8 @@ import useFileManagerContext from "../../../../../../Hooks/FileManager/useFileMa
 import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../../../providers/FileManager/reducer";
 import useFilesContext from "../../../../../../Hooks/useFilesContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faAdd, faTrash } from "@fortawesome/free-solid-svg-icons";
+import UrlFormerQueryParamsOption from "./UrlFormerQueryParamsOption/UrlFormerQueryParamsOption";
 
 const defaultQueryObject = {
   key: "",
@@ -60,6 +61,7 @@ export default function WorkSpaceInputUrlFormerQueryParams() {
             ...content,
             url: {
               ...content.url,
+              inputUrl: content.url.inputUrl,
               parseUrl: url.href,
               queryParams: querys,
             },
@@ -86,7 +88,19 @@ export default function WorkSpaceInputUrlFormerQueryParams() {
   return (
     <div className="workspace-input-url-former_query-params-container">
       <span className="query-params_title">Query params</span>
-      <button onClick={handleAddquery}>add query</button>
+      <div className="query-params_options-container">
+        <UrlFormerQueryParamsOption
+          icon={faAdd}
+          text="Añadir"
+          onClick={handleAddquery}
+        />
+        <UrlFormerQueryParamsOption
+          onClick={() => setQuerys([])}
+          text="Eliminar todo"
+          icon={faTrash}
+          style={{ color: "red" }}
+        />
+      </div>
       <div className="query-params_params-container">
         {querys.map((query, index) => {
           return (

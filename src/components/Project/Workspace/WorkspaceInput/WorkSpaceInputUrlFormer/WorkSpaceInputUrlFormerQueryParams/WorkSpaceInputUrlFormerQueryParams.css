@@ -12,4 +12,13 @@
 
 .query-params_params-container {
   margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.query-params_options-container {
+  display: flex;
+  margin-top: 10px;
+  border-bottom: 1px solid var(--borders);
 }
