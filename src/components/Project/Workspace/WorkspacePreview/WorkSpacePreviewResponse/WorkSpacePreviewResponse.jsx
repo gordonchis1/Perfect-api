@@ -5,18 +5,9 @@ import WorkSpacePreviewResponseSelector from "./WorkSpacePreviewResponseSelector
 
 export default function WorkSpacePreviewContainer() {
   const [content] = useWorkSpaceContentContext();
-  const { responses } = content;
-  const [currentResponseIdx, setCurrentResponse] = useState(
-    responses.length - 1 || 0
-  );
-
-  useEffect(() => {
-    if (responses.length - 1 > 0) {
-      setCurrentResponse(responses.length - 1);
-    } else {
-      setCurrentResponse(0);
-    }
-  }, [responses]);
+  const responses = [...content.responses].reverse();
+  const [currentResponseIdx, setCurrentResponseIdx] = useState(0);
+  console.log(content);
 
   return (
     <>
@@ -30,6 +21,7 @@ export default function WorkSpacePreviewContainer() {
             <WorkSpacePreviewResponseSelector
               responses={responses}
               currentResponseIdx={currentResponseIdx}
+              setCurrentResponseIdx={setCurrentResponseIdx}
             />
           </div>
         </div>

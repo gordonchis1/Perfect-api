@@ -46,7 +46,7 @@ export default function WorkSpaceInputFormUrlButtonRun() {
         },
       });
       const end = performance.now();
-      timeTaken = end - start;
+      timeTaken = Math.abs(start - end);
 
       const contentType = response.headers.get("content-type");
       if (contentType && contentType.includes("application/json")) {
@@ -55,7 +55,7 @@ export default function WorkSpaceInputFormUrlButtonRun() {
         parsedResponse = await response.text();
       }
     } catch (error) {
-      timeTaken = start - performance.now();
+      timeTaken = Math.abs(start - performance.now());
       parsedResponse = error.message;
     }
     if (newResponse.length >= 5) {
@@ -79,6 +79,7 @@ export default function WorkSpaceInputFormUrlButtonRun() {
       body: JSON.stringify(parsedResponse, null, 2),
       queryParams: content.url.queryParams,
       isPinned: false,
+      inputUrl: content.url.inputUrl,
     });
 
     dispatchFileManagerState({

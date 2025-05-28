@@ -1,6 +1,6 @@
 export const WORKSPACE_CONTENT_TYPES = {
   init: "init",
-  changeUrl: "url",
+  changeContent: "ChangeContent",
 };
 
 const workSpaceContentReducer = (state, action) => {
@@ -14,10 +14,12 @@ const workSpaceContentReducer = (state, action) => {
         return undefined;
       }
     }
-    case WORKSPACE_CONTENT_TYPES.changeUrl: {
-      const { newUrl } = payload;
-
-      return { ...state, url: { ...state.url, url: newUrl } };
+    case WORKSPACE_CONTENT_TYPES.changeContent: {
+      const { newContent } = payload;
+      if (newContent) {
+        return newContent;
+      }
+      return state;
     }
   }
 };
