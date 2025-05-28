@@ -1,0 +1,11 @@
+.workspace_preview-container {
+  width: 100%;
+  height: 100%;
+}
+
+.workspace_preview-multiple-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
