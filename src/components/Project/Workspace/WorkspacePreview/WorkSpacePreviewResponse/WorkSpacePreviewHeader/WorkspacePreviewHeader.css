@@ -1,0 +1,32 @@
+.workspace-preview_response-header-container {
+  display: flex;
+  width: 100%;
+  height: auto;
+  justify-content: space-between;
+}
+
+.response-header_info-container {
+  display: flex;
+  gap: 10px;
+  height: fit-content;
+  height: fit-content;
+}
+
+.response-header_info-status-tag {
+  padding: 5px 10px;
+  font-size: 20px;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.response-header_info-time-tag {
+  background: var(--hover);
+  font-size: 20px;
+  font-weight: 600;
+  padding: 5px 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

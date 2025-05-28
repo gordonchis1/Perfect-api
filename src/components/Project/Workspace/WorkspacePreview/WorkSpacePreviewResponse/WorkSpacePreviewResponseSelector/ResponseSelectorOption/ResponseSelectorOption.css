@@ -1,0 +1,22 @@
+.responses-selector_option {
+  background: transparent;
+  border: none;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  color: var(--primary-text-color);
+  padding: 10px;
+  border-bottom: 1px solid var(--borders);
+  cursor: pointer;
+  font-size: 17px;
+  width: 100%;
+  display: flex;
+  gap: 10px;
+}
+
+.responses-selector_option:hover {
+  background: var(--hover);
+}
+
+.selector_option-status {
+  font-weight: 700;
+}

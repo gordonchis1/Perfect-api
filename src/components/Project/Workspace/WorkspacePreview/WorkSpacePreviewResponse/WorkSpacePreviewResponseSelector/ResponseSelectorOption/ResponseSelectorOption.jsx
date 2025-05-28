@@ -1,3 +1,6 @@
+import { determineColor } from "../../../../../../../utils/constants/statusColor";
+import "./ResponseSelectorOption.css";
+
 export default function ResponseSelectorOption({
   responses,
   currentResponseIdx,
@@ -23,11 +26,12 @@ export default function ResponseSelectorOption({
               handleChangeResponse(index);
             }}
           >
-            {response?.status !== 0 ? (
-              <span>{response?.status}</span>
-            ) : (
-              <span>Error</span>
-            )}
+            <span
+              className="selector_option-status"
+              style={{ color: determineColor(response?.status) }}
+            >
+              {response?.status !== 0 ? response?.status : "Error"}
+            </span>
             <span>{response?.url}</span>
           </button>
         );

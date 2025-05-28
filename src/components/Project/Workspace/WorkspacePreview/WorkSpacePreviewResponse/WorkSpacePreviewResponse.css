@@ -4,12 +4,7 @@
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   display: flex;
   width: 100%;
+  flex-direction: column;
   height: 100%;
-}
-
-.workspace-preview_response-header-container {
-  display: flex;
-  width: 100%;
-  height: auto;
-  justify-content: space-between;
+  max-width: 100%;
 }
