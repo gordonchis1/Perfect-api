@@ -8,3 +8,8 @@
   height: 100%;
   max-width: 100%;
 }
+
+.workspace-preview-response_json-preview-container {
+  width: 100%;
+  flex: 1;
+}

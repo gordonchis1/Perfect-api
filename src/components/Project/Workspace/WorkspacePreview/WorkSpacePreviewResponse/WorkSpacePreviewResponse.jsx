@@ -2,7 +2,9 @@ import "./WorkSpacePreviewResponse.css";
 import useWorkSpaceContentContext from "../../../../../Hooks/WorkSpace/useWorkSpaceContentContext";
 import { useState } from "react";
 import WorkspacePreviewHeader from "./WorkSpacePreviewHeader/WorkspacePreviewHeader";
+import WorkSpacePreviewJson from "./WorkSpacePreviewJson/WorkSpacePreviewJson";
 
+// TODO: actuzlizar el heigth en tiempo real
 export default function WorkSpacePreviewContainer() {
   const [content] = useWorkSpaceContentContext();
   const responses = [...content.responses].reverse();
@@ -17,7 +19,10 @@ export default function WorkSpacePreviewContainer() {
             responses={responses}
             setCurrentResponseIdx={setCurrentResponseIdx}
           />
-          <div>{JSON.stringify(responses[currentResponseIdx].response)}</div>
+          <WorkSpacePreviewJson
+            currentResponseIdx={currentResponseIdx}
+            responses={responses}
+          />
         </div>
       )}
     </>
