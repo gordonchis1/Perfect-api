@@ -1,6 +1,6 @@
 import "./WorkSpacePreviewResponse.css";
 import useWorkSpaceContentContext from "../../../../../Hooks/WorkSpace/useWorkSpaceContentContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import WorkspacePreviewHeader from "./WorkSpacePreviewHeader/WorkspacePreviewHeader";
 import WorkSpacePreviewJson from "./WorkSpacePreviewJson/WorkSpacePreviewJson";
 
@@ -9,6 +9,14 @@ export default function WorkSpacePreviewContainer() {
   const [content] = useWorkSpaceContentContext();
   const responses = [...content.responses].reverse();
   const [currentResponseIdx, setCurrentResponseIdx] = useState(0);
+  const [isJson, setIsJson] = useState(false);
+
+  useEffect(() => {
+    const response = responses[currentResponseIdx]?.response;
+    const validJson = typeof response === "object" && response !== null;
+    console.log(validJson);
+    setIsJson(validJson);
+  }, [responses, currentResponseIdx]);
 
   return (
     <>
@@ -19,10 +27,14 @@ export default function WorkSpacePreviewContainer() {
             responses={responses}
             setCurrentResponseIdx={setCurrentResponseIdx}
           />
-          <WorkSpacePreviewJson
-            currentResponseIdx={currentResponseIdx}
-            responses={responses}
-          />
+          {isJson ? (
+            <WorkSpacePreviewJson
+              currentResponseIdx={currentResponseIdx}
+              responses={responses}
+            />
+          ) : (
+            <div>{JSON.stringify(responses[currentResponseIdx].response)}</div>
+          )}
         </div>
       )}
     </>
