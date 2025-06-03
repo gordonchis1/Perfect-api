@@ -14,6 +14,7 @@ export default function WorkSpaceInputFormUrlButtonRun() {
 
   const handleRun = async () => {
     if (!content.url.parseUrl) return;
+    if (content.isRuning) return;
 
     dispatchFileManagerState({
       type: FILEMANAGER_REDUCER_ACTIONS.updateContentWithoutSaving,
@@ -96,7 +97,17 @@ export default function WorkSpaceInputFormUrlButtonRun() {
   };
 
   return (
-    <button className="workspace-input-form_run-button" onClick={handleRun}>
+    <button
+      className="workspace-input-form_run-button "
+      onClick={handleRun}
+      disabled={content.isRuning}
+      style={{
+        background: content.isRuning
+          ? "var(--play-button-disabled-background)"
+          : "",
+        cursor: content.isRuning ? "not-allowed" : "",
+      }}
+    >
       Run
     </button>
   );

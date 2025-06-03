@@ -11,4 +11,5 @@
   gap: 5px;
   cursor: pointer;
   font-size: 20px;
+  transition: background 0.2s ease;
 }
