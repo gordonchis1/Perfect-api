@@ -2,6 +2,7 @@ import "./WorkSpacePreviewJson.css";
 import JsonView from "@uiw/react-json-view";
 import { githubDarkTheme } from "../../../../../../utils/constants/jsonRenderThemes";
 import { useEffect, useRef, useState } from "react";
+import WorkspacePreviewJsonStringComponent from "./WorkspacePreviewJsonStringComponent/WorkspacePreviewJsonStringComponent";
 
 export default function WorkSpacePreviewJson({
   responses,
@@ -23,39 +24,6 @@ export default function WorkSpacePreviewJson({
     return () => clearTimeout(timeout);
   }, []);
 
-  const processImgUrl = (url, width, height) => {
-    const w = width.toString();
-    const h = height.toString();
-
-    if (url.includes("{w}") && url.includes("{h}")) {
-      return url.replace("{w}", w).replace("{h}", h);
-    }
-
-    if (url.includes("?")) {
-      const urlObj = new URL(url);
-      if (urlObj.searchParams.has("w") || urlObj.searchParams.has("width")) {
-        urlObj.searchParams.set("w", w);
-        urlObj.searchParams.set("width", w);
-      }
-      if (urlObj.searchParams.has("h") || urlObj.searchParams.has("height")) {
-        urlObj.searchParams.set("h", h);
-        urlObj.searchParams.set("height", h);
-      }
-      return urlObj.toString();
-    }
-
-    const resizeRegex = /\/resize\/\d+x\d+\//;
-    if (resizeRegex.test(url)) {
-      return url.replace(resizeRegex, `/resize/${w}x${h}/`);
-    }
-
-    if (!url.includes("?")) {
-      return `${url}?w=${w}&h=${h}`;
-    }
-
-    return url;
-  };
-
   return (
     <div
       className="workspace-preview-response_json-preview-container"
@@ -64,6 +32,7 @@ export default function WorkSpacePreviewJson({
       {ready && (
         <JsonView
           value={responses[currentResponseIdx].response}
+          displayDataTypes={false}
           style={{
             borderRadius: "7px",
             fontSize: "20px",
@@ -83,20 +52,10 @@ export default function WorkSpacePreviewJson({
 
               if (type === "value" && isImage) {
                 return (
-                  <div
-                    style={{
-                      display: "flex",
-                      width: "100%",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <span {...rest}>"{value}"</span>
-                    <img
-                      src={processImgUrl(value, 40, 40)}
-                      height={"40"}
-                      width={"40"}
-                    />
-                  </div>
+                  <WorkspacePreviewJsonStringComponent
+                    rest={rest}
+                    value={value}
+                  />
                 );
               }
             }}
