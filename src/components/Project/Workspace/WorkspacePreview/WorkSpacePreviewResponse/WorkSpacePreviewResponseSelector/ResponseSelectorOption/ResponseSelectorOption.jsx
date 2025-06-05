@@ -1,24 +1,30 @@
+import useWorkspacePreviewContext from "../../../../../../../Hooks/useWorkspacePreviewContext";
+import { WORKSPACE_PREVIEW_ACTIONS } from "../../../../../../../providers/WorkspacePreview/WorkSpacePreviewProvider";
 import { determineColor } from "../../../../../../../utils/constants/statusColor";
 import "./ResponseSelectorOption.css";
 
-export default function ResponseSelectorOption({
-  responses,
-  currentResponseIdx,
-  setIsOpen,
-  setCurrentResponseIdx,
-}) {
+export default function ResponseSelectorOption({ setIsOpen }) {
+  const [workspacePreviewContext, workspacePreviewContextDispatch] =
+    useWorkspacePreviewContext();
+
   const handleChangeResponse = (index) => {
     setIsOpen(false);
-    setCurrentResponseIdx(index);
+    workspacePreviewContextDispatch({
+      type: WORKSPACE_PREVIEW_ACTIONS.SET_CURRENT_RESPONSE_IDX,
+      payload: index,
+    });
   };
 
   return (
     <div className="responses-selector_options-container">
-      {responses.map((response, index) => {
+      {workspacePreviewContext.responses.map((response, index) => {
         return (
           <button
             style={{
-              background: index === currentResponseIdx ? "var(--hover)" : "",
+              background:
+                index === workspacePreviewContext.currentResponseIdx
+                  ? "var(--hover)"
+                  : "",
             }}
             className="responses-selector_option"
             key={index}

@@ -4,14 +4,13 @@ import { githubDarkTheme } from "../../../../../../utils/constants/jsonRenderThe
 import { useEffect, useRef, useState } from "react";
 import WorkspacePreviewJsonStringComponent from "./WorkspacePreviewJsonStringImageComponent/WorkspacePreviewJsonStringImageComponent";
 import WorkspacePreviewJsonStringUrlComponent from "./WorkspacePreviewJsonStringUrlComponent/WorkspacePreviewJsonStringUrlComponent";
+import useWorkspacePreviewContext from "../../../../../../Hooks/useWorkspacePreviewContext";
 
 // TODO: agregar un tema custom para json preview
 
-export default function WorkSpacePreviewJson({
-  responses,
-  currentResponseIdx,
-}) {
+export default function WorkSpacePreviewJson() {
   const jsonPreviewContainerRef = useRef(null);
+  const [workspacePreviewContext] = useWorkspacePreviewContext();
   const [height, setHeight] = useState(0);
   const [ready, setReady] = useState(false);
 
@@ -34,7 +33,11 @@ export default function WorkSpacePreviewJson({
     >
       {ready && (
         <JsonView
-          value={responses[currentResponseIdx].response}
+          value={
+            workspacePreviewContext.responses[
+              workspacePreviewContext.currentResponseIdx
+            ].response
+          }
           displayDataTypes={false}
           style={{
             borderRadius: "7px",

@@ -19,5 +19,6 @@ RESPONSES
   url: string,
   body: string,
   isPinned: bool,
+  queryParams: string,
 }
 */

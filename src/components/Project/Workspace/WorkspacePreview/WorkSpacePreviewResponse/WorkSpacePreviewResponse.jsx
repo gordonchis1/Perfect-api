@@ -1,39 +1,38 @@
 import "./WorkSpacePreviewResponse.css";
-import useWorkSpaceContentContext from "../../../../../Hooks/WorkSpace/useWorkSpaceContentContext";
 import { useEffect, useState } from "react";
 import WorkspacePreviewHeader from "./WorkSpacePreviewHeader/WorkspacePreviewHeader";
 import WorkSpacePreviewJson from "./WorkSpacePreviewJson/WorkSpacePreviewJson";
+import useWorkspacePreviewContext from "../../../../../Hooks/useWorkspacePreviewContext";
 
 // TODO: actuzlizar el heigth en tiempo real
 export default function WorkSpacePreviewContainer() {
-  const [content] = useWorkSpaceContentContext();
-  const responses = [...content.responses].reverse();
-  const [currentResponseIdx, setCurrentResponseIdx] = useState(0);
   const [isJson, setIsJson] = useState(false);
+  const [workspacePreviewContext] = useWorkspacePreviewContext();
 
   useEffect(() => {
-    const response = responses[currentResponseIdx]?.response;
+    const response =
+      workspacePreviewContext.responses[
+        workspacePreviewContext.currentResponseIdx
+      ]?.response;
     const validJson = typeof response === "object" && response !== null;
-    console.log(validJson);
     setIsJson(validJson);
-  }, [responses, currentResponseIdx]);
+  }, [workspacePreviewContext]);
 
   return (
     <>
-      {responses.length > 0 && (
+      {workspacePreviewContext.responses.length > 0 && (
         <div className="workspace-preview_response-container">
-          <WorkspacePreviewHeader
-            currentResponseIdx={currentResponseIdx}
-            responses={responses}
-            setCurrentResponseIdx={setCurrentResponseIdx}
-          />
+          <WorkspacePreviewHeader />
           {isJson ? (
-            <WorkSpacePreviewJson
-              currentResponseIdx={currentResponseIdx}
-              responses={responses}
-            />
+            <WorkSpacePreviewJson />
           ) : (
-            <div>{JSON.stringify(responses[currentResponseIdx].response)}</div>
+            <div>
+              {JSON.stringify(
+                workspacePreviewContext.responses[
+                  workspacePreviewContext.currentResponseIdx
+                ].response
+              )}
+            </div>
           )}
         </div>
       )}
