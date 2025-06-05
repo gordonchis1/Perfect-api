@@ -16,6 +16,7 @@
     "fs:allow-copy-file",
     "dialog:allow-open",
     "fs:allow-write-file",
-    "dialog:allow-save"
+    "dialog:allow-save",
+    "opener:default"
   ]
 }

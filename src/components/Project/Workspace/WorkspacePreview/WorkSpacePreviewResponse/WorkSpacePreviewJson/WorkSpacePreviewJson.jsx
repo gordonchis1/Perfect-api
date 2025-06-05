@@ -2,7 +2,10 @@ import "./WorkSpacePreviewJson.css";
 import JsonView from "@uiw/react-json-view";
 import { githubDarkTheme } from "../../../../../../utils/constants/jsonRenderThemes";
 import { useEffect, useRef, useState } from "react";
-import WorkspacePreviewJsonStringComponent from "./WorkspacePreviewJsonStringComponent/WorkspacePreviewJsonStringComponent";
+import WorkspacePreviewJsonStringComponent from "./WorkspacePreviewJsonStringImageComponent/WorkspacePreviewJsonStringImageComponent";
+import WorkspacePreviewJsonStringUrlComponent from "./WorkspacePreviewJsonStringUrlComponent/WorkspacePreviewJsonStringUrlComponent";
+
+// TODO: agregar un tema custom para json preview
 
 export default function WorkSpacePreviewJson({
   responses,
@@ -45,6 +48,14 @@ export default function WorkSpacePreviewJson({
           <JsonView.String
             render={({ ...rest }, { type, value }) => {
               const isImage = /^https?.*\.(jpg|png)$/i.test(value);
+              let isUrl;
+
+              try {
+                new URL(value);
+                isUrl = true;
+              } catch {
+                isUrl = false;
+              }
 
               if (type === "type" && isImage) {
                 return <span />;
@@ -55,6 +66,15 @@ export default function WorkSpacePreviewJson({
                   <WorkspacePreviewJsonStringComponent
                     rest={rest}
                     value={value}
+                  />
+                );
+              }
+
+              if (type === "value" && !isImage && isUrl) {
+                return (
+                  <WorkspacePreviewJsonStringUrlComponent
+                    value={value}
+                    rest={rest}
                   />
                 );
               }

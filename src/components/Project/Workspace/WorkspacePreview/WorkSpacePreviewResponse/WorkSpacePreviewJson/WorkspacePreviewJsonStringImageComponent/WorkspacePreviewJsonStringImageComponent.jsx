@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import "./WorkspacePreviewJsonStringComponent.css";
+import { useRef, useState } from "react";
+import "./WorkspacePreviewJsonStringImageComponent.css";
 
 const defaultPreviewImageState = {
   x: 0,
@@ -7,7 +7,10 @@ const defaultPreviewImageState = {
   show: false,
 };
 
-export default function WorkspacePreviewJsonStringComponent({ value, rest }) {
+export default function WorkspacePreviewJsonStringImageComponent({
+  value,
+  rest,
+}) {
   const stringImageCotnainer = useRef(null);
   const [previewImage, setPreviewImage] = useState(defaultPreviewImageState);
   const previewImageContainer = useRef(null);
