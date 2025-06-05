@@ -10,6 +10,7 @@
 .json-string-url-context-menu_option {
   background: transparent;
   color: var(--primary-text-color);
+  width: 100%;
 
   display: flex;
   justify-content: center;

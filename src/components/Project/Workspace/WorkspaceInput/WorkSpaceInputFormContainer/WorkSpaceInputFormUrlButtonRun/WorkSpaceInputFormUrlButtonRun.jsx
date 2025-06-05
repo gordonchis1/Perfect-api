@@ -77,7 +77,6 @@ export default function WorkSpaceInputFormUrlButtonRun() {
           ? {}
           : Object.fromEntries(response.headers.entries()),
       url: content.url.parseUrl,
-      body: JSON.stringify(parsedResponse, null, 2),
       queryParams: content.url.queryParams,
       isPinned: false,
       inputUrl: content.url.inputUrl,

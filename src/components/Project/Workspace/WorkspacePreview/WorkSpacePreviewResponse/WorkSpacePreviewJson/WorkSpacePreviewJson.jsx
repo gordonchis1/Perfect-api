@@ -47,7 +47,7 @@ export default function WorkSpacePreviewJson({
         >
           <JsonView.String
             render={({ ...rest }, { type, value }) => {
-              const isImage = /^https?.*\.(jpg|png)$/i.test(value);
+              const isImage = /^https?.*\.(jpg|png|jpeg)$/i.test(value);
               let isUrl;
 
               try {

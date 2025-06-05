@@ -2,8 +2,15 @@ import { useRef, useState } from "react";
 import "./WorkspacePreviewJsonStringUrlComponent.css";
 import useClickAway from "../../../../../../../Hooks/useClickAway";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGlobe } from "@fortawesome/free-solid-svg-icons";
+import { faAdd, faGlobe } from "@fortawesome/free-solid-svg-icons";
 import { openUrl } from "@tauri-apps/plugin-opener";
+import useFileManagerContext from "../../../../../../../Hooks/FileManager/useFileMangerContext";
+import FileManagerContextMenu from "../../../../../FileManager/FileManagerContextMenu/FileManagerContextMenu";
+import { VirtualFileSystem } from "../../../../../../../utils/ProjectFileObject";
+import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../../../../providers/FileManager/reducer";
+import useFilesContext from "../../../../../../../Hooks/useFilesContext";
+import useProjectContext from "../../../../../../../Hooks/FileManager/useProjectContext";
+import { fileContentDefault } from "../../../../../../../utils/constants/ProjectFileConstants";
 
 const defaultContextMenuState = {
   x: 0,
@@ -17,6 +24,9 @@ export default function WorkspacePreviewJsonStringUrlComponent({
 }) {
   const [contextMenu, setContextMenu] = useState(defaultContextMenuState);
   const contextMenuRef = useRef(null);
+  const [fileManagerContext, fileManagerDispatcher] = useFileManagerContext();
+  const [filesState] = useFilesContext();
+  const { id } = useProjectContext();
   useClickAway(contextMenuRef, () => setContextMenu(defaultContextMenuState));
 
   const handleContextMenu = (event) => {
@@ -35,6 +45,40 @@ export default function WorkspacePreviewJsonStringUrlComponent({
     setContextMenu(defaultContextMenuState);
   };
 
+  const handleCreateNewTab = () => {
+    if (fileManagerContext instanceof VirtualFileSystem) {
+      const node = fileManagerContext.getNodeById(filesState.currentFile);
+      const path = fileManagerContext.getAbsolutePath(node);
+      let dirPath = path.split("/");
+      if (path) {
+        dirPath.pop();
+
+        dirPath = dirPath.join("/");
+      }
+
+      const urlFromValue = new URL(value);
+
+      fileManagerDispatcher({
+        type: FILEMANAGER_REDUCER_ACTIONS.addFileWithCustomContent,
+        payload: {
+          path: dirPath,
+          id,
+          name: urlFromValue.hostname,
+          content: {
+            ...fileContentDefault,
+            url: {
+              ...fileContentDefault.url,
+              parseUrl: value,
+              inputUrl: value,
+            },
+          },
+        },
+      });
+    }
+
+    setContextMenu(defaultContextMenuState);
+  };
+
   return (
     <div {...rest} onContextMenu={handleContextMenu}>
       {contextMenu.show && (
@@ -49,6 +93,13 @@ export default function WorkspacePreviewJsonStringUrlComponent({
           >
             <FontAwesomeIcon icon={faGlobe} />
             Abrir en el navegador
+          </button>
+          <button
+            className="json-string-url-context-menu_option"
+            onClick={handleCreateNewTab}
+          >
+            <FontAwesomeIcon icon={faAdd} />
+            Crear una nueva pestaña con esta URL
           </button>
         </div>
       )}
