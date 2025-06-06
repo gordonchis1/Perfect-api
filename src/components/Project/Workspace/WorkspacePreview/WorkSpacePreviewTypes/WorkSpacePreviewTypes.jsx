@@ -9,6 +9,7 @@ import "./WorkSpacePreviewTypes.css";
 import { useEffect, useRef, useState } from "react";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { arta } from "react-syntax-highlighter/dist/esm/styles/hljs";
+import PreviewTypesCopyButton from "./PreviewTypesCopyButton/PreviewTypesCopyButton";
 
 export default function WorkSpacePreviewTypes() {
   const syntaxHighlighterRef = useRef(null);
@@ -56,7 +57,6 @@ export default function WorkSpacePreviewTypes() {
 
   useEffect(() => {
     if (syntaxHighlighterRef.current && codeBlockContainerRef.current) {
-      console.log(codeBlockContainerRef.current.offsetHeight);
       syntaxHighlighterRef.current.style.height = `${codeBlockContainerRef.current.offsetHeight}px`;
     }
   }, [syntaxHighlighterRef, codeBlockContainerRef]);
@@ -70,6 +70,7 @@ export default function WorkSpacePreviewTypes() {
             className="preview-types_block-code-container"
             ref={codeBlockContainerRef}
           >
+            <PreviewTypesCopyButton types={types} />
             <SyntaxHighlighter
               language="typescript"
               className="block-code_highlighter custom-scroll-bar"

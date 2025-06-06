@@ -9,6 +9,7 @@
 .block-code_highlighter {
   font-size: 20px;
   border-radius: 4px;
+  width: 100%;
 }
 
 .preview-types_block-code-container {
@@ -18,4 +19,6 @@
   max-width: 100%;
   max-height: 100%;
   border-radius: 4px;
+  display: flex;
+  flex-direction: row-reverse;
 }
