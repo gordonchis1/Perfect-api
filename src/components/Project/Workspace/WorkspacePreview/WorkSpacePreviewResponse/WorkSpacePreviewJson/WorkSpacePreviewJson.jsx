@@ -38,6 +38,7 @@ export default function WorkSpacePreviewJson() {
               workspacePreviewContext.currentResponseIdx
             ].response
           }
+          className="custom-scroll-bar"
           displayDataTypes={false}
           style={{
             borderRadius: "7px",
@@ -50,7 +51,10 @@ export default function WorkSpacePreviewJson() {
         >
           <JsonView.String
             render={({ ...rest }, { type, value }) => {
-              const isImage = /^https?.*\.(jpg|png|jpeg)$/i.test(value);
+              const isImage =
+                /^https?:\/\/.*\.(jpg|jpeg|png|gif|bmp|webp|svg|tiff?|ico|avif)$/i.test(
+                  value
+                );
               let isUrl;
 
               try {

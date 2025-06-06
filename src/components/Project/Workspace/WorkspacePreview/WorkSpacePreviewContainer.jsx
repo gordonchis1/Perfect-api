@@ -2,13 +2,14 @@ import WorkSpacePreviewProvider from "../../../../providers/WorkspacePreview/Wor
 import MultipleContainer from "../../../Global/MultipleContainer/MultipleContainer";
 import "./WorkSpacePreviewContainer.css";
 import WorkSpacePreviewResponse from "./WorkspacePreviewResponse/WorkSpacePreviewResponse";
+import WorkSpacePreviewTypes from "./WorkSpacePreviewTypes/WorkSpacePreviewTypes";
 
 const multipleContainerContainers = {
   Response: {
     component: <WorkSpacePreviewResponse />,
   },
   Types: {
-    component: <h1>Hola mundo types</h1>,
+    component: <WorkSpacePreviewTypes />,
   },
 };
 const defaultContainer = "Response";

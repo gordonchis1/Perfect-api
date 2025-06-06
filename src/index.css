@@ -20,6 +20,19 @@
   --inactive: #8c8c8c;
 }
 
+.custom-scroll-bar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.custom-scroll-bar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scroll-bar::-webkit-scrollbar-thumb {
+  background: var(--borders);
+  border-radius: 50px;
+}
+
 .theme-light {
   --background: #fff;
 }
