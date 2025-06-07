@@ -7,10 +7,11 @@ export const fileContentDefault = {
   },
   responses: [],
   headers: [
-    { key: "Accept", value: "*/*" },
+    { key: "Accept", value: "*/*", isActive: true },
     {
       key: "Host",
       value: "",
+      isActive: true,
     },
     { key: "User-Agent", value: "PerfectApi/0.1", isActive: true },
   ],

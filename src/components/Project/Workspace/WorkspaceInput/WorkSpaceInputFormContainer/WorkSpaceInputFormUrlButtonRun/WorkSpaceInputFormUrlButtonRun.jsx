@@ -33,9 +33,28 @@ export default function WorkSpaceInputFormUrlButtonRun() {
     let response;
     const start = performance.now();
     try {
-      response = await fetch(content.url.parseUrl, {
-        method: content.type,
+      const headersToSend = {};
+
+      content.headers.forEach((header) => {
+        if (header.isActive) {
+          if (header.key === "Host") {
+            try {
+              const url = new URL(content.url.parseUrl);
+              headersToSend[header.key] = url.host;
+            } catch {
+              headersToSend[header.key] = "";
+            }
+          } else {
+            headersToSend[header.key] = header.value;
+          }
+        }
       });
+
+      response = await window.fetch(content.url.parseUrl, {
+        method: content.type,
+        headers: headersToSend,
+      });
+
       dispatchFileManagerState({
         type: FILEMANAGER_REDUCER_ACTIONS.updateContentWithoutSaving,
         payload: {
@@ -56,6 +75,7 @@ export default function WorkSpaceInputFormUrlButtonRun() {
         parsedResponse = await response.text();
       }
     } catch (error) {
+      console.log(error);
       timeTaken = Math.abs(start - performance.now());
       parsedResponse = error.message;
     }

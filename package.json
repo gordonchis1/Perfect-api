@@ -20,6 +20,7 @@
     "@tauri-apps/api": "^2.4.1",
     "@tauri-apps/plugin-dialog": "^2.2.1",
     "@tauri-apps/plugin-fs": "^2.2.1",
+    "@tauri-apps/plugin-http": "^2.4.4",
     "@tauri-apps/plugin-opener": "^2.2.7",
     "@uiw/react-json-view": "^2.0.0-alpha.32",
     "nanoid": "^5.1.5",

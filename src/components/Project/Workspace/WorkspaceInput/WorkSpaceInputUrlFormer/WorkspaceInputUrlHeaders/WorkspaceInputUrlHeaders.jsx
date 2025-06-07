@@ -103,14 +103,12 @@ export default function WorkspaceInputUrlHeaders() {
                     }}
                     className="url-headers_header-input"
                   />
-                  {header.isActive !== undefined && (
-                    <ActiveCheckbox
-                      checked={header.isActive}
-                      onChange={() => {
-                        handleChangeIsActive(index);
-                      }}
-                    />
-                  )}
+                  <ActiveCheckbox
+                    checked={header.isActive}
+                    onChange={() => {
+                      handleChangeIsActive(index);
+                    }}
+                  />
                   <button>
                     <FontAwesomeIcon icon={faTrash} />
                   </button>
