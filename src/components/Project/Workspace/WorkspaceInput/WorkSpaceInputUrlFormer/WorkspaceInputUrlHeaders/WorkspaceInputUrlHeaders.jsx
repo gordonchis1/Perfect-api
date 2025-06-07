@@ -6,6 +6,7 @@ import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../../../providers/FileMan
 import useFilesContext from "../../../../../../Hooks/useFilesContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import ActiveCheckbox from "../../../../../Global/ActiveCheckbox/ActiveCheckbox";
 
 const nonEditableHeaders = ["Host", "Accept"];
 
@@ -50,6 +51,22 @@ export default function WorkspaceInputUrlHeaders() {
     }
   }, [filesContext.currentFile, content]);
 
+  const handleChangeIsActive = (index) => {
+    const updatedHeaders = [...headers];
+    updatedHeaders[index].isActive = !updatedHeaders[index].isActive;
+    filemanagerDispatch({
+      type: FILEMANAGER_REDUCER_ACTIONS.updateContentWithoutSaving,
+      payload: {
+        nodeId: filesContext.currentFile,
+        newContent: {
+          ...content,
+          headers: updatedHeaders,
+        },
+      },
+    });
+    setHeaders(updatedHeaders);
+  };
+
   return (
     <>
       {headers && (
@@ -86,8 +103,13 @@ export default function WorkspaceInputUrlHeaders() {
                     }}
                     className="url-headers_header-input"
                   />
-                  {header.isActive && (
-                    <input type="checkbox" checked={header.isActive}></input>
+                  {header.isActive !== undefined && (
+                    <ActiveCheckbox
+                      checked={header.isActive}
+                      onChange={() => {
+                        handleChangeIsActive(index);
+                      }}
+                    />
                   )}
                   <button>
                     <FontAwesomeIcon icon={faTrash} />
