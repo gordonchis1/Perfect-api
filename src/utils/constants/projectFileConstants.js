@@ -6,6 +6,14 @@ export const fileContentDefault = {
     queryParams: [],
   },
   responses: [],
+  headers: [
+    { key: "Accept", value: "*/*" },
+    {
+      key: "Host",
+      value: "",
+    },
+    { key: "User-Agent", value: "PerfectApi/0.1", isActive: true },
+  ],
   isRuning: false,
 };
 
@@ -17,8 +25,8 @@ RESPONSES
   reponse: JSON,
   headers: object,
   url: string,
-  body: string,
   isPinned: bool,
   queryParams: string,
+  headers: []
 }
 */
