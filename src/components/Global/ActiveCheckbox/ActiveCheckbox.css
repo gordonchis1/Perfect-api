@@ -1,14 +1,14 @@
-.url-former-query-params_is-active-label-checkbox {
+.active-checkbox_label {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.url-former-query-params_is-active-checkbox {
+.active-checkbox_input {
   display: none;
 }
 
-.url-fomer-query-params_is-active-custom-checkbox {
+.active-checkbox_custom-checkbox {
   width: 20px;
   height: 20px;
   margin: 0 10px;
@@ -21,8 +21,7 @@
   cursor: pointer;
 }
 
-.url-former-query-params_is-active-checkbox:checked
-  + .url-fomer-query-params_is-active-custom-checkbox {
+.active-checkbox_input:checked + .active-checkbox_custom-checkbox {
   background: var(--accent-background);
   color: var(--primary-text-color);
   font-size: 14px;

@@ -4,12 +4,11 @@ import "./WorkSpaceInputUrlFormerQueryParams.css";
 import useFileManagerContext from "../../../../../../Hooks/FileManager/useFileMangerContext";
 import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../../../providers/FileManager/reducer";
 import useFilesContext from "../../../../../../Hooks/useFilesContext";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAdd, faTrash } from "@fortawesome/free-solid-svg-icons";
 import UrlFormerQueryParamsOption from "./UrlFormerQueryParamsOption/UrlFormerQueryParamsOption";
 import UrlFormerQueryParamsInput from "./UrlFormerQueryParamsInput/UrlFormerQueryParamsInput";
-import UrlFormerQueryParamsIsActiveCheckbox from "./UrlFormerQueryParamsIsActiveCheckbox/UrlFormerQueryParamsIsActiveCheckbox";
 import UrlFormerQueryParamsDeleteQueryButton from "./UrlFormerQueryParamsDeleteQueryButton/UrlFormerQueryParamsDeleteQueryButton";
+import ActiveCheckbox from "../../../../../Global/ActiveCheckbox/ActiveCheckbox";
 
 const defaultQueryObject = {
   key: "",
@@ -70,6 +69,12 @@ export default function WorkSpaceInputUrlFormerQueryParams() {
     setQuerys((prev) => [...prev, { ...defaultQueryObject }]);
   };
 
+  const handleChangeisActive = (index) => {
+    const updatedQuerys = [...querys];
+    updatedQuerys[index].isActive = !updatedQuerys[index].isActive;
+    setQuerys(updatedQuerys);
+  };
+
   return (
     <div className="workspace-input-url-former_query-params-container">
       <span className="query-params_title">Query params</span>
@@ -104,11 +109,11 @@ export default function WorkSpaceInputUrlFormerQueryParams() {
                 setQuerys={setQuerys}
                 inputModifier="value"
               />
-              <UrlFormerQueryParamsIsActiveCheckbox
-                index={index}
-                query={query}
-                querys={querys}
-                setQuerys={setQuerys}
+              <ActiveCheckbox
+                checked={query.isActive}
+                onChange={() => {
+                  handleChangeisActive(index);
+                }}
               />
               <UrlFormerQueryParamsDeleteQueryButton
                 index={index}
