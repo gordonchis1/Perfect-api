@@ -53,8 +53,8 @@ export default function WorkSpacePreviewTypes() {
 
   useEffect(() => {
     const getTypes = async () => {
-      if (!currentLanguage.languague) return;
-      const { lines } = await convertjsonToTypes(currentLanguage.languague);
+      if (!currentLanguage.language) return;
+      const { lines } = await convertjsonToTypes(currentLanguage.language);
       setTypes(lines.join("\n"));
     };
 
@@ -82,7 +82,7 @@ export default function WorkSpacePreviewTypes() {
           >
             <PreviewTypesCopyButton types={types} />
             <SyntaxHighlighter
-              language={currentLanguage.languagueSyntax}
+              language={currentLanguage.languageSyntax}
               className="block-code_highlighter custom-scroll-bar"
               style={arta}
               showLineNumbers
