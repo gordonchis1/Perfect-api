@@ -47,7 +47,7 @@ export default function WorkSpacePreviewProvider({ children }) {
       type: WORKSPACE_PREVIEW_ACTIONS.CHANGE_RESPONSES,
       payload: { responses: content.responses || [] },
     });
-  }, [content]);
+  }, [content.responses]);
 
   return (
     <WorkSpacePreviewContext.Provider value={[state, dispatch]}>
