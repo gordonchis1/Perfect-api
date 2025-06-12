@@ -1,93 +1,42 @@
 import "./WorkSpacePreviewJson.css";
-import JsonView from "@uiw/react-json-view";
-import { githubDarkTheme } from "../../../../../../utils/constants/jsonRenderThemes";
-import { useEffect, useRef, useState } from "react";
-import WorkspacePreviewJsonStringComponent from "./WorkspacePreviewJsonStringImageComponent/WorkspacePreviewJsonStringImageComponent";
-import WorkspacePreviewJsonStringUrlComponent from "./WorkspacePreviewJsonStringUrlComponent/WorkspacePreviewJsonStringUrlComponent";
+import { useRef } from "react";
 import useWorkspacePreviewContext from "../../../../../../Hooks/useWorkspacePreviewContext";
-
-// TODO: agregar un tema custom para json preview
+import { Editor } from "@monaco-editor/react";
 
 export default function WorkSpacePreviewJson() {
   const jsonPreviewContainerRef = useRef(null);
   const [workspacePreviewContext] = useWorkspacePreviewContext();
-  const [height, setHeight] = useState(0);
-  const [ready, setReady] = useState(false);
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      if (jsonPreviewContainerRef.current) {
-        const measuredHeight = jsonPreviewContainerRef.current.offsetHeight;
-        setHeight(measuredHeight);
-        setReady(true);
-      }
-    }, 0);
-
-    return () => clearTimeout(timeout);
-  }, []);
 
   return (
     <div
       className="workspace-preview-response_json-preview-container"
       ref={jsonPreviewContainerRef}
     >
-      {ready && (
-        <JsonView
-          value={
+      {workspacePreviewContext.responses.length > 0 && (
+        <Editor
+          height={"100%"}
+          defaultLanguage="json"
+          value={JSON.stringify(
             workspacePreviewContext.responses[
               workspacePreviewContext.currentResponseIdx
-            ].response
-          }
-          className="custom-scroll-bar"
-          displayDataTypes={false}
-          style={{
-            borderRadius: "7px",
-            fontSize: "20px",
-            maxHeight: "100%",
-            overflowY: "scroll",
-            height: `${height}px`,
-            ...githubDarkTheme,
+            ].response,
+            null,
+            2
+          )}
+          theme="vs-dark"
+          width={"100%"}
+          options={{
+            definitionLinkOpensInPeek: true,
+            links: true,
+            automaticLayout: true,
+            hover: true,
+            wordWrap: "on",
+            wordWrapColumn: 60,
+            readOnly: true,
+            fontSize: 20,
+            minimap: { enabled: false },
           }}
-        >
-          <JsonView.String
-            render={({ ...rest }, { type, value }) => {
-              const isImage =
-                /^https?:\/\/.*\.(jpg|jpeg|png|gif|bmp|webp|svg|tiff?|ico|avif)$/i.test(
-                  value
-                );
-              let isUrl;
-
-              try {
-                new URL(value);
-                isUrl = true;
-              } catch {
-                isUrl = false;
-              }
-
-              if (type === "type" && isImage) {
-                return <span />;
-              }
-
-              if (type === "value" && isImage) {
-                return (
-                  <WorkspacePreviewJsonStringComponent
-                    rest={rest}
-                    value={value}
-                  />
-                );
-              }
-
-              if (type === "value" && !isImage && isUrl) {
-                return (
-                  <WorkspacePreviewJsonStringUrlComponent
-                    value={value}
-                    rest={rest}
-                  />
-                );
-              }
-            }}
-          ></JsonView.String>
-        </JsonView>
+        ></Editor>
       )}
     </div>
   );
