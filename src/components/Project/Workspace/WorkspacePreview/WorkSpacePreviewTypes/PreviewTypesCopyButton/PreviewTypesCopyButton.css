@@ -8,6 +8,7 @@
   border: none;
   color: var(--primary-text-color);
   transition: opacity 0.2s ease;
+  z-index: 500;
 }
 
 .block-code_copy-button:hover {

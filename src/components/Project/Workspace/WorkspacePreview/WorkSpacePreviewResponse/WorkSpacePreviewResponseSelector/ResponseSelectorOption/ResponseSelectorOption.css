@@ -17,6 +17,10 @@
   background: var(--hover);
 }
 
+.responses-selector_options-container {
+  z-index: 1000;
+}
+
 .selector_option-status {
   font-weight: 700;
 }

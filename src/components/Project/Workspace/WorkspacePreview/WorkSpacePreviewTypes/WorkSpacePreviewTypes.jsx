@@ -7,11 +7,10 @@ import useWorkspacePreviewContext from "../../../../../Hooks/useWorkspacePreview
 import WorkspacePreviewHeader from "../WorkspacePreviewResponse/WorkSpacePreviewHeader/WorkspacePreviewHeader";
 import "./WorkSpacePreviewTypes.css";
 import { useEffect, useRef, useState } from "react";
-import SyntaxHighlighter from "react-syntax-highlighter";
-import { arta } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import PreviewTypesCopyButton from "./PreviewTypesCopyButton/PreviewTypesCopyButton";
 import PreviewTypesLanguagesSelector from "./PreviewTypesLanguagesSelector/PreviewTypesLanguagesSelector";
 import { supportedLanguages } from "../../../../../utils/constants/LanguagesSelectorConstants";
+import { Editor } from "@monaco-editor/react";
 
 export default function WorkSpacePreviewTypes() {
   const syntaxHighlighterRef = useRef(null);
@@ -81,15 +80,18 @@ export default function WorkSpacePreviewTypes() {
             ref={codeBlockContainerRef}
           >
             <PreviewTypesCopyButton types={types} />
-            <SyntaxHighlighter
+
+            <Editor
+              value={types}
               language={currentLanguage.languageSyntax}
-              className="block-code_highlighter custom-scroll-bar"
-              style={arta}
-              showLineNumbers
-              ref={syntaxHighlighterRef}
-            >
-              {types}
-            </SyntaxHighlighter>
+              theme="vs-dark"
+              options={{
+                fontSize: 18,
+                minimap: false,
+                readOnly: true,
+                readOnlyMessage: false,
+              }}
+            />
           </div>
         </div>
       )}

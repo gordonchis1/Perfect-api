@@ -36,6 +36,7 @@
   border-radius: 4px;
   max-height: 700px;
   overflow-y: auto;
+  z-index: 500;
 }
 
 .language-selector_option {
