@@ -77,8 +77,12 @@ export default function WorkspaceInputUrlHeaders() {
               if (nonEditableHeaders.includes(header.key)) {
                 return (
                   <div className="url-headers_header-container" key={index}>
-                    <div>{header.key}</div>
-                    <div>{header.value}</div>
+                    <div className="url-headers_ineditable-value">
+                      {header.key}
+                    </div>
+                    <div className="url-headers_ineditable-value">
+                      {header.value}
+                    </div>
                   </div>
                 );
               }
@@ -109,7 +113,7 @@ export default function WorkspaceInputUrlHeaders() {
                       handleChangeIsActive(index);
                     }}
                   />
-                  <button>
+                  <button className="url-headers_delete-button">
                     <FontAwesomeIcon icon={faTrash} />
                   </button>
                 </div>
