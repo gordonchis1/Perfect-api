@@ -5,7 +5,7 @@ import useWorkSpaceContentContext from "../../../../../../Hooks/WorkSpace/useWor
 import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../../../providers/FileManager/reducer";
 import useFilesContext from "../../../../../../Hooks/useFilesContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faAdd, faTrash } from "@fortawesome/free-solid-svg-icons";
 import ActiveCheckbox from "../../../../../Global/ActiveCheckbox/ActiveCheckbox";
 
 const nonEditableHeaders = ["Host", "Accept"];
@@ -67,11 +67,55 @@ export default function WorkspaceInputUrlHeaders() {
     setHeaders(updatedHeaders);
   };
 
+  const handleAddHeader = () => {
+    const updatedHeaders = [...headers, { key: "", value: "", isActive: true }];
+
+    filemanagerDispatch({
+      type: FILEMANAGER_REDUCER_ACTIONS.updateContentWithoutSaving,
+      payload: {
+        nodeId: filesContext.currentFile,
+        newContent: {
+          ...content,
+          headers: updatedHeaders,
+        },
+      },
+    });
+
+    setHeaders(updatedHeaders);
+  };
+
+  const handleDeleteHeader = (index) => {
+    const updatedHeaders = [...headers];
+    updatedHeaders.splice(index, 1);
+
+    filemanagerDispatch({
+      type: FILEMANAGER_REDUCER_ACTIONS.updateContentWithoutSaving,
+      payload: {
+        nodeId: filesContext.currentFile,
+        newContent: {
+          ...content,
+          headers: updatedHeaders,
+        },
+      },
+    });
+
+    setHeaders(updatedHeaders);
+  };
+
   return (
     <>
       {headers && (
         <div className="workspace-input-url-headers_container">
           <h1 className="url-headers_title">Headers</h1>
+          <div className="url-headers_options-container">
+            <button
+              className="headers-options_option-button"
+              onClick={handleAddHeader}
+            >
+              <span>Añadir</span>
+              <FontAwesomeIcon icon={faAdd} />
+            </button>
+          </div>
           <div className="url-headers_headers-container">
             {headers.map((header, index) => {
               if (nonEditableHeaders.includes(header.key)) {
@@ -113,7 +157,12 @@ export default function WorkspaceInputUrlHeaders() {
                       handleChangeIsActive(index);
                     }}
                   />
-                  <button className="url-headers_delete-button">
+                  <button
+                    className="url-headers_delete-button"
+                    onClick={() => {
+                      handleDeleteHeader(index);
+                    }}
+                  >
                     <FontAwesomeIcon icon={faTrash} />
                   </button>
                 </div>
