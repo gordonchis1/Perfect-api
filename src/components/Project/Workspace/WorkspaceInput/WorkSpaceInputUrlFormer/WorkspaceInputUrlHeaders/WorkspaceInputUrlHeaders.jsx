@@ -7,6 +7,8 @@ import useFilesContext from "../../../../../../Hooks/useFilesContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAdd, faTrash } from "@fortawesome/free-solid-svg-icons";
 import ActiveCheckbox from "../../../../../Global/ActiveCheckbox/ActiveCheckbox";
+import WorkspaceInputUrlHeadersOption from "./WorkspaceInputUrlHeadersOption/WorkspaceInputUrlHeadersOption";
+import WorkspaceInputUrlHeadersNonEditableHeaders from "./WorkspaceInputUrlHeadersNonEditableHeaders/WorkspaceInputUrlHeadersNonEditableHeaders";
 
 const nonEditableHeaders = ["Host", "Accept"];
 
@@ -101,6 +103,28 @@ export default function WorkspaceInputUrlHeaders() {
 
     setHeaders(updatedHeaders);
   };
+  const handleDeleteAllHeaders = () => {
+    const updatedHeaders = [];
+
+    headers.forEach((header) => {
+      if (nonEditableHeaders.includes(header.key)) {
+        updatedHeaders.push(header);
+      }
+    });
+
+    filemanagerDispatch({
+      type: FILEMANAGER_REDUCER_ACTIONS.updateContentWithoutSaving,
+      payload: {
+        nodeId: filesContext.currentFile,
+        newContent: {
+          ...content,
+          headers: updatedHeaders,
+        },
+      },
+    });
+
+    setHeaders(updatedHeaders);
+  };
 
   return (
     <>
@@ -108,26 +132,27 @@ export default function WorkspaceInputUrlHeaders() {
         <div className="workspace-input-url-headers_container">
           <h1 className="url-headers_title">Headers</h1>
           <div className="url-headers_options-container">
-            <button
-              className="headers-options_option-button"
+            <WorkspaceInputUrlHeadersOption
+              icon={faAdd}
+              text={"Añadir"}
               onClick={handleAddHeader}
-            >
-              <span>Añadir</span>
-              <FontAwesomeIcon icon={faAdd} />
-            </button>
+            />
+            <WorkspaceInputUrlHeadersOption
+              icon={faTrash}
+              text={"Eliminar Todo"}
+              onClick={handleDeleteAllHeaders}
+              color="red"
+            />
           </div>
           <div className="url-headers_headers-container">
             {headers.map((header, index) => {
               if (nonEditableHeaders.includes(header.key)) {
                 return (
-                  <div className="url-headers_header-container" key={index}>
-                    <div className="url-headers_ineditable-value">
-                      {header.key}
-                    </div>
-                    <div className="url-headers_ineditable-value">
-                      {header.value}
-                    </div>
-                  </div>
+                  <WorkspaceInputUrlHeadersNonEditableHeaders
+                    keyValue={header.key}
+                    value={header.value}
+                    key={index}
+                  />
                 );
               }
 
