@@ -15,6 +15,10 @@ export const fileContentDefault = {
     },
     { key: "User-Agent", value: "PerfectApi/0.1", isActive: true },
   ],
+  body: {
+    bodyContent: "",
+    bodyType: "",
+  },
   isRuning: false,
 };
 
@@ -29,5 +33,6 @@ RESPONSES
   isPinned: bool,
   queryParams: string,
   headers: []
+  body: object,
 }
 */
