@@ -2,6 +2,8 @@
   width: 100%;
   height: 100%;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
 }
 
 .format-selector_current-format-button {
@@ -43,4 +45,9 @@
 
 .format-selector_option:hover {
   background: var(--hover);
+}
+
+.former-body_body-content-container {
+  flex: 1;
+  margin-top: 10px;
 }
