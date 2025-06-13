@@ -3,6 +3,7 @@ import useWorkSpaceContentContext from "../../../../../../Hooks/WorkSpace/useWor
 import "./WorkSpaceInputUrlFormerBody.css";
 import UrlFormerBodyFormatSelector from "./UrlFormerBodyFormatSelector/UrlFormerBodyFormatSelector";
 import UrlFormerBodyEditor from "./UrlFormerBodyEditor/UrlFormerBodyEditor";
+import useFilesContext from "../../../../../../Hooks/useFilesContext";
 
 const supportedBodyFormat = {
   "Plain Text": {
@@ -28,14 +29,11 @@ export default function WorkSpaceInputUrlFormerBody() {
   const [currentFormat, setCurrentFormat] = useState(
     content?.body?.bodyType || "No body"
   );
+  const [filesContext] = useFilesContext();
 
   useEffect(() => {
-    if (content?.body?.bodyType) {
-      setCurrentFormat(content.body.bodyType);
-    } else {
-      setCurrentFormat("No body");
-    }
-  }, [content]);
+    setCurrentFormat(content?.body?.bodyType || "No body");
+  }, [filesContext.currentFile, content.body.bodyType]);
 
   return (
     <div className="workspace-input-url-former_body-container">

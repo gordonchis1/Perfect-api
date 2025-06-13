@@ -53,6 +53,7 @@ export default function WorkSpaceInputFormUrlButtonRun() {
       response = await window.fetch(content.url.parseUrl, {
         method: content.type,
         headers: headersToSend,
+        body: content?.body?.bodyContent || "",
       });
 
       dispatchFileManagerState({

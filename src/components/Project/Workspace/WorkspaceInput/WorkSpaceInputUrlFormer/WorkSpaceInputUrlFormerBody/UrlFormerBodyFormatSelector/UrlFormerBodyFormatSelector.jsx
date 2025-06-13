@@ -24,7 +24,6 @@ export default function UrlFormerBodyFormatSelector({
   });
 
   const handleChangeFormat = (format) => {
-    setCurrentFormat(format);
     const updatedHeaders = [...content.headers];
     const contentType = supportedBodyFormat[format].contentType;
 
