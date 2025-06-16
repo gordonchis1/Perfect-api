@@ -18,7 +18,7 @@ export default function UrlFormerBodyEditor({ language }) {
     setUpdatedContent(content?.body?.bodyContent || "");
   }, [content]);
 
-  useEffect(() => {
+  const handleChangeEditor = (value) => {
     filemanagerDispatch({
       type: FILEMANAGER_REDUCER_ACTIONS.updateContentWithoutSaving,
       payload: {
@@ -27,12 +27,12 @@ export default function UrlFormerBodyEditor({ language }) {
           ...content,
           body: {
             ...content.body,
-            bodyContent: updatedContent,
+            bodyContent: value,
           },
         },
       },
     });
-  }, [updatedContent]);
+  };
 
   return (
     <Editor
@@ -42,6 +42,7 @@ export default function UrlFormerBodyEditor({ language }) {
       theme="vs-dark"
       language={language}
       onChange={(value) => {
+        handleChangeEditor(value);
         setUpdatedContent(value);
       }}
       options={{
