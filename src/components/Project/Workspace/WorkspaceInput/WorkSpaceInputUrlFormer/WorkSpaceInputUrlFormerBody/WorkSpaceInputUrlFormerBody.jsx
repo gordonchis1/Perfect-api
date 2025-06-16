@@ -12,11 +12,12 @@ const supportedBodyFormat = {
   },
   JSON: {
     contentType: "application/json",
-    component: <h1>Hola mundo plain JSON</h1>,
+    component: <UrlFormerBodyEditor language={"json"} />,
   },
   XML: {
     contentType: "application/xml",
-    component: <h1>Hola mundo plain XML</h1>,
+    component: <UrlFormerBodyEditor language={"xml"} />,
+    defaultValue: "",
   },
   "No body": {
     contentType: null,

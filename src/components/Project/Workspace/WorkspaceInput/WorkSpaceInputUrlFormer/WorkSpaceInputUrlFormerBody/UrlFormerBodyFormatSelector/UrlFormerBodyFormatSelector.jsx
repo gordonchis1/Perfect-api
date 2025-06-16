@@ -1,5 +1,5 @@
 import "./UrlFormerBodyFormatSelector.css";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import useClickAway from "../../../../../../../Hooks/useClickAway";

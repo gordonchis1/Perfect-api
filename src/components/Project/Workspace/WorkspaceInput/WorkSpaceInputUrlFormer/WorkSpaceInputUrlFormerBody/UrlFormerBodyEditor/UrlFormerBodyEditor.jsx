@@ -48,7 +48,7 @@ export default function UrlFormerBodyEditor({ language }) {
       options={{
         fontSize: 20,
         minimap: false,
-        placeholder: "El contenido del body aqui",
+        placeholder: "// El contenido del body aqui",
       }}
     ></Editor>
   );
