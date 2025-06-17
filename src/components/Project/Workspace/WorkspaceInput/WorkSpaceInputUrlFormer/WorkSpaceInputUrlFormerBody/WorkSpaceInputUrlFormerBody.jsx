@@ -4,6 +4,7 @@ import "./WorkSpaceInputUrlFormerBody.css";
 import UrlFormerBodyFormatSelector from "./UrlFormerBodyFormatSelector/UrlFormerBodyFormatSelector";
 import UrlFormerBodyEditor from "./UrlFormerBodyEditor/UrlFormerBodyEditor";
 import useFilesContext from "../../../../../../Hooks/useFilesContext";
+import UrlFormerBodyNoBody from "./UrlFormerBodyNoBody/UrlFormerBodyNoBody";
 
 const supportedBodyFormat = {
   "Plain Text": {
@@ -21,7 +22,7 @@ const supportedBodyFormat = {
   },
   "No body": {
     contentType: null,
-    component: <h1>Hola mundo NO BODY</h1>,
+    component: <UrlFormerBodyNoBody />,
   },
 };
 

@@ -20,6 +20,7 @@
 }
 
 .workspace-input-form-url_types-options-container {
+  z-index: 200;
   border: 1px solid var(--borders);
   width: fit-content;
   margin: 10px 0 0 5px;
