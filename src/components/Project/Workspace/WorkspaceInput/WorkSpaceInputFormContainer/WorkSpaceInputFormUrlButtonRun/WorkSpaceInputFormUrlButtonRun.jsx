@@ -50,7 +50,7 @@ export default function WorkSpaceInputFormUrlButtonRun() {
         }
       });
 
-      if (content.type === "GET") {
+      if (content.type === "GET" || !content?.body?.bodyContent) {
         response = await window.fetch(content.url.parseUrl, {
           method: content.type,
           headers: headersToSend,

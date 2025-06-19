@@ -10,19 +10,22 @@ const supportedBodyFormat = {
   "Plain Text": {
     contentType: "text/plain",
     component: <UrlFormerBodyEditor language={"plaintext"} />,
+    defaultValue: "",
   },
   JSON: {
     contentType: "application/json",
     component: <UrlFormerBodyEditor language={"json"} />,
+    defaultValue: "{\n}",
   },
   XML: {
     contentType: "application/xml",
     component: <UrlFormerBodyEditor language={"xml"} />,
-    defaultValue: "",
+    defaultValue: "<>",
   },
   "No body": {
     contentType: null,
     component: <UrlFormerBodyNoBody />,
+    defaultValue: "",
   },
 };
 
