@@ -1,7 +1,17 @@
 import { Link } from "react-router";
 import AddToFavoriteButton from "./AddToFavoriteButton";
+import ProjectCardContextMenu from "./ProjectCardContextMenu/ProjectCardContextMenu";
+import { useState } from "react";
+
+const defaultContextMenuState = {
+  x: 0,
+  y: 0,
+  show: false,
+};
 
 export default function ProjectCard({ project, setProjects }) {
+  const [contextMenu, setContextMenu] = useState(defaultContextMenuState);
+
   function getTimeSinceLastUpdate(item) {
     const now = new Date();
     const lastUpdate = new Date(item.lastUpdate);
@@ -20,8 +30,26 @@ export default function ProjectCard({ project, setProjects }) {
     }
   }
 
+  const handleContextMenu = (event) => {
+    event.preventDefault();
+    const { clientX, clientY } = event;
+
+    setContextMenu({ x: clientX, y: clientY, show: true });
+  };
+
+  const handleCloseContextMenu = () => {
+    setContextMenu(defaultContextMenuState);
+  };
+
   return (
-    <div className="project-card">
+    <div className="project-card" onContextMenu={handleContextMenu}>
+      {contextMenu.show && (
+        <ProjectCardContextMenu
+          contextMenu={contextMenu}
+          handleCloseContextMenu={handleCloseContextMenu}
+          project={project}
+        />
+      )}
       <Link to={`/project/${project.id}`} className="project-card-link">
         <span className="project-card-name">{project.name}</span>
         <span className="project-card-lastupdate">
