@@ -1,16 +1,19 @@
 import "./ProjectCardContextMenu.css";
 import useClickAway from "../../../../../Hooks/useClickAway";
-import { useRef } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { useRef, useState } from "react";
+import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { deleteProject } from "../../../../../utils/deleteProject";
+import ProjectCardContextMenuOption from "./ProjectCardContextMenuOption/ProjectCardContextMenuOption";
+import PopUp from "../../../../Global/PopUp/PopUp";
 
+// TODO: Agreagr un pop up para confimar la elminiacion de un project
 export default function ProjectCardContextMenu({
   contextMenu,
   handleCloseContextMenu,
   setProjects,
   projects,
   project,
+  setIsRename,
 }) {
   const containerRef = useRef(null);
   useClickAway(containerRef, handleCloseContextMenu);
@@ -28,19 +31,30 @@ export default function ProjectCardContextMenu({
     deleteProject(project.id);
   };
 
+  const handleRename = () => {
+    setIsRename({ show: true, id: project.id });
+    handleCloseContextMenu();
+  };
+
   return (
-    <div
-      ref={containerRef}
-      className="project-card_context-menu-container"
-      style={{ top: `${contextMenu.y}px`, left: `${contextMenu.x}px` }}
-    >
-      <button
-        className="project-card_context-menu-option"
-        onClick={handleDeleteProject}
+    <>
+      <div
+        ref={containerRef}
+        className="project-card_context-menu-container"
+        style={{ top: `${contextMenu.y}px`, left: `${contextMenu.x}px` }}
       >
-        <FontAwesomeIcon icon={faTrash} />
-        <p>Eliminar</p>
-      </button>
-    </div>
+        <ProjectCardContextMenuOption
+          text={"Renombrar"}
+          icon={faPenToSquare}
+          onClick={handleRename}
+        />
+        <ProjectCardContextMenuOption
+          text={"Eliminar"}
+          icon={faTrash}
+          color="red"
+          onClick={handleDeleteProject}
+        />
+      </div>
+    </>
   );
 }
