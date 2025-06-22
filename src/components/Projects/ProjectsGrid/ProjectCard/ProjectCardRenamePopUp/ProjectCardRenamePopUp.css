@@ -1,14 +1,20 @@
 .rename-popup_content-container {
+  width: 500px;
+}
+
+.rename-popup_title {
+  margin-bottom: 16px;
   color: var(--primary-text-color);
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   font-size: 23px;
   font-weight: bold;
-  width: 500px;
 }
 
-.rename-popup_content-container p {
-  margin-bottom: 16px;
+.rename-popup_error-message {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  color: red;
 }
 
 .rename-popup_form {

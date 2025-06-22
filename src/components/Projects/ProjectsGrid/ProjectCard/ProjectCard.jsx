@@ -51,13 +51,15 @@ export default function ProjectCard({ project, setProjects, projects }) {
   const handleCloseRenamePopUp = () => {
     setIsRename(defaultRenamePopUpState);
   };
-  console.log(isRename);
 
   return (
     <>
       {isRename.show && (
         <ProjectCardRenamePopUp
           handleCloseRenamePopUp={handleCloseRenamePopUp}
+          id={isRename.id}
+          setProjects={setProjects}
+          projects={projects}
         />
       )}
       <div className="project-card" onContextMenu={handleContextMenu}>
