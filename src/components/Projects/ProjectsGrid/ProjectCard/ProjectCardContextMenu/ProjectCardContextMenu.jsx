@@ -8,12 +8,23 @@ import { deleteProject } from "../../../../../utils/deleteProject";
 export default function ProjectCardContextMenu({
   contextMenu,
   handleCloseContextMenu,
+  setProjects,
+  projects,
   project,
 }) {
   const containerRef = useRef(null);
   useClickAway(containerRef, handleCloseContextMenu);
 
   const handleDeleteProject = () => {
+    const updatedProjects = [...projects];
+
+    const deltedIndex = updatedProjects.findIndex(
+      (pro) => pro.id === project.id
+    );
+
+    updatedProjects.splice(deltedIndex, 1);
+    setProjects(updatedProjects);
+
     deleteProject(project.id);
   };
 

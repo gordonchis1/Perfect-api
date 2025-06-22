@@ -12,6 +12,7 @@ export default function ProjectsGrid({ projects, setProjects }) {
                 key={project.name}
                 project={project}
                 setProjects={setProjects}
+                projects={projects}
               />
             );
           })}

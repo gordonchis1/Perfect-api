@@ -9,7 +9,7 @@ const defaultContextMenuState = {
   show: false,
 };
 
-export default function ProjectCard({ project, setProjects }) {
+export default function ProjectCard({ project, setProjects, projects }) {
   const [contextMenu, setContextMenu] = useState(defaultContextMenuState);
 
   function getTimeSinceLastUpdate(item) {
@@ -48,6 +48,8 @@ export default function ProjectCard({ project, setProjects }) {
           contextMenu={contextMenu}
           handleCloseContextMenu={handleCloseContextMenu}
           project={project}
+          projects={projects}
+          setProjects={setProjects}
         />
       )}
       <Link to={`/project/${project.id}`} className="project-card-link">
