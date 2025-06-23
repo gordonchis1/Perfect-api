@@ -19,19 +19,27 @@
     "dialog:allow-save",
     "opener:default",
     "http:allow-fetch-read-body",
-    "http:allow-fetch-send",
+    "http:default",
     {
       "identifier": "http:default",
       "allow": [
         {
-          "url": "https://*"
+          "url": "https://**"
         },
         {
-          "url": "http://*"
+          "url": "http://**"
         },
         {
-          "url": "http://localhost/*"
-        }
+          "url": "http://localhost**"
+        },
+        {
+          "url": "https://localhost**"
+        },
+        { "url": "https://localhost**/" },
+        { "url": "http://localhost:**" },
+        { "url": "http://127.0.0.1:**" },
+        { "url": "http://*:**" },
+        { "url": "https://*:**" }
       ]
     }
   ]

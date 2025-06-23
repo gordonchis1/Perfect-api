@@ -4,6 +4,7 @@ import useProjectContext from "../../../../../../Hooks/FileManager/useProjectCon
 import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../../../providers/FileManager/reducer";
 import useFileManagerContext from "../../../../../../Hooks/FileManager/useFileMangerContext";
 import "./WorkSpaceInputFormUrlButtonRun.css";
+import { fetch } from "@tauri-apps/plugin-http";
 
 // todo: evitar que se envie la peticion si el input no es una url valida
 export default function WorkSpaceInputFormUrlButtonRun() {
@@ -51,12 +52,12 @@ export default function WorkSpaceInputFormUrlButtonRun() {
       });
 
       if (content.type === "GET" || !content?.body?.bodyContent) {
-        response = await window.fetch(content.url.parseUrl, {
+        response = await fetch(content.url.parseUrl, {
           method: content.type,
           headers: headersToSend,
         });
       } else {
-        response = await window.fetch(content.url.parseUrl, {
+        response = await fetch(content.url.parseUrl, {
           method: content.type,
           headers: headersToSend,
           body: content?.body?.bodyContent || "",
