@@ -6,7 +6,6 @@ import useFileManagerContext from "../../../../../../Hooks/FileManager/useFileMa
 import "./WorkSpaceInputFormUrlButtonRun.css";
 import { fetch } from "@tauri-apps/plugin-http";
 
-// todo: evitar que se envie la peticion si el input no es una url valida
 export default function WorkSpaceInputFormUrlButtonRun() {
   const [content] = useWorkSpaceContentContext();
   const [filesState] = useFilesContext();

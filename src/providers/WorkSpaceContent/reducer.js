@@ -16,6 +16,7 @@ const workSpaceContentReducer = (state, action) => {
     }
     case WORKSPACE_CONTENT_TYPES.changeContent: {
       const { newContent } = payload;
+
       if (newContent) {
         return newContent;
       }

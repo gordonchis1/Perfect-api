@@ -12,6 +12,7 @@
   "app": {
     "windows": [
       {
+        "userAgent": "PerfectApi/0.1",
         "title": "Perfect Api",
         "closable": true,
         "width": 800,
