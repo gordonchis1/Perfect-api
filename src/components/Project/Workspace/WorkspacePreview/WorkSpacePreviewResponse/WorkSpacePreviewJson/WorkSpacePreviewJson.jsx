@@ -2,6 +2,7 @@ import "./WorkSpacePreviewJson.css";
 import { useRef } from "react";
 import useWorkspacePreviewContext from "../../../../../../Hooks/useWorkspacePreviewContext";
 import { Editor } from "@monaco-editor/react";
+import LoaderSpiner from "../../../../../Global/LoaderSpiner/LoaderSpiner";
 
 export default function WorkSpacePreviewJson() {
   const jsonPreviewContainerRef = useRef(null);
@@ -14,6 +15,7 @@ export default function WorkSpacePreviewJson() {
     >
       {workspacePreviewContext.responses.length > 0 && (
         <Editor
+          loading={<LoaderSpiner size={"70px"} />}
           height={"100%"}
           defaultLanguage="json"
           value={JSON.stringify(

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import useFilesContext from "../../../../../../../Hooks/useFilesContext";
 import useFileManagerContext from "../../../../../../../Hooks/FileManager/useFileMangerContext";
 import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../../../../providers/FileManager/reducer";
+import LoaderSpiner from "../../../../../../Global/LoaderSpiner/LoaderSpiner";
 
 export default function UrlFormerBodyEditor({ language }) {
   const [content] = useWorkSpaceContentContext();
@@ -36,6 +37,7 @@ export default function UrlFormerBodyEditor({ language }) {
 
   return (
     <Editor
+      loading={<LoaderSpiner size={"70px"} />}
       value={updatedContent}
       width={"100%"}
       height={"100%"}

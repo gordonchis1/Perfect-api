@@ -11,6 +11,7 @@ import PreviewTypesCopyButton from "./PreviewTypesCopyButton/PreviewTypesCopyBut
 import PreviewTypesLanguagesSelector from "./PreviewTypesLanguagesSelector/PreviewTypesLanguagesSelector";
 import { supportedLanguages } from "../../../../../utils/constants/LanguagesSelectorConstants";
 import { Editor } from "@monaco-editor/react";
+import LoaderSpiner from "../../../../Global/LoaderSpiner/LoaderSpiner";
 
 export default function WorkSpacePreviewTypes() {
   const syntaxHighlighterRef = useRef(null);
@@ -82,6 +83,7 @@ export default function WorkSpacePreviewTypes() {
             <PreviewTypesCopyButton types={types} />
 
             <Editor
+              loading={<LoaderSpiner />}
               value={types}
               language={currentLanguage.languageSyntax}
               theme="vs-dark"
