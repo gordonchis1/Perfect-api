@@ -1,0 +1,21 @@
+.loader-spiner_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader-spiner {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 5px solid var(--primary-text-color);
+  border-top-color: transparent;
+  aspect-ratio: 1/1;
+  animation: spin 1.2s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
