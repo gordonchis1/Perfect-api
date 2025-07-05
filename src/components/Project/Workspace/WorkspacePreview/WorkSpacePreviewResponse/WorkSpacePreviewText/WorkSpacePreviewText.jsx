@@ -13,11 +13,11 @@ export default function WorkSpacePreviewText() {
           loading={<LoaderSpiner size={"70px"} />}
           height={"100%"}
           defaultLanguage="text"
-          value={
+          value={String(
             workspacePreviewContext.responses[
               workspacePreviewContext.currentResponseIdx
             ].response
-          }
+          )}
           theme="vs-dark"
           width={"100%"}
           options={{
