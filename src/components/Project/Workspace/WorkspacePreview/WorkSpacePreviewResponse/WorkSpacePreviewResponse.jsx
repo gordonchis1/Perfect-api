@@ -3,19 +3,38 @@ import { useEffect, useState } from "react";
 import WorkspacePreviewHeader from "./WorkSpacePreviewHeader/WorkspacePreviewHeader";
 import WorkSpacePreviewJson from "./WorkSpacePreviewJson/WorkSpacePreviewJson";
 import useWorkspacePreviewContext from "../../../../../Hooks/useWorkspacePreviewContext";
+import { detectFormat } from "../../../../../utils/detectFromatResponses";
+import { WORKSPACE_PREVIEW_ACTIONS } from "../../../../../providers/WorkspacePreview/WorkSpacePreviewProvider";
+import WorkSpacePreviewText from "./WorkSpacePreviewText/WorkSpacePreviewText";
+
+const renderPreviewType = {
+  json: <WorkSpacePreviewJson />,
+  html: <div>HTML Preview</div>,
+  text: <WorkSpacePreviewText />,
+};
 
 // TODO: actuzlizar el heigth en tiempo real
+// TODO: agreagr un componente cuando no hay respuesta
 export default function WorkSpacePreviewContainer() {
-  const [isJson, setIsJson] = useState(false);
-  const [workspacePreviewContext] = useWorkspacePreviewContext();
+  const [responseType, setResponseType] = useState(undefined);
+  const [workspacePreviewContext, workspacePreviewContextDispatcher] =
+    useWorkspacePreviewContext();
+  useEffect(() => {
+    workspacePreviewContextDispatcher({
+      type: WORKSPACE_PREVIEW_ACTIONS.SET_CURRENT_RESPONSE_IDX,
+      payload: 0,
+    });
+  }, [workspacePreviewContext.responses]);
 
   useEffect(() => {
     const response =
       workspacePreviewContext.responses[
         workspacePreviewContext.currentResponseIdx
       ]?.response;
-    const validJson = typeof response === "object" && response !== null;
-    setIsJson(validJson);
+
+    if (response !== undefined) {
+      setResponseType(detectFormat(response));
+    }
   }, [workspacePreviewContext]);
 
   return (
@@ -23,17 +42,7 @@ export default function WorkSpacePreviewContainer() {
       {workspacePreviewContext.responses.length > 0 && (
         <div className="workspace-preview_response-container">
           <WorkspacePreviewHeader />
-          {isJson ? (
-            <WorkSpacePreviewJson />
-          ) : (
-            <div>
-              {JSON.stringify(
-                workspacePreviewContext.responses[
-                  workspacePreviewContext.currentResponseIdx
-                ].response
-              )}
-            </div>
-          )}
+          {renderPreviewType[responseType]}
         </div>
       )}
     </>
