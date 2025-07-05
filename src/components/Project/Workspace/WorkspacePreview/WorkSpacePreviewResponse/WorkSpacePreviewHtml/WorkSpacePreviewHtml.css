@@ -1,0 +1,13 @@
+.workspace-preview-response_html-preview-container {
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  max-height: 100%;
+  overflow: hidden;
+}
+
+.workspace-preview-response_html-preview {
+  width: 100%;
+  height: 100%;
+  background: white;
+}

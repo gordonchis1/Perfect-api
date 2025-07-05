@@ -6,10 +6,11 @@ import useWorkspacePreviewContext from "../../../../../Hooks/useWorkspacePreview
 import { detectFormat } from "../../../../../utils/detectFromatResponses";
 import { WORKSPACE_PREVIEW_ACTIONS } from "../../../../../providers/WorkspacePreview/WorkSpacePreviewProvider";
 import WorkSpacePreviewText from "./WorkSpacePreviewText/WorkSpacePreviewText";
+import WorksSpacePreviewHtml from "./WorkSpacePreviewHtml/WorkSpacePreviewHtml";
 
 const renderPreviewType = {
   json: <WorkSpacePreviewJson />,
-  html: <div>HTML Preview</div>,
+  html: <WorksSpacePreviewHtml />,
   text: <WorkSpacePreviewText />,
 };
 
