@@ -5,6 +5,12 @@
   "identifier": "com.test.dev",
   "plugins": {
     "updater": {
+      "windows": {
+        "installMode": "basicUi"
+      },
+      "endpoints": [
+        "https://github.com/gordonchis1/Perfect-api/master/latest.json"
+      ],
       "active": true,
       "dialog": true,
       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDczNkMxQkM1REUxQjc5NDEKUldSQmVSdmV4UnRzYy92cFdpS3ZZYVlRN2V0ODJSalpMdG45ZnJPeTQxQmRvQnhKZTdCMXRwZGUK"
