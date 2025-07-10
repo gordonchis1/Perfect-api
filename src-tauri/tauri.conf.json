@@ -1,8 +1,15 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
-  "productName": "api-tester",
+  "productName": "Perfect Api",
   "version": "0.1.0",
   "identifier": "com.test.dev",
+  "plugins": {
+    "updater": {
+      "active": true,
+      "dialog": true,
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDczNkMxQkM1REUxQjc5NDEKUldSQmVSdmV4UnRzYy92cFdpS3ZZYVlRN2V0ODJSalpMdG45ZnJPeTQxQmRvQnhKZTdCMXRwZGUK"
+    }
+  },
   "build": {
     "frontendDist": "../dist",
     "devUrl": "http://localhost:3000",
@@ -28,6 +35,7 @@
   },
 
   "bundle": {
+    "createUpdaterArtifacts": true,
     "active": true,
     "targets": "all",
     "icon": [
