@@ -1,0 +1,11 @@
+{
+  "version": "0.1.0",
+  "notes": "First version of Perfect api.",
+  "pub_date": "2025-07-09T20:34:19-06:00",
+  "plataforms": {
+    "windows_x86_64": {
+      "url": "https://github.com/gordonchis1/Perfect-api/releases/download/Alpha/Perfect.Api_0.1.0_x64-setup.exe",
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVSQmVSdmV4UnRzYzJhTk0xQ3RCSHJIWU1CbFJSVWNzY3lWTG5xUjF5QlNEYUszWnJ6WjhQVWJMME12UUFRYjNsTDZQMUtaWXJyT3o0YnYwVnRWalJIcHdxbmVCZ0FIamd3PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzUyMjAwMDcwCWZpbGU6UGVyZmVjdCBBcGlfMC4xLjBfeDY0LXNldHVwLmV4ZQpGVjliWE93bVV6dlo3dUp3QkprSm1PcXVYRzFyU1Z4L3JUK0k3Y2NkOHJWaml3YUpwQnpxcmxuOGZBamEveVlGYnBMUmZnNnRnaVZzWEFrM3FCd09Cdz09Cg=="
+    }
+  }
+}
