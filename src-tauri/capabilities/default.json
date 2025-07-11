@@ -19,7 +19,6 @@
     "dialog:allow-save",
     "opener:default",
     "http:allow-fetch-read-body",
-    "http:default",
     "updater:default",
     {
       "identifier": "http:default",
