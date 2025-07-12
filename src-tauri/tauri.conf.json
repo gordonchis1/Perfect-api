@@ -9,7 +9,7 @@
         "installMode": "basicUi"
       },
       "endpoints": [
-        "https://github.com/gordonchis1/Perfect-api/master/latest.json"
+        "https://github.com/gordonchis1/Perfect-api/releases/latest/download/latest.json"
       ],
       "active": true,
       "dialog": true,

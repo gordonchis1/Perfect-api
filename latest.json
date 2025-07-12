@@ -1,11 +1,11 @@
 {
   "version": "0.1.1",
   "notes": "Perfect api alpha release.",
-  "pub_date": "2025-07-10T23:04:39-06:00",
+  "pub_date": "2025-07-12T01:21:42-06:00",
   "platforms": {
     "windows_x86_64": {
-      "url": "https://github.com/gordonchis1/Perfect-api/releases/download/v0.1.1-alpha/Perfect.Api_0.1.1_x64-setup.exe",
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVSQmVSdmV4UnRzY3hPcHJwejg4MTdscE1IVEN5eEFYQW94QytCYlBhQk5PbVdvN2RSWXkxQUhmY1hoeHMzS09aZW54cVFidEJzeVQ3Z09td3FEaWZob1ZGeXJuT2oyYVE4PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzUyMjA5NzQ0CWZpbGU6UGVyZmVjdCBBcGlfMC4xLjFfeDY0LXNldHVwLmV4ZQpDbStkUXM2T2JYMEZ3VXJ5TjcwVWp0Y2VFSWFNT3ZsRUw2OWIwSWZ5TEJDVDZFb1hTRnFwSytwM3Q2WUc0aW5wNUpFZUJoMThmTFZrWlovSDZlYk9EZz09Cg=="
+      "url": "https://github.com/gordonchis1/Perfect-api/releases/download/v0.1.1/Perfect.Api_0.1.1_x64-setup.exe",
+      "signature": ""
     }
   }
 }

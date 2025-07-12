@@ -2,8 +2,8 @@ import { documentDir, join } from "@tauri-apps/api/path";
 import { exists, mkdir, writeTextFile } from "@tauri-apps/plugin-fs";
 
 async function createDocumentDir() {
-  const docuemntPath = await documentDir();
-  const path = await join(docuemntPath, "perfect api");
+  const documentPath = await documentDir();
+  const path = await join(documentPath, "perfect api");
   const existDir = await exists(path);
 
   // Check if the directory already exists
@@ -18,8 +18,8 @@ async function createDocumentDir() {
 }
 
 async function createProjectsFile() {
-  const docuemntPath = await documentDir();
-  const path = await join(docuemntPath, "perfect api", "projects.json");
+  const documentPath = await documentDir();
+  const path = await join(documentPath, "perfect api", "projects.json");
   const existFile = await exists(path);
 
   // Check if the file already exists

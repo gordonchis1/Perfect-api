@@ -1,9 +1,10 @@
-import { getProjectsFile } from "./createDocumentDir";
+import { documentDir, join } from "@tauri-apps/api/path";
 import { readTextFile } from "@tauri-apps/plugin-fs";
 
 export async function getProjects() {
-  const path = await getProjectsFile();
-
+  // TODO: sacar le path de el archivo de la configuracion
+  const docDir = await documentDir();
+  const path = await join(docDir, "perfect api", "projects.json");
   try {
     const projectsData = await readTextFile(path);
     const projects = JSON.parse(projectsData);
