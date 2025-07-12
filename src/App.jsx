@@ -4,35 +4,10 @@ import Projects from "./components/Projects/Projects";
 import { Route, Routes, useMatch } from "react-router";
 import ResizeContainer from "./components/Global/ResizeContainer/ResizeContainer";
 import Project from "./components/Project/Project";
-import { useEffect, useState } from "react";
-import { getVersion } from "@tauri-apps/api/app";
-import { check } from "@tauri-apps/plugin-updater";
-
-const defaultUpdateState = {
-  isUpdateAvailable: false,
-  currentVersion: "",
-};
-
+import UpdateNotification from "./components/Global/UpdateNotification/UpdateNotification";
 // TODO: change defaultWidthTo px
 function App() {
-  const [updater, setUpdater] = useState(defaultUpdateState);
   const match = useMatch("/project/:id");
-
-  useEffect(() => {
-    const getUpdateInfo = async () => {
-      const currentVersion = await getVersion();
-      const checkForUpdate = await check();
-
-      if (checkForUpdate !== null) {
-        setUpdater({
-          isUpdateAvailable: true,
-          currentVersion,
-        });
-      }
-    };
-
-    getUpdateInfo();
-  }, []);
 
   return (
     <div
@@ -43,24 +18,7 @@ function App() {
         overflow: "hidden",
       }}
     >
-      {updater.isUpdateAvailable && (
-        <div
-          className="update-notfication_container"
-          style={{
-            zIndex: 1000,
-            position: "absolute",
-            right: 0,
-            bottom: 0,
-            background: "red",
-            padding: "20px",
-            color: "white",
-          }}
-        >
-          <p className="update-notfication_text">
-            New version available: {updater.currentVersion}
-          </p>
-        </div>
-      )}
+      <UpdateNotification />
       <ResizeContainer
         resizeColor={"var(--borders)"}
         defaultWidth={match !== null ? 4 : 14}

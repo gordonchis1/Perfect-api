@@ -18,6 +18,7 @@
   --error: #ff0000;
   --success: #329432;
   --inactive: #8c8c8c;
+  --warning: #ff9800;
 }
 
 .custom-scroll-bar::-webkit-scrollbar {
