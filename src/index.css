@@ -40,4 +40,5 @@
 
 body {
   background: var(--background);
+  overflow: hidden;
 }

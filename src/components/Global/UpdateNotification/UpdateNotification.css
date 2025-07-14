@@ -9,4 +9,57 @@
   border-radius: 4px;
   padding: 20px;
   border: 1px solid var(--borders);
+  display: flex;
+  user-select: none;
+  flex-direction: column;
+}
+
+.update-notification_update-button {
+  background: var(--accent-background);
+  color: var(--primary-text-color);
+  border: none;
+  padding: 7px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.update-notification_update-progress-container {
+  background: var(--hover);
+  color: var(--primary-text-color);
+  display: flex;
+  border-radius: 4px;
+  margin-top: 10px;
+  width: 100%;
+  height: 30px;
+}
+
+.update-notification_update-progress {
+  height: 100%;
+
+  background: var(--accent-background);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(200px);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

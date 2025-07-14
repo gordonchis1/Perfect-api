@@ -1,12 +1,12 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
   "productName": "Perfect Api",
-  "version": "0.1.1",
+  "version": "0.1.0",
   "identifier": "com.test.dev",
   "plugins": {
     "updater": {
       "windows": {
-        "installMode": "basicUi"
+        "installMode": "passive"
       },
       "endpoints": [
         "https://github.com/gordonchis1/Perfect-api/releases/latest/download/latest.json"
