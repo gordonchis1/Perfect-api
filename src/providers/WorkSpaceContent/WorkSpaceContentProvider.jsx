@@ -20,7 +20,10 @@ export default function WorkSpaceContentProvider({ children }) {
       const node = fileManagerContext.getNodeById(filesContext.currentFile);
       if (node) {
         const content = node.content;
-        dispatch({ type: WORKSPACE_CONTENT_TYPES.init, payload: { content } });
+        dispatch({
+          type: WORKSPACE_CONTENT_TYPES.init,
+          payload: { content: { ...content, name: node.name, id: node.id } },
+        });
       }
     } else {
       dispatch({

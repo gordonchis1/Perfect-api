@@ -32,9 +32,8 @@ export default function WorkSpaceInputFormUrlButtonRun() {
     let timeTaken;
     let response;
     const start = performance.now();
+    const headersToSend = {};
     try {
-      const headersToSend = {};
-
       content.headers.forEach((header) => {
         if (header.isActive) {
           if (header.key === "Host") {
@@ -100,10 +99,7 @@ export default function WorkSpaceInputFormUrlButtonRun() {
       time: timeTaken,
       status: response?.status || 0,
       response: parsedResponse,
-      headers:
-        response === undefined
-          ? {}
-          : Object.fromEntries(response.headers.entries()),
+      headers: response === undefined ? {} : headersToSend,
       url: content.url.parseUrl,
       queryParams: content.url.queryParams,
       isPinned: false,

@@ -25,6 +25,7 @@
     "@tauri-apps/plugin-opener": "^2.2.7",
     "@tauri-apps/plugin-process": "^2.3.0",
     "@tauri-apps/plugin-updater": "^2.9.0",
+    "marked": "^16.0.0",
     "nanoid": "^5.1.5",
     "quicktype-core": "^23.2.6",
     "react": "^19.0.0",
