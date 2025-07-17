@@ -23,6 +23,7 @@ export default function WorkspacePreviewDocs() {
       headers: currentResponse?.headers || [],
       method: content.type,
       queryParams: currentResponse?.queryParams || [],
+      response: currentResponse?.response || {},
     };
 
     setDoscContent(generateDocs(docsStrcture));

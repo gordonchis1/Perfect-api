@@ -72,7 +72,23 @@ const queryParams = (format, queryParams) => {
   }
 };
 
-const response = (format, response) => {};
+const response = (format, response) => {
+  let parsedResponse = "";
+
+  try {
+    parsedResponse = JSON.stringify(response, null, 2);
+  } catch {
+    parsedResponse = String(response);
+  }
+
+  switch (format) {
+    case "markdown":
+      return `- **✅ Respuesta**  \n \`\`\`json\n${parsedResponse
+        .split("\n")
+        .map((line) => "    " + line)
+        .join("\n")}\n    \`\`\``;
+  }
+};
 
 export const generateDocs = (content) => {
   return `
@@ -91,5 +107,7 @@ ${methodType("markdown", content.method)}
 ${headers("markdown", content.headers)}
   \n
 ${queryParams("markdown", content.queryParams)}
+  \n
+${response("markdown", content.response)}
   `;
 };

@@ -15,6 +15,9 @@ const multipleContainerContainers = {
   Body: {
     component: <WorkSpaceInputUrlFormerBody />,
   },
+  Docs: {
+    component: <h1>Docs editor</h1>,
+  },
 };
 const defaultContainer = "URL";
 
