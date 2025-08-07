@@ -6,14 +6,14 @@ import { useParams } from "react-router";
 import { getProjectById } from "../../utils/getProjects";
 
 export const FilesContext = createContext([]);
-export const filesContextDefaulttValue = {
+export const filesContextDefaultValue = {
   currentFile: "",
   openFiles: [],
 };
 
 export default function FilesProvider({ children }) {
   const { id } = useParams();
-  const [state, dispatch] = useReducer(filesReducer, filesContextDefaulttValue);
+  const [state, dispatch] = useReducer(filesReducer, filesContextDefaultValue);
   const [isInit, setIsInit] = useState(false);
   const [fileManagerState] = useFileManagerContext();
 
