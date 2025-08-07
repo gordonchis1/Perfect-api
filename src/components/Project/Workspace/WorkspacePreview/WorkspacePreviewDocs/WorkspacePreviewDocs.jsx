@@ -4,13 +4,11 @@ import { generateDocs } from "../../../../../utils/generateDocs/generateDocs";
 import useWorkSpaceContentContext from "../../../../../Hooks/WorkSpace/useWorkSpaceContentContext";
 import { marked } from "marked";
 import useWorkspacePreviewContext from "../../../../../Hooks/useWorkspacePreviewContext";
-import useDocsContext from "../../../../../Hooks/useDocsContext";
 
 export default function WorkspacePreviewDocs() {
   const [content] = useWorkSpaceContentContext();
   const [docsContent, setDoscContent] = useState("");
   const [workspacePreviewContext] = useWorkspacePreviewContext();
-  const [docsContext] = useDocsContext();
 
   useEffect(() => {
     const currentResponse =
@@ -18,17 +16,7 @@ export default function WorkspacePreviewDocs() {
         workspacePreviewContext.currentResponseIdx
       ];
 
-    const docsStrcture = {
-      name: content.name,
-      url: currentResponse?.url || content.url,
-      description: content.description || "Agrega una descripcion",
-      headers: currentResponse?.headers || [],
-      method: content.type,
-      queryParams: currentResponse?.queryParams || [],
-      response: currentResponse?.response || {},
-    };
-
-    setDoscContent(generateDocs(docsStrcture));
+    setDoscContent(generateDocs(content.docs, currentResponse?.response || {}));
   }, [content, workspacePreviewContext]);
 
   return (

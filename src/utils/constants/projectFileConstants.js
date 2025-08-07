@@ -20,6 +20,7 @@ export const fileContentDefault = {
     bodyType: "",
   },
   isRuning: false,
+  docs: {},
 };
 
 /*
@@ -34,5 +35,6 @@ RESPONSES
   queryParams: string,
   headers: []
   body: object,
+  docs: object,
 }
 */

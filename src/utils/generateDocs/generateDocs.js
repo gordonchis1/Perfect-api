@@ -90,7 +90,20 @@ const response = (format, response) => {
   }
 };
 
-export const generateDocs = (content) => {
+export const generateDocsStructure = (responseData, fileData) => {
+  return {
+    name: fileData.name,
+    url: responseData.url,
+    description: "",
+    headers: responseData?.headers || [],
+    method: fileData.type,
+    queryParams: responseData?.queryParams || [],
+    config: {},
+  };
+};
+
+export const generateDocs = (content, lastReponse) => {
+  console.log(lastReponse, "last reponse");
   return `
 ${title("markdown", content.name)}
   \n
@@ -108,6 +121,6 @@ ${headers("markdown", content.headers)}
   \n
 ${queryParams("markdown", content.queryParams)}
   \n
-${response("markdown", content.response)}
+${response("markdown", lastReponse)}
   `;
 };

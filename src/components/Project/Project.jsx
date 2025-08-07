@@ -8,7 +8,6 @@ import useWidthObserver from "../../Hooks/useWidthObserver";
 import ProjectProviders from "./ProjectProviders";
 import WorkspaceContainer from "./Workspace/WorkspaceContainer";
 import WorkSpaceContentProvider from "../../providers/WorkSpaceContent/WorkSpaceContentProvider";
-import DocsProvider from "../../providers/DocsProvider/DocsProvider";
 
 export default function Project() {
   const container = useRef(null);
@@ -41,12 +40,10 @@ export default function Project() {
                 </ResizeContainer.LeftContainer>
                 <ResizeContainer.RightContainer>
                   <WorkSpaceContentProvider>
-                    <DocsProvider>
-                      <div className="workspace-container">
-                        <TabsContainer />
-                        <WorkspaceContainer />
-                      </div>
-                    </DocsProvider>
+                    <div className="workspace-container">
+                      <TabsContainer />
+                      <WorkspaceContainer />
+                    </div>
                   </WorkSpaceContentProvider>
                 </ResizeContainer.RightContainer>
               </ResizeContainer>

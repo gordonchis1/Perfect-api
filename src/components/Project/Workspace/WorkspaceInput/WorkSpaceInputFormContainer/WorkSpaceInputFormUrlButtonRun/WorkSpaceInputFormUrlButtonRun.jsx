@@ -5,6 +5,7 @@ import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../../../providers/FileMan
 import useFileManagerContext from "../../../../../../Hooks/FileManager/useFileMangerContext";
 import "./WorkSpaceInputFormUrlButtonRun.css";
 import { fetch } from "@tauri-apps/plugin-http";
+import { generateDocsStructure } from "../../../../../../utils/generateDocs/generateDocs";
 
 export default function WorkSpaceInputFormUrlButtonRun() {
   const [content] = useWorkSpaceContentContext();
@@ -112,6 +113,10 @@ export default function WorkSpaceInputFormUrlButtonRun() {
         newContent: {
           ...content,
           responses: newResponse,
+          docs: generateDocsStructure(
+            newResponse[newResponse.length - 1],
+            content
+          ),
         },
         nodeId: filesState.currentFile,
         projectId: id,

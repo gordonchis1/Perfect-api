@@ -6,7 +6,6 @@ import ResizeContainer from "./components/Global/ResizeContainer/ResizeContainer
 import Project from "./components/Project/Project";
 import UpdateNotification from "./components/Global/UpdateNotification/UpdateNotification";
 
-// TODO: change defaultWidthTo px
 function App() {
   const match = useMatch("/project/:id");
 
