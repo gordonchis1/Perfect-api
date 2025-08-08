@@ -7,7 +7,7 @@ export const docsReducer = (state, action) => {
 
   switch (type) {
     case DOCS_REDUCER_ACTION.init: {
-      return state;
+      return payload;
     }
     default:
       return state;

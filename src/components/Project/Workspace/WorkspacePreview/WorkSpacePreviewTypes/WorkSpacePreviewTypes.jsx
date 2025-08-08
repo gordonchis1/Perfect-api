@@ -87,6 +87,8 @@ export default function WorkSpacePreviewTypes() {
               value={types}
               language={currentLanguage.languageSyntax}
               theme="vs-dark"
+              path="types.ts"
+              defaultPath="types.ts"
               options={{
                 fontSize: 18,
                 minimap: false,

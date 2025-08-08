@@ -12,6 +12,8 @@ export default function WorkSpacePreviewJson() {
         <Editor
           loading={<LoaderSpiner size={"70px"} />}
           height={"100%"}
+          path="response.json"
+          defaultPath="response.json"
           defaultLanguage="json"
           value={JSON.stringify(
             workspacePreviewContext.responses[

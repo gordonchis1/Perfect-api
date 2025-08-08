@@ -86,7 +86,8 @@ const response = (format, response) => {
       return `- **✅ Respuesta**  \n \`\`\`json\n${parsedResponse
         .split("\n")
         .map((line) => "    " + line)
-        .join("\n")}\n    \`\`\``;
+        .join("\n")} 
+ \`\`\``;
   }
 };
 
@@ -103,24 +104,23 @@ export const generateDocsStructure = (responseData, fileData) => {
 };
 
 export const generateDocs = (content, lastReponse) => {
-  console.log(lastReponse, "last reponse");
   return `
 ${title("markdown", content.name)}
-  \n
+
 ${baseUrl("markdown", content.url)}
-  \n
+
 ---
-  \n
+
 ${subtitle("markdown", content.url)}
-  \n
+
 ${description("markdown", content.description)}
-  \n
+
 ${methodType("markdown", content.method)}
-  \n
+
 ${headers("markdown", content.headers)}
-  \n
+
 ${queryParams("markdown", content.queryParams)}
-  \n
+
 ${response("markdown", lastReponse)}
   `;
 };
