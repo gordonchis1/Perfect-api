@@ -1,6 +1,6 @@
 import "./WorkspacePreviewDocs.css";
-import { marked } from "marked";
 import useDocsContext from "../../../../../Hooks/useDocsContext";
+import { marked } from "marked";
 
 export default function WorkspacePreviewDocs() {
   const [docsContext] = useDocsContext();
@@ -17,7 +17,7 @@ export default function WorkspacePreviewDocs() {
               Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
           } 
         </style>`}
-      ></iframe>
+      />
     </div>
   );
 }

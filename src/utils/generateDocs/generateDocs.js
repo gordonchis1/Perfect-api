@@ -41,15 +41,16 @@ const description = (format, description) => {
   }
 };
 const headers = (format, headers) => {
+  if (!headers) return;
   const parseHeaders = JSON.stringify(headers, null, 2);
-
   switch (format) {
     case "markdown":
-      if (headers.length !== 0) {
-        return `- 📬 **Headers:**\n\n    \`\`\`json\n${parseHeaders
+      if (headers?.length !== 0) {
+        return `- 📬 **Headers:**\n   \`\`\`json\n${parseHeaders
           .split("\n")
           .map((line) => "    " + line)
-          .join("\n")}\n    \`\`\``;
+          .join("\n")}
+    \`\`\``;
       }
       return "";
   }
@@ -119,9 +120,11 @@ ${description("markdown", content.description)}
 ${methodType("markdown", content.method)}
 
 ${headers("markdown", content.headers)}
-
-${queryParams("markdown", content.queryParams)}
-
+${
+  content.queryParams && content.queryParams.length > 0
+    ? queryParams("markdown", content.queryParams)
+    : ""
+}
 ${response("markdown", lastReponse)}
   `;
 };

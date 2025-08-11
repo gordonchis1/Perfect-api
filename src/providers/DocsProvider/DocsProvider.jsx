@@ -15,7 +15,7 @@ export default function DocsProvider({ children }) {
       type: DOCS_REDUCER_ACTION.init,
       payload: generateDocs(
         content.docs,
-        content.responses[content?.responses?.length - 1].response || {}
+        content.responses[content?.responses?.length - 1]?.response || {}
       ),
     });
   }, [content]);
