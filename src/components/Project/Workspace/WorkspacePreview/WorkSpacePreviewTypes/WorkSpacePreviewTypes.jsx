@@ -4,7 +4,7 @@ import {
   quicktype,
 } from "quicktype-core";
 import useWorkspacePreviewContext from "../../../../../Hooks/useWorkspacePreviewContext";
-import WorkspacePreviewHeader from "../WorkspacePreviewResponse/WorkSpacePreviewHeader/WorkspacePreviewHeader";
+import WorkspacePreviewHeader from "../WorkSpacePreviewResponse/WorkSpacePreviewHeader/WorkspacePreviewHeader";
 import "./WorkSpacePreviewTypes.css";
 import { useEffect, useRef, useState } from "react";
 import PreviewTypesCopyButton from "./PreviewTypesCopyButton/PreviewTypesCopyButton";

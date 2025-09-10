@@ -2,7 +2,7 @@
 // TODO: cambiar donde se identfica por el id
 
 import { nanoid } from "nanoid";
-import { fileContentDefault } from "./constants/ProjectFileConstants";
+import { fileContentDefault } from "./constants/projectFileConstants.js";
 
 export class VirtualFileSystem {
   constructor(jsonData = null) {
