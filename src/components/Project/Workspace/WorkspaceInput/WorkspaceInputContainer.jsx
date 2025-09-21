@@ -4,6 +4,7 @@ import MultipleContainer from "../../../Global/MultipleContainer/MultipleContain
 import WorkSpaceInputUrlFormerContainer from "./WorkSpaceInputUrlFormer/WorkSpaceInputUrlFormerContainer";
 import WorkspaceInputUrlHeaders from "./WorkSpaceInputUrlFormer/WorkspaceInputUrlHeaders/WorkspaceInputUrlHeaders";
 import WorkSpaceInputUrlFormerBody from "./WorkSpaceInputUrlFormer/WorkSpaceInputUrlFormerBody/WorkSpaceInputUrlFormerBody";
+import WorkSpaceInputUrlFormerCode from "./WorkSpaceInputUrlFormer/WorkSpaceInputUrlFormerCode/WorkSpaceInputUrlFormerCode";
 
 const multipleContainerContainers = {
   URL: {
@@ -14,6 +15,9 @@ const multipleContainerContainers = {
   },
   Body: {
     component: <WorkSpaceInputUrlFormerBody />,
+  },
+  Code: {
+    component: <WorkSpaceInputUrlFormerCode />,
   },
 };
 const defaultContainer = "URL";
