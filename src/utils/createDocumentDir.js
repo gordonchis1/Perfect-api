@@ -1,20 +1,39 @@
-import { documentDir, join } from "@tauri-apps/api/path";
+import { documentDir, homeDir, join } from "@tauri-apps/api/path";
 import { exists, mkdir, writeTextFile } from "@tauri-apps/plugin-fs";
 
+// ! Refact function
 async function createDocumentDir() {
-  const documentPath = await documentDir();
-  const path = await join(documentPath, "perfect api");
-  const existDir = await exists(path);
-
-  // Check if the directory already exists
-  if (existDir) return;
-
   try {
-    await mkdir(path, { recursive: true });
-    window.localStorage.setItem("documentDir", path);
+    const documentPath = await documentDir();
+    const path = await join(documentPath, "perfect api");
+    const existDir = await exists(path);
+
+    // Check if the directory already exists
+    if (existDir) return;
+    try {
+      await mkdir(path, { recursive: true });
+      window.localstorage.setitem("documentdir", path);
+    } catch (error) {
+      console.error("error creating directory:", error);
+    }
   } catch (error) {
-    console.error("Error creating directory:", error);
+    const userHomeDirPath = await homeDir()
+    const path = await join(userHomeDirPath, "perfect api");
+    const existDir = await exists(path)
+
+    if (existDir) return;
+
+    try {
+      await mkdir(path, { recursive: true });
+      window.localstorage.setitem("documentdir", path);
+    } catch (error) {
+      console.error("error creating directory:", error);
+    }
+
   }
+
+
+
 }
 
 async function createProjectsFile() {
