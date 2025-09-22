@@ -11,10 +11,6 @@ import { initUserConfig } from "./utils/userConfiguration/initUserConfguration";
 function App() {
   const match = useMatch("/project/:id");
 
-  useEffect(() => {
-    initUserConfig();
-  }, []);
-
   return (
     <div
       style={{

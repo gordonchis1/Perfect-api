@@ -27,7 +27,7 @@ export async function createNewProjectInProjectsFile(newProject) {
 // Function to create a new project file
 // return the path of the new project file
 export async function createNewProjectFile(newProject) {
-  const path = getStorageDir();
+  const path = await getStorageDir();
   const projectPath = await join(path, newProject.name + ".json");
 
   try {

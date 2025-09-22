@@ -6,7 +6,7 @@ export const renameProject = async (id, newName) => {
   if (!id) throw new Error("invalid project id");
 
   const filePath = await getProjectsFile();
-  const projectsDirPath = getStorageDir();
+  const projectsDirPath = await getStorageDir();
 
   try {
     const newPath = await join(projectsDirPath, newName + ".json");
