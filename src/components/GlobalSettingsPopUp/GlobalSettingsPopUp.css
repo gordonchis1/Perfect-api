@@ -12,24 +12,27 @@
 }
 
 .global-settings-pop-up_container {
-  width: 100px;
-  height: 100px;
+  width: 80%;
+  height: 75%;
   background: var(--background);
   position: absolute;
-  animation: fade-in 0.3s ease-in;
   border: 1px solid var(--borders);
+  animation: fade-in 0.2s ease-in;
   border-radius: 7px;
   color: var(--primary-text-color);
+
+  display: flex;
 }
 
 @keyframes fade-in {
   0% {
     transform: translateY(1000px);
   }
-  50% {
-    transform: translateY(500px);
-  }
   100% {
     transform: translateY(0);
   }
+}
+
+.settings-main-container {
+  flex-grow: 8;
 }

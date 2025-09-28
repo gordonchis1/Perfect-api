@@ -1,6 +1,8 @@
 export const defaultUserConfig = {
-  paths: {
-    perfectApiPath: undefined,
-    projectFilePath: undefined,
+  general: {
+    paths: {
+      perfectApiPath: undefined,
+      projectFilePath: undefined,
+    },
   },
 };
