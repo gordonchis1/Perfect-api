@@ -1,0 +1,35 @@
+.global-settings-pop-up_wrapper {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background: #00000059;
+  top: 0;
+  right: 0;
+  z-index: 10000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.global-settings-pop-up_container {
+  width: 100px;
+  height: 100px;
+  background: var(--background);
+  position: absolute;
+  animation: fade-in 0.3s ease-in;
+  border: 1px solid var(--borders);
+  border-radius: 7px;
+  color: var(--primary-text-color);
+}
+
+@keyframes fade-in {
+  0% {
+    transform: translateY(1000px);
+  }
+  50% {
+    transform: translateY(500px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}

@@ -5,8 +5,6 @@ import { Route, Routes, useMatch } from "react-router";
 import ResizeContainer from "./components/Global/ResizeContainer/ResizeContainer";
 import Project from "./components/Project/Project";
 import UpdateNotification from "./components/Global/UpdateNotification/UpdateNotification";
-import { useEffect } from "react";
-import { initUserConfig } from "./utils/userConfiguration/initUserConfguration";
 // TODO: change defaultWidthTo px
 function App() {
   const match = useMatch("/project/:id");

@@ -1,9 +1,9 @@
 import logoLigth from "../../assets/logo-dark.webp";
 import HeaderNav from "./HeaderNav";
-
 import "./Header.css";
 import { useEffect, useRef, useState } from "react";
 import useWidthObserver from "../../Hooks/useWidthObserver";
+import HeaderSettingsButton from "./HeaderSettingsButton/HeaderSettingsButton";
 
 function Header() {
   const containerHeader = useRef(null);
@@ -25,7 +25,9 @@ function Header() {
         {currentHeaderWidth >= 250 && <h1>Perfect-api</h1>}
       </div>
       <HeaderNav currentHeaderWidth={currentHeaderWidth} />
-      <div className="header-config_container"></div>
+      <div className="header-config_container">
+        <HeaderSettingsButton currentHeaderWidth={currentHeaderWidth} />
+      </div>
     </div>
   );
 }

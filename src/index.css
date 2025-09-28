@@ -34,9 +34,13 @@
   border-radius: 50px;
 }
 
-.theme-light {
-  --background: #fff;
-}
+/* .theme-light {
+  --background: #f9fafb;
+  --primary-text-color: #111827;
+  --borders: #e5e7eb;
+  --accent-background: #3b82f6;
+  --hover: #1d4ed8;
+} */
 
 body {
   background: var(--background);
