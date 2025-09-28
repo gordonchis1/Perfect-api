@@ -7,17 +7,21 @@ async function createDocumentDir() {
   const documentPath = await documentDir();
   const path = await join(documentPath, "perfect api");
   const existDir = await exists(path);
+  const config = await getConfig();
+  const general = await config.get("general");
 
   // Check if the directory already exists
-  if (existDir) return;
 
   try {
-    const config = await getConfig();
-    await mkdir(path, { recursive: true });
+    if (!existDir) {
+      await mkdir(path, { recursive: true });
+    }
 
-    // ? Store document path in user config
-    await config.set("paths", { perfectApiPath: path });
-    await config.save();
+    if (!general?.paths?.perfectApiPath) {
+      // ? Store document path in user config
+      await config.set("general", { paths: { perfectApiPath: path } });
+      await config.save();
+    }
   } catch (error) {
     console.error("Error creating directory:", error);
   }
@@ -25,17 +29,19 @@ async function createDocumentDir() {
 
 async function createProjectsFile() {
   const config = await getConfig();
-  const paths = await config.get("paths");
-  const path = await join(paths.perfectApiPath, "projects.json");
+  const configGeneral = await config.get("general");
+  const path = await join(configGeneral.paths.perfectApiPath, "projects.json");
   const existFile = await exists(path);
 
-  // Check if the file already exists
-  if (existFile) return;
-
-  await config.set("paths", { ...paths, projectFilePath: path });
+  await config.set("general", {
+    paths: { ...configGeneral.paths, projectFilePath: path },
+  });
   await config.save();
 
   try {
+    // Check if the file already exists
+    if (existFile) return;
+
     await writeTextFile(path, JSON.stringify([]));
   } catch (error) {
     console.error("Error creating file:", error);
@@ -52,7 +58,7 @@ export async function initDocumentDir() {
 export async function getStorageDir() {
   try {
     const config = await getConfig();
-    const paths = await config.get("paths");
+    const { paths } = await config.get("general");
 
     return paths.perfectApiPath;
   } catch (error) {
@@ -63,7 +69,7 @@ export async function getStorageDir() {
 export async function getProjectsFile() {
   try {
     const config = await getConfig();
-    const paths = await config.get("paths");
+    const { paths } = await config.get("general");
     const existFile = await exists(paths.projectFilePath);
 
     // Check if the file exists
