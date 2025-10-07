@@ -12,7 +12,7 @@
 }
 
 .global-settings-pop-up_container {
-  width: 80%;
+  width: 75%;
   height: 75%;
   background: var(--background);
   position: absolute;
@@ -31,8 +31,4 @@
   100% {
     transform: translateY(0);
   }
-}
-
-.settings-main-container {
-  flex-grow: 8;
 }

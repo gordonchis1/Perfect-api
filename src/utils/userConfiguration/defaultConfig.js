@@ -5,4 +5,5 @@ export const defaultUserConfig = {
       projectFilePath: "",
     },
   },
+  preferences: {},
 };

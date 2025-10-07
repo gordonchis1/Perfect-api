@@ -1,4 +1,5 @@
 .settings-nav-container {
-  flex-grow: 2;
+  flex: 0 0 20%;
   border-right: 2px solid var(--borders);
+  padding: 25px;
 }
