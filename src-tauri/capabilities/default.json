@@ -12,14 +12,20 @@
     "fs:allow-document-write-recursive",
     "fs:allow-document-read-recursive",
     "fs:allow-create",
+    "fs:allow-app-read",
     "fs:allow-app-write",
     "fs:allow-copy-file",
+    "dialog:default",
     "dialog:allow-open",
     "fs:allow-write-text-file",
     "fs:allow-write-file",
     "dialog:allow-save",
     "opener:default",
     "http:allow-fetch-read-body",
+
+    "fs:allow-write",
+    "fs:allow-read",
+
     "updater:default",
     "store:default",
     {

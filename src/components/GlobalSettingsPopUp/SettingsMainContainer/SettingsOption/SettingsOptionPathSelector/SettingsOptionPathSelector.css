@@ -1,0 +1,43 @@
+.settings-option_input {
+  background: transparent;
+  color: var(--primary-text-color);
+  padding: 6px 14px;
+  border: 1px solid var(--borders);
+  border-radius: 4px;
+  margin-right: 3px;
+}
+
+.settings-option_button-open-dir {
+  font-size: 20px;
+  background: transparent;
+  color: var(--primary-text-color);
+  border: none;
+  cursor: pointer;
+}
+
+.settings-option_button-open-dir:hover {
+  opacity: 0.8;
+}
+
+.settings-option_text {
+  max-width: 70%;
+  overflow: hidden;
+}
+
+.settings-option_title {
+  font-size: 20px;
+}
+
+.settings-option_alert {
+  color: orange;
+  font-size: 14px;
+}
+
+.option-alert_icon {
+  margin-right: 5px;
+  margin-top: 5px;
+}
+
+.settings-option_description {
+  font-size: 17px;
+}
