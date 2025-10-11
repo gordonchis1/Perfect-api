@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import "./SettingsMainContainer.css";
 import { getConfig } from "../../../utils/userConfiguration/getConfig";
-import SettingsFooter from "./SettingsFooter/SettingsFooter";
 import SettingsOptionsSection from "./SettingsOptionsSection/SettingsOptionsSection";
 
 export default function SettingsMainContainer({ currentTab }) {
@@ -26,7 +25,6 @@ export default function SettingsMainContainer({ currentTab }) {
           setConfigOptions={setConfigOptions}
         />
       </div>
-      <SettingsFooter />
     </div>
   );
 }
