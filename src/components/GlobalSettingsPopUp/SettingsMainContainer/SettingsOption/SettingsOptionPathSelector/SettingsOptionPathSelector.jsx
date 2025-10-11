@@ -47,6 +47,7 @@ export default function SettingsOptionPathSelector({
       multiple: false,
       title: "Select folder",
       recursive: true,
+      defaultPath: configOptions[section][option] || undefined,
     });
     if (file === null) return;
 

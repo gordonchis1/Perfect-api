@@ -1,4 +1,4 @@
-import { documentDir, join } from "@tauri-apps/api/path";
+import { appDataDir, documentDir, join } from "@tauri-apps/api/path";
 import { exists, mkdir, writeTextFile } from "@tauri-apps/plugin-fs";
 import { getConfig } from "./userConfiguration/getConfig";
 import { initUserConfig } from "./userConfiguration/initUserConfguration";
@@ -30,7 +30,8 @@ async function createDocumentDir() {
 async function createProjectsFile() {
   const config = await getConfig();
   const configGeneral = await config.get("general");
-  const path = await join(configGeneral.paths.perfectApiPath, "projects.json");
+  const appDataPath = await appDataDir();
+  const path = await join(appDataPath, "projects.json");
   const existFile = await exists(path);
 
   await config.set("general", {
