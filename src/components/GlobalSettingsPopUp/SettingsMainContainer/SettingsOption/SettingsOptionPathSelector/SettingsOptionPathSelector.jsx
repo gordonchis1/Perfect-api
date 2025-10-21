@@ -8,26 +8,27 @@ import { useEffect, useState } from "react";
 import { exists } from "@tauri-apps/plugin-fs";
 import SettingsOptionContainer from "../SettingsOptionContainer/SettingsOptionContainer";
 import SettingsOptionText from "../SettingsOptionContainer/SettingsOptionText/SettingsOptionText";
+import { useUserConfigStore } from "../../../../../stores/UserConfigStore";
 
 export default function SettingsOptionPathSelector({
-  configOptions,
   option,
   tab,
   section,
   type,
-  setConfigOptions,
 }) {
+  const config = useUserConfigStore((state) => state.config);
+  const updateConfig = useUserConfigStore((state) => state.updateConfig);
   const [isValidPath, setIsValidPath] = useState(true);
 
   useEffect(() => {
-    if (configOptions[section][option] === undefined) {
+    if (config[tab][section][option] === undefined) {
       setIsValidPath(false);
       return;
     }
 
     const checkIfPathExists = async () => {
       try {
-        const pathExsist = await exists(configOptions[section][option]);
+        const pathExsist = await exists(config[tab][section][option]);
 
         if (pathExsist) {
           setIsValidPath(true);
@@ -39,29 +40,22 @@ export default function SettingsOptionPathSelector({
       }
     };
     checkIfPathExists();
-  }, [configOptions]);
+  }, [config[tab][section][option]]);
 
   const handleOpenFolderDialog = async () => {
-    const updatedConfigOptions = { ...configOptions };
+    const updatedConfigOptions = { ...config };
     const file = await open({
       files: type === "filePath" ? true : false,
       directory: type === "path" ? true : false,
       multiple: false,
       title: "Select folder",
       recursive: true,
-      defaultPath: configOptions[section][option] || undefined,
+      defaultPath: config[tab][section][option] || undefined,
     });
     if (file === null) return;
 
-    updatedConfigOptions[section][option] = file;
-
-    const config = await getConfig();
-    await config.set(tab, updatedConfigOptions);
-    await config.save();
-
-    setConfigOptions((prev) => {
-      return { ...prev, [section]: { ...prev[section], [option]: file } };
-    });
+    updatedConfigOptions[tab][section][option] = file;
+    await updateConfig(updatedConfigOptions);
   };
 
   return (
@@ -70,7 +64,7 @@ export default function SettingsOptionPathSelector({
       <div className="settings-option_input-container">
         <input
           className="settings-option_input"
-          value={configOptions[section][option] || ""}
+          value={config[tab][section][option] || ""}
           placeholder={userSettingsOptionsMap[option]?.title}
           readOnly={true}
           style={{ borderColor: isValidPath ? "var(--borders)" : "red" }}

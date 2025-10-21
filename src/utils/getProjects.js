@@ -1,11 +1,11 @@
 import { join } from "@tauri-apps/api/path";
 import { readTextFile } from "@tauri-apps/plugin-fs";
-import { getConfig } from "./userConfiguration/getConfig";
+import { useUserConfigStore } from "../stores/UserConfigStore";
 
 export async function getProjects() {
   try {
-    const config = await getConfig();
-    const { paths } = await config.get("general");
+    const config = useUserConfigStore.getState().config;
+    const paths = config.general.paths;
 
     const path = await join(paths.projectFilePath);
     const projectsData = await readTextFile(path);

@@ -77,8 +77,8 @@ export async function initDocumentDir() {
 
 export async function getStorageDir() {
   try {
-    const config = await getConfig();
-    const { paths } = await config.get("general");
+    const config = useUserConfigStore.getState().config;
+    const paths = config.general.paths;
 
     return paths.perfectApiPath;
   } catch (error) {
@@ -88,8 +88,8 @@ export async function getStorageDir() {
 
 export async function getProjectsFile() {
   try {
-    const config = await getConfig();
-    const { paths } = await config.get("general");
+    const config = useUserConfigStore.getState().config;
+    const paths = config.general.paths;
     const existFile = await exists(paths.projectFilePath);
 
     // Check if the file exists

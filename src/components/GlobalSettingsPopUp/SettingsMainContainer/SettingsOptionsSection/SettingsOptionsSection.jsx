@@ -2,31 +2,29 @@ import "./SettingsOptionsSection.css";
 import SettingsOptionPathSelector from "../SettingsOption/SettingsOptionPathSelector/SettingsOptionPathSelector";
 import { userSettingsOptionsMap } from "../../../../utils/userConfiguration/userSettingsConstants";
 import SettingsOptionCheckbox from "../SettingsOption/SettingsOptionCheckbox/SettingsOptionCheckbox";
+import { useUserConfigStore } from "../../../../stores/UserConfigStore";
 
-export default function SettingsOptionsSection({
-  configOptions,
-  setConfigOptions,
-  currentTab,
-}) {
+export default function SettingsOptionsSection({ currentTab }) {
+  const config = useUserConfigStore((state) => state.config);
+
+  console.log(config[currentTab]);
   return (
     <>
-      {configOptions &&
-        Object.keys(configOptions).map((section) => {
+      {config &&
+        Object.keys(config[currentTab]).map((section) => {
           return (
             <div className="settings-main_section-container" key={section}>
               <h2 className="settings-section_subtitle">{section}</h2>
-              {Object.keys(configOptions[section]).map((option) => {
+              {Object.keys(config[currentTab][section]).map((option) => {
                 switch (userSettingsOptionsMap[option]?.type) {
                   case "path":
                   case "filePath":
                     return (
                       <SettingsOptionPathSelector
                         tab={currentTab}
-                        configOptions={configOptions}
                         option={option}
                         section={section}
                         key={option}
-                        setConfigOptions={setConfigOptions}
                         type={userSettingsOptionsMap[option]?.type}
                       />
                     );
@@ -34,8 +32,8 @@ export default function SettingsOptionsSection({
                     return (
                       <SettingsOptionCheckbox
                         key={option}
+                        tab={currentTab}
                         option={option}
-                        configOptions={configOptions}
                         section={section}
                       />
                     );
