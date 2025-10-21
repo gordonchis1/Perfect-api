@@ -1,20 +1,21 @@
 import { load } from "@tauri-apps/plugin-store";
 import { defaultUserConfig } from "./defaultConfig";
+import { exists, writeTextFile } from "@tauri-apps/plugin-fs";
+import { appDataDir, join } from "@tauri-apps/api/path";
 
 // ? Create config file
-// ! refactor code
+// ! Compre local config with default config
 export const initUserConfig = async () => {
   try {
-    const config = await load("config.json");
-    const isConfigCreated = await config.has("general");
-    const isPreferencesCreated = await config.has("preferences");
+    const appRoute = await appDataDir();
+    const path = await join(appRoute, "config.json");
+    const configExsist = await exists(path);
 
-    if (!isConfigCreated) {
-      await config.set("general", defaultUserConfig.general);
+    if (!configExsist) {
+      await writeTextFile(path, JSON.stringify(defaultUserConfig));
     }
-    if (!isPreferencesCreated) {
-      await config.set("preferences", defaultUserConfig.preferences);
-    }
+
+    const config = await load("config.json", { defaults: defaultUserConfig });
 
     await config.save();
   } catch (error) {

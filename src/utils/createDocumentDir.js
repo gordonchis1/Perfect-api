@@ -19,7 +19,10 @@ async function createDocumentDir() {
 
     if (!general?.paths?.perfectApiPath) {
       // ? Store document path in user config
-      await config.set("general", { paths: { perfectApiPath: path } });
+      await config.set("general", {
+        ...general,
+        paths: { perfectApiPath: path },
+      });
       await config.save();
     }
   } catch (error) {
@@ -35,6 +38,7 @@ async function createProjectsFile() {
   const existFile = await exists(path);
 
   await config.set("general", {
+    ...configGeneral,
     paths: { ...configGeneral.paths, projectFilePath: path },
   });
   await config.save();

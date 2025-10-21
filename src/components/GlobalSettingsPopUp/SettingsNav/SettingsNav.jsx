@@ -1,7 +1,7 @@
 import "./SettingsNav.css";
 import SettingsNavButton from "./SettingsNavButton/SettingsNavButton";
 import { faGear, faPencil } from "@fortawesome/free-solid-svg-icons";
-import { userSettingsTabs } from "../../../utils/constants/userSettingsConstants";
+import { userSettingsTabs } from "../../../utils/userConfiguration/userSettingsConstants";
 
 const CONFIG_KEYS_MAP = {
   general: {

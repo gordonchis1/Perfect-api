@@ -1,6 +1,7 @@
 import "./SettingsOptionsSection.css";
 import SettingsOptionPathSelector from "../SettingsOption/SettingsOptionPathSelector/SettingsOptionPathSelector";
-import { userSettingsOptionsMap } from "../../../../utils/constants/userSettingsConstants";
+import { userSettingsOptionsMap } from "../../../../utils/userConfiguration/userSettingsConstants";
+import SettingsOptionCheckbox from "../SettingsOption/SettingsOptionCheckbox/SettingsOptionCheckbox";
 
 export default function SettingsOptionsSection({
   configOptions,
@@ -27,6 +28,15 @@ export default function SettingsOptionsSection({
                         key={option}
                         setConfigOptions={setConfigOptions}
                         type={userSettingsOptionsMap[option]?.type}
+                      />
+                    );
+                  case "checkbox":
+                    return (
+                      <SettingsOptionCheckbox
+                        key={option}
+                        option={option}
+                        configOptions={configOptions}
+                        section={section}
                       />
                     );
                   default:

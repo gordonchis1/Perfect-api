@@ -1,0 +1,22 @@
+.settings-option_text {
+  max-width: 70%;
+  overflow: hidden;
+}
+
+.settings-option_title {
+  font-size: 20px;
+}
+
+.settings-option_alert {
+  color: orange;
+  font-size: 14px;
+}
+
+.option-alert_icon {
+  margin-right: 5px;
+  margin-top: 5px;
+}
+
+.settings-option_description {
+  font-size: 17px;
+}

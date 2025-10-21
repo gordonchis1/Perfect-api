@@ -1,11 +1,13 @@
-import { userSettingsOptionsMap } from "../../../../../utils/constants/userSettingsConstants";
-import { faFolder, faWarning } from "@fortawesome/free-solid-svg-icons";
+import { userSettingsOptionsMap } from "../../../../../utils/userConfiguration/userSettingsConstants";
+import { faFolder } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./SettingsOptionPathSelector.css";
 import { open } from "@tauri-apps/plugin-dialog";
 import { getConfig } from "../../../../../utils/userConfiguration/getConfig";
 import { useEffect, useState } from "react";
 import { exists } from "@tauri-apps/plugin-fs";
+import SettingsOptionContainer from "../SettingsOptionContainer/SettingsOptionContainer";
+import SettingsOptionText from "../SettingsOptionContainer/SettingsOptionText/SettingsOptionText";
 
 export default function SettingsOptionPathSelector({
   configOptions,
@@ -63,21 +65,8 @@ export default function SettingsOptionPathSelector({
   };
 
   return (
-    <div key={option} className="settings-main_option-container">
-      <div className="settings-option_text">
-        <h4 className="settings-option_title">
-          {userSettingsOptionsMap[option]?.title || option}
-        </h4>
-        <p className="settings-option_description">
-          {userSettingsOptionsMap[option]?.description || option}
-        </p>
-        {userSettingsOptionsMap[option]?.alert && (
-          <p className="settings-option_alert">
-            <FontAwesomeIcon icon={faWarning} className="option-alert_icon" />
-            {userSettingsOptionsMap[option]?.alert}
-          </p>
-        )}
-      </div>
+    <SettingsOptionContainer option={option}>
+      <SettingsOptionText option={option} />
       <div className="settings-option_input-container">
         <input
           className="settings-option_input"
@@ -94,6 +83,6 @@ export default function SettingsOptionPathSelector({
           <FontAwesomeIcon icon={faFolder} />
         </button>
       </div>
-    </div>
+    </SettingsOptionContainer>
   );
 }

@@ -16,4 +16,10 @@ export const userSettingsOptionsMap = {
     alert:
       "Cambiar o eliminar este archivo puede hacer que la aplicación no encuentre tus proyectos hasta que se reconstruya el índice.",
   },
+  autoUpdate: {
+    title: "Actualización automática",
+    description:
+      "Permite que la aplicación busque y descargue nuevas versiones de forma automática.",
+    type: "checkbox",
+  },
 };

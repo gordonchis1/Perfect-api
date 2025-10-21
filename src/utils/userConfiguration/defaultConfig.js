@@ -4,6 +4,9 @@ export const defaultUserConfig = {
       perfectApiPath: "",
       projectFilePath: "",
     },
+    app: {
+      autoUpdate: true,
+    },
   },
   preferences: {},
 };

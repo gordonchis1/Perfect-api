@@ -1,0 +1,31 @@
+.settings-option_input-checkbox {
+  display: none;
+}
+
+.settings-option_custom-checkbox {
+  width: 53px;
+  height: 30px;
+  background: var(--borders);
+  padding: 5px;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: background 0.2s ease-out;
+}
+
+.settings-option_input-checkbox:checked + .settings-option_custom-checkbox {
+  background: var(--accent-background);
+}
+
+.settings-option_input-checkbox:checked
+  + .settings-option_custom-checkbox
+  .custom-checkbox_bar {
+  transform: translateX(100%);
+}
+
+.custom-checkbox_bar {
+  width: 50%;
+  height: 100%;
+  background: white;
+  border-radius: 7px;
+  transition: transform 0.2s ease-out;
+}
