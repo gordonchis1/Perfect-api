@@ -1,14 +1,14 @@
 import { appDataDir, documentDir, join } from "@tauri-apps/api/path";
 import { exists, mkdir, writeTextFile } from "@tauri-apps/plugin-fs";
 import { getConfig } from "./userConfiguration/getConfig";
-import { initUserConfig } from "./userConfiguration/initUserConfguration";
+import { useUserConfigStore } from "../stores/UserConfigStore";
 
 async function createDocumentDir() {
   const documentPath = await documentDir();
   const path = await join(documentPath, "perfect api");
   const existDir = await exists(path);
-  const config = await getConfig();
-  const general = await config.get("general");
+  const config = useUserConfigStore.getState().config;
+  const updateConfig = useUserConfigStore.getState().updateConfig;
 
   // Check if the directory already exists
 
@@ -17,13 +17,19 @@ async function createDocumentDir() {
       await mkdir(path, { recursive: true });
     }
 
-    if (!general?.paths?.perfectApiPath) {
-      // ? Store document path in user config
-      await config.set("general", {
-        ...general,
-        paths: { perfectApiPath: path },
-      });
-      await config.save();
+    if (!config?.general?.paths?.perfectApiPath) {
+      const newConfig = {
+        ...config,
+        general: {
+          ...config.general,
+          paths: {
+            ...config.general.paths,
+            perfectApiPath: path,
+          },
+        },
+      };
+
+      await updateConfig(newConfig);
     }
   } catch (error) {
     console.error("Error creating directory:", error);
@@ -31,17 +37,24 @@ async function createDocumentDir() {
 }
 
 async function createProjectsFile() {
-  const config = await getConfig();
-  const configGeneral = await config.get("general");
   const appDataPath = await appDataDir();
+  const config = useUserConfigStore.getState().config;
   const path = await join(appDataPath, "projects.json");
   const existFile = await exists(path);
+  const updateConfig = useUserConfigStore.getState().updateConfig;
 
-  await config.set("general", {
-    ...configGeneral,
-    paths: { ...configGeneral.paths, projectFilePath: path },
-  });
-  await config.save();
+  const newConfig = {
+    ...config,
+    general: {
+      ...config.general,
+      paths: {
+        ...config.general.paths,
+        projectFilePath: path,
+      },
+    },
+  };
+
+  await updateConfig(newConfig);
 
   try {
     // Check if the file already exists
@@ -54,7 +67,9 @@ async function createProjectsFile() {
 }
 
 export async function initDocumentDir() {
-  await initUserConfig();
+  const initConfig = useUserConfigStore.getState().initConfig;
+
+  await initConfig();
   await createDocumentDir();
   await createProjectsFile();
   console.log("Document directory and projects file initialized.");
