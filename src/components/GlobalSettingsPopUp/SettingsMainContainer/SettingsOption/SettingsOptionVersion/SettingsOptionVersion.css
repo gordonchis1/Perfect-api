@@ -1,0 +1,27 @@
+.settings-option_btn-search-updates {
+  height: 100%;
+  padding: 7px;
+  border-radius: 7px;
+  background: var(--accent-background);
+  color: var(--primary-text-color);
+  border: none;
+  transition: background 0.2s ease;
+  cursor: pointer;
+}
+
+.settings-option_update-available {
+  padding: 7px;
+  background: var(--accent-background);
+  border-radius: 7px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border: none;
+  color: var(--primary-text-color);
+}
+
+.settings-option_btn-search-updates:hover {
+  background: var(--hover);
+}

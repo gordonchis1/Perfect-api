@@ -4,8 +4,10 @@ import { check } from "@tauri-apps/plugin-updater";
 import "./UpdateNotification.css";
 import { relaunch } from "@tauri-apps/plugin-process";
 import { fetch } from "@tauri-apps/plugin-http";
+import { useUserConfigStore } from "../../../stores/UserConfigStore";
 
-export default function UpdateNotification() {
+export default function UpdateNotification({ setUpdateNotification }) {
+  const config = useUserConfigStore((state) => state.config);
   const [updater, setUpdater] = useState(undefined);
   const [isOpen, setIsOpen] = useState(true);
   const [updating, setUpdateing] = useState({
@@ -51,19 +53,21 @@ export default function UpdateNotification() {
       getLatestVersion();
     };
 
-    getUpdateInfo();
-  }, []);
+    if (config && config.general.app.autoUpdate) {
+      getUpdateInfo();
+    }
+  }, [config]);
 
   useEffect(() => {
     const intervalAnimation = setInterval(() => {
       if (updating.isUpdating) return;
       setIsOpen(false);
-    }, 9000);
+    }, 7000);
 
     const interval = setInterval(() => {
       if (updating.isUpdating) return;
       setUpdater(undefined);
-    }, 10000);
+    }, 80000);
 
     return () => {
       clearInterval(intervalAnimation);

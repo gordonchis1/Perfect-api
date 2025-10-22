@@ -22,4 +22,8 @@ export const userSettingsOptionsMap = {
       "Permite que la aplicación busque y descargue nuevas versiones de forma automática.",
     type: "checkbox",
   },
+  version: {
+    title: "Version actual: ",
+    type: "version",
+  },
 };
