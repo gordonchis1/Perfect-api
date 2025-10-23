@@ -9,5 +9,10 @@ export const defaultUserConfig = {
       projectFilePath: "",
     },
   },
-  preferences: {},
+  preferences: {
+    appearance: {
+      theme: "dark",
+      editorTheme: "vs-dark",
+    },
+  },
 };

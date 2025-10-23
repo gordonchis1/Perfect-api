@@ -4,7 +4,7 @@
   box-sizing: border-box;
 }
 
-:root {
+.dark {
   --background: #020617;
   --primary-text-color: #ffffff;
   --borders: #8c8c8c;
@@ -34,13 +34,23 @@
   border-radius: 50px;
 }
 
-/* .theme-light {
+.light {
   --background: #f9fafb;
   --primary-text-color: #111827;
   --borders: #e5e7eb;
   --accent-background: #3b82f6;
   --hover: #1d4ed8;
-} */
+
+  --context-menu-background: #020617;
+  --focused-background: #1c2738;
+  --play-button-background: #2bff00;
+  --play-button-disabled-background: #399125;
+  --play-button-color: #000;
+  --error: #ff0000;
+  --success: #329432;
+  --inactive: #8c8c8c;
+  --warning: #ff9800;
+}
 
 body {
   background: var(--background);

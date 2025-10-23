@@ -5,7 +5,9 @@ import SettingsOptionCheckbox from "../SettingsOption/SettingsOptionCheckbox/Set
 import { useUserConfigStore } from "../../../../stores/UserConfigStore";
 import { defaultUserConfig } from "../../../../utils/userConfiguration/defaultConfig";
 import SettingsOptionVersion from "../SettingsOption/SettingsOptionVersion/SettingsOptionVersion";
+import SettingsOptionSelector from "../SettingsOption/SettingsOptionSelector/SettingsOptionSelector";
 
+// ! Refactor this component to make code more reusable and clean
 export default function SettingsOptionsSection({ currentTab }) {
   const config = useUserConfigStore((state) => state.config);
 
@@ -41,6 +43,15 @@ export default function SettingsOptionsSection({ currentTab }) {
                   case "version":
                     return (
                       <SettingsOptionVersion option={option} key={option} />
+                    );
+                  case "selector":
+                    return (
+                      <SettingsOptionSelector
+                        option={option}
+                        key={option}
+                        section={section}
+                        tab={currentTab}
+                      />
                     );
                   default:
                     return;

@@ -26,6 +26,8 @@
     "fs:allow-write",
     "fs:allow-read",
 
+    "core:app:allow-set-app-theme",
+
     "updater:default",
     "store:default",
     {

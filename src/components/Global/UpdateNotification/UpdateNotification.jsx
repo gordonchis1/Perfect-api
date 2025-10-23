@@ -56,7 +56,7 @@ export default function UpdateNotification({ setUpdateNotification }) {
     if (config && config.general.app.autoUpdate) {
       getUpdateInfo();
     }
-  }, [config]);
+  }, [config?.genera?.app?.autoUpdate]);
 
   useEffect(() => {
     const intervalAnimation = setInterval(() => {

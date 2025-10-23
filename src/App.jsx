@@ -5,12 +5,15 @@ import { Route, Routes, useMatch } from "react-router";
 import ResizeContainer from "./components/Global/ResizeContainer/ResizeContainer";
 import Project from "./components/Project/Project";
 import UpdateNotification from "./components/Global/UpdateNotification/UpdateNotification";
+import { useUserConfigStore } from "./stores/UserConfigStore";
 
 function App() {
   const match = useMatch("/project/:id");
+  const config = useUserConfigStore((state) => state.config);
 
   return (
     <div
+      className={config?.preferences?.appearance?.theme || "dark"}
       style={{
         maxWidth: "100vw",
         width: "100vw",

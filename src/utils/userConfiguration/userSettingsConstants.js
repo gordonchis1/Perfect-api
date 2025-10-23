@@ -26,4 +26,15 @@ export const userSettingsOptionsMap = {
     title: "Version actual: ",
     type: "version",
   },
+  theme: {
+    title: "Tema",
+    description: "Selecciona el tema de color de la aplicación.",
+    type: "selector",
+    options: ["dark", "light"],
+  },
+  editorTheme: {
+    title: "Tema del editor",
+    description: "Selecciona el tema de color para el editor de código.",
+    type: "editor-theme",
+  },
 };
