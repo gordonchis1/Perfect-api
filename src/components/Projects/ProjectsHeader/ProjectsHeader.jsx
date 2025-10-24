@@ -25,7 +25,7 @@ export default function ProjectsHeader({ setProjects }) {
         <ProjectsHeaderButton
           text={"Nuevo Projecto"}
           icon={faAdd}
-          color={"var(--accent-background)"}
+          color={"var(--primary)"}
           onClick={() => handlePopUp()}
         />
         <CreateNewProjectPopUp

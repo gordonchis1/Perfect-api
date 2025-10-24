@@ -3,17 +3,28 @@ import { Link } from "react-router";
 
 function NavLink({ currentHeaderWidth, text, icon, to }) {
   return (
-    <nav className="header-nav">
-      <Link to={to} className="header-nav_a">
+    <nav
+      className="header-nav"
+      style={{
+        padding: currentHeaderWidth >= 150 ? "0px 10px 10px 20px" : "10px 10px",
+      }}
+    >
+      <Link
+        to={to}
+        style={{
+          padding: currentHeaderWidth >= 150 ? "10px 10px 10px 20px" : "10px 0",
+          justifyContent: currentHeaderWidth >= 150 ? "flex-start" : "center",
+        }}
+        className="header-nav_a"
+      >
         <FontAwesomeIcon
           icon={icon}
           className="header-nav_icon"
           style={{
-            width: currentHeaderWidth >= 200 ? "1.5rem" : "2rem",
-            height: currentHeaderWidth >= 200 ? "1.5rem" : "2rem",
+            fontSize: currentHeaderWidth >= 150 ? "18px" : "25px",
           }}
         />
-        {currentHeaderWidth >= 200 && <span>{text}</span>}
+        {currentHeaderWidth >= 150 && <span>{text}</span>}
       </Link>
     </nav>
   );

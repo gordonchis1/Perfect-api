@@ -24,8 +24,8 @@ function App() {
       <UpdateNotification />
       <ResizeContainer
         resizeColor={"var(--borders)"}
-        defaultWidth={match !== null ? 4 : 14}
-        maxWidthOfLeftContainer={14}
+        defaultWidth={match !== null ? 4 : 10}
+        maxWidthOfLeftContainer={10}
         minWidthOfLeftContainer={80}
         containerWidth={window.innerWidth}
       >

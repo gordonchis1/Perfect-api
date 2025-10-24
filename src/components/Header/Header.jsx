@@ -21,8 +21,8 @@ function Header() {
   return (
     <div className="container-header" ref={containerHeader}>
       <div className="header-logo">
-        <img src={logoLigth} alt="Logo" className="header-logo_img" />
-        {currentHeaderWidth >= 250 && <h1>Perfect-api</h1>}
+        {/* <img src={logoLigth} alt="Logo" className="header-logo_img" /> */}
+        <h1>Perfect-api</h1>
       </div>
       <HeaderNav currentHeaderWidth={currentHeaderWidth} />
       <div className="header-config_container">

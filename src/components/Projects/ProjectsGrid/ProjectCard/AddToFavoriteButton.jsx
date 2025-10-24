@@ -36,6 +36,7 @@ export default function AddToFavoriteButton({ project, setProjects }) {
     >
       <FontAwesomeIcon
         icon={hover || project.isFavorite ? faStarSolid : faStar}
+        style={{ color: project.isFavorite ? "var(--warning)" : "" }}
       />
     </button>
   );

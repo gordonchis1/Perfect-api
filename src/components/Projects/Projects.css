@@ -8,22 +8,19 @@
 .projects-header {
   width: 100%;
   height: fit-content;
-  border-bottom: 1px solid var(--borders);
+  box-shadow: 0 0.2px 0 0 var(--sidebar-border);
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 20px 10px 20px;
+  padding: 20px 35px;
+  background: var(--secondary-background);
 }
 
 .projects-title {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-family: var(--bold-font);
+  font-size: 25px;
   color: var(--primary-text-color);
-}
-
-.projects-filters-container {
-  display: flex;
-  flex-direction: row;
 }
 
 .projects-header-buttons {
@@ -33,15 +30,18 @@
 }
 
 .projects-header-button {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-family: var(--regular-font);
   margin-left: 10px;
   border: none;
   padding: 7px 20px 7px 20px;
   border-radius: 5px;
-  color: var(--primary-text-color);
+  color: var(--primary-foreground);
   text-align: center;
   cursor: pointer;
+}
+
+.projects-header-button:hover {
+  opacity: 0.9;
 }
 
 .projects-header-button_icon {
@@ -50,7 +50,11 @@
 }
 
 .projects-filters-container {
-  padding: 10px 20px 10px 20px;
+  background: var(--secondary-background);
+  display: flex;
+  flex-direction: row;
+  box-shadow: 0 0.2px 0 0 var(--sidebar-border);
+  padding: 15px 35px;
   color: var(--primary-text-color);
   width: 100%;
   display: flex;
@@ -62,6 +66,7 @@
   display: flex;
   align-items: center;
 }
+
 .projects-input_input {
   width: 100%;
   background: transparent;
@@ -109,10 +114,10 @@
   width: 100%;
   min-height: 100%;
   height: fit-content;
-  padding: 20px 20px 20px 20px;
+  padding: 35px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
-  grid-template-rows: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-rows: repeat(auto-fill, minmax(150px, 1fr));
   gap: 20px;
   overflow-y: scroll;
   overflow-x: hidden;
@@ -151,15 +156,13 @@
 }
 
 .container-popup_h1 {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-family: var(--regular-font);
   color: var(--primary-text-color);
   font-size: 30px;
 }
 
 .container-popup_p {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-family: var(--regular-font);
   color: var(--primary-text-color);
   font-size: 16px;
   margin-top: 10px;
@@ -178,8 +181,7 @@
   display: flex;
   justify-content: center;
   gap: 10px;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-family: var(--regular-font);
   flex-direction: column;
 }
 
@@ -226,48 +228,52 @@
 .popup_form-error {
   color: red;
   font-size: 20px;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-family: var(--regular-font);
 }
 
 .add-card-container {
   width: 100%;
   height: 100%;
-  border: 2px dashed var(--borders);
+  max-width: 100%;
+  border: 2px dashed var(--accent);
   border-radius: 8px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   color: var(--primary-text-color);
-  font-size: 20px;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  font-weight: bold;
+  font-size: 17px;
+  font-family: var(--regular-font);
+  background: var(--secondary-background);
   cursor: pointer;
 }
 
+.add-card-container:hover {
+  border: 2px dashed var(--primary);
+}
+
 .project-card {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-family: var(--regular-font);
   box-shadow: 0 0 0 0.5px var(--borders) inset;
   border-radius: 8px;
   color: var(--primary-text-color);
   min-width: 100%;
-  min-height: 200px;
+  min-height: 150px;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  background: var(--secondary-background);
 }
 
-.project-card-link:hover {
-  background: var(--hover);
-  transition: all 0.3s ease-in-out;
+.project-card:hover {
+  box-shadow: 0 0 0 1px var(--primary) inset;
 }
 
 .project-card-link {
   padding: 20px 20px 20px 20px;
   width: 100%;
+  max-width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -276,19 +282,17 @@
 }
 
 .project-card-lastupdate {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  font-size: 16px;
+  font-family: var(--regular-font);
+  font-size: 13px;
   margin-top: 10px;
   opacity: 0.7;
   font-weight: 300;
   width: fit-content;
 }
 .project-card-name {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-family: var(--bold-font);
   font-weight: bold;
-  font-size: 30px;
+  font-size: 20px;
 }
 
 .project-card-container-options {
