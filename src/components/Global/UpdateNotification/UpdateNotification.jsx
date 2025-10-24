@@ -6,7 +6,7 @@ import { relaunch } from "@tauri-apps/plugin-process";
 import { fetch } from "@tauri-apps/plugin-http";
 import { useUserConfigStore } from "../../../stores/UserConfigStore";
 
-export default function UpdateNotification({ setUpdateNotification }) {
+export default function UpdateNotification() {
   const config = useUserConfigStore((state) => state.config);
   const [updater, setUpdater] = useState(undefined);
   const [isOpen, setIsOpen] = useState(true);
@@ -53,10 +53,10 @@ export default function UpdateNotification({ setUpdateNotification }) {
       getLatestVersion();
     };
 
-    if (config && config.general.app.autoUpdate) {
+    if (config && config?.general?.app?.autoUpdate) {
       getUpdateInfo();
     }
-  }, [config?.genera?.app?.autoUpdate]);
+  }, [config?.genera?.app?.autoUpdate, config?.general]);
 
   useEffect(() => {
     const intervalAnimation = setInterval(() => {
