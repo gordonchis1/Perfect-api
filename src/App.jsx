@@ -1,14 +1,10 @@
 import "./App.css";
-import Header from "./components/Header/Header";
-import Projects from "./components/Projects/Projects";
-import { Route, Routes, useMatch } from "react-router";
-import ResizeContainer from "./components/Global/ResizeContainer/ResizeContainer";
+import { Route, Routes } from "react-router";
 import Project from "./components/Project/Project";
-import UpdateNotification from "./components/Global/UpdateNotification/UpdateNotification";
 import { useUserConfigStore } from "./stores/UserConfigStore";
+import Home from "./components/Home/Home";
 
 function App() {
-  const match = useMatch("/project/:id");
   const config = useUserConfigStore((state) => state.config);
 
   return (
@@ -21,25 +17,10 @@ function App() {
         overflow: "hidden",
       }}
     >
-      <UpdateNotification />
-      <ResizeContainer
-        resizeColor={"var(--borders)"}
-        defaultWidth={match !== null ? 4 : 10}
-        maxWidthOfLeftContainer={10}
-        minWidthOfLeftContainer={80}
-        containerWidth={window.innerWidth}
-      >
-        <ResizeContainer.LeftContainer>
-          <Header />
-        </ResizeContainer.LeftContainer>
-
-        <ResizeContainer.RightContainer>
-          <Routes>
-            <Route index element={<Projects />}></Route>
-            <Route element={<Project />} path="/project/:id"></Route>
-          </Routes>
-        </ResizeContainer.RightContainer>
-      </ResizeContainer>
+      <Routes>
+        <Route index element={<Home />}></Route>
+        <Route element={<Project />} path="/project/:id"></Route>
+      </Routes>
     </div>
   );
 }

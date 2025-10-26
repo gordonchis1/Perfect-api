@@ -14,7 +14,7 @@
 .rezise-handler {
   user-select: none;
   overflow: hidden;
-  width: 2px;
+  width: 1px;
   cursor: e-resize;
   position: absolute;
 }
