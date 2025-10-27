@@ -2,16 +2,25 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  gap: 5px;
   max-width: 100%;
   cursor: grab;
+  overflow: hidden;
+  font-family: var(--regular-font);
 }
 
 .filemanager-element-content {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   align-items: center;
 }
 
 .hover-drag-and-drop {
   background: var(--hover);
+}
+
+.filemanager-dir-childs-container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }

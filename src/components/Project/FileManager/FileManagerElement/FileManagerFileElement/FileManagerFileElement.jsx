@@ -1,6 +1,3 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFile } from "@fortawesome/free-regular-svg-icons";
-import { faFile as faFileSolidIcon } from "@fortawesome/free-solid-svg-icons";
 import "./FileManagerFileElement.css";
 import FileManagerRenameForm from "../../FileManagerRenameForm/FileManagerRenameForm";
 import { useRef, useState } from "react";
@@ -10,6 +7,7 @@ import useFilesContext from "../../../../../Hooks/useFilesContext";
 import { FILES_REDUCER_ACTIONS } from "../../../../../providers/FilesProvider/reducer";
 import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../../providers/FileManager/reducer";
 import IsRuningIndicator from "../../../../Global/IsRuningIndicator/IsRuningIndicator";
+import { File } from "lucide-react";
 
 export default function FileManagerFileElement({
   node,
@@ -33,7 +31,7 @@ export default function FileManagerFileElement({
       style={
         draggin
           ? { position: "absolute", opacity: ".8", background: "var(--hover)" }
-          : {}
+          : { paddingLeft: `${level * 20}px` }
       }
     >
       <FileManagerDraggableElement
@@ -42,8 +40,15 @@ export default function FileManagerFileElement({
         setDraggin={setDraggin}
         node={node}
         style={{
-          paddingLeft: `${level * 20}px`,
-          background: filesState.currentFile === node.id ? "var(--hover)" : "",
+          background:
+            filesState.currentFile === node.id
+              ? "var(--primary-transparent)"
+              : "",
+          color: filesState.currentFile === node.id ? "var(--primary)" : "",
+          border:
+            filesState.currentFile === node.id
+              ? "1px solid var(--primary)"
+              : "",
         }}
         onContextMenu={onContextMenu}
         onClick={() => {
@@ -73,14 +78,8 @@ export default function FileManagerFileElement({
         }}
       >
         <div className="filemanager-element-content">
-          <IsRuningIndicator isRuning={node.content.isRuning} />
-          <FontAwesomeIcon
-            icon={
-              filesState.openFiles.some((file) => file.id === node.id)
-                ? faFileSolidIcon
-                : faFile
-            }
-          />
+          <IsRuningIndicator isRuning={node.content.isRuning} size="10px" />
+          <File size={17} />
           {nodeState?.isRename ? (
             <FileManagerRenameForm
               node={node}
