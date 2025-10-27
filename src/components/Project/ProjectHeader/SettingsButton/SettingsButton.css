@@ -1,0 +1,15 @@
+.project-header_settings-button {
+  color: var(--primary-text-color);
+  background: transparent;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  padding: 7px;
+  border-radius: 4px;
+}
+
+.project-header_settings-button:hover {
+  background: var(--accent);
+}

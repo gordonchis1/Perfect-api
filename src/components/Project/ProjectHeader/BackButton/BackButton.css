@@ -1,0 +1,16 @@
+.project-header_back-btn {
+  background: transparent;
+  color: var(--primary-text-color);
+  border: none;
+  padding: 5px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  text-align: center;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.project-header_back-btn:hover {
+  background: var(--accent);
+}

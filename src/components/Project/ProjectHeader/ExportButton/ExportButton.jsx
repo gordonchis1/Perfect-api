@@ -1,6 +1,6 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFileExport } from "@fortawesome/free-solid-svg-icons";
+import { Download } from "lucide-react";
 import ChooseFolder from "../../../../utils/ChooseFolder";
+import "./ExportButton.css";
 
 export default function ExportButton({ id }) {
   const handleExportClick = async () => {
@@ -12,7 +12,7 @@ export default function ExportButton({ id }) {
       className="project-header_export-button"
       onClick={handleExportClick}
     >
-      <FontAwesomeIcon icon={faFileExport} />
+      <Download size={17} />
       Exportar
     </button>
   );

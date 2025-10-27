@@ -1,26 +1,22 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./ProjectHeader.css";
-import { faGear } from "@fortawesome/free-solid-svg-icons";
-import ExportButton from "./ExportButton/ExportButton";
 import useProjectContext from "../../../Hooks/FileManager/useProjectContext";
+import BackButton from "./BackButton/BackButton";
+import ExportButton from "./ExportButton/ExportButton";
+import SettingsButton from "./SettingsButton/SettingsButton";
 
-//TODO: Agregar custom right click para cambiar de nombre en el nombre del proyecto
 export default function ProjectHeader() {
   const project = useProjectContext();
 
   return (
-    <>
-      <div className="project-header-container">
-        {project !== undefined && (
-          <>
-            <ExportButton id={project.id} />
-            <h1>{project.name}</h1>
-            <button className="project-header_settings-button">
-              <FontAwesomeIcon icon={faGear} />
-            </button>
-          </>
-        )}
+    <div className="project-header-container">
+      <div className="project-header_left-container">
+        <BackButton />
+        <h1 className="project-header_title">Perfect API</h1>
       </div>
-    </>
+      <div className="project-header_right-container">
+        <ExportButton id={project.id} />
+        <SettingsButton />
+      </div>
+    </div>
   );
 }

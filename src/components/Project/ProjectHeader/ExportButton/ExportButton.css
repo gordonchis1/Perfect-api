@@ -1,0 +1,19 @@
+.project-header_export-button {
+  display: flex;
+  font-size: 16px;
+  cursor: pointer;
+  gap: 7px;
+  background: transparent;
+  border: none;
+  box-shadow: 0 0 0 0.2px var(--sidebar-border);
+  color: var(--primary-text-color);
+  border-radius: 4px;
+  font-family: var(--regular-font);
+  padding: 7px 7px;
+  justify-content: center;
+  align-items: center;
+}
+
+.project-header_export-button:hover {
+  background: var(--accent);
+}
