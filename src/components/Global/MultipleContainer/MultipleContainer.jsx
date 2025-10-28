@@ -22,9 +22,14 @@ export default function MultipleContainer({
               key={keyContainer}
               className="multiple-container_option"
               style={{
-                background:
-                  container === keyContainer ? "var(--accent-background)" : "",
-                fontWeight: container === keyContainer ? "600" : "",
+                border:
+                  container == keyContainer
+                    ? " 1px solid var(--accent-background)"
+                    : "",
+                color:
+                  container == keyContainer
+                    ? "var(--primary)"
+                    : "var(--muted-foreground)",
               }}
             >
               {keyContainer}
