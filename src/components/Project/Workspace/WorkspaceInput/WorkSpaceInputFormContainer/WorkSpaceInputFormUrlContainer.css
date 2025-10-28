@@ -1,7 +1,11 @@
 .workspace-input_form-url {
   height: 60px;
   width: 100%;
-  border-bottom: 1px solid var(--borders);
-  background: var(--focused-background);
+  box-shadow: 0 0 0 0.2px var(--sidebar-border);
+  border-radius: 7px;
+  background: var(--secondary-background);
+
   display: flex;
+  gap: 8px;
+  padding: 10px 15px;
 }

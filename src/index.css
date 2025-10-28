@@ -42,6 +42,7 @@
   --sidebar-border: oklch(0.922 0 0);
 
   --warning: oklch(0.75 0.2 60);
+  --warning-foreground: oklch(0.15 0 0);
 
   --primary: oklch(0.65 0.24 250);
   --primary-transparent: oklch(0.65 0.24 250 / 0.1);
@@ -58,6 +59,12 @@
   --borders: #8c8c8c;
   --hover: oklch(0.2 0 0);
 
+  --method-get: oklch(0.65 0.24 250);
+  --method-post: oklch(0.7 0.22 145);
+  --method-put: oklch(0.75 0.2 60);
+  --method-delete: oklch(0.65 0.24 25);
+  --method-patch: oklch(0.65 0.2 290);
+
   --accent-background: #3b82f6;
   --focused-background: #1c2738;
   --play-button-background: #2bff00;
@@ -66,7 +73,6 @@
   --error: #ff0000;
   --success: #329432;
   --inactive: #8c8c8c;
-  --warning: #ff9800;
 }
 
 .light {

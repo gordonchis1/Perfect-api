@@ -1,5 +1,3 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import useProjectContext from "../../../../../../Hooks/FileManager/useProjectContext";
 import useFilesContext from "../../../../../../Hooks/useFilesContext";
 import useFilemanagerContenxt from "../../../../../../Hooks/FileManager/useFileMangerContext";
@@ -51,16 +49,11 @@ export default function WorkSpaceInputFormTypeSelector() {
       <button
         onClick={handleOpenOptions}
         className="workspace-input-form_select-type-button"
-        style={{ backgroundColor: isOpen ? "var(--accent-background)" : "" }}
+        style={{ background: workspaceTypeInput[indexOfCurrentType].bg }}
       >
         <span style={{ color: workspaceTypeInput[indexOfCurrentType].color }}>
           {content.type}
         </span>
-        <FontAwesomeIcon
-          className="workspace-input-form_select-type-icon"
-          style={{ transform: isOpen ? "rotate(-180deg)" : "" }}
-          icon={faAngleDown}
-        />
       </button>
       {isOpen && (
         <div className="workspace-input-form-url_types-options-container">
@@ -69,7 +62,7 @@ export default function WorkSpaceInputFormTypeSelector() {
               <button
                 className="workspace-input-form-url_types-option"
                 key={option.type}
-                style={{ color: option.color }}
+                style={{ color: option.bg }}
                 onClick={() => updateContent(option.type)}
               >
                 <span>{option.type}</span>

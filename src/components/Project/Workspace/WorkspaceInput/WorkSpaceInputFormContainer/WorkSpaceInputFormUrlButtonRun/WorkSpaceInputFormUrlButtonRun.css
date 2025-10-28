@@ -1,10 +1,10 @@
 .workspace-input-form_run-button {
-  padding: 0 20px;
+  padding: 0 13px;
+  border-radius: 7px;
   border: none;
-  border-left: 1px solid var(--borders);
-  background: var(--play-button-background);
-  color: var(--play-button-color);
-  font-weight: 600;
+  font-family: var(--regular-font);
+  background: var(--primary);
+  color: var(--primary-foreground);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12,4 +12,6 @@
   cursor: pointer;
   font-size: 20px;
   transition: background 0.2s ease;
+  flex: 1;
+  max-width: 110px;
 }

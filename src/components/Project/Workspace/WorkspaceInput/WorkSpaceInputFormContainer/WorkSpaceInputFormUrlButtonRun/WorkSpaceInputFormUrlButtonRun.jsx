@@ -5,6 +5,7 @@ import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../../../providers/FileMan
 import useFileManagerContext from "../../../../../../Hooks/FileManager/useFileMangerContext";
 import "./WorkSpaceInputFormUrlButtonRun.css";
 import { fetch } from "@tauri-apps/plugin-http";
+import { Play } from "lucide-react";
 
 export default function WorkSpaceInputFormUrlButtonRun() {
   const [content] = useWorkSpaceContentContext();
@@ -129,13 +130,13 @@ export default function WorkSpaceInputFormUrlButtonRun() {
       onClick={handleRun}
       disabled={content.isRuning}
       style={{
-        background: content.isRuning
-          ? "var(--play-button-disabled-background)"
-          : "",
+        background: content.isRuning ? "var(--primary-transparent)" : "",
         cursor: content.isRuning ? "not-allowed" : "",
+        color: content.isRuning ? "var(--muted-foreground)" : "",
       }}
     >
-      Run
+      <Play size={16} />
+      Send
     </button>
   );
 }
