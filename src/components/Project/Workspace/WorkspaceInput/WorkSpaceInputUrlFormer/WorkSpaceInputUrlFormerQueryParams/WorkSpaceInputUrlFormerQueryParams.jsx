@@ -91,7 +91,7 @@ export default function WorkSpaceInputUrlFormerQueryParams() {
                 onClick={() => setQuerys([])}
                 text="Eliminar todo"
                 icon={<Trash2 size={20} />}
-                style={{ color: "red" }}
+                style={{ color: "var(--destructive)" }}
               />
             </div>
           </div>

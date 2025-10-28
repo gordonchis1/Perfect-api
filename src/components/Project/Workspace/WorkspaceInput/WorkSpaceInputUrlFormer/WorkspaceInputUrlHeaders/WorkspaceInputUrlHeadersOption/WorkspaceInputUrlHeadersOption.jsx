@@ -1,5 +1,4 @@
 import "./WorkspaceInputUrlHeadersOption.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function WorkspaceInputUrlHeadersOption({
   onClick,
@@ -14,7 +13,7 @@ export default function WorkspaceInputUrlHeadersOption({
       style={{ color }}
     >
       <span>{text}</span>
-      <FontAwesomeIcon icon={icon} />
+      {icon}
     </button>
   );
 }

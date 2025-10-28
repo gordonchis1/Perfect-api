@@ -1,7 +1,7 @@
 .query-params_delete-button {
   background: transparent;
   border: none;
-  color: red;
+  color: var(--destructive);
   font-size: 20px;
 }
 

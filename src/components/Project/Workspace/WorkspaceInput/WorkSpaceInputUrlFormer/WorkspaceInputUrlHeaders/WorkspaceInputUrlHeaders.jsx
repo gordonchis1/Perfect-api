@@ -4,11 +4,10 @@ import useFileManagerContext from "../../../../../../Hooks/FileManager/useFileMa
 import useWorkSpaceContentContext from "../../../../../../Hooks/WorkSpace/useWorkSpaceContentContext";
 import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../../../providers/FileManager/reducer";
 import useFilesContext from "../../../../../../Hooks/useFilesContext";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAdd, faTrash } from "@fortawesome/free-solid-svg-icons";
 import ActiveCheckbox from "../../../../../Global/ActiveCheckbox/ActiveCheckbox";
 import WorkspaceInputUrlHeadersOption from "./WorkspaceInputUrlHeadersOption/WorkspaceInputUrlHeadersOption";
 import WorkspaceInputUrlHeadersNonEditableHeaders from "./WorkspaceInputUrlHeadersNonEditableHeaders/WorkspaceInputUrlHeadersNonEditableHeaders";
+import { Plus, Trash2 } from "lucide-react";
 
 const nonEditableHeaders = ["Host", "Accept"];
 
@@ -130,19 +129,21 @@ export default function WorkspaceInputUrlHeaders() {
     <>
       {headers && (
         <div className="workspace-input-url-headers_container">
-          <h1 className="url-headers_title">Headers</h1>
-          <div className="url-headers_options-container">
-            <WorkspaceInputUrlHeadersOption
-              icon={faAdd}
-              text={"Añadir"}
-              onClick={handleAddHeader}
-            />
-            <WorkspaceInputUrlHeadersOption
-              icon={faTrash}
-              text={"Eliminar Todo"}
-              onClick={handleDeleteAllHeaders}
-              color="red"
-            />
+          <div className="url-headers_header-container">
+            <h1 className="url-headers_title">Headers</h1>
+            <div className="url-headers_options-container">
+              <WorkspaceInputUrlHeadersOption
+                icon={<Plus size={20} />}
+                text={"Añadir"}
+                onClick={handleAddHeader}
+              />
+              <WorkspaceInputUrlHeadersOption
+                icon={<Trash2 size={20} />}
+                text={"Eliminar Todo"}
+                onClick={handleDeleteAllHeaders}
+                color="red"
+              />
+            </div>
           </div>
           <div className="url-headers_headers-container">
             {headers.map((header, index) => {
@@ -188,7 +189,7 @@ export default function WorkspaceInputUrlHeaders() {
                       handleDeleteHeader(index);
                     }}
                   >
-                    <FontAwesomeIcon icon={faTrash} />
+                    <Trash2 size={20} />
                   </button>
                 </div>
               );
