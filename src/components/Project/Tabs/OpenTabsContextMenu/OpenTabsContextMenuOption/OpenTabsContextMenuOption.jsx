@@ -1,4 +1,3 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./OpenTabsContextMenuOption.css";
 
 export default function OpenTabsContextMenuOption({
@@ -13,7 +12,7 @@ export default function OpenTabsContextMenuOption({
       onClick={onClick}
       style={{ color: color || "var(--primary-text-color" }}
     >
-      <FontAwesomeIcon icon={icon} />
+      {icon}
       {text}
     </button>
   );

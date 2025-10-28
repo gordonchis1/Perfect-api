@@ -1,13 +1,14 @@
 .open-tab_contextmenu-container {
-  background: var(--context-menu-background);
-  border: 1px solid var(--borders);
+  background: var(--secondary-background);
+  box-shadow: 0 0 0 0.2px var(--sidebar-border);
   position: absolute;
   z-index: 100;
-  padding: 10px 15px;
-  border-radius: 10px;
+  padding: 5px;
+  border-radius: 0.5rem;
   display: flex;
   flex-direction: column;
   animation: 0.3s contextMenuAnimation cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  min-width: 180px;
 }
 
 @keyframes contextMenuAnimation {

@@ -1,12 +1,12 @@
 import { useRef } from "react";
 import useClickAway from "../../../../Hooks/useClickAway";
 import "./OpenTabsContextMenu.css";
-import { faClose, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import useFilesContext from "../../../../Hooks/useFilesContext";
 import { FILES_REDUCER_ACTIONS } from "../../../../providers/FilesProvider/reducer";
 import OpenTabsContextMenuOption from "./OpenTabsContextMenuOption/OpenTabsContextMenuOption";
 import useFileManagerContext from "../../../../Hooks/FileManager/useFileMangerContext";
 import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../providers/FileManager/reducer";
+import { Pen, X } from "lucide-react";
 
 export default function OpenTabContextMenu({
   file,
@@ -47,12 +47,12 @@ export default function OpenTabContextMenu({
           style={{ left: `${contextMenu.x}px`, top: `${contextMenu.y}px` }}
         >
           <OpenTabsContextMenuOption
-            icon={faPenToSquare}
+            icon={<Pen size={16} />}
             text={"Renombrar"}
             onClick={handleRename}
           />
           <OpenTabsContextMenuOption
-            icon={faClose}
+            icon={<X size={16} />}
             onClick={handleCloseFile}
             text={"Close"}
             color={"red"}

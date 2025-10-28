@@ -1,6 +1,4 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./OpenTab.css";
-import { faClose, faFile } from "@fortawesome/free-solid-svg-icons";
 import useFilesContext from "../../../../../Hooks/useFilesContext";
 import { FILES_REDUCER_ACTIONS } from "../../../../../providers/FilesProvider/reducer";
 import useFileManagerContext from "../../../../../Hooks/FileManager/useFileMangerContext";
@@ -9,6 +7,7 @@ import { useState } from "react";
 import OpenTabContextMenu from "../../OpenTabsContextMenu/OpenTabsContextMenu";
 import OpenTabRenameForm from "../OpenTabRenameForm/OpenTabRenameForm";
 import IsRuningIndicator from "../../../../Global/IsRuningIndicator/IsRuningIndicator";
+import { File, X } from "lucide-react";
 
 const defaultContextMenuState = {
   x: 0,
@@ -49,8 +48,8 @@ export default function OpenTab({ file }) {
         closeContextMenu={closeContextMenu}
         setIsRename={setIsRename}
       />
-      <IsRuningIndicator isRuning={file.content.isRuning} size="10px" />
-      <FontAwesomeIcon icon={faFile} />
+      <IsRuningIndicator isRuning={file.content.isRuning} size="8px" />
+      <File size={16} />
       {isRename ? (
         <OpenTabRenameForm
           setIsRename={setIsRename}
@@ -74,7 +73,7 @@ export default function OpenTab({ file }) {
           });
         }}
       >
-        <FontAwesomeIcon icon={faClose} />
+        <X size={16} />
       </button>
     </div>
   );

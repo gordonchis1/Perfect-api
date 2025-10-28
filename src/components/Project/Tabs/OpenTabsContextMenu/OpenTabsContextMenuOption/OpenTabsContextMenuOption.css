@@ -3,11 +3,13 @@
   border: none;
   outline: none;
   color: var(--primary-font-color);
-  font-size: 18px;
+  font-size: 14px;
   padding: 10px;
   border-radius: 4px;
   gap: 16px;
   display: flex;
+  font-family: var(--regular-font);
+  width: 100%;
 }
 
 .open-tab-contextmenu-option:hover {

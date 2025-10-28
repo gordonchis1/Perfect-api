@@ -40,9 +40,11 @@ export default function Project() {
                 </ResizeContainer.LeftContainer>
                 <ResizeContainer.RightContainer>
                   <WorkSpaceContentProvider>
-                    <div className="workspace-container">
-                      <TabsContainer />
-                      <WorkspaceContainer />
+                    <div className="workspace-wrapper">
+                      <div className="workspace-container">
+                        <TabsContainer />
+                        <WorkspaceContainer />
+                      </div>
                     </div>
                   </WorkSpaceContentProvider>
                 </ResizeContainer.RightContainer>
