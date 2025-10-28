@@ -3,6 +3,7 @@ import { faCheck, faCopy } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useWorkSpaceContentContext from "../../../../../../Hooks/WorkSpace/useWorkSpaceContentContext";
 import "./WorkSpaceInputUrlFormerUrlPreview.css";
+import { Check, Copy } from "lucide-react";
 
 export default function WorkSpaceInputUrlFormerUrlPreview() {
   const [isCopied, setIsCopied] = useState(false);
@@ -43,18 +44,9 @@ export default function WorkSpaceInputUrlFormerUrlPreview() {
           onClick={handleCopyUrlPreview}
         >
           {isCopied ? (
-            <FontAwesomeIcon
-              icon={faCheck}
-              style={{ opacity: isCopied ? "1" : "0" }}
-              className="preview-url_copy-button-icon"
-              color="#22ff00"
-            />
+            <Check size={20} color="var(--success)" />
           ) : (
-            <FontAwesomeIcon
-              icon={faCopy}
-              style={{ opacity: isCopied ? "0" : "1" }}
-              className="preview-url_copy-button-icon"
-            />
+            <Copy size={20} />
           )}
         </button>
       </div>
