@@ -1,6 +1,5 @@
+import { Trash2 } from "lucide-react";
 import "./UrlFormerQueryParamsDeleteQueryButton.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 export default function UrlFormerQueryParamsDeleteQueryButton({
   index,
@@ -18,7 +17,7 @@ export default function UrlFormerQueryParamsDeleteQueryButton({
       onClick={() => handleDeleteQuery(index)}
       className="query-params_delete-button"
     >
-      <FontAwesomeIcon icon={faTrash} />
+      <Trash2 size={20} />
     </button>
   );
 }

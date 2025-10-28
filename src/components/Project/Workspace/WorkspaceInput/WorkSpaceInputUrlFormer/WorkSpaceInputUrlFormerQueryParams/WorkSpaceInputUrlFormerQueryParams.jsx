@@ -4,11 +4,11 @@ import "./WorkSpaceInputUrlFormerQueryParams.css";
 import useFileManagerContext from "../../../../../../Hooks/FileManager/useFileMangerContext";
 import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../../../providers/FileManager/reducer";
 import useFilesContext from "../../../../../../Hooks/useFilesContext";
-import { faAdd, faTrash } from "@fortawesome/free-solid-svg-icons";
 import UrlFormerQueryParamsOption from "./UrlFormerQueryParamsOption/UrlFormerQueryParamsOption";
 import UrlFormerQueryParamsInput from "./UrlFormerQueryParamsInput/UrlFormerQueryParamsInput";
 import UrlFormerQueryParamsDeleteQueryButton from "./UrlFormerQueryParamsDeleteQueryButton/UrlFormerQueryParamsDeleteQueryButton";
 import ActiveCheckbox from "../../../../../Global/ActiveCheckbox/ActiveCheckbox";
+import { Plus, Trash2 } from "lucide-react";
 
 const defaultQueryObject = {
   key: "",
@@ -76,54 +76,66 @@ export default function WorkSpaceInputUrlFormerQueryParams() {
   };
 
   return (
-    <div className="workspace-input-url-former_query-params-container">
-      <span className="query-params_title">Query params</span>
-      <div className="query-params_options-container">
-        <UrlFormerQueryParamsOption
-          icon={faAdd}
-          text="Añadir"
-          onClick={handleAddquery}
-        />
-        <UrlFormerQueryParamsOption
-          onClick={() => setQuerys([])}
-          text="Eliminar todo"
-          icon={faTrash}
-          style={{ color: "red" }}
-        />
-      </div>
-      <div className="query-params_params-container">
-        {querys.map((query, index) => {
-          return (
-            <div key={index} className="query-params_query-container">
-              <UrlFormerQueryParamsInput
-                index={index}
-                query={query}
-                querys={querys}
-                setQuerys={setQuerys}
-                inputModifier="key"
+    <>
+      {querys && (
+        <div className="workspace-input-url-former_query-params-container">
+          <div className="query-params_header">
+            <span className="query-params_title">Query params</span>
+            <div className="query-params-header_btn-container">
+              <UrlFormerQueryParamsOption
+                icon={<Plus size={20} />}
+                text="Añadir"
+                onClick={handleAddquery}
               />
-              <UrlFormerQueryParamsInput
-                index={index}
-                query={query}
-                querys={querys}
-                setQuerys={setQuerys}
-                inputModifier="value"
-              />
-              <ActiveCheckbox
-                checked={query.isActive}
-                onChange={() => {
-                  handleChangeisActive(index);
-                }}
-              />
-              <UrlFormerQueryParamsDeleteQueryButton
-                index={index}
-                querys={querys}
-                setQuerys={setQuerys}
+              <UrlFormerQueryParamsOption
+                onClick={() => setQuerys([])}
+                text="Eliminar todo"
+                icon={<Trash2 size={20} />}
+                style={{ color: "red" }}
               />
             </div>
-          );
-        })}
-      </div>
-    </div>
+          </div>
+          <div className="query-params_params-container">
+            {querys.length !== 0 ? (
+              querys.map((query, index) => {
+                return (
+                  <div key={index} className="query-params_query-container">
+                    <UrlFormerQueryParamsInput
+                      index={index}
+                      query={query}
+                      querys={querys}
+                      setQuerys={setQuerys}
+                      inputModifier="key"
+                    />
+                    <UrlFormerQueryParamsInput
+                      index={index}
+                      query={query}
+                      querys={querys}
+                      setQuerys={setQuerys}
+                      inputModifier="value"
+                    />
+                    <ActiveCheckbox
+                      checked={query.isActive}
+                      onChange={() => {
+                        handleChangeisActive(index);
+                      }}
+                    />
+                    <UrlFormerQueryParamsDeleteQueryButton
+                      index={index}
+                      querys={querys}
+                      setQuerys={setQuerys}
+                    />
+                  </div>
+                );
+              })
+            ) : (
+              <div className="query-params_no-querys-container">
+                No query params
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+    </>
   );
 }

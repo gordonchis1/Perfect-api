@@ -1,5 +1,4 @@
 import "./UrlFormerQueryParamsOption.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function UrlFormerQueryParamsOption({
   icon,
@@ -10,7 +9,7 @@ export default function UrlFormerQueryParamsOption({
   return (
     <button onClick={onClick} className="query-params_option" {...rest}>
       {text}
-      {icon && <FontAwesomeIcon icon={icon} />}
+      {icon}
     </button>
   );
 }

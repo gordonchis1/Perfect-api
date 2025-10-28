@@ -1,6 +1,5 @@
 import "./ActiveCheckbox.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { Check } from "lucide-react";
 
 export default function ActiveCheckbox({ checked, onChange }) {
   return (
@@ -12,7 +11,7 @@ export default function ActiveCheckbox({ checked, onChange }) {
         onChange={onChange}
       />
       <div className="active-checkbox_custom-checkbox">
-        {checked && <FontAwesomeIcon icon={faCheck} />}
+        {checked && <Check size={16} />}
       </div>
     </label>
   );
