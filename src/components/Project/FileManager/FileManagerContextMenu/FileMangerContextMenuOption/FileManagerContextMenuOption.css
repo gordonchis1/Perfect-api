@@ -3,13 +3,30 @@
   border: none;
   outline: none;
   color: var(--primary-font-color);
-  font-size: 18px;
+  font-size: 14px;
   padding: 10px;
   border-radius: 4px;
   gap: 16px;
   display: flex;
+  font-family: var(--regular-font);
+  width: 100%;
+}
+
+.filemanager-contextmenu-option span {
+  color: var(--muted-foreground);
 }
 
 .filemanager-contextmenu-option:hover {
-  background: var(--hover);
+  background: var(--accent);
+}
+
+.contextmenu-remove-option span {
+  color: var(--destructive) !important;
+}
+.contextmenu-remove-option {
+  box-shadow: 0 -0.2px 0 0 var(--sidebar-border);
+}
+
+.contextmenu-remove-option:hover {
+  background: var(--destructive-transparent) !important;
 }

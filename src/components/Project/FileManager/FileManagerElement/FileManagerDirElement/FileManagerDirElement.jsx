@@ -30,6 +30,7 @@ export default function FileManagerDirElement({
 
   const childrens = node.getChildrens();
   const FilemanagerElementContainerRef = useRef(null);
+  console.log(level, node.name);
 
   return (
     <div

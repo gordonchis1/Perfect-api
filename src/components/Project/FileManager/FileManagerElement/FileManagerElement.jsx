@@ -4,8 +4,8 @@ import "./FileManagerElement.css";
 import { useEffect, useState } from "react";
 import FileManagerContextMenu from "../FileManagerContextMenu/FileManagerContextMenu";
 
-// Todo: despues refactorizar el estado para usar un estado global para evitar props drilling
 // !FIX: arreglar la identacion de los elementos en el file manager
+// !FIX: Poner los directorios primero y luego los archivos en orden alfabetico
 
 const defaultContextMenu = {
   show: false,

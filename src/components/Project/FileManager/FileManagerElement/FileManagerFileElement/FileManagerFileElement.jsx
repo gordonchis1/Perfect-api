@@ -24,6 +24,14 @@ export default function FileManagerFileElement({
 
   const [filesState, dispatch] = useFilesContext();
 
+  const fileFontColor = () => {
+    if (filesState.currentFile === node.id) {
+      return "var(--primary)";
+    } else if (filesState.openFiles.some((file) => file.id == node.id)) {
+      return "var(--primery-text-color)";
+    }
+  };
+
   return (
     <div
       className="filemanager-element-container"
@@ -31,7 +39,7 @@ export default function FileManagerFileElement({
       style={
         draggin
           ? { position: "absolute", opacity: ".8", background: "var(--hover)" }
-          : { paddingLeft: `${level * 20}px` }
+          : {}
       }
     >
       <FileManagerDraggableElement
@@ -44,11 +52,12 @@ export default function FileManagerFileElement({
             filesState.currentFile === node.id
               ? "var(--primary-transparent)"
               : "",
-          color: filesState.currentFile === node.id ? "var(--primary)" : "",
+          color: fileFontColor(),
           border:
             filesState.currentFile === node.id
               ? "1px solid var(--primary)"
               : "",
+          paddingLeft: `${level * 20}px`,
         }}
         onContextMenu={onContextMenu}
         onClick={() => {

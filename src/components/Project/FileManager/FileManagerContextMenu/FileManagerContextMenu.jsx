@@ -2,15 +2,10 @@ import { useRef } from "react";
 import useClickAway from "../../../../Hooks/useClickAway";
 import "./FileManagerContextMenu.css";
 import FileManagerContextMenuOption from "./FileMangerContextMenuOption/FileManagerContextMenuOption";
-import {
-  faFileCirclePlus,
-  faFolderPlus,
-  faPenToSquare,
-  faTrash,
-} from "@fortawesome/free-solid-svg-icons";
 import useFileManagerContext from "../../../../Hooks/FileManager/useFileMangerContext";
 import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../providers/FileManager/reducer";
 import useProjectContext from "../../../../Hooks/FileManager/useProjectContext";
+import { FilePlus2, FolderPlus, Pen, Trash2 } from "lucide-react";
 
 // TODO: Agregar una pantalla de confirmacion de remove
 // TODO: open tab when create new file
@@ -63,14 +58,14 @@ export default function FileManagerContextMenu({
         optionFor="dir"
         text={"Nuevo Archivo"}
         node={node}
-        icon={faFileCirclePlus}
+        icon={<FilePlus2 size={16} />}
         onClick={handleAddFile}
       />
       <FileManagerContextMenuOption
         optionFor="dir"
         text={"Agregar Directorio"}
         node={node}
-        icon={faFolderPlus}
+        icon={<FolderPlus size={16} />}
         onClick={handleAddDir}
       />
       {node.name !== "/" && (
@@ -78,15 +73,16 @@ export default function FileManagerContextMenu({
           <FileManagerContextMenuOption
             node={node}
             text={"Renombrar"}
-            icon={faPenToSquare}
+            icon={<Pen size={16} />}
             onClick={() => updateNodeState({ ...node, isRename: true })}
           />
           <FileManagerContextMenuOption
             node={node}
             text={"Remover"}
-            icon={faTrash}
+            icon={<Trash2 size={16} />}
             onClick={handleRemove}
-            color={"red"}
+            color={"var(--destructive)"}
+            className="contextmenu-remove-option"
           />
         </>
       )}
