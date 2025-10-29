@@ -1,7 +1,7 @@
 export const statusColors = {
-  error: "var(--error)",
-  inactive: "var(--inactive)",
-  success: "var(--success)",
+  error: { color: "var(--destructive-foreground)", bg: "var(--destructive)" },
+  inactive: { color: "var(--inactive)", bg: "" },
+  success: { color: "var(--success-foreground)", bg: "var(--success)" },
 };
 
 export function determineColor(statusCode) {

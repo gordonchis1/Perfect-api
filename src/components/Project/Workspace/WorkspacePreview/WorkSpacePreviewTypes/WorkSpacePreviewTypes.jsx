@@ -71,7 +71,6 @@ export default function WorkSpacePreviewTypes() {
     <>
       {workspacePreviewContext.responses.length > 0 && (
         <div className="workspace-preview_types-container">
-          <WorkspacePreviewHeader />
           <PreviewTypesLanguagesSelector
             currentLanguage={currentLanguage}
             setCurrentLanguage={setCurrentLanguage}

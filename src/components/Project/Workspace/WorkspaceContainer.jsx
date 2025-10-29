@@ -5,6 +5,7 @@ import useWidthObserver from "../../../Hooks/useWidthObserver";
 import WorkspaceInputContainer from "./WorkspaceInput/WorkspaceInputContainer";
 import useWorkSpaceContentContext from "../../../Hooks/WorkSpace/useWorkSpaceContentContext";
 import WorkSpacePreviewContainer from "./WorkspacePreview/WorkSpacePreviewContainer";
+import WorkSpacePreviewProvider from "../../../providers/WorkspacePreview/WorkSpacePreviewProvider";
 
 // TODO: remove content from files context use filemanger content insted
 export default function WorkspaceContainer() {
@@ -35,7 +36,9 @@ export default function WorkspaceContainer() {
             <WorkspaceInputContainer />
           </ResizeContainer.LeftContainer>
           <ResizeContainer.RightContainer>
-            <WorkSpacePreviewContainer />
+            <WorkSpacePreviewProvider>
+              <WorkSpacePreviewContainer />
+            </WorkSpacePreviewProvider>
           </ResizeContainer.RightContainer>
         </ResizeContainer>
       )}

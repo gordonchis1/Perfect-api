@@ -1,3 +1,4 @@
+import "./WorkspacePreviewContent.css";
 import WorkSpacePreviewResponse from "../WorkSpacePreviewResponse/WorkSpacePreviewResponse";
 import WorkSpacePreviewTypes from "../WorkSpacePreviewTypes/WorkSpacePreviewTypes";
 import MultipleContainer from "../../../../Global/MultipleContainer/MultipleContainer";
@@ -18,7 +19,7 @@ export default function WorkspacePreviewContent() {
   const [content] = useWorkSpaceContentContext();
 
   return (
-    <>
+    <div className="workspace-preview_multiple-container">
       {content.isRuning ? (
         <WorkspacePreviewLoading
           url={content.url.parseUrl}
@@ -31,6 +32,6 @@ export default function WorkspacePreviewContent() {
           mainContainerclassName="workspace_preview-multiple-container"
         />
       )}
-    </>
+    </div>
   );
 }

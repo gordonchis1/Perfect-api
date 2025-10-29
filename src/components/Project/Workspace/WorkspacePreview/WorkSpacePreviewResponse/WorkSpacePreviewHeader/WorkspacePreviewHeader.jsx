@@ -15,25 +15,42 @@ export default function WorkspacePreviewHeader() {
             background: determineColor(
               workspacePreviewContext.responses[
                 workspacePreviewContext.currentResponseIdx
-              ].status
-            ),
-          }}
-        >
-          {workspacePreviewContext.responses[
-            workspacePreviewContext.currentResponseIdx
-          ].status !== 0
-            ? workspacePreviewContext.responses[
+              ]?.status
+            ).bg,
+            color: determineColor(
+              workspacePreviewContext.responses[
                 workspacePreviewContext.currentResponseIdx
               ]?.status
-            : "Error"}
+            ).color,
+          }}
+        >
+          <span>
+            {workspacePreviewContext.responses[
+              workspacePreviewContext.currentResponseIdx
+            ]?.status !== 0
+              ? workspacePreviewContext.responses[
+                  workspacePreviewContext.currentResponseIdx
+                ]?.status
+              : "Error"}
+          </span>
+          <span>
+            {
+              workspacePreviewContext.responses[
+                workspacePreviewContext.currentResponseIdx
+              ]?.response?.status
+            }
+          </span>
         </span>
         <span className="response-header_info-time-tag">
-          {Math.trunc(
-            workspacePreviewContext.responses[
-              workspacePreviewContext.currentResponseIdx
-            ]?.time
-          )}{" "}
-          ms
+          <span className="response-header-info-time_time">Time: </span>
+          <span>
+            {Math.trunc(
+              workspacePreviewContext.responses[
+                workspacePreviewContext.currentResponseIdx
+              ]?.time
+            )}{" "}
+            ms
+          </span>
         </span>
       </div>
       <WorkSpacePreviewResponseSelector />

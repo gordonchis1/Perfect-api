@@ -23,7 +23,15 @@ export default function ResponseSelectorOption({ setIsOpen }) {
             style={{
               background:
                 index === workspacePreviewContext.currentResponseIdx
-                  ? "var(--hover)"
+                  ? "var(--primary-transparent)"
+                  : "",
+              color:
+                index === workspacePreviewContext.currentResponseIdx
+                  ? "var(--primary)"
+                  : "",
+              border:
+                index === workspacePreviewContext.currentResponseIdx
+                  ? "1px solid var(--primary)"
                   : "",
             }}
             className="responses-selector_option"
@@ -34,7 +42,10 @@ export default function ResponseSelectorOption({ setIsOpen }) {
           >
             <span
               className="selector_option-status"
-              style={{ color: determineColor(response?.status) }}
+              style={{
+                color: determineColor(response?.status).color,
+                background: determineColor(response?.status).bg,
+              }}
             >
               {response?.status !== 0 ? response?.status : "Error"}
             </span>

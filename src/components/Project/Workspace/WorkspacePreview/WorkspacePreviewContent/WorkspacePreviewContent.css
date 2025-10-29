@@ -1,0 +1,9 @@
+.workspace-preview_multiple-container {
+  box-shadow: 0 0 0 0.1px var(--sidebar-border);
+  background: var(--secondary-background);
+  border-radius: 7px;
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}

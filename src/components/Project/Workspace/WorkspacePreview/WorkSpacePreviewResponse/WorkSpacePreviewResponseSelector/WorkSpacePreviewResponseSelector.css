@@ -2,13 +2,18 @@
   display: flex;
   height: fit-content;
   flex-direction: row-reverse;
+  flex-grow: 1;
+  max-width: 400px;
+  flex-wrap: nowrap;
+  flex-shrink: 1;
 }
 
 .responses-selector_open-button {
   background: transparent;
-  border: 1px solid var(--borders);
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  border: none;
+  box-shadow: 0 0 0 0.3px var(--sidebar-border);
+  outline: none;
+  font-family: var(--regular-font);
   color: var(--primary-text-color);
   align-items: center;
   gap: 10px;
@@ -17,10 +22,22 @@
   font-size: 16px;
   cursor: pointer;
   border-radius: 4px;
+  flex-grow: 1;
+  flex-shrink: 1;
+  overflow: hidden;
+  flex-wrap: nowrap;
+}
+
+.responses-selector_open-button span {
+  text-wrap: none;
+  white-space: nowrap;
+  max-width: 90%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .responses-selector_open-button:hover {
-  background: var(--hover);
+  background: var(--accent);
 }
 
 .responses-selector_options-container {
@@ -29,6 +46,8 @@
   display: flex;
   flex-direction: column;
   transform: translateY(43px);
-  background: var(--background);
-  border: 1px solid var(--borders);
+  background: var(--secondary-background);
+  border-radius: 7px;
+  box-shadow: 0 0 0 0.3px var(--sidebar-border);
+  padding: 5px;
 }

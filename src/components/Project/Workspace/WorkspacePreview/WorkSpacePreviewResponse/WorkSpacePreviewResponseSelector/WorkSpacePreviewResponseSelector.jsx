@@ -1,10 +1,9 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./WorkSpacePreviewResponseSelector.css";
-import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { useRef, useState } from "react";
 import useClickAway from "../../../../../../Hooks/useClickAway";
 import ResponseSelectorOption from "./ResponseSelectorOption/ResponseSelectorOption";
 import useWorkspacePreviewContext from "../../../../../../Hooks/useWorkspacePreviewContext";
+import { ChevronDown } from "lucide-react";
 
 // TODO: cambiar el valor de el input y de todos los inputs con le del index
 export default function WorkSpacePreviewResponseSelector() {
@@ -30,7 +29,7 @@ export default function WorkSpacePreviewResponseSelector() {
             ]?.url
           }
         </span>
-        <FontAwesomeIcon icon={faAngleDown} />
+        <ChevronDown size={20} />
       </button>
       {isOpen && <ResponseSelectorOption setIsOpen={setIsOpen} />}
     </div>

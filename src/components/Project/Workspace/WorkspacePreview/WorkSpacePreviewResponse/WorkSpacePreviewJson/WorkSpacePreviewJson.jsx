@@ -7,7 +7,7 @@ export default function WorkSpacePreviewJson() {
   const [workspacePreviewContext] = useWorkspacePreviewContext();
 
   return (
-    <div className="workspace-preview-response_json-preview-container">
+    <>
       {workspacePreviewContext.responses.length > 0 && (
         <Editor
           loading={<LoaderSpiner size={"70px"} />}
@@ -21,7 +21,6 @@ export default function WorkSpacePreviewJson() {
             2
           )}
           theme="vs-dark"
-          width={"100%"}
           options={{
             definitionLinkOpensInPeek: true,
             links: true,
@@ -30,11 +29,12 @@ export default function WorkSpacePreviewJson() {
             wordWrap: "on",
             wordWrapColumn: 60,
             readOnly: true,
-            fontSize: 20,
+            fontSize: 16,
+            fontFamily: "var(--mono-font)",
             minimap: { enabled: false },
           }}
         ></Editor>
       )}
-    </div>
+    </>
   );
 }

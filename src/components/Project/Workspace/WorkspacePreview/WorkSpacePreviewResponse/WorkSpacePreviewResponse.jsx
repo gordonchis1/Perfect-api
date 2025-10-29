@@ -1,6 +1,5 @@
 import "./WorkSpacePreviewResponse.css";
 import { useEffect, useState } from "react";
-import WorkspacePreviewHeader from "./WorkSpacePreviewHeader/WorkspacePreviewHeader";
 import WorkSpacePreviewJson from "./WorkSpacePreviewJson/WorkSpacePreviewJson";
 import useWorkspacePreviewContext from "../../../../../Hooks/useWorkspacePreviewContext";
 import { detectFormat } from "../../../../../utils/detectFromatResponses";
@@ -14,8 +13,6 @@ const renderPreviewType = {
   text: <WorkSpacePreviewText />,
 };
 
-// TODO: actuzlizar el heigth en tiempo real
-// TODO: agreagr un componente cuando no hay respuesta
 export default function WorkSpacePreviewContainer() {
   const [responseType, setResponseType] = useState(undefined);
   const [workspacePreviewContext, workspacePreviewContextDispatcher] =
@@ -42,7 +39,6 @@ export default function WorkSpacePreviewContainer() {
     <>
       {workspacePreviewContext.responses.length > 0 && (
         <div className="workspace-preview_response-container">
-          <WorkspacePreviewHeader />
           {renderPreviewType[responseType]}
         </div>
       )}
