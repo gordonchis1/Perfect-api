@@ -45,5 +45,5 @@
   color: var(--muted-foreground);
   align-items: center;
 
-  box-shadow: 0 0 0 0.1px var(--sidebar-border);
+  box-shadow: 0 0 0 0.1px var(--border);
 }

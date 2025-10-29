@@ -5,7 +5,7 @@
   gap: 7px;
   background: transparent;
   border: none;
-  box-shadow: 0 0 0 0.2px var(--sidebar-border);
+  box-shadow: 0 0 0 0.2px var(--border);
   color: var(--primary-text-color);
   border-radius: 4px;
   font-family: var(--regular-font);

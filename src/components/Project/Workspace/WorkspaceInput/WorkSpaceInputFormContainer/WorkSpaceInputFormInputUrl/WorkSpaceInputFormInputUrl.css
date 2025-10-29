@@ -11,7 +11,7 @@
   transition: border 0.1s ease;
   font-family: var(--regular-font);
   border-radius: 7px;
-  box-shadow: 0 0 0 0.5px var(--sidebar-border);
+  box-shadow: 0 0 0 0.5px var(--border);
 }
 
 .workspace-input-form_url-input:focus {

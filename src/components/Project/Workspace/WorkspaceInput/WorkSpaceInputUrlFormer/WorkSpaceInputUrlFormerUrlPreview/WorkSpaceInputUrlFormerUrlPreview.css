@@ -1,6 +1,6 @@
 .workspace-input-url-former_preview-url-container {
   width: 100%;
-  box-shadow: 0 0 0 0.3px var(--sidebar-border);
+  box-shadow: 0 0 0 0.3px var(--border);
   border-radius: 7px;
   border: 1px solid transparent;
 }
@@ -8,7 +8,7 @@
 .preview-url-title-container {
   background: var(--muted);
   padding: 10px;
-  box-shadow: 0 0.2px 0 0 var(--sidebar-border);
+  box-shadow: 0 0.2px 0 0 var(--border);
   font-family: var(--bold-font);
   font-size: 17px;
   display: flex;

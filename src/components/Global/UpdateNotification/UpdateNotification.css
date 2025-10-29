@@ -7,7 +7,7 @@
   right: 20px;
   border-radius: 4px;
   padding: 20px;
-  border: 1px solid var(--sidebar-border);
+  box-shadow: 0 0 0 0.3px var(--border);
   display: flex;
   user-select: none;
   flex-direction: column;
@@ -24,6 +24,7 @@
 }
 
 .update-notification_update-progress-container {
+  box-shadow: 0 0 0 0.3px var(--border);
   background: var(--hover);
   color: var(--primary-text-color);
   display: flex;

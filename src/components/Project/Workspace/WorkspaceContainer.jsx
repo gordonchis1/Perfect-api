@@ -26,7 +26,7 @@ export default function WorkspaceContainer() {
     <div className="workspace_container" ref={container}>
       {content && (
         <ResizeContainer
-          resizeColor={"var(--sidebar-border)"}
+          resizeColor={"var(--border)"}
           defaultWidth={60}
           containerWidth={width}
           minWidthOfLeftContainer={800}

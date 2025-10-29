@@ -3,7 +3,7 @@
   color: var(--primary-text-color);
   padding: 10px 10px;
   border: none;
-  box-shadow: 0 0 0 0.2px var(--sidebar-border);
+  box-shadow: 0 0 0 0.2px var(--border);
   border-radius: 4px;
   cursor: pointer;
   display: flex;

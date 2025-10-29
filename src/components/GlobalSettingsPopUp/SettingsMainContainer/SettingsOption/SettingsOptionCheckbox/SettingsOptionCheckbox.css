@@ -5,7 +5,7 @@
 .settings-option_custom-checkbox {
   width: 53px;
   height: 30px;
-  background: var(--sidebar-border);
+  background: var(--border);
   padding: 5px;
   border-radius: 7px;
   cursor: pointer;

@@ -24,7 +24,7 @@
   color: var(--destructive) !important;
 }
 .contextmenu-remove-option {
-  box-shadow: 0 -0.2px 0 0 var(--sidebar-border);
+  box-shadow: 0 -0.2px 0 0 var(--border);
 }
 
 .contextmenu-remove-option:hover {

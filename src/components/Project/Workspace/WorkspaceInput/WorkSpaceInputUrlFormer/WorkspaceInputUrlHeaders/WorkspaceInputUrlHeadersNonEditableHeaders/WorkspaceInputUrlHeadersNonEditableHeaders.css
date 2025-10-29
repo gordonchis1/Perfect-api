@@ -3,7 +3,7 @@
   padding: 10px;
   font-size: 16px;
   font-family: var(--regular-font);
-  box-shadow: 0 0.3px 0 0 var(--sidebar-border);
+  box-shadow: 0 0.3px 0 0 var(--border);
   color: var(--muted-foreground);
   cursor: not-allowed;
 }

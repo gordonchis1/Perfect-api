@@ -11,7 +11,7 @@
 .responses-selector_open-button {
   background: transparent;
   border: none;
-  box-shadow: 0 0 0 0.3px var(--sidebar-border);
+  box-shadow: 0 0 0 0.3px var(--border);
   outline: none;
   font-family: var(--regular-font);
   color: var(--primary-text-color);
@@ -48,6 +48,6 @@
   transform: translateY(43px);
   background: var(--secondary-background);
   border-radius: 7px;
-  box-shadow: 0 0 0 0.3px var(--sidebar-border);
+  box-shadow: 0 0 0 0.3px var(--border);
   padding: 5px;
 }

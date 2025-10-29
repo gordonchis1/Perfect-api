@@ -10,7 +10,7 @@
   transition: opacity 0.3s ease, background-color 0.3s ease,
     border-bottom 0.3s ease;
   border: none;
-  box-shadow: 0 0 0 0.2px var(--sidebar-border);
+  box-shadow: 0 0 0 0.2px var(--border);
   border-radius: 4px;
 }
 

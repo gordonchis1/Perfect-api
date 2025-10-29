@@ -65,7 +65,7 @@ export default function SettingsOptionPathSelector({
           value={config[tab][section][option] || ""}
           placeholder={userSettingsOptionsMap[option]?.title}
           readOnly={true}
-          style={{ borderColor: isValidPath ? "var(--sidebar-border)" : "red" }}
+          style={{ borderColor: isValidPath ? "var(--border)" : "red" }}
           onClick={handleOpenFolderDialog}
         ></input>
         <button

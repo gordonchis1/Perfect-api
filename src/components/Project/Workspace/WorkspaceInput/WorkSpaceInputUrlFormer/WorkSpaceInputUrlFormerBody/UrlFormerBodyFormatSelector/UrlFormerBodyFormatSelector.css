@@ -1,7 +1,7 @@
 .format-selector_options-container {
   position: absolute;
   border: none;
-  box-shadow: 0 0 0 0.2px var(--sidebar-border);
+  box-shadow: 0 0 0 0.2px var(--border);
   background: var(--background);
   margin-top: 5px;
   padding: 5px;

@@ -1,5 +1,5 @@
 .workspace-preview_multiple-container {
-  box-shadow: 0 0 0 0.1px var(--sidebar-border);
+  box-shadow: 0 0 0 0.1px var(--border);
   background: var(--secondary-background);
   border-radius: 7px;
   width: 100%;

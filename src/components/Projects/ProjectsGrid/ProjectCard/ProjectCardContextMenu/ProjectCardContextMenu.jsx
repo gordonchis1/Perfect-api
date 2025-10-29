@@ -1,7 +1,6 @@
 import "./ProjectCardContextMenu.css";
 import useClickAway from "../../../../../Hooks/useClickAway";
 import { useRef } from "react";
-import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { deleteProject } from "../../../../../utils/deleteProject";
 import ProjectCardContextMenuOption from "./ProjectCardContextMenuOption/ProjectCardContextMenuOption";
 import { Pen, Trash2 } from "lucide-react";

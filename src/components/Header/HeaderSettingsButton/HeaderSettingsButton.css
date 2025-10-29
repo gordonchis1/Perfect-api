@@ -8,7 +8,7 @@
   background: transparent;
   border: none;
   color: var(--primary-text-color);
-  box-shadow: 0 0 0 0.3px var(--sidebar-border);
+  box-shadow: 0 0 0 0.3px var(--border);
 }
 
 .header-settings-button:hover {

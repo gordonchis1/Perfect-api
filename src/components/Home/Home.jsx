@@ -8,7 +8,7 @@ export default function Home() {
     <>
       <UpdateNotification />
       <ResizeContainer
-        resizeColor={"var(--sidebar-border)"}
+        resizeColor={"var(--border)"}
         defaultWidth={10}
         maxWidthOfLeftContainer={10}
         minWidthOfLeftContainer={80}

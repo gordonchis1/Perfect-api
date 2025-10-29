@@ -23,7 +23,7 @@
 .workspace-input-form-url_types-options-container {
   z-index: 200;
   border: none;
-  box-shadow: 0 0 0 0.2px var(--sidebar-border);
+  box-shadow: 0 0 0 0.2px var(--border);
   padding: 5px;
   width: fit-content;
   margin: 10px 0 0 5px;

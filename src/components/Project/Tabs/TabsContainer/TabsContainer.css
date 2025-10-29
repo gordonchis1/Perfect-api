@@ -4,7 +4,7 @@
   height: 40px;
   border-radius: 6px;
 
-  box-shadow: 0 0 0 0.3px var(--sidebar-border);
+  box-shadow: 0 0 0 0.3px var(--border);
   background: var(--secondary-background);
   padding: 7px;
 

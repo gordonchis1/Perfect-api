@@ -5,7 +5,7 @@
   background: var(--secondary-background);
   padding: 10px;
   border-radius: 4px;
-  box-shadow: 0 0 0 0.3px var(--sidebar-border);
+  box-shadow: 0 0 0 0.3px var(--border);
   padding: 5px;
   z-index: 1000;
   animation: 0.3s contextMenuAnimation cubic-bezier(0.25, 1, 0.5, 1) forwards;

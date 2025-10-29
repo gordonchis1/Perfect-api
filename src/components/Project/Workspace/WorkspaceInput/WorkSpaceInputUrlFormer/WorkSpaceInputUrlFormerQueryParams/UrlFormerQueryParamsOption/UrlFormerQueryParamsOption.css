@@ -7,7 +7,7 @@
   border: none;
   padding: 10px 10px;
   border-radius: 4px;
-  box-shadow: 0 0 0 0.2px var(--sidebar-border);
+  box-shadow: 0 0 0 0.2px var(--border);
   font-family: var(--regular-font);
   font-size: 16px;
   gap: 5px;
