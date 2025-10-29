@@ -29,7 +29,7 @@ export default function WorkspaceContainer() {
           resizeColor={"var(--border)"}
           defaultWidth={60}
           containerWidth={width}
-          minWidthOfLeftContainer={800}
+          minWidthOfLeftContainer={750}
           maxWidthOfLeftContainer={80}
         >
           <ResizeContainer.LeftContainer>

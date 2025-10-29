@@ -21,7 +21,6 @@ export default function Projects() {
     filters
   );
 
-  //TODO: Add handlerError function to handle errors in the fetchProjects function
   useEffect(() => {
     async function createDir() {
       await initDocumentDir();

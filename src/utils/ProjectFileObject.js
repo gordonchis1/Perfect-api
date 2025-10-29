@@ -166,6 +166,7 @@ export class VirtualFileSystem {
 
     return new VirtualFileSystem(json);
   }
+
   getNodeById(id, currentNode = this.root) {
     if (currentNode.id === id) return currentNode;
 

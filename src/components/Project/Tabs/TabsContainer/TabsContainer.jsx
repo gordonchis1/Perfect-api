@@ -6,6 +6,7 @@ import "./TabsContainer.css";
 export default function TabsContainer() {
   const [files] = useFilesContext();
   useSaveStateOnClose();
+
   return (
     <div className="tabs-container">
       {files.openFiles.map((file) => (

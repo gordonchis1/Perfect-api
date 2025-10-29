@@ -19,6 +19,7 @@ const filesReducer = (state, action) => {
 
         initState.openFiles.forEach((fileId) => {
           const fileFromVfs = fileManager.getNodeById(fileId);
+          if (!fileFromVfs) return;
           const path = fileManager.getAbsolutePath(fileFromVfs);
 
           newState.openFiles.push({
