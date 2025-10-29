@@ -2,7 +2,7 @@
   height: 100%;
   padding: 7px;
   border-radius: 7px;
-  background: var(--accent-background);
+  background: var(--primary);
   color: var(--primary-text-color);
   border: none;
   transition: background 0.2s ease;
@@ -11,7 +11,7 @@
 
 .settings-option_update-available {
   padding: 7px;
-  background: var(--accent-background);
+  background: var(--primary);
   border-radius: 7px;
   display: flex;
   flex-direction: column;
@@ -23,5 +23,5 @@
 }
 
 .settings-option_btn-search-updates:hover {
-  background: var(--hover);
+  background: var(--accent);
 }

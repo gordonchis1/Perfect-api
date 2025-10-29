@@ -67,7 +67,7 @@ export default function SettingsOptionVersion({ option }) {
         option={option}
         text={`${userSettingsOptionsMap[option]?.title} ${currentVersion}`}
         description={
-          <a style={{ color: "var(--accent-background)" }} href="#">
+          <a style={{ color: "var(--primary)" }} href="#">
             Ver novedades
           </a>
         }

@@ -21,8 +21,8 @@
 }
 
 .settings-nav_button-active {
-  background: var(--accent-background);
+  background: var(--primary);
 }
 .settings-nav_button:hover {
-  background: var(--hover);
+  background: var(--accent);
 }

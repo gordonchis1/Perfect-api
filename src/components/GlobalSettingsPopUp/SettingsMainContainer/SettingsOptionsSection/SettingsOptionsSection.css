@@ -1,5 +1,5 @@
 .settings-main_section-container {
-  border-bottom: 3px solid var(--borders);
+  border-bottom: 3px solid var(--sidebar-border);
 }
 
 .settings-section_subtitle {

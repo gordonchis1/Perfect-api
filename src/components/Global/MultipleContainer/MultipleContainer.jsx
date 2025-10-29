@@ -23,9 +23,7 @@ export default function MultipleContainer({
               className="multiple-container_option"
               style={{
                 border:
-                  container == keyContainer
-                    ? " 1px solid var(--accent-background)"
-                    : "",
+                  container == keyContainer ? " 1px solid var(--primary)" : "",
                 color:
                   container == keyContainer
                     ? "var(--primary)"

@@ -30,13 +30,13 @@
   padding: 10px;
   outline: none;
   border: none;
-  border-bottom: 2px solid var(--borders);
+  border-bottom: 2px solid var(--sidebar-border);
   transition: border-bottom 0.2s ease-in;
 }
 
 .rename-popup-form_input:focus {
   background: var(--hover);
-  border-bottom: 2px solid var(--accent-background);
+  border-bottom: 2px solid var(--primary);
 }
 
 .rename-popup-form_buttons-container {
@@ -60,6 +60,6 @@
 }
 
 .rename-popup_confirm-btn {
-  background: var(--accent-background);
+  background: var(--primary);
   transition: opacity 0.2s ease-in;
 }

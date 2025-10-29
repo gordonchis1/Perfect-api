@@ -16,13 +16,13 @@
   justify-content: center;
   align-items: center;
   border-radius: 5px;
-  border: 1px solid var(--borders);
+  border: 1px solid var(--sidebar-border);
   transition: background 0.3s ease, color 0.3s ease;
   cursor: pointer;
 }
 
 .active-checkbox_input:checked + .active-checkbox_custom-checkbox {
-  background: var(--accent-background);
+  background: var(--primary);
   color: var(--primary-text-color);
   font-size: 14px;
 }

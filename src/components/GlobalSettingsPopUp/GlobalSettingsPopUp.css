@@ -16,7 +16,7 @@
   height: 75%;
   background: var(--background);
   position: absolute;
-  border: 1px solid var(--borders);
+  border: 1px solid var(--sidebar-border);
   animation: fade-in 0.2s ease-in;
   border-radius: 7px;
   color: var(--primary-text-color);

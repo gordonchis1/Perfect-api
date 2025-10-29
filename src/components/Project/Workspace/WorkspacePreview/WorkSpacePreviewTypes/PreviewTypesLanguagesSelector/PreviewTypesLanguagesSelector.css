@@ -32,7 +32,7 @@
   background: var(--background);
   display: flex;
   flex-direction: column;
-  border: 1px solid var(--borders);
+  border: 1px solid var(--sidebar-border);
   border-radius: 4px;
   max-height: 700px;
   overflow-y: auto;

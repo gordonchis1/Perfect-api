@@ -5,7 +5,7 @@
 .settings-option_custom-checkbox {
   width: 53px;
   height: 30px;
-  background: var(--borders);
+  background: var(--sidebar-border);
   padding: 5px;
   border-radius: 7px;
   cursor: pointer;
@@ -13,7 +13,7 @@
 }
 
 .settings-option_input-checkbox:checked + .settings-option_custom-checkbox {
-  background: var(--accent-background);
+  background: var(--primary);
 }
 
 .settings-option_input-checkbox:checked

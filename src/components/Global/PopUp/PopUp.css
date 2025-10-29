@@ -12,7 +12,7 @@
 }
 
 .popup_content-container {
-  border: 1px solid var(--borders);
+  border: 1px solid var(--sidebar-border);
   background: var(--background);
   width: fit-content;
   border-radius: 7px;

@@ -2,7 +2,7 @@ import "./IsRuningIndicator.css";
 
 const stateColor = {
   true: "var(--success)",
-  false: "var(--inactive)",
+  false: "var(--muted-foreground)",
   error: "var(--error)",
   success: "var(--success)",
 };

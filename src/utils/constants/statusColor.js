@@ -1,6 +1,6 @@
 export const statusColors = {
   error: { color: "var(--destructive-foreground)", bg: "var(--destructive)" },
-  inactive: { color: "var(--inactive)", bg: "" },
+  inactive: { color: "var(--muted-foreground)", bg: "var(--muted)" },
   success: { color: "var(--success-foreground)", bg: "var(--success)" },
 };
 

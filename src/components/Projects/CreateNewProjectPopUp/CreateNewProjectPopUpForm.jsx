@@ -45,7 +45,7 @@ export default function CreateNewProjectPopUpForm({ setState, setProjects }) {
           }}
         />
         <CreateNewProjectPopUpButton
-          color={"var(--accent-background)"}
+          color={"var(--primary)"}
           text={"Crear"}
           type="submit"
         />

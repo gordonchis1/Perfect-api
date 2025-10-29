@@ -2,7 +2,7 @@
   background: transparent;
   color: var(--primary-text-color);
   padding: 6px 14px;
-  border: 1px solid var(--borders);
+  border: 1px solid var(--sidebar-border);
   border-radius: 4px;
   margin-right: 3px;
 }

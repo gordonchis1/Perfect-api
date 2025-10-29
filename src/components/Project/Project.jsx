@@ -29,7 +29,7 @@ export default function Project() {
             <ProjectHeader />
             <div className="project-container" ref={container}>
               <ResizeContainer
-                resizeColor={"var(--borders)"}
+                resizeColor={"var(--sidebar-border)"}
                 defaultWidth={14}
                 maxWidthOfLeftContainer={14}
                 minWidthOfLeftContainer={200}

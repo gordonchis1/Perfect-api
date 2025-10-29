@@ -2,7 +2,7 @@
   border-top: none;
   border-right: none;
   border-left: none;
-  border-bottom: 2px solid var(--accent-background);
+  border-bottom: 2px solid var(--primary);
 
   outline: none;
   background: transparent;
