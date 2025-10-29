@@ -8,6 +8,11 @@
   src: url("./assets/fonts/Geist-bold.woff2") format("woff2");
 }
 
+@font-face {
+  font-family: "geist-mono";
+  src: url("./assets/fonts/GeistMono-Regular.woff2") format("woff2");
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -17,6 +22,7 @@
 :root {
   --regular-font: "geist";
   --bold-font: "geist-bold";
+  --mono-font: "geist-mono";
 }
 
 /* ------------------------------------------------------------------------ */

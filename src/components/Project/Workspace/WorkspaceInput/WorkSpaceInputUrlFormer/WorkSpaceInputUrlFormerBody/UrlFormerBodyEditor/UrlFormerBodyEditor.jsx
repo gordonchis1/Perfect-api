@@ -48,7 +48,8 @@ export default function UrlFormerBodyEditor({ language }) {
         setUpdatedContent(value);
       }}
       options={{
-        fontSize: 20,
+        fontSize: 16,
+        fontFamily: "var(--mono-font)",
         minimap: false,
         placeholder: "// El contenido del body aqui",
       }}
