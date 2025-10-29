@@ -25,5 +25,7 @@ dist/
 *.sln
 *.sw?
 
+package-lock.json
+
 .env
 .env.local
