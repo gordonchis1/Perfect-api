@@ -1,4 +1,3 @@
-import { faFile } from "@fortawesome/free-solid-svg-icons";
 import NavLink from "./NavLink";
 
 function HeaderNav({ currentHeaderWidth }) {
@@ -6,7 +5,6 @@ function HeaderNav({ currentHeaderWidth }) {
     <nav className="header-nav">
       <NavLink
         currentHeaderWidth={currentHeaderWidth}
-        icon={faFile}
         text={"Proyectos"}
         to={"/"}
       />

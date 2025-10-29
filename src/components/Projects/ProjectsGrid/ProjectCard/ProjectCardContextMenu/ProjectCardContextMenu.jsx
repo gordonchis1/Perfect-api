@@ -1,10 +1,10 @@
 import "./ProjectCardContextMenu.css";
 import useClickAway from "../../../../../Hooks/useClickAway";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { deleteProject } from "../../../../../utils/deleteProject";
 import ProjectCardContextMenuOption from "./ProjectCardContextMenuOption/ProjectCardContextMenuOption";
-import PopUp from "../../../../Global/PopUp/PopUp";
+import { Pen, Trash2 } from "lucide-react";
 
 // TODO: Agreagr un pop up para confimar la elminiacion de un project
 export default function ProjectCardContextMenu({
@@ -45,12 +45,12 @@ export default function ProjectCardContextMenu({
       >
         <ProjectCardContextMenuOption
           text={"Renombrar"}
-          icon={faPenToSquare}
+          icon={<Pen size={16} />}
           onClick={handleRename}
         />
         <ProjectCardContextMenuOption
           text={"Eliminar"}
-          icon={faTrash}
+          icon={<Trash2 size={16} />}
           color="red"
           onClick={handleDeleteProject}
         />

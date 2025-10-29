@@ -1,5 +1,5 @@
 .settings-nav-container {
   flex: 0 0 20%;
-  border-right: 2px solid var(--sidebar-border);
+  box-shadow: 0.2px 0 0 0 var(--sidebar-border);
   padding: 25px;
 }

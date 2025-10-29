@@ -1,8 +1,6 @@
 import { useRef, useState } from "react";
 import "./WorkspacePreviewJsonStringUrlComponent.css";
 import useClickAway from "../../../../../../../Hooks/useClickAway";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAdd, faGlobe } from "@fortawesome/free-solid-svg-icons";
 import { openUrl } from "@tauri-apps/plugin-opener";
 import useFileManagerContext from "../../../../../../../Hooks/FileManager/useFileMangerContext";
 import FileManagerContextMenu from "../../../../../FileManager/FileManagerContextMenu/FileManagerContextMenu";
@@ -11,6 +9,7 @@ import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../../../../providers/File
 import useFilesContext from "../../../../../../../Hooks/useFilesContext";
 import useProjectContext from "../../../../../../../Hooks/FileManager/useProjectContext";
 import { fileContentDefault } from "../../../../../../../utils/constants/ProjectFileConstants";
+import { Globe, Plus } from "lucide-react";
 
 const defaultContextMenuState = {
   x: 0,
@@ -91,14 +90,14 @@ export default function WorkspacePreviewJsonStringUrlComponent({
             className="json-string-url-context-menu_option"
             onClick={handleOpenBrowser}
           >
-            <FontAwesomeIcon icon={faGlobe} />
+            <Globe size={20} />
             Abrir en el navegador
           </button>
           <button
             className="json-string-url-context-menu_option"
             onClick={handleCreateNewTab}
           >
-            <FontAwesomeIcon icon={faAdd} />
+            <Plus size={20} />
             Crear una nueva pestaña con esta URL
           </button>
         </div>

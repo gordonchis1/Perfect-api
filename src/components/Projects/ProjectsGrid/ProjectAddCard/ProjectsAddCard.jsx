@@ -1,7 +1,6 @@
-import { faAdd } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CreateNewProjectPopUp from "../../CreateNewProjectPopUp/CreateNewProjectPopUp";
 import { useState } from "react";
+import { Plus } from "lucide-react";
 
 export default function ProjectsAddCard({ setProjects }) {
   const [state, setState] = useState(false);
@@ -9,7 +8,7 @@ export default function ProjectsAddCard({ setProjects }) {
   return (
     <>
       <div className="add-card-container" onClick={() => setState(true)}>
-        <FontAwesomeIcon icon={faAdd} className="add-card-icon" />
+        <Plus size={20} />
         Nuevo projecto
       </div>
       {state && (

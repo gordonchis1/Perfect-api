@@ -1,14 +1,12 @@
 import { userSettingsOptionsMap } from "../../../../../utils/userConfiguration/userSettingsConstants";
-import { faFolder } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./SettingsOptionPathSelector.css";
 import { open } from "@tauri-apps/plugin-dialog";
-import { getConfig } from "../../../../../utils/userConfiguration/getConfig";
 import { useEffect, useState } from "react";
 import { exists } from "@tauri-apps/plugin-fs";
 import SettingsOptionContainer from "../SettingsOptionContainer/SettingsOptionContainer";
 import SettingsOptionText from "../SettingsOptionContainer/SettingsOptionText/SettingsOptionText";
 import { useUserConfigStore } from "../../../../../stores/UserConfigStore";
+import { Folder } from "lucide-react";
 
 export default function SettingsOptionPathSelector({
   option,
@@ -74,7 +72,7 @@ export default function SettingsOptionPathSelector({
           onClick={handleOpenFolderDialog}
           className="settings-option_button-open-dir"
         >
-          <FontAwesomeIcon icon={faFolder} />
+          <Folder size={20} fill="var(--primary-text-color)" />
         </button>
       </div>
     </SettingsOptionContainer>

@@ -1,14 +1,16 @@
 .settings-option_text {
   max-width: 70%;
   overflow: hidden;
+  font-family: var(--regular-font);
 }
 
 .settings-option_title {
   font-size: 20px;
+  font-family: var(--bold-font);
 }
 
 .settings-option_alert {
-  color: orange;
+  color: var(--warning);
   font-size: 14px;
 }
 
@@ -18,5 +20,5 @@
 }
 
 .settings-option_description {
-  font-size: 17px;
+  font-size: 16px;
 }

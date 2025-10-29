@@ -1,7 +1,6 @@
 import "./PreviewTypesCopyButton.css";
 import { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faCopy } from "@fortawesome/free-solid-svg-icons";
+import { Check, Copy } from "lucide-react";
 
 export default function PreviewTypesCopyButton({ types }) {
   const [isCopied, setIsCopied] = useState(false);
@@ -22,9 +21,9 @@ export default function PreviewTypesCopyButton({ types }) {
   return (
     <button className="block-code_copy-button" onClick={handleCopy}>
       {isCopied ? (
-        <FontAwesomeIcon icon={faCheck} color="#22ff00" />
+        <Check size={20} color="var(--success)" />
       ) : (
-        <FontAwesomeIcon icon={faCopy} />
+        <Copy size={20} />
       )}
     </button>
   );

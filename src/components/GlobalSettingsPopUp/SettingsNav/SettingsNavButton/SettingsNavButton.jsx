@@ -1,4 +1,3 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./SettingsNavButton.css";
 
 export default function SettingsNavButton({
@@ -15,7 +14,7 @@ export default function SettingsNavButton({
       }`}
       onClick={() => setCurrentTab(tab)}
     >
-      <FontAwesomeIcon icon={icon} />
+      {icon}
       <span>{text}</span>
     </button>
   );

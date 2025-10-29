@@ -1,12 +1,11 @@
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ProjectsFiltersButton from "./ProjectsFiltersButton";
+import { Search } from "lucide-react";
 
 export default function ProjectsFilters({ setFilters, filters }) {
   return (
     <div className="projects-filters-container">
       <div className="projects-filters_input-container">
-        <FontAwesomeIcon icon={faSearch} className="projects-input_icon" />
+        <Search size={20} className="projects-input_icon" />
         <input
           onChange={(e) =>
             setFilters((prev) => ({

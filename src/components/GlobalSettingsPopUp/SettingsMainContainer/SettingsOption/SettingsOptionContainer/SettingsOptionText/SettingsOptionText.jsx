@@ -1,7 +1,6 @@
 import { userSettingsOptionsMap } from "../../../../../../utils/userConfiguration/userSettingsConstants";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faWarning } from "@fortawesome/free-solid-svg-icons";
 import "./SettingsOptionText.css";
+import { TriangleAlert } from "lucide-react";
 
 export default function SettingsOptionText({
   option,
@@ -14,7 +13,7 @@ export default function SettingsOptionText({
       <p className="settings-option_description">{description || option}</p>
       {userSettingsOptionsMap[option]?.alert && (
         <p className="settings-option_alert">
-          <FontAwesomeIcon icon={faWarning} className="option-alert_icon" />
+          <TriangleAlert size={15} />
           {userSettingsOptionsMap[option]?.alert}
         </p>
       )}

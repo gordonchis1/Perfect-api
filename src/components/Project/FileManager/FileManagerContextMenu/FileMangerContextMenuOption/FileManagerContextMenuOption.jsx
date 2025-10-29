@@ -1,4 +1,3 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./FileManagerContextMenuOption.css";
 
 export default function FileManagerContextMenuOption({

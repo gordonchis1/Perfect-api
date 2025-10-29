@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import { faCheck, faCopy } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useWorkSpaceContentContext from "../../../../../../Hooks/WorkSpace/useWorkSpaceContentContext";
 import "./WorkSpaceInputUrlFormerUrlPreview.css";
 import { Check, Copy } from "lucide-react";

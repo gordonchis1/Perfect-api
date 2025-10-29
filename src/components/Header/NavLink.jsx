@@ -1,7 +1,7 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { File } from "lucide-react";
 import { Link } from "react-router";
 
-function NavLink({ currentHeaderWidth, text, icon, to }) {
+function NavLink({ currentHeaderWidth, text, to }) {
   return (
     <nav
       className="header-nav"
@@ -17,13 +17,7 @@ function NavLink({ currentHeaderWidth, text, icon, to }) {
         }}
         className="header-nav_a"
       >
-        <FontAwesomeIcon
-          icon={icon}
-          className="header-nav_icon"
-          style={{
-            fontSize: currentHeaderWidth >= 150 ? "18px" : "25px",
-          }}
-        />
+        <File size={currentHeaderWidth >= 150 ? 18 : 25} />
         {currentHeaderWidth >= 150 && <span>{text}</span>}
       </Link>
     </nav>

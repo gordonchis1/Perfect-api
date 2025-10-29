@@ -1,16 +1,16 @@
 import "./SettingsNav.css";
 import SettingsNavButton from "./SettingsNavButton/SettingsNavButton";
-import { faGear, faPencil } from "@fortawesome/free-solid-svg-icons";
 import { userSettingsTabs } from "../../../utils/userConfiguration/userSettingsConstants";
+import { Pencil, Settings } from "lucide-react";
 
 const CONFIG_KEYS_MAP = {
   general: {
     text: "General",
-    icon: faGear,
+    icon: <Settings size={20} />,
   },
   preferences: {
     text: "Preferences",
-    icon: faPencil,
+    icon: <Pencil size={20} />,
   },
 };
 
