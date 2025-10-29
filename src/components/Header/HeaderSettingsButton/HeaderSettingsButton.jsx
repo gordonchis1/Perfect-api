@@ -1,8 +1,7 @@
-import { faGear } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./HeaderSettingsButton.css";
 import { useState } from "react";
 import GlobalSettingsPopUp from "../../GlobalSettingsPopUp/GlobalSettingsPopUp";
+import { Settings } from "lucide-react";
 
 export default function HeaderSettingsButton({ currentHeaderWidth }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,8 +12,13 @@ export default function HeaderSettingsButton({ currentHeaderWidth }) {
       <button
         className="header-settings-button"
         onClick={() => setIsOpen(!isOpen)}
+        style={{
+          background: isOpen ? "var(--primary-transparent)" : "",
+          color: isOpen ? "var(--primary)" : "",
+          border: isOpen ? "1px solid var(--primary)" : "",
+        }}
       >
-        <FontAwesomeIcon icon={faGear} />
+        <Settings size={25} />
         {currentHeaderWidth >= 200 && <span>Settings</span>}
       </button>
     </>

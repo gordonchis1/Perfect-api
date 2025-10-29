@@ -1,5 +1,3 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 export default function ProjectsHeaderButton({ text, color, icon, onClick }) {
   return (
     <button
@@ -7,7 +5,7 @@ export default function ProjectsHeaderButton({ text, color, icon, onClick }) {
       style={{ backgroundColor: color }}
       onClick={onClick}
     >
-      <FontAwesomeIcon icon={icon} className="projects-header-button_icon" />
+      {icon}
       {text}
     </button>
   );

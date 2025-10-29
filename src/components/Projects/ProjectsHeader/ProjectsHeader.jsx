@@ -1,6 +1,6 @@
+import { Import, Plus } from "lucide-react";
 import CreateNewProjectPopUp from "../CreateNewProjectPopUp/CreateNewProjectPopUp";
 import ProjectsHeaderButton from "./ProjectsHeaderButton";
-import { faAdd, faFileImport } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 
 export default function ProjectsHeader({ setProjects }) {
@@ -16,7 +16,7 @@ export default function ProjectsHeader({ setProjects }) {
       <div className="projects-header-buttons">
         <ProjectsHeaderButton
           text={"Importar"}
-          icon={faFileImport}
+          icon={<Import size={20} />}
           color={"transparent"}
           onClick={() => {
             console.log("Importar");
@@ -24,7 +24,7 @@ export default function ProjectsHeader({ setProjects }) {
         />
         <ProjectsHeaderButton
           text={"Nuevo Projecto"}
-          icon={faAdd}
+          icon={<Plus size={20} />}
           color={"var(--primary)"}
           onClick={() => handlePopUp()}
         />

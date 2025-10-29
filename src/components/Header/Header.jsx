@@ -1,4 +1,3 @@
-import logoLigth from "../../assets/logo-dark.webp";
 import HeaderNav from "./HeaderNav";
 import "./Header.css";
 import { useEffect, useRef, useState } from "react";
