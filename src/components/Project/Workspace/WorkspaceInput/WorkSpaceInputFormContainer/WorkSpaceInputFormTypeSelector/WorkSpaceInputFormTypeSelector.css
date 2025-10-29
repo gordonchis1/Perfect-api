@@ -22,15 +22,17 @@
 
 .workspace-input-form-url_types-options-container {
   z-index: 200;
-  border: 1px solid var(--borders);
+  border: none;
+  box-shadow: 0 0 0 0.2px var(--sidebar-border);
+  padding: 5px;
   width: fit-content;
   margin: 10px 0 0 5px;
   position: absolute;
   border-radius: 7px;
-  background-color: var(--background);
+  background-color: var(--secondary-background);
   display: flex;
   flex-direction: column;
-  animation: open-options-container 0.5s ease forwards;
+  animation: open-options-container 0.3s ease forwards;
 }
 
 @keyframes open-options-container {
@@ -50,9 +52,8 @@
 }
 
 .workspace-input-form-url_types-option {
-  padding: 10px 20px 10px 15px;
+  padding: 10px 30px 10px 10px;
   border: none;
-  border-bottom: 1px solid var(--borders);
   font-family: var(--regular-font);
   font-size: 18px;
   cursor: pointer;
@@ -62,5 +63,5 @@
 }
 
 .workspace-input-form-url_types-option:hover {
-  background-color: var(--hover);
+  background-color: var(--accent);
 }

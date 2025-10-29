@@ -1,17 +1,15 @@
 import "./UrlFormerBodyFormatSelector.css";
 import { useState, useRef } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import useClickAway from "../../../../../../../Hooks/useClickAway";
 import useFileManagerContext from "../../../../../../../Hooks/FileManager/useFileMangerContext";
 import useFilesContext from "../../../../../../../Hooks/useFilesContext";
 import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../../../../providers/FileManager/reducer";
 import useWorkSpaceContentContext from "../../../../../../../Hooks/WorkSpace/useWorkSpaceContentContext";
+import { ChevronDown } from "lucide-react";
 
 export default function UrlFormerBodyFormatSelector({
   currentFormat,
   supportedBodyFormat,
-  setCurrentFormat,
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const selectorContainerRef = useRef(null);
@@ -76,7 +74,7 @@ export default function UrlFormerBodyFormatSelector({
         }}
       >
         <span>{currentFormat}</span>
-        <FontAwesomeIcon icon={faAngleDown} />
+        <ChevronDown size={20} />
       </button>
       {isOpen && (
         <div className="format-selector_options-container">

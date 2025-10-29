@@ -4,8 +4,6 @@ import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../../../../providers/File
 import useFilesContext from "../../../../../../../Hooks/useFilesContext";
 import useFileManagerContext from "../../../../../../../Hooks/FileManager/useFileMangerContext";
 import useWorkSpaceContentContext from "../../../../../../../Hooks/WorkSpace/useWorkSpaceContentContext";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClose } from "@fortawesome/free-solid-svg-icons";
 
 export default function UrlFormerBodyNoBody() {
   const [filesContext] = useFilesContext();
@@ -31,10 +29,6 @@ export default function UrlFormerBodyNoBody() {
   return (
     <div className="url-former-body_no-body-container">
       <div className="no-body_content-container">
-        <FontAwesomeIcon
-          icon={faClose}
-          className="no-body_content-container-icon"
-        />
         <h2 className="no-body_content-title">La peticion no tiene body</h2>
         <p className="no-body_content-description">
           Elige un el formato del body arriba
