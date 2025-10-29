@@ -1,9 +1,8 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./PreviewTypesLanguagesSelector.css";
-import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { supportedLanguages } from "../../../../../../utils/constants/LanguagesSelectorConstants";
 import { useRef, useState } from "react";
 import useClickAway from "../../../../../../Hooks/useClickAway";
+import { ChevronDown } from "lucide-react";
 
 export default function PreviewTypesLanguagesSelector({
   currentLanguage,
@@ -27,7 +26,7 @@ export default function PreviewTypesLanguagesSelector({
           {currentLanguage.icon}
         </span>
         <span>{currentLanguage.name}</span>
-        <FontAwesomeIcon icon={faChevronDown} />
+        <ChevronDown size={20} />
       </button>
       {isOpen && (
         <div className="language-selector_options-container custom-scroll-bar">
@@ -43,7 +42,15 @@ export default function PreviewTypesLanguagesSelector({
                 style={{
                   backgroundColor:
                     currentLanguage.name === language.name
-                      ? "var(--hover)"
+                      ? "var(--primary-transparent)"
+                      : "",
+                  border:
+                    currentLanguage.name === language.name
+                      ? "1px solid var(--primary)"
+                      : "",
+                  color:
+                    currentLanguage.name === language.name
+                      ? "var(--primary)"
                       : "",
                 }}
               >

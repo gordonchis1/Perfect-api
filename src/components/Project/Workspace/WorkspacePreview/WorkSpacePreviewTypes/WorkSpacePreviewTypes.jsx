@@ -87,7 +87,8 @@ export default function WorkSpacePreviewTypes() {
               language={currentLanguage.languageSyntax}
               theme="vs-dark"
               options={{
-                fontSize: 18,
+                fontFamily: "var(--mono-font)",
+                fontSize: 16,
                 minimap: false,
                 readOnly: true,
                 readOnlyMessage: false,
