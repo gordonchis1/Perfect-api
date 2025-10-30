@@ -3,6 +3,7 @@ import AddToFavoriteButton from "./AddToFavoriteButton";
 import ProjectCardContextMenu from "./ProjectCardContextMenu/ProjectCardContextMenu";
 import { useState } from "react";
 import ProjectCardRenamePopUp from "./ProjectCardRenamePopUp/ProjectCardRenamePopUp";
+import { useProjectsStore } from "../../../../stores/ProjectsStore";
 
 const defaultContextMenuState = {
   x: 0,
@@ -15,7 +16,8 @@ const defaultRenamePopUpState = {
   id: "",
 };
 
-export default function ProjectCard({ project, setProjects, projects }) {
+export default function ProjectCard({ project }) {
+  const projects = useProjectsStore((state) => state.projects);
   const [contextMenu, setContextMenu] = useState(defaultContextMenuState);
   const [isRename, setIsRename] = useState(defaultRenamePopUpState);
 
@@ -58,7 +60,6 @@ export default function ProjectCard({ project, setProjects, projects }) {
         <ProjectCardRenamePopUp
           handleCloseRenamePopUp={handleCloseRenamePopUp}
           id={isRename.id}
-          setProjects={setProjects}
           projects={projects}
         />
       )}
@@ -69,8 +70,6 @@ export default function ProjectCard({ project, setProjects, projects }) {
             contextMenu={contextMenu}
             handleCloseContextMenu={handleCloseContextMenu}
             project={project}
-            projects={projects}
-            setProjects={setProjects}
           />
         )}
         <Link to={`/project/${project.id}`} className="project-card-link">
@@ -80,7 +79,7 @@ export default function ProjectCard({ project, setProjects, projects }) {
           </span>
         </Link>
         <div className="project-card-container-options">
-          <AddToFavoriteButton project={project} setProjects={setProjects} />
+          <AddToFavoriteButton project={project} />
           <div className="project-card-options-section">
             <button className="project-card-option-button">Editar</button>
             <button className="project-card-option-button">Ejecutar</button>

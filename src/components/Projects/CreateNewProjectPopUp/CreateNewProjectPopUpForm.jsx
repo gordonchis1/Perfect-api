@@ -1,8 +1,9 @@
-import { createNewProject } from "../../../utils/createNewProject";
+import { useProjectsStore } from "../../../stores/ProjectsStore";
 import CreateNewProjectPopUpButton from "./CreateNewProjectPopUpButton";
 import { useState } from "react";
 
-export default function CreateNewProjectPopUpForm({ setState, setProjects }) {
+export default function CreateNewProjectPopUpForm({ setState }) {
+  const addProject = useProjectsStore((state) => state.addProject);
   const [error, setError] = useState({
     error: false,
     message: "",
@@ -11,19 +12,13 @@ export default function CreateNewProjectPopUpForm({ setState, setProjects }) {
   const handleCreateProject = async (e) => {
     e.preventDefault();
     try {
-      const newProject = await createNewProject(e.target[0].value);
-      setProjects((prev) => [...prev, newProject]);
+      await addProject(e.target[0].value);
       setState(false);
-    } catch (e) {
-      console.log(e);
-      const errorMessage = JSON.parse(e.message);
-      setError({
-        error: true,
-        message: errorMessage.message,
-      });
-      console.error(error);
+    } catch (error) {
+      setError({ error: true, message: error.message });
     }
   };
+
   return (
     <form className="popup_form-container" onSubmit={handleCreateProject}>
       <label htmlFor="name">Nombre</label>

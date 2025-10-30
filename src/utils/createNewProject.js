@@ -83,10 +83,7 @@ export async function createNewProject(newProjectName) {
   // Check if the project already exists
   const projectExists = await theProjectAlredyExists(newProject.name);
   if (projectExists) {
-    console.error("Project already exists.");
-    throw new Error(
-      JSON.stringify({ error: true, message: "Project already exists." })
-    );
+    throw new Error("Project already exists.");
   }
 
   // Create the project file and add it to the projects.json file

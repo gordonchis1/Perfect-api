@@ -26,6 +26,7 @@ export const renameProject = async (id, newName) => {
     }
 
     const oldPath = fileContentParse[renameIndex].path;
+
     fileContentParse[renameIndex].name = newName;
     fileContentParse[renameIndex].path = newPath;
 

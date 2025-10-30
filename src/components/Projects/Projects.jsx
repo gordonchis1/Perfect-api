@@ -5,21 +5,10 @@ import ProjectsGrid from "./ProjectsGrid/ProjectsGrid";
 import { useEffect, useState } from "react";
 import { getProjects } from "../../utils/getProjects";
 import { initDocumentDir } from "../../utils/createDocumentDir";
-import useFilterProjects from "../../Hooks/useFilterProjects";
+import { useProjectsStore } from "../../stores/ProjectsStore";
 
 export default function Projects() {
-  const [projects, setProjects] = useState(undefined);
-  const [filters, setFilters] = useState({
-    search: "",
-    favorites: false,
-    recent: false,
-    all: true,
-  });
-
-  const [filteredProjects, setFilteredProjects] = useFilterProjects(
-    projects,
-    filters
-  );
+  const initProjects = useProjectsStore((state) => state.initProjects);
 
   useEffect(() => {
     async function createDir() {
@@ -28,8 +17,7 @@ export default function Projects() {
 
     async function fetchProjects() {
       const projectsData = await getProjects();
-      setProjects(projectsData);
-      setFilteredProjects(projectsData);
+      initProjects(projectsData);
     }
 
     async function initialize() {
@@ -40,23 +28,11 @@ export default function Projects() {
     initialize();
   }, []);
 
-  useEffect(() => {
-    setFilteredProjects(projects);
-    setFilters({
-      search: "",
-      favorites: false,
-      recent: false,
-      all: true,
-    });
-  }, [projects]);
-
-  // TODO: Add loading state
-  // TODO: Add error state
   return (
     <div className="projects-container">
-      <ProjectsHeader setProjects={setProjects} />
-      <ProjectsFilters setFilters={setFilters} filters={filters} />
-      <ProjectsGrid projects={filteredProjects} setProjects={setProjects} />
+      <ProjectsHeader />
+      <ProjectsFilters />
+      <ProjectsGrid />
     </div>
   );
 }

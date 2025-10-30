@@ -1,10 +1,6 @@
 import CreateNewProjectPopUpForm from "./CreateNewProjectPopUpForm";
 
-export default function CreateNewProjectPopUp({
-  state,
-  setState,
-  setProjects,
-}) {
+export default function CreateNewProjectPopUp({ state, setState }) {
   return (
     <>
       {state && (
@@ -20,10 +16,7 @@ export default function CreateNewProjectPopUp({
                 Introduce el nombre para tu nuevo proyecto
               </p>
             </div>
-            <CreateNewProjectPopUpForm
-              setState={setState}
-              setProjects={setProjects}
-            />
+            <CreateNewProjectPopUpForm setState={setState} />
           </div>
         </>
       )}

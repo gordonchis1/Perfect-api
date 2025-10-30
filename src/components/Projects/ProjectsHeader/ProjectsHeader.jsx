@@ -3,7 +3,7 @@ import CreateNewProjectPopUp from "../CreateNewProjectPopUp/CreateNewProjectPopU
 import ProjectsHeaderButton from "./ProjectsHeaderButton";
 import { useState } from "react";
 
-export default function ProjectsHeader({ setProjects }) {
+export default function ProjectsHeader() {
   const [showPopUp, setShowPopUp] = useState(false);
 
   const handlePopUp = () => {
@@ -28,11 +28,7 @@ export default function ProjectsHeader({ setProjects }) {
           color={"var(--primary)"}
           onClick={() => handlePopUp()}
         />
-        <CreateNewProjectPopUp
-          state={showPopUp}
-          setState={setShowPopUp}
-          setProjects={setProjects}
-        />
+        <CreateNewProjectPopUp state={showPopUp} setState={setShowPopUp} />
       </div>
     </header>
   );

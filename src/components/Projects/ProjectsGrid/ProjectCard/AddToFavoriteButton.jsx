@@ -1,25 +1,11 @@
-import { updateProjectsFile } from "../../../../utils/updateProjectsFile";
+import { useProjectsStore } from "../../../../stores/ProjectsStore";
 import { Star } from "lucide-react";
 
-export default function AddToFavoriteButton({ project, setProjects }) {
-  const handleAddToFavorite = async () => {
-    console.log(project);
-    setProjects((prevProjects) =>
-      prevProjects.map((prevProject) => {
-        if (prevProject.id === project.id) {
-          return {
-            ...prevProject,
-            isFavorite: !project.isFavorite,
-          };
-        }
-        return prevProject;
-      })
-    );
+export default function AddToFavoriteButton({ project }) {
+  const addToFavorite = useProjectsStore((state) => state.addProjectToFavorite);
 
-    await updateProjectsFile(project.id, {
-      ...project,
-      isFavorite: !project.isFavorite,
-    });
+  const handleAddToFavorite = async () => {
+    addToFavorite(project.id);
   };
 
   return (

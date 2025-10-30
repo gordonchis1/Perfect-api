@@ -1,33 +1,23 @@
 import "./ProjectCardContextMenu.css";
 import useClickAway from "../../../../../Hooks/useClickAway";
 import { useRef } from "react";
-import { deleteProject } from "../../../../../utils/deleteProject";
 import ProjectCardContextMenuOption from "./ProjectCardContextMenuOption/ProjectCardContextMenuOption";
 import { Pen, Trash2 } from "lucide-react";
+import { useProjectsStore } from "../../../../../stores/ProjectsStore";
 
 // TODO: Agreagr un pop up para confimar la elminiacion de un project
 export default function ProjectCardContextMenu({
   contextMenu,
   handleCloseContextMenu,
-  setProjects,
-  projects,
   project,
   setIsRename,
 }) {
   const containerRef = useRef(null);
+  const deleteProjectZ = useProjectsStore((state) => state.deleteProject);
   useClickAway(containerRef, handleCloseContextMenu);
 
   const handleDeleteProject = () => {
-    const updatedProjects = [...projects];
-
-    const deltedIndex = updatedProjects.findIndex(
-      (pro) => pro.id === project.id
-    );
-
-    updatedProjects.splice(deltedIndex, 1);
-    setProjects(updatedProjects);
-
-    deleteProject(project.id);
+    deleteProjectZ(project.id);
   };
 
   const handleRename = () => {

@@ -16,6 +16,7 @@ export async function updateProjectsFile(updatedIdProject, newValue) {
     console.log(projects[selectProject]);
 
     await writeTextFile(path, JSON.stringify(projects));
+    return;
   } catch (error) {
     console.error(error);
   }

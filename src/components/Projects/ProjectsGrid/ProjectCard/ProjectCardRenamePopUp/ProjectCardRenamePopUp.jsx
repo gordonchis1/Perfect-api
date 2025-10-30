@@ -1,14 +1,10 @@
 import "./ProjectCardRenamePopUp.css";
 import PopUp from "../../../../Global/PopUp/PopUp";
 import { useState } from "react";
-import { renameProject } from "../../../../../utils/renameProject";
+import { useProjectsStore } from "../../../../../stores/ProjectsStore";
 
-export default function ProjectCardRenamePopUp({
-  handleCloseRenamePopUp,
-  id,
-  setProjects,
-  projects,
-}) {
+export default function ProjectCardRenamePopUp({ handleCloseRenamePopUp, id }) {
+  const renameProject = useProjectsStore((state) => state.renameProject);
   const [newName, setNewName] = useState("");
   const [error, setError] = useState({
     message: "",
@@ -21,17 +17,7 @@ export default function ProjectCardRenamePopUp({
     event.preventDefault();
 
     try {
-      const updatedProject = await renameProject(id, newName);
-      const updatedProjects = [...projects];
-
-      const renameIdx = updatedProjects.findIndex(
-        (project) => project.id === id
-      );
-
-      updatedProjects[renameIdx] = updatedProject;
-      setProjects(updatedProjects);
-
-      handleCloseRenamePopUp();
+      await renameProject({ id, newName });
     } catch (error) {
       setError({ error: true, message: error.message });
     }

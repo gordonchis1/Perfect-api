@@ -2,7 +2,7 @@ import CreateNewProjectPopUp from "../../CreateNewProjectPopUp/CreateNewProjectP
 import { useState } from "react";
 import { Plus } from "lucide-react";
 
-export default function ProjectsAddCard({ setProjects }) {
+export default function ProjectsAddCard() {
   const [state, setState] = useState(false);
 
   return (
@@ -11,13 +11,7 @@ export default function ProjectsAddCard({ setProjects }) {
         <Plus size={20} />
         Nuevo projecto
       </div>
-      {state && (
-        <CreateNewProjectPopUp
-          state={state}
-          setState={setState}
-          setProjects={setProjects}
-        />
-      )}
+      {state && <CreateNewProjectPopUp state={state} setState={setState} />}
     </>
   );
 }
