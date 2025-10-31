@@ -2,7 +2,7 @@ import "./Projects.css";
 import ProjectsFilters from "./ProjectsFilters/ProjectsFilters";
 import ProjectsHeader from "./ProjectsHeader/ProjectsHeader";
 import ProjectsGrid from "./ProjectsGrid/ProjectsGrid";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { getProjects } from "../../utils/getProjects";
 import { initDocumentDir } from "../../utils/createDocumentDir";
 import { useProjectsStore } from "../../stores/ProjectsStore";
