@@ -4,13 +4,16 @@ import { Editor } from "@monaco-editor/react";
 import LoaderSpiner from "../../../../../Global/LoaderSpiner/LoaderSpiner";
 import { useEffect, useRef } from "react";
 import { handleOnEditorMount } from "../../../../../../utils/monacoHover";
+import { useUserConfigStore } from "../../../../../../stores/UserConfigStore";
 
 export default function WorkSpacePreviewJson() {
   const [workspacePreviewContext] = useWorkspacePreviewContext();
+  const config = useUserConfigStore((state) => state.config);
   const editorRef = useRef(null);
   const monacoRef = useRef(null);
   const hoverRef = useRef(null);
   const onDidDisposeDispRef = useRef(null);
+  console.log(config.preferences.appearance.editorTheme);
 
   useEffect(() => {
     return () => {
@@ -61,7 +64,7 @@ export default function WorkSpacePreviewJson() {
               hoverRef
             )
           }
-          theme="vs-dark"
+          theme={config.preferences.appearance.editorTheme || "vs-dark"}
           options={{
             definitionLinkOpensInPeek: true,
             links: true,

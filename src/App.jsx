@@ -1,4 +1,5 @@
 import "./App.css";
+import "./Themes.css";
 import { Route, Routes } from "react-router";
 import Project from "./components/Project/Project";
 import { useUserConfigStore } from "./stores/UserConfigStore";

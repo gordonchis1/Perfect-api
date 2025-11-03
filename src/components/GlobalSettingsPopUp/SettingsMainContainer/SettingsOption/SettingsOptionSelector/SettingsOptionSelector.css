@@ -1,2 +1,66 @@
 .option-selector_selector-container {
+  padding: 1px;
+}
+
+.option-selector_btn-selected {
+  font-family: var(--regular-font);
+  text-transform: capitalize;
+  display: flex;
+  padding: 4px 7px;
+  gap: 10px;
+  border-radius: 4px;
+  border: none;
+  background: transparent;
+  color: var(--primary-text-color);
+  cursor: pointer;
+  box-shadow: 0 0 0 0.5px var(--border);
+}
+
+.option-selector_container-options {
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  margin-top: 5px;
+  padding: 5px;
+  background: var(--secondary-background);
+  border-radius: 4px;
+  box-shadow: 0 0 0 0.3px var(--border);
+  animation: open-options-container 0.3s ease forwards;
+}
+
+.option-selector_button-option {
+  font-size: 16px;
+  border-radius: 4px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+
+  text-transform: capitalize;
+  font-family: var(--regular-font);
+  display: flex;
+  align-items: center;
+  padding: 4px 10px;
+  gap: 10px;
+  color: var(--primary-text-color);
+}
+
+.option-selector_button-option:hover {
+  background: var(--accent);
+}
+
+.selector-theme_color-preview {
+  border-radius: 100%;
+  background: var(--background);
+  width: 20px;
+  height: 20px;
+}
+
+@keyframes open-options-container {
+  0% {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+  }
 }

@@ -1,0 +1,365 @@
+.dark {
+  --background: oklch(0.12 0 0);
+  --primary-text-color: oklch(0.95 0 0);
+  --primary-text-color: oklch(0.95 0 0);
+  --secondary-background: oklch(0.16 0 0);
+  --border: oklch(0.922 0 0);
+
+  --warning: oklch(0.75 0.2 60);
+  --warning-foreground: oklch(0.15 0 0);
+
+  --primary: oklch(0.65 0.24 250);
+  --primary-transparent: oklch(0.65 0.24 250 / 0.1);
+  --primary-foreground: oklch(1 0 0);
+
+  --success: oklch(0.7 0.22 145);
+  --success-foreground: oklch(0.12 0 0);
+
+  --muted: oklch(0.2 0 0);
+  --muted-foreground: oklch(0.6 0 0);
+
+  --accent: oklch(0.2 0 0);
+
+  --destructive: oklch(0.65 0.24 25);
+  --destructive-transparent: oklch(0.65 0.24 25 / 0.1);
+  --destructive-foreground: oklch(1 0 0);
+
+  --method-get: oklch(0.65 0.24 250);
+  --method-post: oklch(0.7 0.22 145);
+  --method-put: oklch(0.75 0.2 60);
+  --method-delete: oklch(0.65 0.24 25);
+  --method-patch: oklch(0.65 0.2 290);
+}
+
+.light {
+  --background: oklch(0.99 0 0);
+  --border: oklch(0.269 0 0);
+  --primary-text-color: oklch(0.15 0 0);
+  --secondary-background: oklch(0.922 0 0);
+
+  --primary: oklch(0.55 0.22 250);
+  --primary-transparent: oklch(0.55 0.22 250 / 0.1);
+  --primary-foreground: oklch(1 0 0);
+
+  --accent: oklch(0.96 0 0);
+  --accent-foreground: oklch(0.15 0 0);
+
+  --muted: oklch(0.96 0 0);
+  --muted-foreground: oklch(0.5 0 0);
+
+  --success: oklch(0.65 0.2 145);
+  --success-foreground: oklch(1 0 0);
+
+  --destructive: oklch(0.6 0.22 25);
+  --destructive-transparent: oklch(0.6 0.22 25 / 0.1);
+  --destructive-foreground: oklch(1 0 0);
+
+  --method-get: oklch(0.55 0.22 250);
+  --method-post: oklch(0.65 0.2 145);
+  --method-put: oklch(0.7 0.18 60);
+  --method-delete: oklch(0.6 0.22 25);
+  --method-patch: oklch(0.6 0.18 290);
+}
+
+.matcha {
+  /* Soft cream and green palette */
+  --background: oklch(0.97 0.01 120);
+  --primary-text-color: oklch(0.25 0.05 140);
+  --secondary-background: oklch(0.99 0.01 120);
+  --secondary-background-foreground: oklch(0.25 0.05 140);
+  --border: oklch(0.88 0.02 140);
+
+  /* Matcha green primary */
+  --primary: oklch(0.55 0.12 145);
+  --primary-transparent: oklch(0.55 0.12 145 / 0.1);
+  --primary-foreground: oklch(1 0 0);
+
+  /* Soft sage secondary */
+  --secondary: oklch(0.92 0.02 140);
+  --secondary-foreground: oklch(0.25 0.05 140);
+
+  --muted: oklch(0.92 0.02 140);
+  --muted-foreground: oklch(0.45 0.05 140);
+
+  --accent: oklch(0.92 0.02 140);
+  --accent-foreground: oklch(0.25 0.05 140);
+
+  /* Matcha-themed status colors */
+  --success: oklch(0.6 0.15 145);
+  --success-foreground: oklch(1 0 0);
+
+  --warning: oklch(0.7 0.12 80);
+  --warning-foreground: oklch(0.2 0.05 80);
+
+  --destructive: oklch(0.55 0.15 25);
+  --destructive-foreground: oklch(1 0 0);
+
+  --input: oklch(0.94 0.02 140);
+  --ring: oklch(0.55 0.12 145);
+
+  /* HTTP Method colors - matcha palette */
+  --method-get: oklch(0.55 0.12 145);
+  --method-post: oklch(0.6 0.15 145);
+  --method-put: oklch(0.7 0.12 80);
+  --method-delete: oklch(0.55 0.15 25);
+  --method-patch: oklch(0.55 0.12 160);
+}
+
+.sunset {
+  /* Warm peachy background */
+  --background: oklch(0.97 0.02 50);
+  --primary-text-color: oklch(0.2 0.05 30);
+  --secondary-background: oklch(0.99 0.01 50);
+  --secondary-background-foreground: oklch(0.2 0.05 30);
+  --border: oklch(0.89 0.03 50);
+
+  /* Coral primary */
+  --primary: oklch(0.6 0.18 35);
+  --primary-transparent: oklch(0.6 0.18 35 / 0.1);
+  --primary-foreground: oklch(1 0 0);
+
+  /* Soft peach secondary */
+  --secondary: oklch(0.93 0.03 50);
+  --secondary-foreground: oklch(0.2 0.05 30);
+
+  --muted: oklch(0.93 0.03 50);
+  --muted-foreground: oklch(0.45 0.05 40);
+
+  --accent: oklch(0.93 0.03 50);
+  --accent-foreground: oklch(0.2 0.05 30);
+
+  /* Sunset-themed status colors */
+  --success: oklch(0.65 0.15 140);
+  --success-foreground: oklch(1 0 0);
+
+  --warning: oklch(0.7 0.16 60);
+  --warning-foreground: oklch(0.15 0.05 60);
+
+  --destructive: oklch(0.58 0.2 25);
+  --destructive-foreground: oklch(1 0 0);
+
+  --input: oklch(0.95 0.02 50);
+  --ring: oklch(0.6 0.18 35);
+
+  /* HTTP Method colors - sunset palette */
+  --method-get: oklch(0.6 0.18 35);
+  --method-post: oklch(0.65 0.15 140);
+  --method-put: oklch(0.7 0.16 60);
+  --method-delete: oklch(0.58 0.2 25);
+  --method-patch: oklch(0.6 0.16 320);
+}
+
+.ocean {
+  /* Cool blue-tinted background */
+  --background: oklch(0.96 0.02 230);
+  --primary-text-color: oklch(0.2 0.05 230);
+  --secondary-background: oklch(0.98 0.01 230);
+  --border: oklch(0.88 0.02 230);
+
+  /* Ocean teal primary */
+  --primary: oklch(0.55 0.15 200);
+  --primary-transparent: oklch(0.55 0.15 200 / 0.1);
+  --primary-foreground: oklch(1 0 0);
+
+  /* Soft blue-gray secondary */
+  --secondary: oklch(0.92 0.02 230);
+  --secondary-foreground: oklch(0.2 0.05 230);
+
+  --muted: oklch(0.92 0.02 230);
+  --muted-foreground: oklch(0.45 0.05 230);
+
+  --accent: oklch(0.92 0.02 230);
+  --accent-foreground: oklch(0.2 0.05 230);
+
+  /* Ocean-themed status colors */
+  --success: oklch(0.6 0.15 170);
+  --success-foreground: oklch(1 0 0);
+
+  --warning: oklch(0.7 0.14 70);
+  --warning-foreground: oklch(0.15 0.05 70);
+
+  --destructive: oklch(0.58 0.18 25);
+  --destructive-foreground: oklch(1 0 0);
+
+  --input: oklch(0.94 0.02 230);
+  --ring: oklch(0.55 0.15 200);
+
+  /* HTTP Method colors - ocean palette */
+  --method-get: oklch(0.55 0.15 200);
+  --method-post: oklch(0.6 0.15 170);
+  --method-put: oklch(0.7 0.14 70);
+  --method-delete: oklch(0.58 0.18 25);
+  --method-patch: oklch(0.58 0.14 250);
+}
+
+.lavender {
+  /* Soft lavender background */
+  --background: oklch(0.97 0.02 300);
+  --primary-text-color: oklch(0.22 0.05 300);
+  --secondary-background: oklch(0.99 0.01 300);
+  --border: oklch(0.89 0.03 300);
+
+  /* Lavender purple primary */
+  --primary: oklch(0.58 0.15 290);
+  --primary-transparent: oklch(0.58 0.15 290 / 0.1);
+  --primary-foreground: oklch(1 0 0);
+
+  /* Soft lilac secondary */
+  --secondary: oklch(0.93 0.03 300);
+  --secondary-foreground: oklch(0.22 0.05 300);
+
+  --muted: oklch(0.93 0.03 300);
+  --muted-foreground: oklch(0.45 0.05 300);
+
+  --accent: oklch(0.93 0.03 300);
+  --accent-foreground: oklch(0.22 0.05 300);
+
+  /* Lavender-themed status colors */
+  --success: oklch(0.62 0.14 150);
+  --success-foreground: oklch(1 0 0);
+
+  --warning: oklch(0.7 0.14 70);
+  --warning-foreground: oklch(0.15 0.05 70);
+
+  --destructive: oklch(0.58 0.18 15);
+  --destructive-foreground: oklch(1 0 0);
+
+  --input: oklch(0.95 0.02 300);
+  --ring: oklch(0.58 0.15 290);
+
+  /* HTTP Method colors - lavender palette */
+  --method-get: oklch(0.58 0.15 290);
+  --method-post: oklch(0.62 0.14 150);
+  --method-put: oklch(0.7 0.14 70);
+  --method-delete: oklch(0.58 0.18 15);
+  --method-patch: oklch(0.6 0.16 310);
+}
+
+/* Added cyberpunk dark theme with neon colors */
+.cyberpunk {
+  --background: oklch(0.08 0 0);
+  --primary-text-color: oklch(0.98 0.08 320);
+  --secondary-background: oklch(0.12 0.05 320);
+  --border: oklch(0.18 0.08 320);
+
+  /* Neon magenta primary */
+  --primary: oklch(0.65 0.28 320);
+  --primary-transparent: oklch(0.65 0.28 320 / 0.1);
+  --primary-foreground: oklch(0.08 0 0);
+
+  /* Dark purple secondary */
+  --secondary: oklch(0.15 0.08 300);
+  --secondary-foreground: oklch(0.98 0.08 320);
+
+  --muted: oklch(0.15 0.08 300);
+  --muted-foreground: oklch(0.55 0.06 280);
+
+  --accent: oklch(0.15 0.08 300);
+  --accent-foreground: oklch(0.98 0.08 320);
+
+  /* Neon status colors */
+  --success: oklch(0.7 0.22 150);
+  --success-foreground: oklch(0.08 0 0);
+
+  --warning: oklch(0.75 0.22 80);
+  --warning-foreground: oklch(0.08 0 0);
+
+  --destructive: oklch(0.68 0.25 10);
+  --destructive-foreground: oklch(1 0 0);
+
+  --input: oklch(0.14 0.06 300);
+  --ring: oklch(0.65 0.28 320);
+
+  /* HTTP Method colors - cyberpunk palette */
+  --method-get: oklch(0.65 0.28 320);
+  --method-post: oklch(0.7 0.22 150);
+  --method-put: oklch(0.75 0.22 80);
+  --method-delete: oklch(0.68 0.25 10);
+  --method-patch: oklch(0.7 0.24 200);
+}
+
+/* Added nord dark theme with arctic colors */
+.nord {
+  --background: oklch(0.14 0.01 240);
+  --primary-text-color: oklch(0.93 0.02 220);
+  --secondary-background: oklch(0.18 0.02 240);
+  --border: oklch(0.26 0.02 240);
+
+  /* Nord blue primary */
+  --primary: oklch(0.6 0.15 220);
+  --primary-transparent: oklch(0.6 0.15 220 / 0.1);
+  --primary-foreground: oklch(1 0 0);
+
+  /* Nord frost secondary */
+  --secondary: oklch(0.22 0.04 240);
+  --secondary-foreground: oklch(0.93 0.02 220);
+
+  --muted: oklch(0.22 0.04 240);
+  --muted-foreground: oklch(0.65 0.04 220);
+
+  --accent: oklch(0.22 0.04 240);
+  --accent-foreground: oklch(0.93 0.02 220);
+
+  /* Nord status colors */
+  --success: oklch(0.65 0.12 140);
+  --success-foreground: oklch(0.14 0.01 240);
+
+  --warning: oklch(0.72 0.14 70);
+  --warning-foreground: oklch(0.14 0.01 240);
+
+  --destructive: oklch(0.62 0.16 15);
+  --destructive-foreground: oklch(1 0 0);
+
+  --input: oklch(0.2 0.02 240);
+  --ring: oklch(0.6 0.15 220);
+
+  /* HTTP Method colors - nord palette */
+  --method-get: oklch(0.6 0.15 220);
+  --method-post: oklch(0.65 0.12 140);
+  --method-put: oklch(0.72 0.14 70);
+  --method-delete: oklch(0.62 0.16 15);
+  --method-patch: oklch(0.62 0.14 200);
+}
+
+/* Added solarized dark theme with warm tones */
+.solarized {
+  --background: oklch(0.15 0.02 50);
+  --primary-text-color: oklch(0.93 0.02 60);
+  --secondary-background: oklch(0.2 0.02 50);
+  --border: oklch(0.29 0.02 50);
+
+  /* Solarized base01 blue primary */
+  --primary: oklch(0.58 0.12 220);
+  --primary-transparent: oklch(0.58 0.12 220 / 0.1);
+  --primary-foreground: oklch(1 0 0);
+
+  /* Solarized base02 secondary */
+  --secondary: oklch(0.25 0.02 50);
+  --secondary-foreground: oklch(0.93 0.02 60);
+
+  --muted: oklch(0.25 0.02 50);
+  --muted-foreground: oklch(0.68 0.04 60);
+
+  --accent: oklch(0.25 0.02 50);
+  --accent-foreground: oklch(0.93 0.02 60);
+
+  /* Solarized status colors */
+  --success: oklch(0.64 0.14 150);
+  --success-foreground: oklch(0.15 0.02 50);
+
+  --warning: oklch(0.71 0.15 80);
+  --warning-foreground: oklch(0.15 0.02 50);
+
+  --destructive: oklch(0.62 0.18 20);
+  --destructive-foreground: oklch(1 0 0);
+
+  --input: oklch(0.22 0.02 50);
+  --ring: oklch(0.58 0.12 220);
+
+  /* HTTP Method colors - solarized palette */
+  --method-get: oklch(0.58 0.12 220);
+  --method-post: oklch(0.64 0.14 150);
+  --method-put: oklch(0.71 0.15 80);
+  --method-delete: oklch(0.62 0.18 20);
+  --method-patch: oklch(0.6 0.13 300);
+}

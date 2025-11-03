@@ -30,7 +30,17 @@ export const userSettingsOptionsMap = {
     title: "Tema",
     description: "Selecciona el tema de color de la aplicación.",
     type: "selector",
-    options: ["dark", "light"],
+    options: [
+      "dark",
+      "light",
+      "ocean",
+      "matcha",
+      "sunset",
+      "lavender",
+      "cyberpunk",
+      "nord",
+      "solarized",
+    ],
   },
   editorTheme: {
     title: "Tema del editor",
