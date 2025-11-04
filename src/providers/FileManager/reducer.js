@@ -1,3 +1,4 @@
+import { fileContentDefault } from "../../utils/constants/ProjectFileConstants";
 import {
   Directory,
   File,
@@ -68,11 +69,13 @@ const fileManagerReducer = (state, action) => {
       return state;
     }
     case FILEMANAGER_REDUCER_ACTIONS.addFile: {
-      const { id, path } = payload;
+      const { id, path, content } = payload;
       if (state instanceof VirtualFileSystem) {
         const clonedVfs = state.clone();
         const clonedNode = clonedVfs.getDirByPath(path);
-        clonedNode.addChild(new File("New File"));
+        clonedNode.addChild(
+          new File("New File", content ? content : fileContentDefault)
+        );
         UpdateProjectContent(clonedVfs, id);
         return clonedVfs;
       }

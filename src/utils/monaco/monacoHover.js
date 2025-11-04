@@ -89,7 +89,12 @@ export const registerMonacoHover = (
           };
         } else {
           return {
-            contents: [{ value: "# Es url " }],
+            contents: [
+              {
+                value: `<a href="action/new/?url=${text}">Crear una request con esta url</a>`,
+                supportHtml: true,
+              },
+            ],
           };
         }
       } catch {
