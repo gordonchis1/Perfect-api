@@ -3,7 +3,10 @@ import useWorkspacePreviewContext from "../../../../../../Hooks/useWorkspacePrev
 import { Editor } from "@monaco-editor/react";
 import LoaderSpiner from "../../../../../Global/LoaderSpiner/LoaderSpiner";
 import { useEffect, useRef } from "react";
-import { handleOnEditorMount } from "../../../../../../utils/monacoHover";
+import {
+  addMonacoThemes,
+  registerMonacoHover,
+} from "../../../../../../utils/monaco/monacoHover";
 import { useUserConfigStore } from "../../../../../../stores/UserConfigStore";
 
 export default function WorkSpacePreviewJson() {
@@ -13,7 +16,6 @@ export default function WorkSpacePreviewJson() {
   const monacoRef = useRef(null);
   const hoverRef = useRef(null);
   const onDidDisposeDispRef = useRef(null);
-  console.log(config.preferences.appearance.editorTheme);
 
   useEffect(() => {
     return () => {
@@ -40,6 +42,21 @@ export default function WorkSpacePreviewJson() {
     };
   }, []);
 
+  const handleOnEditorMount = (editor, monaco) => {
+    registerMonacoHover(
+      editor,
+      monaco,
+      editorRef,
+      monacoRef,
+      onDidDisposeDispRef,
+      hoverRef
+    );
+  };
+
+  const handleBeforeMount = (monaco) => {
+    addMonacoThemes(monaco);
+  };
+
   return (
     <>
       {workspacePreviewContext.responses.length > 0 && (
@@ -54,16 +71,10 @@ export default function WorkSpacePreviewJson() {
             null,
             2
           )}
-          onMount={(editor, monaco) =>
-            handleOnEditorMount(
-              editor,
-              monaco,
-              editorRef,
-              monacoRef,
-              onDidDisposeDispRef,
-              hoverRef
-            )
-          }
+          onMount={(editor, monaco) => handleOnEditorMount(editor, monaco)}
+          beforeMount={(monaco) => {
+            handleBeforeMount(monaco);
+          }}
           theme={config.preferences.appearance.editorTheme || "vs-dark"}
           options={{
             definitionLinkOpensInPeek: true,

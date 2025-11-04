@@ -12,9 +12,11 @@ import PreviewTypesLanguagesSelector from "./PreviewTypesLanguagesSelector/Previ
 import { supportedLanguages } from "../../../../../utils/constants/LanguagesSelectorConstants";
 import { Editor } from "@monaco-editor/react";
 import LoaderSpiner from "../../../../Global/LoaderSpiner/LoaderSpiner";
+import { useUserConfigStore } from "../../../../../stores/UserConfigStore";
 
 export default function WorkSpacePreviewTypes() {
   const syntaxHighlighterRef = useRef(null);
+  const config = useUserConfigStore((state) => state.config);
   const codeBlockContainerRef = useRef(null);
   const [workspacePreviewContext] = useWorkspacePreviewContext();
   const [types, setTypes] = useState("");
@@ -85,7 +87,7 @@ export default function WorkSpacePreviewTypes() {
               loading={<LoaderSpiner />}
               value={types}
               language={currentLanguage.languageSyntax}
-              theme="vs-dark"
+              theme={config.preferences.appearance.editorTheme || "vs-dark"}
               options={{
                 fontFamily: "var(--mono-font)",
                 fontSize: 16,
