@@ -6,8 +6,10 @@ import useFilesContext from "../../../../../../../Hooks/useFilesContext";
 import useFileManagerContext from "../../../../../../../Hooks/FileManager/useFileMangerContext";
 import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../../../../providers/FileManager/reducer";
 import LoaderSpiner from "../../../../../../Global/LoaderSpiner/LoaderSpiner";
+import { useUserConfigStore } from "../../../../../../../stores/UserConfigStore";
 
 export default function UrlFormerBodyEditor({ language }) {
+  const config = useUserConfigStore((state) => state.config);
   const [content] = useWorkSpaceContentContext();
   const [updatedContent, setUpdatedContent] = useState(
     content?.body?.bodyContent || ""
@@ -41,7 +43,7 @@ export default function UrlFormerBodyEditor({ language }) {
       value={updatedContent}
       width={"100%"}
       height={"100%"}
-      theme="vs-dark"
+      theme={config.preferences.appearance.editorTheme || "vs-dark"}
       language={language}
       onChange={(value) => {
         handleChangeEditor(value);
@@ -49,7 +51,6 @@ export default function UrlFormerBodyEditor({ language }) {
       }}
       options={{
         fontSize: 16,
-        fontFamily: "var(--mono-font)",
         minimap: false,
         placeholder: "// El contenido del body aqui",
       }}
