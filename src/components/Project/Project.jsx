@@ -8,10 +8,25 @@ import useWidthObserver from "../../Hooks/useWidthObserver";
 import ProjectProviders from "./ProjectProviders";
 import WorkspaceContainer from "./Workspace/WorkspaceContainer";
 import WorkSpaceContentProvider from "../../providers/WorkSpaceContent/WorkSpaceContentProvider";
+import { useFilemanagerStore } from "../../stores/FileManagerStore";
+import { useParams } from "react-router";
 
 export default function Project() {
   const container = useRef(null);
+  const { id } = useParams();
   const [isMounted, setIsMounted] = useState(false);
+  const initFileManager = useFilemanagerStore((state) => state.init);
+  const fileManagerReset = useFilemanagerStore((state) => state.reset);
+
+  useEffect(() => {
+    if (id) {
+      initFileManager(id);
+    }
+
+    return () => {
+      fileManagerReset();
+    };
+  }, [id]);
 
   useEffect(() => {
     setIsMounted(true);

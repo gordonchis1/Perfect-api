@@ -4,13 +4,17 @@
 import { nanoid } from "nanoid";
 import { fileContentDefault } from "./constants/ProjectFileConstants";
 
+const defaultOnChangeFunction = () => {
+  console.log("Vfs Changed");
+};
 export class VirtualFileSystem {
-  constructor(jsonData = null) {
+  constructor(jsonData = null, onChange = defaultOnChangeFunction) {
     if (jsonData) {
       this.root = this._buildFromJson(jsonData);
     } else {
       this.root = new Directory("/");
     }
+    this.onChange = onChange;
   }
   _buildFromJson(node) {
     if (node.type === "file") {

@@ -1,6 +1,7 @@
 import useFileManagerContext from "../../../../../Hooks/FileManager/useFileMangerContext";
 import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../../providers/FileManager/reducer";
 import useProjectContext from "../../../../../Hooks/FileManager/useProjectContext";
+import { useFilemanagerStore } from "../../../../../stores/FileManagerStore";
 
 export default function FileManagerDraggableElement({
   children,
@@ -11,8 +12,9 @@ export default function FileManagerDraggableElement({
   ...props
 }) {
   const { id } = useProjectContext();
-  const [state, dispatch] = useFileManagerContext();
-  const absolutePath = state.getAbsolutePath(node);
+  const fileManagerState = useFilemanagerStore((store) => store.vfs);
+
+  const absolutePath = fileManagerState.getAbsolutePath(node);
 
   const handleOnMouseDown = (event) => {
     const originalWidth = FilemanagerElementContainerRef.current.clientWidth;
@@ -82,12 +84,12 @@ export default function FileManagerDraggableElement({
 
       const path = filemanagerElementContainerBelow[1]?.getAttribute("path");
 
-      if (path && (diffX > 5 || diffY > 5)) {
-        dispatch({
-          type: FILEMANAGER_REDUCER_ACTIONS.move,
-          payload: { moveElement: absolutePath, to: path, type: node.type, id },
-        });
-      }
+      // if (path && (diffX > 5 || diffY > 5)) {
+      //   dispatch({
+      //     type: FILEMANAGER_REDUCER_ACTIONS.move,
+      //     payload: { moveElement: absolutePath, to: path, type: node.type, id },
+      //   });
+      // }
 
       document
         .querySelectorAll(".hover-drag-and-drop")

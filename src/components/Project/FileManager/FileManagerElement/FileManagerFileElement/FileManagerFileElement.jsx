@@ -8,6 +8,7 @@ import { FILES_REDUCER_ACTIONS } from "../../../../../providers/FilesProvider/re
 import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../../providers/FileManager/reducer";
 import IsRuningIndicator from "../../../../Global/IsRuningIndicator/IsRuningIndicator";
 import { File } from "lucide-react";
+import { useFilemanagerStore } from "../../../../../stores/FileManagerStore";
 
 export default function FileManagerFileElement({
   node,
@@ -18,8 +19,9 @@ export default function FileManagerFileElement({
   const FilemanagerElementContainerRef = useRef(null);
   const [draggin, setDraggin] = useState(false);
 
-  const [state, fileManagerDispatch] = useFileManagerContext();
-  const absolutePath = state.getAbsolutePath(node);
+  const fileManagerState = useFilemanagerStore((store) => store.vfs);
+
+  const absolutePath = fileManagerState.getAbsolutePath(node);
   const level = absolutePath.split("/").length;
 
   const [filesState, dispatch] = useFilesContext();
@@ -63,15 +65,16 @@ export default function FileManagerFileElement({
         onClick={() => {
           if (filesState.currentFile === node.id) return;
           if (filesState.openFiles.some((file) => file.id === node.id)) {
-            dispatch({
-              type: FILES_REDUCER_ACTIONS.changeCurrentTab,
-              payload: { id: node.id },
-            });
+            console.log("print");
+            // dispatch({
+            //   type: FILES_REDUCER_ACTIONS.changeCurrentTab,
+            //   payload: { id: node.id },
+            // });
           } else {
-            fileManagerDispatch({
-              type: FILEMANAGER_REDUCER_ACTIONS.toggleIsOpen,
-              payload: { path: absolutePath, type: node.type },
-            });
+            // fileManagerDispatch({
+            //   type: FILEMANAGER_REDUCER_ACTIONS.toggleIsOpen,
+            //   payload: { path: absolutePath, type: node.type },
+            // });
 
             dispatch({
               type: FILES_REDUCER_ACTIONS.openFile,

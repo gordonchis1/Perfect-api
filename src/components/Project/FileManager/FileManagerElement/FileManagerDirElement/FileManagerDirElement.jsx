@@ -3,9 +3,8 @@ import "./FileManagerDirElement.css";
 import FileManagerRenameForm from "../../FileManagerRenameForm/FileManagerRenameForm";
 import { useRef, useState } from "react";
 import FileManagerDraggableElement from "../FileManagerDraggableElement/FileManagerDraggableElement";
-import useFileManagerContext from "../../../../../Hooks/FileManager/useFileMangerContext";
-import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../../providers/FileManager/reducer";
 import { Folder, FolderOpen } from "lucide-react";
+import { useFilemanagerStore } from "../../../../../stores/FileManagerStore";
 
 export default function FileManagerDirElement({
   node,
@@ -14,18 +13,20 @@ export default function FileManagerDirElement({
   updateNodeState,
 }) {
   const [draggin, setDraggin] = useState(false);
-  const [state, dispatch] = useFileManagerContext();
+  const fileManagerState = useFilemanagerStore((store) => store.vfs);
+  const toggleIsOpen = useFilemanagerStore((store) => store.toggleIsOpen);
 
-  const absolutePath = state.getAbsolutePath(node);
+  const absolutePath = fileManagerState.getAbsolutePath(node);
   const level = absolutePath.split("/").length;
 
   const handleToggle = (e) => {
     if (node.name === "/") return;
     e.stopPropagation();
-    dispatch({
-      type: FILEMANAGER_REDUCER_ACTIONS.toggleIsOpen,
-      payload: { path: absolutePath, type: node.type },
-    });
+    toggleIsOpen(node.id);
+    //   dispatch({
+    //     type: FILEMANAGER_REDUCER_ACTIONS.toggleIsOpen,
+    //     payload: { path: absolutePath, type: node.type },
+    //   });
   };
 
   const childrens = node.getChildrens();
