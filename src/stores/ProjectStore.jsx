@@ -11,6 +11,8 @@ const initialState = {
   vfs: null,
   renameId: null,
   version: 0,
+  openFiles: {},
+  currentFileId: null,
 };
 
 export const useProjectStore = create((set, get) => ({
@@ -18,15 +20,28 @@ export const useProjectStore = create((set, get) => ({
 
   init: async (id) => {
     const jsonData = await getProjectById(id);
-    const { content } = jsonData;
+    const { content, state } = jsonData;
 
     const vfs = new VirtualFileSystem(content);
 
     vfs.onChange = () => {
-      set((state) => ({ version: state.version + 1 }));
+      set((storeState) => ({ version: storeState.version + 1 }));
     };
 
-    set({ vfs, version: 0 });
+    const openFiles = {};
+
+    state.openFiles.forEach((fileId) => {
+      const node = vfs.getNodeById(fileId);
+      if (node) {
+        openFiles[fileId] = {
+          content: node.content,
+          name: node.name,
+          isRuning: node.content.isRuning,
+        };
+      }
+    });
+
+    set({ vfs, currentFileId: state.currentFile, openFiles, version: 0 });
   },
 
   toggleIsOpen: (id) => {
