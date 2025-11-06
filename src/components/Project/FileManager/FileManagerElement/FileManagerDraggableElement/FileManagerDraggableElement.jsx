@@ -1,4 +1,4 @@
-import { useFilemanagerStore } from "../../../../../stores/FileManagerStore";
+import { useProjectStore } from "../../../../../stores/ProjectStore";
 
 export default function FileManagerDraggableElement({
   children,
@@ -8,8 +8,7 @@ export default function FileManagerDraggableElement({
   setDraggin,
   ...props
 }) {
-  const fileManagerState = useFilemanagerStore((store) => store.vfs);
-  const move = useFilemanagerStore((store) => store.move);
+  const move = useProjectStore((store) => store.move);
 
   const handleOnMouseDown = (event) => {
     const originalWidth = FilemanagerElementContainerRef.current.clientWidth;

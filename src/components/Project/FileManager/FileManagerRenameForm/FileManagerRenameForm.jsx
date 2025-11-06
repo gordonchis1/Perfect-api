@@ -2,13 +2,13 @@ import { useRef } from "react";
 import useClickAway from "../../../../Hooks/useClickAway";
 import { useEffect } from "react";
 import "./FileManagerRenameForm.css";
-import { useFilemanagerStore } from "../../../../stores/FileManagerStore";
+import { useProjectStore } from "../../../../stores/ProjectStore";
 
 // TODO: evitar que pueda crear un nombre de archivo o de directorio con el mismo que la raiz /
 export default function FileManagerRenameForm({ node, closeContextMenu }) {
   const inputRef = useRef(null);
-  const rename = useFilemanagerStore((store) => store.rename);
-  const setRename = useFilemanagerStore((store) => store.setRename);
+  const rename = useProjectStore((store) => store.rename);
+  const setRename = useProjectStore((store) => store.setRename);
 
   useClickAway(inputRef, () => {
     inputRef.current.blur();

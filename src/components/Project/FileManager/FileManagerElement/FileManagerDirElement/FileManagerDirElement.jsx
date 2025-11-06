@@ -4,7 +4,7 @@ import FileManagerRenameForm from "../../FileManagerRenameForm/FileManagerRename
 import { useRef, useState } from "react";
 import FileManagerDraggableElement from "../FileManagerDraggableElement/FileManagerDraggableElement";
 import { Folder, FolderOpen } from "lucide-react";
-import { useFilemanagerStore } from "../../../../../stores/FileManagerStore";
+import { useProjectStore } from "../../../../../stores/ProjectStore";
 
 export default function FileManagerDirElement({
   node,
@@ -14,9 +14,9 @@ export default function FileManagerDirElement({
 }) {
   const [draggin, setDraggin] = useState(false);
 
-  const fileManagerState = useFilemanagerStore((store) => store.vfs);
-  const toggleIsOpen = useFilemanagerStore((store) => store.toggleIsOpen);
-  const renameState = useFilemanagerStore((store) => store.renameId);
+  const fileManagerState = useProjectStore((store) => store.vfs);
+  const toggleIsOpen = useProjectStore((store) => store.toggleIsOpen);
+  const renameState = useProjectStore((store) => store.renameId);
 
   const absolutePath = fileManagerState.getAbsolutePath(node);
   const level = absolutePath.split("/").length;

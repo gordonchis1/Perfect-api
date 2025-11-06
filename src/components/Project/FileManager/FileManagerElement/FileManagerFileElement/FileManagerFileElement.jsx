@@ -6,7 +6,7 @@ import useFilesContext from "../../../../../Hooks/useFilesContext";
 import { FILES_REDUCER_ACTIONS } from "../../../../../providers/FilesProvider/reducer";
 import IsRuningIndicator from "../../../../Global/IsRuningIndicator/IsRuningIndicator";
 import { File } from "lucide-react";
-import { useFilemanagerStore } from "../../../../../stores/FileManagerStore";
+import { useProjectStore } from "../../../../../stores/ProjectStore";
 
 export default function FileManagerFileElement({
   node,
@@ -17,9 +17,9 @@ export default function FileManagerFileElement({
   const FilemanagerElementContainerRef = useRef(null);
   const [draggin, setDraggin] = useState(false);
   const [filesState, dispatch] = useFilesContext();
-  const renameState = useFilemanagerStore((store) => store.renameId);
-  const fileManagerState = useFilemanagerStore((store) => store.vfs);
-  const toggleIsOpen = useFilemanagerStore((store) => store.toggleIsOpen);
+  const renameState = useProjectStore((store) => store.renameId);
+  const fileManagerState = useProjectStore((store) => store.vfs);
+  const toggleIsOpen = useProjectStore((store) => store.toggleIsOpen);
 
   const absolutePath = fileManagerState.getAbsolutePath(node);
   const level = absolutePath.split("/").length;

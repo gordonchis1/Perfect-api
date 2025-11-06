@@ -6,15 +6,15 @@ import useFileManagerContext from "../../../../../../Hooks/FileManager/useFileMa
 import "./WorkSpaceInputFormUrlButtonRun.css";
 import { fetch } from "@tauri-apps/plugin-http";
 import { Play } from "lucide-react";
-import { useFilemanagerStore } from "../../../../../../stores/FileManagerStore";
+import { useProjectStore } from "../../../../../../stores/ProjectStore";
 
 export default function WorkSpaceInputFormUrlButtonRun() {
   const [content] = useWorkSpaceContentContext();
   const [filesState] = useFilesContext();
   const [, dispatchFileManagerState] = useFileManagerContext();
   const { id } = useProjectContext();
-  const toggleIsRuning = useFilemanagerStore((store) => store.toggleIsRuning);
-  const fileManagerState = useFilemanagerStore((store) => store.vfs);
+  const toggleIsRuning = useProjectStore((store) => store.toggleIsRuning);
+  const fileManagerState = useProjectStore((store) => store.vfs);
 
   const handleRun = async () => {
     if (!content.url.parseUrl) return;

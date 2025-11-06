@@ -5,7 +5,7 @@ import useFilesContext from "../../../../Hooks/useFilesContext";
 import { FILES_REDUCER_ACTIONS } from "../../../../providers/FilesProvider/reducer";
 import OpenTabsContextMenuOption from "./OpenTabsContextMenuOption/OpenTabsContextMenuOption";
 import { Pen, X } from "lucide-react";
-import { useFilemanagerStore } from "../../../../stores/FileManagerStore";
+import { useProjectStore } from "../../../../stores/ProjectStore";
 
 export default function OpenTabContextMenu({
   file,
@@ -14,7 +14,7 @@ export default function OpenTabContextMenu({
   setIsRename,
 }) {
   const containerRef = useRef(null);
-  const toggleIsOpen = useFilemanagerStore((store) => store.toggleIsOpen);
+  const toggleIsOpen = useProjectStore((store) => store.toggleIsOpen);
   const [, dispatchFile] = useFilesContext();
 
   useClickAway(containerRef, closeContextMenu);

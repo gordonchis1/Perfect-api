@@ -3,7 +3,7 @@ import { useReducer, createContext, useEffect, useState } from "react";
 import filesReducer, { FILES_REDUCER_ACTIONS } from "./reducer";
 import { useParams } from "react-router";
 import { getProjectById } from "../../utils/getProjects";
-import { useFilemanagerStore } from "../../stores/FileManagerStore";
+import { useProjectStore } from "../../stores/ProjectStore";
 
 export const FilesContext = createContext([]);
 export const filesContextDefaulttValue = {
@@ -15,8 +15,8 @@ export default function FilesProvider({ children }) {
   const { id } = useParams();
   const [state, dispatch] = useReducer(filesReducer, filesContextDefaulttValue);
   const [isInit, setIsInit] = useState(false);
-  const fileManagerState = useFilemanagerStore((store) => store.vfs);
-  const fileManagerVersion = useFilemanagerStore((store) => store.version);
+  const fileManagerState = useProjectStore((store) => store.vfs);
+  const projectVersion = useProjectStore((store) => store.version);
 
   useEffect(() => {
     const init = async () => {
@@ -30,7 +30,7 @@ export default function FilesProvider({ children }) {
       init();
       setIsInit(true);
     }
-  }, [fileManagerState, fileManagerVersion]);
+  }, [fileManagerState, projectVersion]);
 
   return (
     <FilesContext.Provider value={[state, dispatch]}>

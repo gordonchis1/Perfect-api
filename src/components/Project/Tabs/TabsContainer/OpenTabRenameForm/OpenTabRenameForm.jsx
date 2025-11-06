@@ -1,10 +1,10 @@
 import { useEffect, useRef } from "react";
 import "./OpenTabRenameForm.css";
-import { useFilemanagerStore } from "../../../../../stores/FileManagerStore";
+import { useProjectStore } from "../../../../../stores/ProjectStore";
 
 export default function OpenTabRenameForm({ setIsRename, isRename, file }) {
   const inputRef = useRef(null);
-  const rename = useFilemanagerStore((store) => store.rename);
+  const rename = useProjectStore((store) => store.rename);
 
   const handleChange = (event) => {
     event.preventDefault();

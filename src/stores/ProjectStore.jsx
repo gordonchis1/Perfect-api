@@ -13,7 +13,7 @@ const initialState = {
   version: 0,
 };
 
-export const useFilemanagerStore = create((set, get) => ({
+export const useProjectStore = create((set, get) => ({
   ...initialState,
 
   init: async (id) => {

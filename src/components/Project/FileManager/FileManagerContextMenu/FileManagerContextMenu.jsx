@@ -3,13 +3,12 @@ import useClickAway from "../../../../Hooks/useClickAway";
 import "./FileManagerContextMenu.css";
 import FileManagerContextMenuOption from "./FileMangerContextMenuOption/FileManagerContextMenuOption";
 import { FilePlus2, FolderPlus, Pen, Trash2 } from "lucide-react";
-import { useFilemanagerStore } from "../../../../stores/FileManagerStore";
+import { useProjectStore } from "../../../../stores/ProjectStore";
 
 // TODO: Agregar una pantalla de confirmacion de remove
 // TODO: open tab when create new file
 export default function FileManagerContextMenu({
   node,
-  updateNodeState,
   x,
   y,
   closeContextMenu,
@@ -17,10 +16,10 @@ export default function FileManagerContextMenu({
   const menuRef = useRef(null);
   useClickAway(menuRef, closeContextMenu);
 
-  const addDir = useFilemanagerStore((store) => store.addDir);
-  const remove = useFilemanagerStore((store) => store.remove);
-  const addFile = useFilemanagerStore((store) => store.addFile);
-  const setRename = useFilemanagerStore((store) => store.setRename);
+  const addDir = useProjectStore((store) => store.addDir);
+  const remove = useProjectStore((store) => store.remove);
+  const addFile = useProjectStore((store) => store.addFile);
+  const setRename = useProjectStore((store) => store.setRename);
 
   const handleAddDir = () => {
     addDir(node.id);

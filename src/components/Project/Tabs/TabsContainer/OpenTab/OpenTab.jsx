@@ -6,7 +6,7 @@ import OpenTabContextMenu from "../../OpenTabsContextMenu/OpenTabsContextMenu";
 import OpenTabRenameForm from "../OpenTabRenameForm/OpenTabRenameForm";
 import IsRuningIndicator from "../../../../Global/IsRuningIndicator/IsRuningIndicator";
 import { File, X } from "lucide-react";
-import { useFilemanagerStore } from "../../../../../stores/FileManagerStore";
+import { useProjectStore } from "../../../../../stores/ProjectStore";
 
 const defaultContextMenuState = {
   x: 0,
@@ -18,7 +18,7 @@ export default function OpenTab({ file }) {
   const [, dispatch] = useFilesContext();
   const [contextMenu, setContextMenu] = useState(defaultContextMenuState);
   const [isRename, setIsRename] = useState(false);
-  const toggleIsOpen = useFilemanagerStore((store) => store.toggleIsOpen);
+  const toggleIsOpen = useProjectStore((store) => store.toggleIsOpen);
 
   const openContextMenu = (event) => {
     event.preventDefault();

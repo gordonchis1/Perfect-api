@@ -2,15 +2,15 @@ import { createContext, useEffect, useReducer } from "react";
 import workSpaceContentReducer, { WORKSPACE_CONTENT_TYPES } from "./reducer";
 import { VirtualFileSystem } from "../../utils/ProjectFileObject";
 import useFilesContext from "../../Hooks/useFilesContext";
-import { useFilemanagerStore } from "../../stores/FileManagerStore";
+import { useProjectStore } from "../../stores/ProjectStore";
 
 export const WorkSpaceContentContext = createContext();
 
 export default function WorkSpaceContentProvider({ children }) {
   const [state, dispatch] = useReducer(workSpaceContentReducer, undefined);
-  const fileManagerState = useFilemanagerStore((state) => state.vfs);
+  const fileManagerState = useProjectStore((state) => state.vfs);
   const [filesContext] = useFilesContext();
-  const fileManagerVersion = useFilemanagerStore((store) => store.version);
+  const projectVersion = useProjectStore((store) => store.version);
 
   useEffect(() => {
     if (
@@ -30,7 +30,7 @@ export default function WorkSpaceContentProvider({ children }) {
         payload: { content: undefined },
       });
     }
-  }, [fileManagerState, filesContext.currentFile, fileManagerVersion]);
+  }, [fileManagerState, filesContext.currentFile, projectVersion]);
 
   return (
     <WorkSpaceContentContext.Provider value={[state, dispatch]}>
