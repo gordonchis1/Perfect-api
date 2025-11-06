@@ -2,10 +2,8 @@ import "./FileManagerFileElement.css";
 import FileManagerRenameForm from "../../FileManagerRenameForm/FileManagerRenameForm";
 import { useRef, useState } from "react";
 import FileManagerDraggableElement from "../FileManagerDraggableElement/FileManagerDraggableElement";
-import useFileManagerContext from "../../../../../Hooks/FileManager/useFileMangerContext";
 import useFilesContext from "../../../../../Hooks/useFilesContext";
 import { FILES_REDUCER_ACTIONS } from "../../../../../providers/FilesProvider/reducer";
-import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../../providers/FileManager/reducer";
 import IsRuningIndicator from "../../../../Global/IsRuningIndicator/IsRuningIndicator";
 import { File } from "lucide-react";
 import { useFilemanagerStore } from "../../../../../stores/FileManagerStore";
@@ -14,17 +12,17 @@ export default function FileManagerFileElement({
   node,
   onContextMenu,
   nodeState,
-  updateNodeState,
+  closeContextMenu,
 }) {
   const FilemanagerElementContainerRef = useRef(null);
   const [draggin, setDraggin] = useState(false);
-
+  const [filesState, dispatch] = useFilesContext();
+  const renameState = useFilemanagerStore((store) => store.renameId);
   const fileManagerState = useFilemanagerStore((store) => store.vfs);
+  const toggleIsOpen = useFilemanagerStore((store) => store.toggleIsOpen);
 
   const absolutePath = fileManagerState.getAbsolutePath(node);
   const level = absolutePath.split("/").length;
-
-  const [filesState, dispatch] = useFilesContext();
 
   const fileFontColor = () => {
     if (filesState.currentFile === node.id) {
@@ -65,16 +63,12 @@ export default function FileManagerFileElement({
         onClick={() => {
           if (filesState.currentFile === node.id) return;
           if (filesState.openFiles.some((file) => file.id === node.id)) {
-            console.log("print");
-            // dispatch({
-            //   type: FILES_REDUCER_ACTIONS.changeCurrentTab,
-            //   payload: { id: node.id },
-            // });
+            dispatch({
+              type: FILES_REDUCER_ACTIONS.changeCurrentTab,
+              payload: { id: node.id },
+            });
           } else {
-            // fileManagerDispatch({
-            //   type: FILEMANAGER_REDUCER_ACTIONS.toggleIsOpen,
-            //   payload: { path: absolutePath, type: node.type },
-            // });
+            toggleIsOpen(node.id);
 
             dispatch({
               type: FILES_REDUCER_ACTIONS.openFile,
@@ -92,11 +86,11 @@ export default function FileManagerFileElement({
         <div className="filemanager-element-content">
           <IsRuningIndicator isRuning={node.content.isRuning} size="10px" />
           <File size={17} />
-          {nodeState?.isRename ? (
+          {renameState != null && renameState == node.id ? (
             <FileManagerRenameForm
               node={node}
               nodeState={nodeState}
-              updateNodeState={updateNodeState}
+              closeContextMenu={closeContextMenu}
             />
           ) : (
             <p className="filemanager-element_name">{node.name}</p>

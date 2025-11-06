@@ -1,9 +1,15 @@
 import { create } from "zustand";
-import { VirtualFileSystem } from "../utils/ProjectFileObject";
+import {
+  Directory,
+  File,
+  FSNode,
+  VirtualFileSystem,
+} from "../utils/ProjectFileObject";
 import { getProjectById } from "../utils/getProjects";
 
 const initialState = {
   vfs: null,
+  renameId: null,
   version: 0,
 };
 
@@ -29,6 +35,60 @@ export const useFilemanagerStore = create((set, get) => ({
       const node = vfs.getNodeById(id);
       node.toggleIsOpen();
       vfs.onChange();
+    }
+  },
+
+  addDir: (id) => {
+    const vfs = get().vfs;
+
+    if (vfs instanceof VirtualFileSystem) {
+      const node = vfs.getNodeById(id);
+      if (node.type === "dir") {
+        node.addChild(new Directory("New directory", true));
+        vfs.onChange();
+      }
+    }
+  },
+
+  remove: (node) => {
+    const vfs = get().vfs;
+    if (node instanceof FSNode) {
+      vfs.remove(node);
+    }
+  },
+
+  addFile: (id) => {
+    const vfs = get().vfs;
+
+    if (vfs instanceof VirtualFileSystem) {
+      const node = vfs.getNodeById(id);
+      if (node.type === "dir") {
+        node.addChild(new File("New file"));
+        vfs.onChange();
+      }
+    }
+  },
+
+  rename: (id, newName) => {
+    const vfs = get().vfs;
+    if (vfs instanceof VirtualFileSystem) {
+      const node = vfs.getNodeById(id);
+      node.rename(newName);
+      vfs.onChange();
+    }
+  },
+
+  setRename: (renameId) => set({ renameId }),
+
+  move: (moveElementId, toId) => {
+    const vfs = get().vfs;
+    if (vfs instanceof VirtualFileSystem) {
+      const nodeToMove = vfs.getNodeById(moveElementId);
+      const toNode = vfs.getNodeById(toId);
+
+      if (toNode.type === "dir") {
+        vfs.move(nodeToMove, toNode);
+      }
     }
   },
 

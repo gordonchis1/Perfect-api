@@ -2,48 +2,37 @@ import { useRef } from "react";
 import useClickAway from "../../../../Hooks/useClickAway";
 import { useEffect } from "react";
 import "./FileManagerRenameForm.css";
-import useFileManagerContext from "../../../../Hooks/FileManager/useFileMangerContext";
-import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../providers/FileManager/reducer";
-import useProjectContext from "../../../../Hooks/FileManager/useProjectContext";
+import { useFilemanagerStore } from "../../../../stores/FileManagerStore";
 
 // TODO: evitar que pueda crear un nombre de archivo o de directorio con el mismo que la raiz /
-export default function FileManagerRenameForm({
-  node,
-  updateNodeState,
-  nodeState,
-}) {
+export default function FileManagerRenameForm({ node, closeContextMenu }) {
   const inputRef = useRef(null);
-  const [state, dispatch] = useFileManagerContext();
-  const { id } = useProjectContext();
-
-  const absolutePath = state.getAbsolutePath(node);
+  const rename = useFilemanagerStore((store) => store.rename);
+  const setRename = useFilemanagerStore((store) => store.setRename);
 
   useClickAway(inputRef, () => {
     inputRef.current.blur();
   });
 
   const handleBlur = (event) => {
-    updateNodeState({ ...node, isRename: false });
+    setRename(null);
     if (event.target.value === "" || event.target.value === node.name) {
       return;
     } else {
-      dispatch({
-        type: FILEMANAGER_REDUCER_ACTIONS.rename,
-        payload: {
-          type: node.type,
-          newName: event.target.value,
-          path: absolutePath,
-          id,
-        },
-      });
+      console.log("renaming to");
+      rename(node.id, event.target.value);
     }
   };
+  useEffect(() => {
+    closeContextMenu();
+  }, []);
 
   useEffect(() => {
-    if (nodeState?.isRename && inputRef.current) {
-      inputRef.current.select();
+    const input = inputRef.current;
+    if (input) {
+      input.select();
     }
-  }, [nodeState?.isRename]);
+  }, [inputRef]);
 
   return (
     <form

@@ -2,10 +2,8 @@ import { useRef } from "react";
 import useClickAway from "../../../../Hooks/useClickAway";
 import "./FileManagerContextMenu.css";
 import FileManagerContextMenuOption from "./FileMangerContextMenuOption/FileManagerContextMenuOption";
-import useFileManagerContext from "../../../../Hooks/FileManager/useFileMangerContext";
-import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../providers/FileManager/reducer";
-import useProjectContext from "../../../../Hooks/FileManager/useProjectContext";
 import { FilePlus2, FolderPlus, Pen, Trash2 } from "lucide-react";
+import { useFilemanagerStore } from "../../../../stores/FileManagerStore";
 
 // TODO: Agregar una pantalla de confirmacion de remove
 // TODO: open tab when create new file
@@ -16,34 +14,26 @@ export default function FileManagerContextMenu({
   y,
   closeContextMenu,
 }) {
-  const { id } = useProjectContext();
   const menuRef = useRef(null);
   useClickAway(menuRef, closeContextMenu);
 
-  const [state, dispatch] = useFileManagerContext();
-  const absolutePath = state.getAbsolutePath(node);
+  const addDir = useFilemanagerStore((store) => store.addDir);
+  const remove = useFilemanagerStore((store) => store.remove);
+  const addFile = useFilemanagerStore((store) => store.addFile);
+  const setRename = useFilemanagerStore((store) => store.setRename);
 
   const handleAddDir = () => {
-    dispatch({
-      type: FILEMANAGER_REDUCER_ACTIONS.addDir,
-      payload: { path: absolutePath, id },
-    });
+    addDir(node.id);
     closeContextMenu();
   };
 
   const handleRemove = () => {
-    dispatch({
-      type: FILEMANAGER_REDUCER_ACTIONS.remove,
-      payload: { type: node.type, path: absolutePath, id },
-    });
+    remove(node);
     closeContextMenu();
   };
 
   const handleAddFile = () => {
-    dispatch({
-      type: FILEMANAGER_REDUCER_ACTIONS.addFile,
-      payload: { path: absolutePath, id },
-    });
+    addFile(node.id);
     closeContextMenu();
   };
 
@@ -74,7 +64,7 @@ export default function FileManagerContextMenu({
             node={node}
             text={"Renombrar"}
             icon={<Pen size={16} />}
-            onClick={() => updateNodeState({ ...node, isRename: true })}
+            onClick={() => setRename(node.id)}
           />
           <FileManagerContextMenuOption
             node={node}

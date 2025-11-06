@@ -1,7 +1,7 @@
 import FileManagerDirElement from "./FileManagerDirElement/FileManagerDirElement";
 import FileManagerFileElement from "./FileManagerFileElement/FileManagerFileElement";
 import "./FileManagerElement.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import FileManagerContextMenu from "../FileManagerContextMenu/FileManagerContextMenu";
 
 // !FIX: arreglar la identacion de los elementos en el file manager
@@ -15,7 +15,6 @@ const defaultContextMenu = {
 
 export default function FileManagerElement({ node, updateVfs }) {
   const [contextMenu, setContextMenu] = useState(defaultContextMenu);
-  const [nodeState, setNodeState] = useState({ ...node, isRename: false });
 
   const handleContextMenu = (event) => {
     event.preventDefault();
@@ -29,23 +28,12 @@ export default function FileManagerElement({ node, updateVfs }) {
     });
   };
 
-  useEffect(() => {
-    if (nodeState?.isRename) {
-      setContextMenu(defaultContextMenu);
-    }
-  }, [nodeState]);
-
-  const updateNodeState = (updatedNode) => {
-    setNodeState(updatedNode);
-  };
-
   const closeContextMenu = () => setContextMenu(defaultContextMenu);
 
   return (
     <>
       {contextMenu.show && (
         <FileManagerContextMenu
-          updateNodeState={updateNodeState}
           node={node}
           x={contextMenu.x}
           y={contextMenu.y}
@@ -54,18 +42,16 @@ export default function FileManagerElement({ node, updateVfs }) {
       )}
       {node.type === "dir" ? (
         <FileManagerDirElement
-          updateNodeState={updateNodeState}
-          nodeState={nodeState}
+          closeContextMenu={closeContextMenu}
           node={node}
           onContextMenu={handleContextMenu}
           updateVfs={updateVfs}
         />
       ) : (
         <FileManagerFileElement
-          updateNodeState={updateNodeState}
+          closeContextMenu={closeContextMenu}
           node={node}
           onContextMenu={handleContextMenu}
-          nodeState={nodeState}
           updateVfs={updateVfs}
         />
       )}

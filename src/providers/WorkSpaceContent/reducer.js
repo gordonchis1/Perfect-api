@@ -8,6 +8,7 @@ const workSpaceContentReducer = (state, action) => {
   switch (type) {
     case WORKSPACE_CONTENT_TYPES.init: {
       const { content } = payload;
+      console.log(content);
       if (content) {
         return content;
       } else {

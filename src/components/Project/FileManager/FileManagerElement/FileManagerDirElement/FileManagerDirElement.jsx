@@ -9,12 +9,14 @@ import { useFilemanagerStore } from "../../../../../stores/FileManagerStore";
 export default function FileManagerDirElement({
   node,
   onContextMenu,
-  nodeState,
+  closeContextMenu,
   updateNodeState,
 }) {
   const [draggin, setDraggin] = useState(false);
+
   const fileManagerState = useFilemanagerStore((store) => store.vfs);
   const toggleIsOpen = useFilemanagerStore((store) => store.toggleIsOpen);
+  const renameState = useFilemanagerStore((store) => store.renameId);
 
   const absolutePath = fileManagerState.getAbsolutePath(node);
   const level = absolutePath.split("/").length;
@@ -23,10 +25,6 @@ export default function FileManagerDirElement({
     if (node.name === "/") return;
     e.stopPropagation();
     toggleIsOpen(node.id);
-    //   dispatch({
-    //     type: FILEMANAGER_REDUCER_ACTIONS.toggleIsOpen,
-    //     payload: { path: absolutePath, type: node.type },
-    //   });
   };
 
   const childrens = node.getChildrens();
@@ -45,7 +43,7 @@ export default function FileManagerDirElement({
             }
           : {}
       }
-      path={absolutePath ? absolutePath : ""}
+      data-id={node.id}
     >
       <FileManagerDraggableElement
         node={node}
@@ -60,21 +58,18 @@ export default function FileManagerDirElement({
       >
         <div className="filemanager-element-content">
           {node.isOpen ? <FolderOpen size={17} /> : <Folder size={17} />}
-          {nodeState.isRename ? (
+          {renameState != null && renameState == node.id ? (
             <FileManagerRenameForm
               node={node}
-              nodeState={nodeState}
               updateNodeState={updateNodeState}
+              closeContextMenu={closeContextMenu}
             />
           ) : (
             <p className="filemanager-element_name">{node.name}</p>
           )}
         </div>
       </FileManagerDraggableElement>
-      <div
-        className="filemanager-dir-childs-container"
-        path={absolutePath ? absolutePath : ""}
-      >
+      <div className="filemanager-dir-childs-container" data-id={node.id}>
         {node.isOpen &&
           childrens.map((element) => {
             return <FileManagerElement key={element.name} node={element} />;

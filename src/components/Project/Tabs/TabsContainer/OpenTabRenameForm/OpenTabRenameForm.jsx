@@ -1,33 +1,17 @@
 import { useEffect, useRef } from "react";
 import "./OpenTabRenameForm.css";
-import useFileManagerContext from "../../../../../Hooks/FileManager/useFileMangerContext";
-import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../../providers/FileManager/reducer";
-import useProjectContext from "../../../../../Hooks/FileManager/useProjectContext";
+import { useFilemanagerStore } from "../../../../../stores/FileManagerStore";
 
 export default function OpenTabRenameForm({ setIsRename, isRename, file }) {
   const inputRef = useRef(null);
-  const [fileManagerState, dispatchFileManager] = useFileManagerContext();
-  const { id } = useProjectContext();
+  const rename = useFilemanagerStore((store) => store.rename);
 
   const handleChange = (event) => {
     event.preventDefault();
     setIsRename(false);
     if (event.target.value === "" || event.target.value === file.name) return;
-    if (fileManagerState) {
-      const node = fileManagerState.getNodeById(file.id);
-      if (node) {
-        const path = fileManagerState.getAbsolutePath(node);
-        dispatchFileManager({
-          type: FILEMANAGER_REDUCER_ACTIONS.rename,
-          payload: {
-            type: "file",
-            newName: event.target.value,
-            path,
-            id,
-          },
-        });
-      }
-    }
+
+    rename(file.id, event.target.value);
   };
 
   useEffect(() => {

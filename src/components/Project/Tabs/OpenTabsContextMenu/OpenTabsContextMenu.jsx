@@ -4,9 +4,8 @@ import "./OpenTabsContextMenu.css";
 import useFilesContext from "../../../../Hooks/useFilesContext";
 import { FILES_REDUCER_ACTIONS } from "../../../../providers/FilesProvider/reducer";
 import OpenTabsContextMenuOption from "./OpenTabsContextMenuOption/OpenTabsContextMenuOption";
-import useFileManagerContext from "../../../../Hooks/FileManager/useFileMangerContext";
-import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../providers/FileManager/reducer";
 import { Pen, X } from "lucide-react";
+import { useFilemanagerStore } from "../../../../stores/FileManagerStore";
 
 export default function OpenTabContextMenu({
   file,
@@ -15,8 +14,8 @@ export default function OpenTabContextMenu({
   setIsRename,
 }) {
   const containerRef = useRef(null);
+  const toggleIsOpen = useFilemanagerStore((store) => store.toggleIsOpen);
   const [, dispatchFile] = useFilesContext();
-  const [, dispatchFileManager] = useFileManagerContext();
 
   useClickAway(containerRef, closeContextMenu);
 
@@ -26,12 +25,10 @@ export default function OpenTabContextMenu({
       type: FILES_REDUCER_ACTIONS.closeFile,
       payload: { id: file.id },
     });
-
-    dispatchFileManager({
-      type: FILEMANAGER_REDUCER_ACTIONS.toggleIsOpen,
-      payload: { path: file.path, type: "file" },
-    });
+    toggleIsOpen(file.id);
+    closeContextMenu();
   };
+
   const handleRename = (event) => {
     event.stopPropagation();
     setIsRename(true);

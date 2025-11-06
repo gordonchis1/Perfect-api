@@ -1,13 +1,12 @@
 import "./OpenTab.css";
 import useFilesContext from "../../../../../Hooks/useFilesContext";
 import { FILES_REDUCER_ACTIONS } from "../../../../../providers/FilesProvider/reducer";
-import useFileManagerContext from "../../../../../Hooks/FileManager/useFileMangerContext";
-import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../../providers/FileManager/reducer";
 import { useState } from "react";
 import OpenTabContextMenu from "../../OpenTabsContextMenu/OpenTabsContextMenu";
 import OpenTabRenameForm from "../OpenTabRenameForm/OpenTabRenameForm";
 import IsRuningIndicator from "../../../../Global/IsRuningIndicator/IsRuningIndicator";
 import { File, X } from "lucide-react";
+import { useFilemanagerStore } from "../../../../../stores/FileManagerStore";
 
 const defaultContextMenuState = {
   x: 0,
@@ -17,9 +16,9 @@ const defaultContextMenuState = {
 
 export default function OpenTab({ file }) {
   const [, dispatch] = useFilesContext();
-  const [, fileManagerDispatch] = useFileManagerContext();
   const [contextMenu, setContextMenu] = useState(defaultContextMenuState);
   const [isRename, setIsRename] = useState(false);
+  const toggleIsOpen = useFilemanagerStore((store) => store.toggleIsOpen);
 
   const openContextMenu = (event) => {
     event.preventDefault();
@@ -67,10 +66,7 @@ export default function OpenTab({ file }) {
             type: FILES_REDUCER_ACTIONS.closeFile,
             payload: { id: file.id },
           });
-          fileManagerDispatch({
-            type: FILEMANAGER_REDUCER_ACTIONS.toggleIsOpen,
-            payload: { path: file.path, type: "file" },
-          });
+          toggleIsOpen(file.id);
         }}
       >
         <X size={16} />

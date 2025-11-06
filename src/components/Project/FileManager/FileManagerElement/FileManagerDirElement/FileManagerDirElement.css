@@ -16,7 +16,7 @@
 }
 
 .hover-drag-and-drop {
-  background: var(--hover);
+  background: var(--accent);
 }
 
 .filemanager-dir-childs-container {

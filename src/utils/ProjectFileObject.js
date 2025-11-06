@@ -135,17 +135,17 @@ export class VirtualFileSystem {
 
     parentNode.children.splice(indexOfDeletedChildren, 1);
 
+    this.onChange();
     return node;
   }
 
   move(node, to) {
-    if (!(node instanceof FSNode)) return;
+    if (!(node instanceof FSNode) && !(to instanceof Directory)) return;
 
     const nodeToMove = this.remove(node);
 
-    const toDirectory = this.getDirByPath(to);
-
-    toDirectory.addChild(nodeToMove);
+    to.addChild(nodeToMove);
+    this.onChange();
   }
 
   toJSON(node = this.root) {

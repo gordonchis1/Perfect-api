@@ -1,9 +1,9 @@
 // ? Provadier for update open files and file content
 import { useReducer, createContext, useEffect, useState } from "react";
 import filesReducer, { FILES_REDUCER_ACTIONS } from "./reducer";
-import useFileManagerContext from "../../Hooks/FileManager/useFileMangerContext";
 import { useParams } from "react-router";
 import { getProjectById } from "../../utils/getProjects";
+import { useFilemanagerStore } from "../../stores/FileManagerStore";
 
 export const FilesContext = createContext([]);
 export const filesContextDefaulttValue = {
@@ -15,7 +15,8 @@ export default function FilesProvider({ children }) {
   const { id } = useParams();
   const [state, dispatch] = useReducer(filesReducer, filesContextDefaulttValue);
   const [isInit, setIsInit] = useState(false);
-  const [fileManagerState] = useFileManagerContext();
+  const fileManagerState = useFilemanagerStore((store) => store.vfs);
+  const fileManagerVersion = useFilemanagerStore((store) => store.version);
 
   useEffect(() => {
     const init = async () => {
@@ -25,11 +26,11 @@ export default function FilesProvider({ children }) {
         payload: { fileManager: fileManagerState, initState: project.state },
       });
     };
-    if (!isInit && fileManagerState !== undefined) {
+    if (!isInit && fileManagerState) {
       init();
       setIsInit(true);
     }
-  }, [fileManagerState]);
+  }, [fileManagerState, fileManagerVersion]);
 
   return (
     <FilesContext.Provider value={[state, dispatch]}>
