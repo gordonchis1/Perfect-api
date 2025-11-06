@@ -6,27 +6,23 @@ import useFileManagerContext from "../../../../../../Hooks/FileManager/useFileMa
 import "./WorkSpaceInputFormUrlButtonRun.css";
 import { fetch } from "@tauri-apps/plugin-http";
 import { Play } from "lucide-react";
+import { useFilemanagerStore } from "../../../../../../stores/FileManagerStore";
 
 export default function WorkSpaceInputFormUrlButtonRun() {
   const [content] = useWorkSpaceContentContext();
   const [filesState] = useFilesContext();
   const [, dispatchFileManagerState] = useFileManagerContext();
   const { id } = useProjectContext();
+  const toggleIsRuning = useFilemanagerStore((store) => store.toggleIsRuning);
+  const fileManagerState = useFilemanagerStore((store) => store.vfs);
 
   const handleRun = async () => {
     if (!content.url.parseUrl) return;
     if (content.isRuning) return;
 
-    dispatchFileManagerState({
-      type: FILEMANAGER_REDUCER_ACTIONS.updateContentWithoutSaving,
-      payload: {
-        nodeId: filesState.currentFile,
-        newContent: {
-          ...content,
-          isRuning: true,
-        },
-      },
-    });
+    const node = fileManagerState.getNodeById(filesState.currentFile);
+
+    toggleIsRuning(node);
 
     const newResponse = [...content.responses];
     let parsedResponse;
@@ -64,16 +60,8 @@ export default function WorkSpaceInputFormUrlButtonRun() {
         });
       }
 
-      dispatchFileManagerState({
-        type: FILEMANAGER_REDUCER_ACTIONS.updateContentWithoutSaving,
-        payload: {
-          nodeId: filesState.currentFile,
-          newContent: {
-            ...content,
-            isRuning: false,
-          },
-        },
-      });
+      toggleIsRuning(node);
+
       const end = performance.now();
       timeTaken = Math.abs(start - end);
 

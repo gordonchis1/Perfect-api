@@ -268,6 +268,9 @@ export class File extends FSNode {
     super(name, "file", isOpen, id);
     this.content = content;
   }
+  toggleIsRuning() {
+    this.content = { ...this.content, isRuning: !this.content.isRuning };
+  }
   updateContent(newContent) {
     this.content = newContent;
     return newContent;

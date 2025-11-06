@@ -92,5 +92,13 @@ export const useFilemanagerStore = create((set, get) => ({
     }
   },
 
+  toggleIsRuning: (node) => {
+    const vfs = get().vfs;
+    if (node instanceof File && vfs instanceof VirtualFileSystem) {
+      node.toggleIsRuning();
+      vfs.onChange();
+    }
+  },
+
   reset: () => set({ ...initialState }),
 }));
