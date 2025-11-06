@@ -1,16 +1,17 @@
 import useSaveStateOnClose from "../../../../Hooks/FileManager/useSaveStateOnClose";
-import useFilesContext from "../../../../Hooks/useFilesContext";
+import { useProjectStore } from "../../../../stores/ProjectStore";
 import OpenTab from "./OpenTab/OpenTab";
 import "./TabsContainer.css";
 
 export default function TabsContainer() {
-  const [files] = useFilesContext();
+  // const [files] = useFilesContext();
+  const openFiles = useProjectStore((state) => state.openFiles);
   useSaveStateOnClose();
 
   return (
     <div className="tabs-container">
-      {files.openFiles.map((file) => (
-        <OpenTab file={file} key={file.path} />
+      {Object.keys(openFiles).map((id) => (
+        <OpenTab file={openFiles[id]} key={id} />
       ))}
     </div>
   );

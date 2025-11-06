@@ -3,13 +3,15 @@ import "./WorkspaceContainer.css";
 import ResizeContainer from "../../Global/ResizeContainer/ResizeContainer";
 import useWidthObserver from "../../../Hooks/useWidthObserver";
 import WorkspaceInputContainer from "./WorkspaceInput/WorkspaceInputContainer";
-import useWorkSpaceContentContext from "../../../Hooks/WorkSpace/useWorkSpaceContentContext";
 import WorkSpacePreviewContainer from "./WorkspacePreview/WorkSpacePreviewContainer";
 import WorkSpacePreviewProvider from "../../../providers/WorkspacePreview/WorkSpacePreviewProvider";
+import { useProjectStore } from "../../../stores/ProjectStore";
 
 // TODO: remove content from files context use filemanger content insted
 export default function WorkspaceContainer() {
-  const [content] = useWorkSpaceContentContext();
+  const content = useProjectStore(
+    (store) => store.openFiles[store.currentFileId]?.content
+  );
 
   const container = useRef(null);
   const [isMounted, setIsMounted] = useState(false);

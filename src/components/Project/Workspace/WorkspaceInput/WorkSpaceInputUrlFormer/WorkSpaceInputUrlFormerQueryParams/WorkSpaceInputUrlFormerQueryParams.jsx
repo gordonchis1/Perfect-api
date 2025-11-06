@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import useWorkSpaceContentContext from "../../../../../../Hooks/WorkSpace/useWorkSpaceContentContext";
 import "./WorkSpaceInputUrlFormerQueryParams.css";
 import useFileManagerContext from "../../../../../../Hooks/FileManager/useFileMangerContext";
 import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../../../providers/FileManager/reducer";
@@ -9,6 +8,7 @@ import UrlFormerQueryParamsInput from "./UrlFormerQueryParamsInput/UrlFormerQuer
 import UrlFormerQueryParamsDeleteQueryButton from "./UrlFormerQueryParamsDeleteQueryButton/UrlFormerQueryParamsDeleteQueryButton";
 import ActiveCheckbox from "../../../../../Global/ActiveCheckbox/ActiveCheckbox";
 import { Plus, Trash2 } from "lucide-react";
+import { useProjectStore } from "../../../../../../stores/ProjectStore";
 
 const defaultQueryObject = {
   key: "",
@@ -17,7 +17,9 @@ const defaultQueryObject = {
 };
 
 export default function WorkSpaceInputUrlFormerQueryParams() {
-  const [content] = useWorkSpaceContentContext();
+  const content = useProjectStore(
+    (store) => store.openFiles[store.currentFileId]?.content
+  );
   const [querys, setQuerys] = useState(content.url.queryParams);
   const [, dispatchFileManagerState] = useFileManagerContext();
   const [filesState] = useFilesContext();

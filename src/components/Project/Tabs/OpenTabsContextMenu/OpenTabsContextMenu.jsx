@@ -1,8 +1,6 @@
 import { useRef } from "react";
 import useClickAway from "../../../../Hooks/useClickAway";
 import "./OpenTabsContextMenu.css";
-import useFilesContext from "../../../../Hooks/useFilesContext";
-import { FILES_REDUCER_ACTIONS } from "../../../../providers/FilesProvider/reducer";
 import OpenTabsContextMenuOption from "./OpenTabsContextMenuOption/OpenTabsContextMenuOption";
 import { Pen, X } from "lucide-react";
 import { useProjectStore } from "../../../../stores/ProjectStore";
@@ -15,16 +13,13 @@ export default function OpenTabContextMenu({
 }) {
   const containerRef = useRef(null);
   const toggleIsOpen = useProjectStore((store) => store.toggleIsOpen);
-  const [, dispatchFile] = useFilesContext();
+  const closeOpenFile = useProjectStore((store) => store.closeOpenFile);
 
   useClickAway(containerRef, closeContextMenu);
 
   const handleCloseFile = (event) => {
     event.stopPropagation();
-    dispatchFile({
-      type: FILES_REDUCER_ACTIONS.closeFile,
-      payload: { id: file.id },
-    });
+    closeOpenFile(file.id);
     toggleIsOpen(file.id);
     closeContextMenu();
   };

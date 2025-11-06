@@ -1,4 +1,3 @@
-import useWorkSpaceContentContext from "../../../../../../Hooks/WorkSpace/useWorkSpaceContentContext";
 import useFilesContext from "../../../../../../Hooks/useFilesContext";
 import useProjectContext from "../../../../../../Hooks/FileManager/useProjectContext";
 import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../../../providers/FileManager/reducer";
@@ -9,7 +8,9 @@ import { Play } from "lucide-react";
 import { useProjectStore } from "../../../../../../stores/ProjectStore";
 
 export default function WorkSpaceInputFormUrlButtonRun() {
-  const [content] = useWorkSpaceContentContext();
+  const content = useProjectStore(
+    (store) => store.openFiles[store.currentFileId]?.content
+  );
   const [filesState] = useFilesContext();
   const [, dispatchFileManagerState] = useFileManagerContext();
   const { id } = useProjectContext();

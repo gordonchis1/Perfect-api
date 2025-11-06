@@ -1,5 +1,5 @@
 import { createContext, useEffect, useReducer } from "react";
-import useWorkSpaceContentContext from "../../Hooks/WorkSpace/useWorkSpaceContentContext";
+import { useProjectStore } from "../../stores/ProjectStore";
 
 export const WorkSpacePreviewContext = createContext(undefined);
 
@@ -36,7 +36,9 @@ const workspacePreviewReducer = (state, action) => {
 
 // This provider is used to manage the workspace preview index state.
 export default function WorkSpacePreviewProvider({ children }) {
-  const [content] = useWorkSpaceContentContext();
+  const content = useProjectStore(
+    (store) => store.openFiles[store.currentFileId]?.content
+  );
   const [state, dispatch] = useReducer(
     workspacePreviewReducer,
     defaultWorkSpacePreviewState

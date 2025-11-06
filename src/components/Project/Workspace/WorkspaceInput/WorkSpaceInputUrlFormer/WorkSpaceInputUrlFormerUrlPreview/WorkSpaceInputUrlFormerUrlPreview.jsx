@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
-import useWorkSpaceContentContext from "../../../../../../Hooks/WorkSpace/useWorkSpaceContentContext";
 import "./WorkSpaceInputUrlFormerUrlPreview.css";
 import { Check, Copy } from "lucide-react";
+import { useProjectStore } from "../../../../../../stores/ProjectStore";
 
 export default function WorkSpaceInputUrlFormerUrlPreview() {
   const [isCopied, setIsCopied] = useState(false);
-  const [content] = useWorkSpaceContentContext();
+  const content = useProjectStore(
+    (store) => store.openFiles[store.currentFileId]?.content
+  );
   const [isValidUrl, setIsValidUrl] = useState(true);
 
   const handleCopyUrlPreview = async () => {

@@ -37,6 +37,7 @@ export const useProjectStore = create((set, get) => ({
           content: node.content,
           name: node.name,
           isRuning: node.content.isRuning,
+          id: node.id,
         };
       }
     });
@@ -113,6 +114,16 @@ export const useProjectStore = create((set, get) => ({
       node.toggleIsRuning();
       vfs.onChange();
     }
+  },
+
+  setCurrentFile: (id) => {
+    set({ currentFileId: id });
+  },
+  // ! on Close tab if change is currentfile, set another open file as current
+  closeOpenFile: (id) => {
+    const openFiles = { ...get().openFiles };
+    delete openFiles[id];
+    set({ openFiles });
   },
 
   reset: () => set({ ...initialState }),

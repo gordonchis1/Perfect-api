@@ -7,6 +7,7 @@ import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../../../providers/FileMan
 import useClickAway from "../../../../../../Hooks/useClickAway";
 import "./WorkSpaceInputFormTypeSelector.css";
 import useWorkSpaceContentContext from "../../../../../../Hooks/WorkSpace/useWorkSpaceContentContext";
+import { useProjectStore } from "../../../../../../stores/ProjectStore";
 
 export default function WorkSpaceInputFormTypeSelector() {
   const { id } = useProjectContext();
@@ -17,7 +18,9 @@ export default function WorkSpaceInputFormTypeSelector() {
   useClickAway(InputFormSelectorRef, () => {
     setIsOpen(false);
   });
-  const [content] = useWorkSpaceContentContext();
+  const content = useProjectStore(
+    (store) => store.openFiles[store.currentFileId]?.content
+  );
 
   const handleOpenOptions = () => {
     setIsOpen(!isOpen);

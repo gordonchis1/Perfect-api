@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import useFileManagerContext from "../../../../../../Hooks/FileManager/useFileMangerContext";
 import useFilesContext from "../../../../../../Hooks/useFilesContext";
-import useWorkSpaceContentContext from "../../../../../../Hooks/WorkSpace/useWorkSpaceContentContext";
 import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../../../providers/FileManager/reducer";
 import "./WorkSpaceInputFormInputUrl.css";
+import { useProjectStore } from "../../../../../../stores/ProjectStore";
 
 export default function WorkSpaceInputFormInputUrl() {
-  const [content] = useWorkSpaceContentContext();
+  const content = useProjectStore(
+    (store) => store.openFiles[store.currentFileId]?.content
+  );
   const [filesState] = useFilesContext();
   const [, dispatchFileManagerState] = useFileManagerContext();
   const [inputValue, setInputValue] = useState(content.url.inputUrl);

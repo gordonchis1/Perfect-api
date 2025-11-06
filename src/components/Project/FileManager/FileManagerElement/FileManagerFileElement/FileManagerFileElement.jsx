@@ -16,7 +16,10 @@ export default function FileManagerFileElement({
 }) {
   const FilemanagerElementContainerRef = useRef(null);
   const [draggin, setDraggin] = useState(false);
-  const [filesState, dispatch] = useFilesContext();
+  // const [filesState, dispatch] = useFilesContext();
+  const currentFileId = useProjectStore((store) => store.currentFileId);
+  const openFiles = useProjectStore((store) => store.openFiles);
+
   const renameState = useProjectStore((store) => store.renameId);
   const fileManagerState = useProjectStore((store) => store.vfs);
   const toggleIsOpen = useProjectStore((store) => store.toggleIsOpen);
@@ -25,10 +28,10 @@ export default function FileManagerFileElement({
   const level = absolutePath.split("/").length;
 
   const fileFontColor = () => {
-    if (filesState.currentFile === node.id) {
+    if (currentFileId === node.id) {
       return "var(--primary)";
-    } else if (filesState.openFiles.some((file) => file.id == node.id)) {
-      return "var(--primery-text-color)";
+    } else if (openFiles[node.id]) {
+      return "var(--primary-text-color)";
     }
   };
 
@@ -49,37 +52,32 @@ export default function FileManagerFileElement({
         node={node}
         style={{
           background:
-            filesState.currentFile === node.id
-              ? "var(--primary-transparent)"
-              : "",
+            currentFileId === node.id ? "var(--primary-transparent)" : "",
           color: fileFontColor(),
-          border:
-            filesState.currentFile === node.id
-              ? "1px solid var(--primary)"
-              : "",
+          border: currentFileId === node.id ? "1px solid var(--primary)" : "",
           paddingLeft: `${level * 20}px`,
         }}
         onContextMenu={onContextMenu}
         onClick={() => {
-          if (filesState.currentFile === node.id) return;
-          if (filesState.openFiles.some((file) => file.id === node.id)) {
-            dispatch({
-              type: FILES_REDUCER_ACTIONS.changeCurrentTab,
-              payload: { id: node.id },
-            });
+          if (currentFileId === node.id) return;
+          if (openFiles[node.id]) {
+            // dispatch({
+            //   type: FILES_REDUCER_ACTIONS.changeCurrentTab,
+            //   payload: { id: node.id },
+            // });
           } else {
             toggleIsOpen(node.id);
 
-            dispatch({
-              type: FILES_REDUCER_ACTIONS.openFile,
-              payload: {
-                path: absolutePath,
-                content: node.content,
-                name: node.name,
-                currentTab: true,
-                id: node.id,
-              },
-            });
+            // dispatch({
+            //   type: FILES_REDUCER_ACTIONS.openFile,
+            //   payload: {
+            //     path: absolutePath,
+            //     content: node.content,
+            //     name: node.name,
+            //     currentTab: true,
+            //     id: node.id,
+            //   },
+            // });
           }
         }}
       >

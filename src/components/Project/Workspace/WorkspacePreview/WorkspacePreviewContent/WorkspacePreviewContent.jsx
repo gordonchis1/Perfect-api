@@ -2,8 +2,8 @@ import "./WorkspacePreviewContent.css";
 import WorkSpacePreviewResponse from "../WorkSpacePreviewResponse/WorkSpacePreviewResponse";
 import WorkSpacePreviewTypes from "../WorkSpacePreviewTypes/WorkSpacePreviewTypes";
 import MultipleContainer from "../../../../Global/MultipleContainer/MultipleContainer";
-import useWorkSpaceContentContext from "../../../../../Hooks/WorkSpace/useWorkSpaceContentContext";
 import WorkspacePreviewLoading from "../WorkspacePreviewLoading/WorkspacePreviewLoading";
+import { useProjectStore } from "../../../../../stores/ProjectStore";
 
 const multipleContainerContainers = {
   Response: {
@@ -16,7 +16,9 @@ const multipleContainerContainers = {
 const defaultContainer = "Response";
 
 export default function WorkspacePreviewContent() {
-  const [content] = useWorkSpaceContentContext();
+  const content = useProjectStore(
+    (store) => store.openFiles[store.currentFileId]?.content
+  );
 
   return (
     <div className="workspace-preview_multiple-container">
