@@ -248,6 +248,16 @@ export class Directory extends FSNode {
     }
 
     this.children.push(node);
+    this.sortChildren();
+  }
+
+  sortChildren() {
+    this.children.sort((a, b) => {
+      if (a.type === b.type) {
+        return a.name.localeCompare(b.name);
+      }
+      return a.type === "dir" ? -1 : 1;
+    });
   }
 
   getChildrens() {

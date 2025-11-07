@@ -19,7 +19,7 @@ export default function FileManagerDirElement({
   const renameState = useProjectStore((store) => store.renameId);
 
   const absolutePath = fileManagerState.getAbsolutePath(node);
-  const level = absolutePath.split("/").length;
+  const level = absolutePath.split("/").length - 1;
 
   const handleToggle = (e) => {
     if (node.name === "/") return;
@@ -52,7 +52,7 @@ export default function FileManagerDirElement({
         setDraggin={setDraggin}
         onClick={handleToggle}
         style={{
-          paddingLeft: node.name !== "/" ? `${level * 15}px` : "15px",
+          paddingLeft: node.name !== "/" ? `${level * 25}px` : "15px",
         }}
         onContextMenu={(event) => onContextMenu(event)}
       >
@@ -72,7 +72,7 @@ export default function FileManagerDirElement({
       <div className="filemanager-dir-childs-container" data-id={node.id}>
         {node.isOpen &&
           childrens.map((element) => {
-            return <FileManagerElement key={element.name} node={element} />;
+            return <FileManagerElement key={element.id} node={element} />;
           })}
       </div>
     </div>

@@ -24,7 +24,7 @@ export default function FileManagerFileElement({
   const addOpenFile = useProjectStore((store) => store.addOpenFile);
 
   const absolutePath = fileManagerState.getAbsolutePath(node);
-  const level = absolutePath.split("/").length;
+  const level = absolutePath.split("/").length - 1;
 
   const fileFontColor = () => {
     if (currentFileId === node.id) {
@@ -54,7 +54,7 @@ export default function FileManagerFileElement({
             currentFileId === node.id ? "var(--primary-transparent)" : "",
           color: fileFontColor(),
           border: currentFileId === node.id ? "1px solid var(--primary)" : "",
-          paddingLeft: `${level * 20}px`,
+          paddingLeft: `${level * 25}px`,
         }}
         onContextMenu={onContextMenu}
         onClick={() => {
