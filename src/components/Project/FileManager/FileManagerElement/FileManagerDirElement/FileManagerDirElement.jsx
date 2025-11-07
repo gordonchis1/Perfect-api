@@ -53,6 +53,9 @@ export default function FileManagerDirElement({
         onClick={handleToggle}
         style={{
           paddingLeft: node.name !== "/" ? `${level * 25}px` : "15px",
+          color: node.isOpen
+            ? "var(--primary-text-color)"
+            : "var(--muted-foreground)",
         }}
         onContextMenu={(event) => onContextMenu(event)}
       >
