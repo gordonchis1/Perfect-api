@@ -1,7 +1,4 @@
 import { useEffect, useState } from "react";
-import useFileManagerContext from "../../../../../../Hooks/FileManager/useFileMangerContext";
-import useFilesContext from "../../../../../../Hooks/useFilesContext";
-import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../../../providers/FileManager/reducer";
 import "./WorkSpaceInputFormInputUrl.css";
 import { useProjectStore } from "../../../../../../stores/ProjectStore";
 
@@ -9,23 +6,28 @@ export default function WorkSpaceInputFormInputUrl() {
   const content = useProjectStore(
     (store) => store.openFiles[store.currentFileId]?.content
   );
-  const [filesState] = useFilesContext();
-  const [, dispatchFileManagerState] = useFileManagerContext();
+  const currentFileId = useProjectStore((store) => store.currentFileId);
   const [inputValue, setInputValue] = useState(content.url.inputUrl);
   const [isValidUrl, setIsValidUrl] = useState(true);
+  const isRuning = useProjectStore(
+    (store) => store.openFiles[store.currentFileId].isRuning
+  );
+  const updateContentOfOpenFile = useProjectStore(
+    (store) => store.updateContentOfOpenFile
+  );
 
   useEffect(() => {
-    if (filesState.currentFile) {
+    if (currentFileId) {
       setInputValue(content.url.inputUrl || "");
     }
-  }, [filesState, content.url.inputUrl]);
+  }, [currentFileId, content.url.inputUrl]);
 
   const handleChangeUrl = (event) => {
     setInputValue(event.target.value);
   };
 
   useEffect(() => {
-    if (!filesState.currentFile) return;
+    if (!currentFileId) return;
     if (inputValue === undefined) return;
 
     let newParseUrl = inputValue;
@@ -46,18 +48,12 @@ export default function WorkSpaceInputFormInputUrl() {
       return;
     }
 
-    dispatchFileManagerState({
-      type: FILEMANAGER_REDUCER_ACTIONS.updateContentWithoutSaving,
-      payload: {
-        nodeId: filesState.currentFile,
-        newContent: {
-          ...content,
-          url: {
-            ...content.url,
-            inputUrl: inputValue,
-            parseUrl: newParseUrl,
-          },
-        },
+    updateContentOfOpenFile(currentFileId, {
+      ...content,
+      url: {
+        ...content.url,
+        inputUrl: inputValue,
+        parseUrl: newParseUrl,
       },
     });
   }, [inputValue]);
@@ -68,6 +64,7 @@ export default function WorkSpaceInputFormInputUrl() {
       type="text"
       placeholder="URL"
       value={inputValue}
+      disabled={isRuning}
       className="workspace-input-form_url-input"
       style={{ border: isValidUrl ? "" : "1px solid red" }}
     />

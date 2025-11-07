@@ -2,8 +2,6 @@ import "./FileManagerFileElement.css";
 import FileManagerRenameForm from "../../FileManagerRenameForm/FileManagerRenameForm";
 import { useRef, useState } from "react";
 import FileManagerDraggableElement from "../FileManagerDraggableElement/FileManagerDraggableElement";
-import useFilesContext from "../../../../../Hooks/useFilesContext";
-import { FILES_REDUCER_ACTIONS } from "../../../../../providers/FilesProvider/reducer";
 import IsRuningIndicator from "../../../../Global/IsRuningIndicator/IsRuningIndicator";
 import { File } from "lucide-react";
 import { useProjectStore } from "../../../../../stores/ProjectStore";
@@ -19,10 +17,12 @@ export default function FileManagerFileElement({
   // const [filesState, dispatch] = useFilesContext();
   const currentFileId = useProjectStore((store) => store.currentFileId);
   const openFiles = useProjectStore((store) => store.openFiles);
+  const setCurrentFile = useProjectStore((store) => store.setCurrentFile);
 
   const renameState = useProjectStore((store) => store.renameId);
   const fileManagerState = useProjectStore((store) => store.vfs);
   const toggleIsOpen = useProjectStore((store) => store.toggleIsOpen);
+  const addOpenFile = useProjectStore((store) => store.addOpenFile);
 
   const absolutePath = fileManagerState.getAbsolutePath(node);
   const level = absolutePath.split("/").length;
@@ -61,23 +61,11 @@ export default function FileManagerFileElement({
         onClick={() => {
           if (currentFileId === node.id) return;
           if (openFiles[node.id]) {
-            // dispatch({
-            //   type: FILES_REDUCER_ACTIONS.changeCurrentTab,
-            //   payload: { id: node.id },
-            // });
+            setCurrentFile(node.id);
           } else {
             toggleIsOpen(node.id);
-
-            // dispatch({
-            //   type: FILES_REDUCER_ACTIONS.openFile,
-            //   payload: {
-            //     path: absolutePath,
-            //     content: node.content,
-            //     name: node.name,
-            //     currentTab: true,
-            //     id: node.id,
-            //   },
-            // });
+            setCurrentFile(node.id);
+            addOpenFile(node.id);
           }
         }}
       >

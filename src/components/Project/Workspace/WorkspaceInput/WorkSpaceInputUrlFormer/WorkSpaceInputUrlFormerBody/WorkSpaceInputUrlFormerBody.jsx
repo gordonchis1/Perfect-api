@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import useWorkSpaceContentContext from "../../../../../../Hooks/WorkSpace/useWorkSpaceContentContext";
 import "./WorkSpaceInputUrlFormerBody.css";
 import UrlFormerBodyFormatSelector from "./UrlFormerBodyFormatSelector/UrlFormerBodyFormatSelector";
 import UrlFormerBodyEditor from "./UrlFormerBodyEditor/UrlFormerBodyEditor";
 import useFilesContext from "../../../../../../Hooks/useFilesContext";
 import UrlFormerBodyNoBody from "./UrlFormerBodyNoBody/UrlFormerBodyNoBody";
+import { useProjectStore } from "../../../../../../stores/ProjectStore";
 
 const supportedBodyFormat = {
   "Plain Text": {
@@ -30,15 +30,18 @@ const supportedBodyFormat = {
 };
 
 export default function WorkSpaceInputUrlFormerBody() {
-  const [content] = useWorkSpaceContentContext();
+  const content = useProjectStore(
+    (store) => store.openFiles[store.currentFileId]?.content
+  );
   const [currentFormat, setCurrentFormat] = useState(
     content?.body?.bodyType || "No body"
   );
-  const [filesContext] = useFilesContext();
+
+  const currentFileId = useProjectStore((store) => store.currentFileId);
 
   useEffect(() => {
     setCurrentFormat(content?.body?.bodyType || "No body");
-  }, [filesContext.currentFile, content.body.bodyType]);
+  }, [currentFileId, content.body.bodyType]);
 
   return (
     <div className="workspace-input-url-former_body-container">

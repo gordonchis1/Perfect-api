@@ -8,21 +8,14 @@ import {
   registerMonacoHover,
 } from "../../../../../../utils/monaco/monacoHover";
 import { useUserConfigStore } from "../../../../../../stores/UserConfigStore";
-import useFilesContext from "../../../../../../Hooks/useFilesContext";
-import useFileManagerContext from "../../../../../../Hooks/FileManager/useFileMangerContext";
-import {
-  File,
-  VirtualFileSystem,
-} from "../../../../../../utils/ProjectFileObject";
 import { fileContentDefault } from "../../../../../../utils/constants/ProjectFileConstants";
-import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../../../providers/FileManager/reducer";
-import useProjectContext from "../../../../../../Hooks/FileManager/useProjectContext";
+import { useProjectStore } from "../../../../../../stores/ProjectStore";
 
 export default function WorkSpacePreviewJson() {
-  const { id } = useProjectContext();
-  const [filesContext] = useFilesContext();
-  const [filemanagerContext, filemanagerDispatch] = useFileManagerContext();
   const [workspacePreviewContext] = useWorkspacePreviewContext();
+  const addFile = useProjectStore((store) => store.addFile);
+  const currentFileId = useProjectStore((store) => store.currentFileId);
+
   const config = useUserConfigStore((state) => state.config);
   const editorRef = useRef(null);
   const monacoRef = useRef(null);
@@ -41,27 +34,17 @@ export default function WorkSpacePreviewJson() {
       const params = new URLSearchParams(url.search);
       const callUrl = params.get("url");
 
-      if (filemanagerContext instanceof VirtualFileSystem) {
-        const node = filemanagerContext.getNodeById(filesContext.currentFile);
-        const parent = filemanagerContext.getParentNode(node);
-        const path = filemanagerContext.getAbsolutePath(parent);
+      if (!callUrl) return;
 
-        filemanagerDispatch({
-          type: FILEMANAGER_REDUCER_ACTIONS.addFile,
-          payload: {
-            id,
-            path: path,
-            content: {
-              ...fileContentDefault,
-              url: {
-                ...fileContentDefault.url,
-                inputUrl: callUrl,
-                parseUrl: callUrl,
-              },
-            },
-          },
-        });
-      }
+      console.log("Adding new file with URL:", callUrl);
+      addFile(currentFileId, {
+        ...fileContentDefault,
+        url: {
+          ...fileContentDefault.url,
+          inputUrl: callUrl,
+          parseUrl: callUrl,
+        },
+      });
     };
 
     const container = containerRef.current;
@@ -81,21 +64,27 @@ export default function WorkSpacePreviewJson() {
       if (onDidDisposeDispRef.current) {
         try {
           onDidDisposeDispRef.current.dispose();
-        } catch {}
+        } catch {
+          // ignore
+        }
         onDidDisposeDispRef.current = null;
       }
 
       if (hoverRef.current) {
         try {
           hoverRef.current.dispose();
-        } catch {}
+        } catch {
+          // ignore
+        }
         hoverRef.current = null;
       }
 
       if (editorRef.current) {
         try {
           editorRef.current.dispose();
-        } catch {}
+        } catch {
+          // ignore
+        }
         editorRef.current = null;
       }
     };

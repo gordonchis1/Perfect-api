@@ -1,7 +1,3 @@
-import useFilesContext from "../../../../../../Hooks/useFilesContext";
-import useProjectContext from "../../../../../../Hooks/FileManager/useProjectContext";
-import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../../../providers/FileManager/reducer";
-import useFileManagerContext from "../../../../../../Hooks/FileManager/useFileMangerContext";
 import "./WorkSpaceInputFormUrlButtonRun.css";
 import { fetch } from "@tauri-apps/plugin-http";
 import { Play } from "lucide-react";
@@ -11,17 +7,18 @@ export default function WorkSpaceInputFormUrlButtonRun() {
   const content = useProjectStore(
     (store) => store.openFiles[store.currentFileId]?.content
   );
-  const [filesState] = useFilesContext();
-  const [, dispatchFileManagerState] = useFileManagerContext();
-  const { id } = useProjectContext();
+  const currnetFileId = useProjectStore((store) => store.currentFileId);
   const toggleIsRuning = useProjectStore((store) => store.toggleIsRuning);
   const fileManagerState = useProjectStore((store) => store.vfs);
+  const updateContentOfOpenFile = useProjectStore(
+    (store) => store.updateContentOfOpenFile
+  );
 
   const handleRun = async () => {
     if (!content.url.parseUrl) return;
     if (content.isRuning) return;
 
-    const node = fileManagerState.getNodeById(filesState.currentFile);
+    const node = fileManagerState.getNodeById(currnetFileId);
 
     toggleIsRuning(node);
 
@@ -30,6 +27,7 @@ export default function WorkSpaceInputFormUrlButtonRun() {
     let timeTaken;
     let response;
     const start = performance.now();
+
     try {
       const headersToSend = {};
 
@@ -61,8 +59,6 @@ export default function WorkSpaceInputFormUrlButtonRun() {
         });
       }
 
-      toggleIsRuning(node);
-
       const end = performance.now();
       timeTaken = Math.abs(start - end);
 
@@ -73,7 +69,6 @@ export default function WorkSpaceInputFormUrlButtonRun() {
         parsedResponse = await response.text();
       }
     } catch (error) {
-      console.log(error);
       timeTaken = Math.abs(start - performance.now());
       parsedResponse = error.message;
     }
@@ -85,6 +80,8 @@ export default function WorkSpaceInputFormUrlButtonRun() {
         }
       }
     }
+
+    toggleIsRuning(node);
 
     newResponse.push({
       time: timeTaken,
@@ -100,17 +97,15 @@ export default function WorkSpaceInputFormUrlButtonRun() {
       inputUrl: content.url.inputUrl,
     });
 
-    dispatchFileManagerState({
-      type: FILEMANAGER_REDUCER_ACTIONS.updateContent,
-      payload: {
-        newContent: {
-          ...content,
-          responses: newResponse,
-        },
-        nodeId: filesState.currentFile,
-        projectId: id,
+    updateContentOfOpenFile(
+      currnetFileId,
+      {
+        ...content,
+        responses: newResponse,
+        isRuning: false,
       },
-    });
+      true
+    );
   };
 
   return (

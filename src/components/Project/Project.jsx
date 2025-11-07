@@ -7,7 +7,6 @@ import ResizeContainer from "../Global/ResizeContainer/ResizeContainer";
 import useWidthObserver from "../../Hooks/useWidthObserver";
 import ProjectProviders from "./ProjectProviders";
 import WorkspaceContainer from "./Workspace/WorkspaceContainer";
-import WorkSpaceContentProvider from "../../providers/WorkSpaceContent/WorkSpaceContentProvider";
 import { useProjectStore } from "../../stores/ProjectStore";
 import { useParams } from "react-router";
 
@@ -23,8 +22,8 @@ export default function Project() {
       initProjectStore(id);
     }
 
-    return () => {
-      resetProjectStore();
+    return async () => {
+      await resetProjectStore();
     };
   }, [id]);
 
@@ -54,14 +53,12 @@ export default function Project() {
                   <FileManager />
                 </ResizeContainer.LeftContainer>
                 <ResizeContainer.RightContainer>
-                  <WorkSpaceContentProvider>
-                    <div className="workspace-wrapper">
-                      <div className="workspace-container">
-                        <TabsContainer />
-                        <WorkspaceContainer />
-                      </div>
+                  <div className="workspace-wrapper">
+                    <div className="workspace-container">
+                      <TabsContainer />
+                      <WorkspaceContainer />
                     </div>
-                  </WorkSpaceContentProvider>
+                  </div>
                 </ResizeContainer.RightContainer>
               </ResizeContainer>
             </div>

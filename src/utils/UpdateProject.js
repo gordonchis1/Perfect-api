@@ -70,14 +70,7 @@ export async function updateProjectContentAndState(newState, newContent, id) {
 
     updatedFile.state.currentFile = newState.currentFile;
 
-    if (newState.openFiles.length !== 0) {
-      updatedFile.state.openFiles = [];
-      newState.openFiles.forEach((file) => {
-        updatedFile.state.openFiles.push(file.id);
-      });
-    } else {
-      updatedFile.state.openFiles = [];
-    }
+    updatedFile.state.openFiles = newState.openFiles;
 
     await writeTextFile(path, JSON.stringify(updatedFile));
   } catch (error) {

@@ -1,27 +1,22 @@
 import { useEffect } from "react";
 import "./UrlFormerBodyNoBody.css";
-import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../../../../providers/FileManager/reducer";
-import useFilesContext from "../../../../../../../Hooks/useFilesContext";
-import useFileManagerContext from "../../../../../../../Hooks/FileManager/useFileMangerContext";
-import useWorkSpaceContentContext from "../../../../../../../Hooks/WorkSpace/useWorkSpaceContentContext";
+import { useProjectStore } from "../../../../../../../stores/ProjectStore";
 
 export default function UrlFormerBodyNoBody() {
-  const [filesContext] = useFilesContext();
-  const [, filemanagerDispatch] = useFileManagerContext();
-  const [content] = useWorkSpaceContentContext();
+  const currentFileId = useProjectStore((store) => store.currentFileId);
+  const content = useProjectStore(
+    (store) => store.openFiles[store.currentFileId]?.content
+  );
+  const updateContentOfOpenFile = useProjectStore(
+    (store) => store.updateContentOfOpenFile
+  );
 
   useEffect(() => {
-    filemanagerDispatch({
-      type: FILEMANAGER_REDUCER_ACTIONS.updateContentWithoutSaving,
-      payload: {
-        nodeId: filesContext.currentFile,
-        newContent: {
-          ...content,
-          body: {
-            ...content.body,
-            bodyContent: null,
-          },
-        },
+    updateContentOfOpenFile(currentFileId, {
+      ...content,
+      body: {
+        ...content.body,
+        bodyContent: null,
       },
     });
   }, []);

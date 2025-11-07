@@ -1,8 +1,5 @@
 import { useEffect, useState } from "react";
 import "./WorkSpaceInputUrlFormerQueryParams.css";
-import useFileManagerContext from "../../../../../../Hooks/FileManager/useFileMangerContext";
-import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../../../providers/FileManager/reducer";
-import useFilesContext from "../../../../../../Hooks/useFilesContext";
 import UrlFormerQueryParamsOption from "./UrlFormerQueryParamsOption/UrlFormerQueryParamsOption";
 import UrlFormerQueryParamsInput from "./UrlFormerQueryParamsInput/UrlFormerQueryParamsInput";
 import UrlFormerQueryParamsDeleteQueryButton from "./UrlFormerQueryParamsDeleteQueryButton/UrlFormerQueryParamsDeleteQueryButton";
@@ -21,14 +18,16 @@ export default function WorkSpaceInputUrlFormerQueryParams() {
     (store) => store.openFiles[store.currentFileId]?.content
   );
   const [querys, setQuerys] = useState(content.url.queryParams);
-  const [, dispatchFileManagerState] = useFileManagerContext();
-  const [filesState] = useFilesContext();
+  const currentFileId = useProjectStore((store) => store.currentFileId);
+  const updateContentOfOpenFile = useProjectStore(
+    (store) => store.updateContentOfOpenFile
+  );
 
   useEffect(() => {
-    if (filesState.currentFile) {
+    if (content.url.queryParams) {
       setQuerys(content.url.queryParams);
     }
-  }, [filesState, content.url]);
+  }, [content]);
 
   useEffect(() => {
     try {
@@ -47,19 +46,13 @@ export default function WorkSpaceInputUrlFormerQueryParams() {
       });
       url.search = updatedParams.toString();
 
-      dispatchFileManagerState({
-        type: FILEMANAGER_REDUCER_ACTIONS.updateContentWithoutSaving,
-        payload: {
-          nodeId: filesState.currentFile,
-          newContent: {
-            ...content,
-            url: {
-              ...content.url,
-              inputUrl: content.url.inputUrl,
-              parseUrl: url.href,
-              queryParams: querys,
-            },
-          },
+      updateContentOfOpenFile(currentFileId, {
+        ...content,
+        url: {
+          ...content.url,
+          inputUrl: content.url.inputUrl,
+          parseUrl: url.href,
+          queryParams: querys,
         },
       });
     } catch {

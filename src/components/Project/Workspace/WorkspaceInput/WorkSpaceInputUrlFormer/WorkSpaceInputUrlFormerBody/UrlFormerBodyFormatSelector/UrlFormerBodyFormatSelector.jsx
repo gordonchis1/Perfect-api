@@ -1,11 +1,8 @@
 import "./UrlFormerBodyFormatSelector.css";
 import { useState, useRef } from "react";
 import useClickAway from "../../../../../../../Hooks/useClickAway";
-import useFileManagerContext from "../../../../../../../Hooks/FileManager/useFileMangerContext";
-import useFilesContext from "../../../../../../../Hooks/useFilesContext";
-import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../../../../providers/FileManager/reducer";
-import useWorkSpaceContentContext from "../../../../../../../Hooks/WorkSpace/useWorkSpaceContentContext";
 import { ChevronDown } from "lucide-react";
+import { useProjectStore } from "../../../../../../../stores/ProjectStore";
 
 export default function UrlFormerBodyFormatSelector({
   currentFormat,
@@ -13,9 +10,14 @@ export default function UrlFormerBodyFormatSelector({
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const selectorContainerRef = useRef(null);
-  const [, filemanagerDispatch] = useFileManagerContext();
-  const [filesContext] = useFilesContext();
-  const [content] = useWorkSpaceContentContext();
+
+  const content = useProjectStore(
+    (store) => store.openFiles[store.currentFileId]?.content
+  );
+  const updateContentOfOpenFile = useProjectStore(
+    (store) => store.updateContentOfOpenFile
+  );
+  const currentFileId = useProjectStore((store) => store.currentFileId);
 
   useClickAway(selectorContainerRef, () => {
     setIsOpen(false);
@@ -44,19 +46,13 @@ export default function UrlFormerBodyFormatSelector({
       }
     }
 
-    filemanagerDispatch({
-      type: FILEMANAGER_REDUCER_ACTIONS.updateContentWithoutSaving,
-      payload: {
-        nodeId: filesContext.currentFile,
-        newContent: {
-          ...content,
-          body: {
-            ...content.body,
-            bodyType: format,
-          },
-          headers: updatedHeaders,
-        },
+    updateContentOfOpenFile(currentFileId, {
+      ...content,
+      body: {
+        ...content.body,
+        bodyType: format,
       },
+      headers: updatedHeaders,
     });
 
     setIsOpen(false);

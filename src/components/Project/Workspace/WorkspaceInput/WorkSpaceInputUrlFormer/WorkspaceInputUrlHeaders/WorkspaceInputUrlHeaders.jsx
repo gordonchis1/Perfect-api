@@ -1,21 +1,22 @@
 import { useEffect, useState } from "react";
 import "./WorkspaceInputUrlHeaders.css";
-import useFileManagerContext from "../../../../../../Hooks/FileManager/useFileMangerContext";
-import useWorkSpaceContentContext from "../../../../../../Hooks/WorkSpace/useWorkSpaceContentContext";
-import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../../../providers/FileManager/reducer";
-import useFilesContext from "../../../../../../Hooks/useFilesContext";
 import ActiveCheckbox from "../../../../../Global/ActiveCheckbox/ActiveCheckbox";
 import WorkspaceInputUrlHeadersOption from "./WorkspaceInputUrlHeadersOption/WorkspaceInputUrlHeadersOption";
 import WorkspaceInputUrlHeadersNonEditableHeaders from "./WorkspaceInputUrlHeadersNonEditableHeaders/WorkspaceInputUrlHeadersNonEditableHeaders";
 import { Plus, Trash2 } from "lucide-react";
+import { useProjectStore } from "../../../../../../stores/ProjectStore";
 
 const nonEditableHeaders = ["Host", "Accept"];
 
 export default function WorkspaceInputUrlHeaders() {
-  const [content] = useWorkSpaceContentContext();
+  const content = useProjectStore(
+    (store) => store.openFiles[store.currentFileId]?.content
+  );
   const [headers, setHeaders] = useState([]);
-  const [, filemanagerDispatch] = useFileManagerContext();
-  const [filesContext] = useFilesContext();
+  const currentFileId = useProjectStore((store) => store.currentFileId);
+  const updateContentOfOpenFile = useProjectStore(
+    (store) => store.updateContentOfOpenFile
+  );
 
   const onHeadersChange = (index, type, value) => {
     if (nonEditableHeaders.includes(headers[index].key)) {
@@ -23,16 +24,12 @@ export default function WorkspaceInputUrlHeaders() {
     }
     const updatedHeaders = [...headers];
     updatedHeaders[index][type] = value;
-    filemanagerDispatch({
-      type: FILEMANAGER_REDUCER_ACTIONS.updateContentWithoutSaving,
-      payload: {
-        nodeId: filesContext.currentFile,
-        newContent: {
-          ...content,
-          headers: updatedHeaders,
-        },
-      },
+
+    updateContentOfOpenFile(currentFileId, {
+      ...content,
+      headers: updatedHeaders,
     });
+
     setHeaders(updatedHeaders);
   };
 
@@ -50,36 +47,26 @@ export default function WorkspaceInputUrlHeaders() {
     } catch {
       setHeaders(content.headers);
     }
-  }, [filesContext.currentFile, content]);
+  }, [content]);
 
   const handleChangeIsActive = (index) => {
     const updatedHeaders = [...headers];
     updatedHeaders[index].isActive = !updatedHeaders[index].isActive;
-    filemanagerDispatch({
-      type: FILEMANAGER_REDUCER_ACTIONS.updateContentWithoutSaving,
-      payload: {
-        nodeId: filesContext.currentFile,
-        newContent: {
-          ...content,
-          headers: updatedHeaders,
-        },
-      },
+
+    updateContentOfOpenFile(currentFileId, {
+      ...content,
+      headers: updatedHeaders,
     });
+
     setHeaders(updatedHeaders);
   };
 
   const handleAddHeader = () => {
     const updatedHeaders = [...headers, { key: "", value: "", isActive: true }];
 
-    filemanagerDispatch({
-      type: FILEMANAGER_REDUCER_ACTIONS.updateContentWithoutSaving,
-      payload: {
-        nodeId: filesContext.currentFile,
-        newContent: {
-          ...content,
-          headers: updatedHeaders,
-        },
-      },
+    updateContentOfOpenFile(currentFileId, {
+      ...content,
+      headers: updatedHeaders,
     });
 
     setHeaders(updatedHeaders);
@@ -89,15 +76,9 @@ export default function WorkspaceInputUrlHeaders() {
     const updatedHeaders = [...headers];
     updatedHeaders.splice(index, 1);
 
-    filemanagerDispatch({
-      type: FILEMANAGER_REDUCER_ACTIONS.updateContentWithoutSaving,
-      payload: {
-        nodeId: filesContext.currentFile,
-        newContent: {
-          ...content,
-          headers: updatedHeaders,
-        },
-      },
+    updateContentOfOpenFile(currentFileId, {
+      ...content,
+      headers: updatedHeaders,
     });
 
     setHeaders(updatedHeaders);
@@ -111,15 +92,9 @@ export default function WorkspaceInputUrlHeaders() {
       }
     });
 
-    filemanagerDispatch({
-      type: FILEMANAGER_REDUCER_ACTIONS.updateContentWithoutSaving,
-      payload: {
-        nodeId: filesContext.currentFile,
-        newContent: {
-          ...content,
-          headers: updatedHeaders,
-        },
-      },
+    updateContentOfOpenFile(currentFileId, {
+      ...content,
+      headers: updatedHeaders,
     });
 
     setHeaders(updatedHeaders);

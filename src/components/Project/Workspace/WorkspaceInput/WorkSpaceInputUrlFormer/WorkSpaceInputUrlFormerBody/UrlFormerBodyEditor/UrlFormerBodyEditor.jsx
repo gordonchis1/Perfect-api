@@ -1,38 +1,34 @@
 import { Editor } from "@monaco-editor/react";
 import "./UrlFormerBodyEditor.css";
-import useWorkSpaceContentContext from "../../../../../../../Hooks/WorkSpace/useWorkSpaceContentContext";
 import { useEffect, useState } from "react";
-import useFilesContext from "../../../../../../../Hooks/useFilesContext";
-import useFileManagerContext from "../../../../../../../Hooks/FileManager/useFileMangerContext";
-import { FILEMANAGER_REDUCER_ACTIONS } from "../../../../../../../providers/FileManager/reducer";
 import LoaderSpiner from "../../../../../../Global/LoaderSpiner/LoaderSpiner";
 import { useUserConfigStore } from "../../../../../../../stores/UserConfigStore";
+import { useProjectStore } from "../../../../../../../stores/ProjectStore";
 
 export default function UrlFormerBodyEditor({ language }) {
   const config = useUserConfigStore((state) => state.config);
-  const [content] = useWorkSpaceContentContext();
+  const content = useProjectStore(
+    (store) => store.openFiles[store.currentFileId]?.content
+  );
+
   const [updatedContent, setUpdatedContent] = useState(
     content?.body?.bodyContent || ""
   );
-  const [filesContext] = useFilesContext();
-  const [, filemanagerDispatch] = useFileManagerContext();
+  const currentFileId = useProjectStore((store) => store.currentFileId);
+  const updateContentOfOpenFile = useProjectStore(
+    (store) => store.updateContentOfOpenFile
+  );
 
   useEffect(() => {
     setUpdatedContent(content?.body?.bodyContent || "");
   }, [content]);
 
   const handleChangeEditor = (value) => {
-    filemanagerDispatch({
-      type: FILEMANAGER_REDUCER_ACTIONS.updateContentWithoutSaving,
-      payload: {
-        nodeId: filesContext.currentFile,
-        newContent: {
-          ...content,
-          body: {
-            ...content.body,
-            bodyContent: value,
-          },
-        },
+    updateContentOfOpenFile(currentFileId, {
+      ...content,
+      body: {
+        ...content.body,
+        bodyContent: value,
       },
     });
   };

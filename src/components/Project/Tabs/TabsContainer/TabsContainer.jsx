@@ -4,7 +4,6 @@ import OpenTab from "./OpenTab/OpenTab";
 import "./TabsContainer.css";
 
 export default function TabsContainer() {
-  // const [files] = useFilesContext();
   const openFiles = useProjectStore((state) => state.openFiles);
   useSaveStateOnClose();
 
