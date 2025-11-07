@@ -36,7 +36,6 @@ export default function WorkSpacePreviewJson() {
 
       if (!callUrl) return;
 
-      console.log("Adding new file with URL:", callUrl);
       addFile(currentFileId, {
         ...fileContentDefault,
         url: {

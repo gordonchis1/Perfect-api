@@ -14,7 +14,6 @@ export default function FileManagerFileElement({
 }) {
   const FilemanagerElementContainerRef = useRef(null);
   const [draggin, setDraggin] = useState(false);
-  // const [filesState, dispatch] = useFilesContext();
   const currentFileId = useProjectStore((store) => store.currentFileId);
   const openFiles = useProjectStore((store) => store.openFiles);
   const setCurrentFile = useProjectStore((store) => store.setCurrentFile);

@@ -5,7 +5,6 @@ import { useEffect, useRef, useState } from "react";
 import FileManager from "./FileManager/FileManager";
 import ResizeContainer from "../Global/ResizeContainer/ResizeContainer";
 import useWidthObserver from "../../Hooks/useWidthObserver";
-import ProjectProviders from "./ProjectProviders";
 import WorkspaceContainer from "./Workspace/WorkspaceContainer";
 import { useProjectStore } from "../../stores/ProjectStore";
 import { useParams } from "react-router";
@@ -38,32 +37,30 @@ export default function Project() {
   return (
     <>
       {isMounted && (
-        <ProjectProviders>
-          <div className="project-wrapper">
-            <ProjectHeader />
-            <div className="project-container" ref={container}>
-              <ResizeContainer
-                resizeColor={"var(--border)"}
-                defaultWidth={14}
-                maxWidthOfLeftContainer={14}
-                minWidthOfLeftContainer={200}
-                containerWidth={width}
-              >
-                <ResizeContainer.LeftContainer>
-                  <FileManager />
-                </ResizeContainer.LeftContainer>
-                <ResizeContainer.RightContainer>
-                  <div className="workspace-wrapper">
-                    <div className="workspace-container">
-                      <TabsContainer />
-                      <WorkspaceContainer />
-                    </div>
+        <div className="project-wrapper">
+          <ProjectHeader />
+          <div className="project-container" ref={container}>
+            <ResizeContainer
+              resizeColor={"var(--border)"}
+              defaultWidth={14}
+              maxWidthOfLeftContainer={14}
+              minWidthOfLeftContainer={200}
+              containerWidth={width}
+            >
+              <ResizeContainer.LeftContainer>
+                <FileManager />
+              </ResizeContainer.LeftContainer>
+              <ResizeContainer.RightContainer>
+                <div className="workspace-wrapper">
+                  <div className="workspace-container">
+                    <TabsContainer />
+                    <WorkspaceContainer />
                   </div>
-                </ResizeContainer.RightContainer>
-              </ResizeContainer>
-            </div>
+                </div>
+              </ResizeContainer.RightContainer>
+            </ResizeContainer>
           </div>
-        </ProjectProviders>
+        </div>
       )}
     </>
   );

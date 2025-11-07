@@ -81,6 +81,12 @@ export const useProjectStore = create((set, get) => ({
 
   remove: async (node) => {
     const vfs = get().vfs;
+    const openFiles = { ...get().openFiles };
+
+    if (openFiles[node.id]) {
+      get().closeOpenFile(node.id);
+    }
+
     if (node instanceof FSNode) {
       vfs.remove(node);
       await get().save();
@@ -88,26 +94,37 @@ export const useProjectStore = create((set, get) => ({
   },
 
   addFile: async (id, content = null) => {
-    console.log(id, content);
     const vfs = get().vfs;
 
     if (vfs instanceof VirtualFileSystem) {
+      const newNode = new File("New file", content || fileContentDefault);
       const node = vfs.getNodeById(id);
+
       if (node.type === "dir") {
-        node.addChild(new File("New file", content || fileContentDefault));
+        node.addChild(newNode);
         vfs.onChange();
         await get().save();
       } else {
         const parent = vfs.getParentNode(node);
-        parent.addChild(new File("New file", content || fileContentDefault));
+        parent.addChild(newNode);
         vfs.onChange();
         await get().save();
       }
+
+      get().setCurrentFile(newNode.id);
+      get().addOpenFile(newNode.id);
     }
   },
 
   rename: async (id, newName) => {
     const vfs = get().vfs;
+    const openFiles = { ...get().openFiles };
+
+    if (openFiles[id]) {
+      openFiles[id].name = newName;
+      set({ openFiles });
+    }
+
     if (vfs instanceof VirtualFileSystem) {
       const node = vfs.getNodeById(id);
       node.rename(newName);

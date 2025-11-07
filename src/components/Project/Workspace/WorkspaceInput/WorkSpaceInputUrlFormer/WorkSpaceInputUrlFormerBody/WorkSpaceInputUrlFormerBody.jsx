@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import "./WorkSpaceInputUrlFormerBody.css";
 import UrlFormerBodyFormatSelector from "./UrlFormerBodyFormatSelector/UrlFormerBodyFormatSelector";
 import UrlFormerBodyEditor from "./UrlFormerBodyEditor/UrlFormerBodyEditor";
-import useFilesContext from "../../../../../../Hooks/useFilesContext";
 import UrlFormerBodyNoBody from "./UrlFormerBodyNoBody/UrlFormerBodyNoBody";
 import { useProjectStore } from "../../../../../../stores/ProjectStore";
 
