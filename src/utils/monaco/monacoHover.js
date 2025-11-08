@@ -1,30 +1,4 @@
-function esImagenURL(url) {
-  return /\.(png|jpe?g|gif|webp|svg|bmp|ico)$/i.test(url);
-}
-
-function reemplazarTamañoEnURL(url, width, height) {
-  if (typeof url !== "string") return url;
-
-  const patrones = [
-    { regex: /\{w\}x\{h\}/gi, reemplazo: `${width}x${height}` },
-    {
-      regex: /=[wh](\d+)(-[wh](\d+))?/gi,
-      reemplazo: `=w${width}-h${height}`,
-    },
-    { regex: /=s\d+/gi, reemplazo: `=s${Math.max(width, height)}` },
-    { regex: /__w-\d+__/gi, reemplazo: `__w-${width}__` },
-    { regex: /\{width\}x\{height\}/gi, reemplazo: `${width}x${height}` },
-    { regex: /\{w\}/gi, reemplazo: `${width}` },
-    { regex: /\{h\}/gi, reemplazo: `${height}` },
-  ];
-
-  let nuevaURL = url;
-  for (const { regex, reemplazo } of patrones) {
-    nuevaURL = nuevaURL.replace(regex, reemplazo);
-  }
-
-  return nuevaURL;
-}
+import { isImageUrl, replaceImageSize } from "../findLinks";
 
 export const registerMonacoHover = (
   editor,
@@ -74,12 +48,12 @@ export const registerMonacoHover = (
       try {
         new URL(text);
 
-        if (esImagenURL(text)) {
+        if (isImageUrl(text)) {
           return {
             contents: [
               {
                 supportHtml: true,
-                value: `<img src="${reemplazarTamañoEnURL(
+                value: `<img src="${replaceImageSize(
                   text,
                   200,
                   200

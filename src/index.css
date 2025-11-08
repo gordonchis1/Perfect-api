@@ -36,7 +36,7 @@
 }
 
 .custom-scroll-bar::-webkit-scrollbar-thumb {
-  background: var(--border);
+  background: var(--primary);
   border-radius: 50px;
 }
 

@@ -1,0 +1,50 @@
+.gallery-container_button {
+  display: flex;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  outline: none;
+  display: block;
+
+  cursor: pointer;
+  border-radius: 4px;
+  position: relative;
+}
+
+.gallery-container_button:hover {
+  border: 1px solid var(--primary);
+  z-index: 100;
+}
+
+.gallery-container_img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  display: block;
+  object-fit: cover;
+}
+
+.gallery-container_img:hover {
+  opacity: 0.7;
+}
+
+.gallery-button_hover-container {
+  position: absolute;
+  background: var(--secondary-background);
+  padding: 20px;
+  z-index: 100;
+  color: white;
+  overflow: hidden;
+  text-wrap: nowrap;
+  border-radius: 5px;
+  box-shadow: 0 0 0 0.3px var(--primary);
+  font-family: var(--regular-font);
+  max-width: 110%;
+  margin-top: 5px;
+}
+
+.gallery-button_hover-container p {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 100%;
+}
