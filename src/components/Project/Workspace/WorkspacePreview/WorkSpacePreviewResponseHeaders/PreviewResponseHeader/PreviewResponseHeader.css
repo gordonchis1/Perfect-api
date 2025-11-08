@@ -1,0 +1,19 @@
+.preview-response_header-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
+  font-family: var(--regular-font);
+  padding: 15px 0;
+  box-shadow: 0 0.3px 0 0 var(--primary);
+  font-size: 16px;
+}
+
+.preview-response_header-key {
+  font-family: var(--bold-font);
+  padding: 0 10px;
+}
+
+.preview-response_header-value {
+  overflow: hidden;
+  display: flex;
+}
