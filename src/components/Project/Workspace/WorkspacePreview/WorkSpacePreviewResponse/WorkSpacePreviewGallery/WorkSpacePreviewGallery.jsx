@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
 import useWorkspacePreviewContext from "../../../../../../Hooks/useWorkspacePreviewContext";
-import { findLinks } from "../../../../../../utils/findLinks";
-import "./WorkSpacePreviewGallery.css";
 import {
+  findLinks,
   isImageUrl,
-  replaceImageSize,
+  isVideoUrl,
 } from "../../../../../../utils/findLinks";
-import PreviewGalleryImage from "./PreviewGalleryImage/PreviewGalleryImage";
+import "./WorkSpacePreviewGallery.css";
+import { replaceImageSize } from "../../../../../../utils/findLinks";
+import PreviewGalleryMedia from "./PreviewGalleryMedia/PreviewGalleryMedia";
 
 export default function WorkSpacePreviewGallery() {
   const [workspacePreviewContext] = useWorkspacePreviewContext();
-  const [images, setImages] = useState(undefined);
+  const [media, setMedia] = useState(undefined);
 
   useEffect(() => {
     const response =
@@ -20,22 +21,22 @@ export default function WorkSpacePreviewGallery() {
 
     const links = findLinks(response);
 
-    const imgs = [];
+    const mediaArr = [];
 
     links.forEach((link) => {
       if (isImageUrl(link)) {
-        imgs.push(replaceImageSize(link, 200, 200));
-      }
+        mediaArr.push({ url: replaceImageSize(link, 200, 200), type: "img" });
+      } else if (isVideoUrl(link)) mediaArr.push({ url: link, type: "vid" });
     });
 
-    setImages(imgs);
-  }, [workspacePreviewContext]);
+    setMedia(mediaArr);
+  }, [workspacePreviewContext.currentResponseIdx, workspacePreviewContext]);
 
   return (
     <div className="workspace-preview_gallery-container custom-scroll-bar">
-      {images !== undefined &&
-        images.map((img) => {
-          return <PreviewGalleryImage img={img} key={img} />;
+      {media !== undefined &&
+        media.map((mediaElement) => {
+          return <PreviewGalleryMedia media={mediaElement} key={media.url} />;
         })}
     </div>
   );

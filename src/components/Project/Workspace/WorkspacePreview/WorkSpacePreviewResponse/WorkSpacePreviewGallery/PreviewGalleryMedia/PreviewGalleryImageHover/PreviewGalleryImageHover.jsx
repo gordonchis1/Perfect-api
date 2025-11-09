@@ -6,6 +6,7 @@ export default function PreviewGalleryImageHover({ img, size }) {
       <p>URL: {img}</p>
       <p>Width: {size.width}px</p>
       <p>Height: {size.height}px</p>
+      {size.duration && <p>Duration: {size.duration}</p>}
     </div>
   );
 }

@@ -6,7 +6,7 @@ export default function WorkSpacePreviewResponseHeaders() {
   const [content] = useWorkspacePreviewContext();
 
   return (
-    <div className="worksapce-preview_response-headers-container">
+    <div className="worksapce-preview_response-headers-container custom-scroll-bar">
       {Object.entries(
         content.responses[content.currentResponseIdx].headers
       ).map(([key, value], index) => {

@@ -57,7 +57,7 @@ export const registerMonacoHover = (
                   text,
                   200,
                   200
-                )}" style="max-width: 200px; max-height:200px;"></img>`,
+                )}" style="max-width: 200px; max-height: 200px; width: auto; height: auto; display: block;"></img>`,
               },
             ],
           };

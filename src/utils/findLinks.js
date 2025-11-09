@@ -1,5 +1,10 @@
 export function isImageUrl(url) {
-  return /\.(png|jpe?g|gif|webp|svg|bmp|ico)$/i.test(url);
+  return /\.(png|jpe?g|gif|webp|svg|bmp|ico)(\?.*)?$/i.test(url);
+}
+
+export function isVideoUrl(url) {
+  const regex = /\.(mp4|webm|ogg|mov|avi|mkv|flv|wmv)(\?.*|#.*)?$/i;
+  return regex.test(url);
 }
 
 export function replaceImageSize(url, width, height) {

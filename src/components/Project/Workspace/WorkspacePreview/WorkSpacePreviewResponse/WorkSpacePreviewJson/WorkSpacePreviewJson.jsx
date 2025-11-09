@@ -2,7 +2,7 @@ import "./WorkSpacePreviewJson.css";
 import useWorkspacePreviewContext from "../../../../../../Hooks/useWorkspacePreviewContext";
 import { Editor } from "@monaco-editor/react";
 import LoaderSpiner from "../../../../../Global/LoaderSpiner/LoaderSpiner";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   addMonacoThemes,
   registerMonacoHover,
@@ -12,6 +12,12 @@ import { fileContentDefault } from "../../../../../../utils/constants/ProjectFil
 import { useProjectStore } from "../../../../../../stores/ProjectStore";
 
 export default function WorkSpacePreviewJson() {
+  const [line, setLine] = useState({
+    startLineNumber: 1,
+    startColumn: undefined,
+    endLineNumber: undefined,
+    endColumn: undefined,
+  });
   const [workspacePreviewContext] = useWorkspacePreviewContext();
   const addFile = useProjectStore((store) => store.addFile);
   const currentFileId = useProjectStore((store) => store.currentFileId);
@@ -98,6 +104,32 @@ export default function WorkSpacePreviewJson() {
       onDidDisposeDispRef,
       hoverRef
     );
+
+    // const model = editor.getModel();
+
+    // const response = model.findMatches(
+    //   "https://rickandmortyapi.com/api/character/avatar/41.jpeg",
+    //   false,
+    //   false,
+    //   false,
+    //   null,
+    //   false
+    // )[0].range;
+    // console.log(response);
+
+    // setLine({ ...response });
+
+    // const decoration = editor.createDecorationsCollection([
+    //   {
+    //     options: { inlineClassName: "editor-sub" },
+    //     range: new monaco.Range(
+    //       response.startLineNumber,
+    //       response.startColumn,
+    //       response.endLineNumber,
+    //       response.endColumn
+    //     ),
+    //   },
+    // ]);
   };
 
   const handleBeforeMount = (monaco) => {
@@ -122,6 +154,7 @@ export default function WorkSpacePreviewJson() {
           beforeMount={(monaco) => {
             handleBeforeMount(monaco);
           }}
+          line={line.startLineNumber}
           theme={config.preferences.appearance.editorTheme || "vs-dark"}
           options={{
             definitionLinkOpensInPeek: true,
@@ -133,6 +166,9 @@ export default function WorkSpacePreviewJson() {
             readOnly: true,
             fontSize: 16,
             minimap: { enabled: false },
+            colorDecoratorsActivatedOn: "clickAndHover",
+            colorDecorators: true,
+            defaultColorDecorators: true,
           }}
         />
       )}

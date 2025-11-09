@@ -1,0 +1,21 @@
+.gallery-button_hover-container {
+  position: absolute;
+  background: var(--secondary-background);
+  padding: 20px;
+  z-index: 100;
+  color: var(--primary-text-color);
+  font-size: 16px;
+  overflow: hidden;
+  text-wrap: nowrap;
+  border-radius: 5px;
+  box-shadow: 0 0 0 0.5px var(--primary);
+  font-family: var(--regular-font);
+  max-width: 110%;
+  margin-top: 5px;
+}
+
+.gallery-button_hover-container p {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 100%;
+}

@@ -1,0 +1,17 @@
+.gallery-container_button {
+  display: flex;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  outline: none;
+  display: block;
+
+  cursor: pointer;
+  border-radius: 4px;
+  position: relative;
+}
+
+.gallery_video {
+  max-width: 100%;
+  max-height: 100%;
+}
