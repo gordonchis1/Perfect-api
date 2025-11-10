@@ -51,18 +51,12 @@ export default function WorkSpaceInputFormUrlButtonRun() {
           method: content.type,
           headers: headersToSend,
         });
-
-        for (const [key, value] of response.headers) {
-          console.log(`${key}: ${value}`);
-        }
       } else {
         response = await fetch(content.url.parseUrl, {
           method: content.type,
           headers: headersToSend,
           body: content?.body?.bodyContent || "",
         });
-
-        console.log(response);
       }
 
       const end = performance.now();

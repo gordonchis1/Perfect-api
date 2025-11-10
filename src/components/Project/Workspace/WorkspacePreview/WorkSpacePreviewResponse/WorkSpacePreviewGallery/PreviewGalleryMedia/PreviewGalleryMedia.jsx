@@ -1,10 +1,10 @@
-import { useState, useRef, useEffect } from "react";
-import { X } from "lucide-react";
+import { useState, useRef } from "react";
 import PreviewGalleryImage from "../PreviewGalleryImage/PreviewGalleryImage";
 import PreviewGalleryVideo from "../PreviewGalleryVideo/PreviewGalleryVideo";
 import "./PreviewGalleryMedia.css";
 import PreviewGalleryImageHover from "./PreviewGalleryImageHover/PreviewGalleryImageHover";
 import { formatDuration } from "../../../../../../../utils/formatTime";
+import PreviewGalleryView from "./PreviewGalleryView/PreviewGalleryView";
 
 export default function PreviewGalleryMedia({ media }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -40,25 +40,7 @@ export default function PreviewGalleryMedia({ media }) {
 
   return (
     <>
-      {isOpen && (
-        <div className="gallery-img-view_wrapper">
-          <div className="img-view_container">
-            <header className="img-view_header">
-              <div className="img-view_header-url">{media.url}</div>
-              <button
-                onClick={() => setIsOpen(false)}
-                className="img-view_close-button"
-              >
-                <X size={40} />
-              </button>
-            </header>
-            <div className="img-view_image-container">
-              <img src={media.url} />
-            </div>
-            <div className="img-view_options-container"></div>
-          </div>
-        </div>
-      )}
+      {isOpen && <PreviewGalleryView setIsOpen={setIsOpen} media={media} />}
       <button
         onClick={() => setIsOpen(true)}
         className="gallery-container_button"
