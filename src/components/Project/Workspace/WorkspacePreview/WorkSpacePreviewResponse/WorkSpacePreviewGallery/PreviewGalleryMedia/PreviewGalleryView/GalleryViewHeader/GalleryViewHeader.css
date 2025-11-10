@@ -1,0 +1,25 @@
+.img-view_header {
+  max-height: 40px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-grow: 0;
+}
+
+.img-view_header-url {
+  background: var(--secondary-background);
+  color: var(--primary-text-color);
+  padding: 10px;
+  box-shadow: 0 0 0 0.3px var(--primary);
+  border-radius: 4px;
+  font-family: var(--regular-font);
+}
+
+.img-view_header-count {
+  padding: 10px;
+  background: var(--secondary-background);
+  box-shadow: 0 0 0 0.3px var(--primary);
+  border-radius: 4px;
+  font-family: var(--regular-font);
+  color: var(--primary-text-color);
+}

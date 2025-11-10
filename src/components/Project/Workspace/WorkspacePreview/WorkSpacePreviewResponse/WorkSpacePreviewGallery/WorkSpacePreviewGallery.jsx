@@ -35,8 +35,15 @@ export default function WorkSpacePreviewGallery() {
   return (
     <div className="workspace-preview_gallery-container custom-scroll-bar">
       {media !== undefined &&
-        media.map((mediaElement) => {
-          return <PreviewGalleryMedia media={mediaElement} key={media.url} />;
+        media.map((mediaElement, index) => {
+          return (
+            <PreviewGalleryMedia
+              media={mediaElement}
+              key={media.url}
+              mediaArr={media}
+              currentIdx={index}
+            />
+          );
         })}
     </div>
   );

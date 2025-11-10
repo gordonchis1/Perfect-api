@@ -6,7 +6,7 @@ import PreviewGalleryImageHover from "./PreviewGalleryImageHover/PreviewGalleryI
 import { formatDuration } from "../../../../../../../utils/formatTime";
 import PreviewGalleryView from "./PreviewGalleryView/PreviewGalleryView";
 
-export default function PreviewGalleryMedia({ media }) {
+export default function PreviewGalleryMedia({ media, currentIdx, mediaArr }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isHover, setIsHover] = useState(false);
   const [size, setSize] = useState({
@@ -40,7 +40,14 @@ export default function PreviewGalleryMedia({ media }) {
 
   return (
     <>
-      {isOpen && <PreviewGalleryView setIsOpen={setIsOpen} media={media} />}
+      {isOpen && (
+        <PreviewGalleryView
+          setIsOpen={setIsOpen}
+          media={media}
+          currentIdx={currentIdx}
+          mediaArr={mediaArr}
+        />
+      )}
       <button
         onClick={() => setIsOpen(true)}
         className="gallery-container_button"

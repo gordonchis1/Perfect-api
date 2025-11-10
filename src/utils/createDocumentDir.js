@@ -1,6 +1,5 @@
 import { appDataDir, documentDir, join } from "@tauri-apps/api/path";
 import { exists, mkdir, writeTextFile } from "@tauri-apps/plugin-fs";
-import { getConfig } from "./userConfiguration/getConfig";
 import { useUserConfigStore } from "../stores/UserConfigStore";
 
 async function createDocumentDir() {
