@@ -5,6 +5,7 @@ import "./PreviewGalleryMedia.css";
 import PreviewGalleryImageHover from "./PreviewGalleryImageHover/PreviewGalleryImageHover";
 import { formatDuration } from "../../../../../../../utils/formatTime";
 import PreviewGalleryView from "./PreviewGalleryView/PreviewGalleryView";
+import { replaceImageSize } from "../../../../../../../utils/findLinks";
 
 export default function PreviewGalleryMedia({ media, currentIdx, mediaArr }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -56,7 +57,7 @@ export default function PreviewGalleryMedia({ media, currentIdx, mediaArr }) {
       >
         {media.type === "img" ? (
           <PreviewGalleryImage
-            url={media.url}
+            url={replaceImageSize(media.url, 300, 300)}
             key={media.url}
             imgRef={imgRef}
           />

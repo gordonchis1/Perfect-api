@@ -1,0 +1,32 @@
+.img-view_options-wrapper {
+  width: 100%;
+  min-height: 50px;
+  flex-grow: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.img-view_options-container {
+  box-shadow: 0 0 0 0.3px var(--primary);
+  background: var(--secondary-background);
+  border-radius: 4px;
+  height: 100%;
+  width: fit-content;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 0 20px;
+  gap: 20px;
+}
+
+.gallery-view_info-wrapper {
+  background: transparent;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+}

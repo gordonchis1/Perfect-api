@@ -25,7 +25,7 @@ export default function WorkSpacePreviewGallery() {
 
     links.forEach((link) => {
       if (isImageUrl(link)) {
-        mediaArr.push({ url: replaceImageSize(link, 200, 200), type: "img" });
+        mediaArr.push({ url: link, type: "img" });
       } else if (isVideoUrl(link)) mediaArr.push({ url: link, type: "vid" });
     });
 

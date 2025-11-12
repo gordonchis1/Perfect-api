@@ -37,15 +37,8 @@
   max-height: 100%;
   flex-grow: 1;
   overflow: hidden;
-}
-
-.img-view_options-container {
-  background: var(--secondary-background);
-  width: 100%;
-  min-height: 50px;
-  flex-grow: 0;
-  box-shadow: 0 0 0 0.3px var(--primary);
-  border-radius: 4px;
+  justify-content: space-between;
+  position: relative;
 }
 
 .img-view_img {

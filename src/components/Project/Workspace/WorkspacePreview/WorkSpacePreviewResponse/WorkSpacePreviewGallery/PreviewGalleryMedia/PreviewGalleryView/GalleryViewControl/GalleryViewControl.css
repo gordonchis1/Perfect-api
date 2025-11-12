@@ -1,0 +1,11 @@
+.gallery-view_control-btn {
+  background: transparent;
+  position: absolute;
+  color: var(--primary-text-color);
+  cursor: pointer;
+  border: none;
+}
+
+.gallery-view_control-btn-next {
+  right: 0;
+}

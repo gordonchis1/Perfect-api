@@ -1,9 +1,12 @@
 import "./PreviewGalleryView.css";
 import { useState } from "react";
 import GalleryViewHeader from "./GalleryViewHeader/GalleryViewHeader";
+import { replaceImageSize } from "../../../../../../../../utils/findLinks";
+import GalleryViewOptions from "./GalleryViewOptions/GalleryViewOptions";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import GalleryViewControl from "./GalleryViewControl/GalleryViewControl";
 
 export default function PreviewGalleryView({
-  media,
   setIsOpen,
   currentIdx,
   mediaArr,
@@ -19,16 +22,21 @@ export default function PreviewGalleryView({
           setIsOpen={setIsOpen}
         />
         <div className="img-view_image-container">
-          <button
+          <GalleryViewControl
             onClick={() => {
               if (idx - 1 < 0) return;
               setIdx(idx - 1);
             }}
-          >
-            prev
-          </button>
+            icon={<ChevronLeft size={50} />}
+            type={"prev"}
+            idx={idx}
+            mediaArr={mediaArr}
+          />
           {mediaArr[idx].type == "img" ? (
-            <img src={mediaArr[idx].url} className="img-view_img" />
+            <img
+              src={replaceImageSize(mediaArr[idx].url, 800, 800)}
+              className="img-view_img"
+            />
           ) : (
             <video
               controls={true}
@@ -38,16 +46,18 @@ export default function PreviewGalleryView({
               className="img-view_video"
             />
           )}
-          <button
+          <GalleryViewControl
+            icon={<ChevronRight size={50} />}
             onClick={() => {
               if (idx + 1 > mediaArr.length - 1) return;
               setIdx(idx + 1);
             }}
-          >
-            next
-          </button>
+            type={"next"}
+            mediaArr={mediaArr}
+            idx={idx}
+          />
         </div>
-        <div className="img-view_options-container"></div>
+        <GalleryViewOptions url={mediaArr[idx].url} mediaArr={mediaArr} />
       </div>
     </div>
   );

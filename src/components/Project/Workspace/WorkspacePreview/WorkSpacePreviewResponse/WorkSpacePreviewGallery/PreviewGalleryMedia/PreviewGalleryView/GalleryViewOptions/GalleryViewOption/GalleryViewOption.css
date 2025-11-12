@@ -1,0 +1,12 @@
+.view-options_option {
+  background: transparent;
+  border: none;
+  color: var(--primary-text-color);
+  padding: 5px;
+
+  cursor: pointer;
+}
+
+.view-options_option:hover {
+  opacity: 0.5;
+}
