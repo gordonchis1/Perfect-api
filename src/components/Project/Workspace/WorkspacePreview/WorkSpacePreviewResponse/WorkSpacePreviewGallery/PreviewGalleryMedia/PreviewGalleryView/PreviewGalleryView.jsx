@@ -1,10 +1,11 @@
 import "./PreviewGalleryView.css";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import GalleryViewHeader from "./GalleryViewHeader/GalleryViewHeader";
 import { replaceImageSize } from "../../../../../../../../utils/findLinks";
 import GalleryViewOptions from "./GalleryViewOptions/GalleryViewOptions";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import GalleryViewControl from "./GalleryViewControl/GalleryViewControl";
+import useGetMediaInfo from "../../../../../../../../Hooks/useGetMediaInfo";
 
 export default function PreviewGalleryView({
   setIsOpen,
@@ -12,6 +13,12 @@ export default function PreviewGalleryView({
   mediaArr,
 }) {
   const [idx, setIdx] = useState(currentIdx);
+  const mediaRef = useRef(null);
+  const info = useGetMediaInfo(
+    mediaRef,
+    mediaArr[currentIdx].type,
+    mediaArr[currentIdx].url
+  );
 
   return (
     <div className="gallery-img-view_wrapper">
@@ -36,9 +43,11 @@ export default function PreviewGalleryView({
             <img
               src={replaceImageSize(mediaArr[idx].url, 800, 800)}
               className="img-view_img"
+              ref={mediaRef}
             />
           ) : (
             <video
+              ref={mediaRef}
               controls={true}
               src={mediaArr[idx].url}
               autoPlay={true}
@@ -57,7 +66,13 @@ export default function PreviewGalleryView({
             idx={idx}
           />
         </div>
-        <GalleryViewOptions url={mediaArr[idx].url} mediaArr={mediaArr} />
+        <GalleryViewOptions
+          info={info}
+          type={mediaArr[idx].type}
+          url={mediaArr[idx].url}
+          mediaArr={mediaArr}
+          idx={idx}
+        />
       </div>
     </div>
   );

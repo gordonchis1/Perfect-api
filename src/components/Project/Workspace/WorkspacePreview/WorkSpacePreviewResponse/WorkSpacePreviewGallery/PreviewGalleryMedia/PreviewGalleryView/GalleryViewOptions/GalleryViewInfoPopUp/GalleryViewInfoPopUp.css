@@ -1,0 +1,77 @@
+.gallery-view_info-wrapper {
+  background: transparent;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.gallery-view_info-container {
+  width: 60%;
+  height: fit-content;
+  animation: fade-in 0.2s ease-in;
+  border-radius: 7px;
+  border: 2px solid var(--border);
+  background: var(--background);
+  padding: 30px;
+  display: flex;
+  gap: 20px;
+}
+
+.gallery-view-info_img-preview {
+  height: fit-content;
+  width: fit-content;
+  flex-grow: 1;
+  flex-shrink: 0;
+
+  max-width: 40%;
+  width: 40%;
+  max-height: 500px;
+
+  display: flex;
+  border-radius: 4px;
+  background-image: url(../../../../../../../../../../assets/img/transparent-pattern.jpg);
+}
+
+.gallery-view-info_img-preview img {
+  object-fit: cover;
+  max-width: 100%;
+  min-width: 100%;
+
+  min-height: 200px;
+  max-height: 100%;
+
+  border-radius: 4px;
+}
+
+.gallery-view-info_img-preview video {
+  max-width: 100%;
+  min-width: 100%;
+
+  min-height: 200px;
+  max-height: 200px;
+
+  border-radius: 4px;
+}
+
+@keyframes fade-in {
+  0% {
+    transform: translateY(1000px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.view-info_props-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 10px;
+}

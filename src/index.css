@@ -39,6 +39,9 @@
   background: var(--primary);
   border-radius: 50px;
 }
+.editor-sub {
+  background-color: #eaff004e;
+}
 
 body {
   background: var(--background);

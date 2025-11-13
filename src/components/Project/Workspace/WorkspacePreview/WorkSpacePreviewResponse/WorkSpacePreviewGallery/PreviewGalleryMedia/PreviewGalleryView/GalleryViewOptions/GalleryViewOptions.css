@@ -20,13 +20,3 @@
   padding: 0 20px;
   gap: 20px;
 }
-
-.gallery-view_info-wrapper {
-  background: transparent;
-  width: 100vw;
-  height: 100vh;
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-}

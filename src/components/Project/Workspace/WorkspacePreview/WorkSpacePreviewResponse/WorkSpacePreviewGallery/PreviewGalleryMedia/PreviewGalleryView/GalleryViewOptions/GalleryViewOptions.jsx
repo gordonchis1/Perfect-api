@@ -4,8 +4,9 @@ import { Download, Info } from "lucide-react";
 import GalleryViewOption from "./GalleryViewOption/GalleryViewOption";
 import { replaceImageSize } from "../../../../../../../../../utils/findLinks";
 import { useState } from "react";
+import GalleryViewInfoPopUp from "./GalleryViewInfoPopUp/GalleryViewInfoPopUp";
 
-export default function GalleryViewOptions({ url }) {
+export default function GalleryViewOptions({ url, type, mediaArr, idx, info }) {
   const [infoIsOpen, setInfoIsOpen] = useState(false);
 
   const handleDownloadMedia = async () => {
@@ -16,6 +17,7 @@ export default function GalleryViewOptions({ url }) {
       const blob = await response.blob();
 
       const downloadUrl = URL.createObjectURL(blob);
+      console.log(downloadUrl);
 
       const link = document.createElement("a");
       link.href = downloadUrl;
@@ -32,13 +34,21 @@ export default function GalleryViewOptions({ url }) {
 
   return (
     <>
-      {infoIsOpen && <div className="gallery-view_info-wrapper"></div>}
       <div className="img-view_options-wrapper">
+        <GalleryViewInfoPopUp
+          infoIsOpen={infoIsOpen}
+          setInfoIsOpen={setInfoIsOpen}
+          url={url}
+          info={info}
+          media={mediaArr[idx]}
+        />
         <div className="img-view_options-container">
-          <GalleryViewOption
-            icon={<Download size={30} />}
-            onClick={handleDownloadMedia}
-          />
+          {type === "img" && (
+            <GalleryViewOption
+              icon={<Download size={30} />}
+              onClick={handleDownloadMedia}
+            />
+          )}
           <GalleryViewOption
             icon={<Info size={30} onClick={() => setInfoIsOpen(true)} />}
           />

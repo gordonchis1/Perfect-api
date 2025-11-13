@@ -6,7 +6,6 @@ import {
   isVideoUrl,
 } from "../../../../../../utils/findLinks";
 import "./WorkSpacePreviewGallery.css";
-import { replaceImageSize } from "../../../../../../utils/findLinks";
 import PreviewGalleryMedia from "./PreviewGalleryMedia/PreviewGalleryMedia";
 
 export default function WorkSpacePreviewGallery() {
@@ -29,7 +28,7 @@ export default function WorkSpacePreviewGallery() {
       } else if (isVideoUrl(link)) mediaArr.push({ url: link, type: "vid" });
     });
 
-    setMedia(mediaArr);
+    setMedia(Array.from(new Set(mediaArr)));
   }, [workspacePreviewContext.currentResponseIdx, workspacePreviewContext]);
 
   return (
