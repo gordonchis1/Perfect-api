@@ -2,7 +2,6 @@ import { useRef } from "react";
 import "./GalleryViewInfoPopUp.css";
 import useClickAway from "../../../../../../../../../../Hooks/useClickAway";
 import { replaceImageSize } from "../../../../../../../../../../utils/findLinks";
-import { Editor } from "@monaco-editor/react";
 import GalleryInfoProp from "./GalleryInfoProp/GalleryInfoProp";
 import GalleryInfoCode from "./GalleryInfoCode/GalleryInfoCode";
 
@@ -36,16 +35,23 @@ export default function GalleryViewInfoPopUp({
               />
               <GalleryInfoProp
                 propKey={"Height"}
-                propValue={`${info.width}px`}
+                propValue={`${info.height}px`}
               />
               <GalleryInfoProp
                 propKey={"Aspect Ratio"}
                 propValue={info.aspectRatio}
               />
+              <GalleryInfoProp propKey={"Size"} propValue={info.size} />
               <GalleryInfoProp
                 propKey={"Dynamic size support"}
                 propValue={String(info.supportDynamicSize)}
               />
+              {info.duration && (
+                <GalleryInfoProp
+                  propKey={"Duration"}
+                  propValue={info.duration}
+                />
+              )}
               <GalleryInfoCode url={url} />
             </div>
           </div>

@@ -17,7 +17,8 @@ export default function PreviewGalleryView({
   const info = useGetMediaInfo(
     mediaRef,
     mediaArr[currentIdx].type,
-    mediaArr[currentIdx].url
+    mediaArr[currentIdx].url,
+    idx
   );
 
   return (
