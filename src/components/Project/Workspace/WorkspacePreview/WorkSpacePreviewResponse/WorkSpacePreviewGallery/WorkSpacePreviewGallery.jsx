@@ -10,7 +10,7 @@ import PreviewGalleryMedia from "./PreviewGalleryMedia/PreviewGalleryMedia";
 
 export default function WorkSpacePreviewGallery() {
   const [workspacePreviewContext] = useWorkspacePreviewContext();
-  const [media, setMedia] = useState(undefined);
+  const [media, setMedia] = useState([]);
 
   useEffect(() => {
     const response =
@@ -33,7 +33,7 @@ export default function WorkSpacePreviewGallery() {
 
   return (
     <div className="workspace-preview_gallery-container custom-scroll-bar">
-      {media !== undefined &&
+      {media.length != 0 ? (
         media.map((mediaElement, index) => {
           return (
             <PreviewGalleryMedia
@@ -43,7 +43,12 @@ export default function WorkSpacePreviewGallery() {
               currentIdx={index}
             />
           );
-        })}
+        })
+      ) : (
+        <div className="workspace-preview_gallery-no-media">
+          <h1>No media in the response</h1>
+        </div>
+      )}
     </div>
   );
 }
