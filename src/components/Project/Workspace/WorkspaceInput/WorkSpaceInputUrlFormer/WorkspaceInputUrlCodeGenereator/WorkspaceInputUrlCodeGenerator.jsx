@@ -3,7 +3,6 @@ import "./WorkspaceInputUrlCodeGenerator.css";
 import { HTTPSnippet } from "httpsnippet-lite";
 import { useProjectStore } from "../../../../../../stores/ProjectStore";
 import CodeGeneratorEditor from "./CodeGeneratorEditor/CodeGeneratorEditor";
-import CodeGeneratorSelector from "./CodeGeneratorSelector/CodeGeneratorSelector";
 import CodeGeneratorTargetSelector from "./CodeGeneratorTargetSelector/CodeGeneratorTargetSelector";
 import CodeGeneratorClientSelector from "./CodeGeneratorClientSelector/CodeGeneratorClientSelector";
 

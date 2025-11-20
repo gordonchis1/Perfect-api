@@ -33,9 +33,10 @@
   max-height: 500px;
   z-index: 1000;
   top: 100%;
-  margin-top: 5px;
+  margin-top: 7px;
   background: var(--background);
-  border: 1px solid var(--border);
+  box-shadow: 0 0 0 0.3px var(--border);
+  border-radius: 4px;
   padding: 5px;
   overflow-y: auto;
 }
