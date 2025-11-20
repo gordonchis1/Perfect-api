@@ -42,22 +42,22 @@ async function createProjectsFile() {
   const existFile = await exists(path);
   const updateConfig = useUserConfigStore.getState().updateConfig;
 
-  const newConfig = {
-    ...config,
-    general: {
-      ...config.general,
-      paths: {
-        ...config.general.paths,
-        projectFilePath: path,
-      },
-    },
-  };
-
-  await updateConfig(newConfig);
-
   try {
     // Check if the file already exists
     if (existFile) return;
+
+    const newConfig = {
+      ...config,
+      general: {
+        ...config.general,
+        paths: {
+          ...config.general.paths,
+          projectFilePath: path,
+        },
+      },
+    };
+
+    await updateConfig(newConfig);
 
     await writeTextFile(path, JSON.stringify([]));
   } catch (error) {

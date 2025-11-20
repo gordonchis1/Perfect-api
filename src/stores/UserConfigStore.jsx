@@ -7,6 +7,7 @@ import { writeTextFile } from "@tauri-apps/plugin-fs";
 
 export const useUserConfigStore = create((set) => ({
   config: null,
+
   initConfig: async () => {
     const config = await initUserConfig();
     set({ config });
