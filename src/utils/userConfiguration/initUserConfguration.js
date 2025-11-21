@@ -3,6 +3,7 @@ import { exists, readTextFile, writeTextFile } from "@tauri-apps/plugin-fs";
 import { appDataDir, join } from "@tauri-apps/api/path";
 import fillMissings from "./update/fillMissings";
 import { updateConfig } from "./update/updateConfig";
+import migrate from "./update/migrate";
 
 const getUserConfig = async () => {
   try {
@@ -23,8 +24,15 @@ const getUserConfig = async () => {
   }
 };
 
-// ? Create config file
-// ! Compre local config with default config
+const migrateAndFillConfing = (config) => {
+  let userConfig = config;
+
+  userConfig = migrate(config);
+  userConfig = fillMissings(userConfig);
+
+  return userConfig;
+};
+
 export const initUserConfig = async () => {
   try {
     let userConfig = await getUserConfig();
@@ -33,15 +41,10 @@ export const initUserConfig = async () => {
       userConfig.configVersion !== undefined &&
       userConfig.configVersion !== defaultUserConfig.configVersion
     ) {
-      console.log("user cofig version:", userConfig.configVersion);
-      console.log("app config version:", defaultUserConfig.configVersion);
-
-      // ? migrate config
-      // ? migrate config versions
-      // ? auto fill
-      userConfig = fillMissings(userConfig);
+      userConfig = migrateAndFillConfing(userConfig);
       await updateConfig(userConfig);
     }
+
     return userConfig;
   } catch (error) {
     console.error(error);

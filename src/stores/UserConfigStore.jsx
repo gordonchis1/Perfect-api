@@ -1,9 +1,6 @@
 import { create } from "zustand";
-import {
-  getUserConfigPath,
-  initUserConfig,
-} from "../utils/userConfiguration/initUserConfguration";
-import { writeTextFile } from "@tauri-apps/plugin-fs";
+import { initUserConfig } from "../utils/userConfiguration/initUserConfguration";
+import { updateConfig } from "../utils/userConfiguration/update/updateConfig";
 
 export const useUserConfigStore = create((set) => ({
   config: null,
@@ -14,8 +11,7 @@ export const useUserConfigStore = create((set) => ({
   },
   updateConfig: async (newConfig) => {
     try {
-      const path = await getUserConfigPath();
-      await writeTextFile(path, JSON.stringify(newConfig));
+      await updateConfig(newConfig);
       set({ config: newConfig });
     } catch {
       set((state) => ({ config: state.config }));
