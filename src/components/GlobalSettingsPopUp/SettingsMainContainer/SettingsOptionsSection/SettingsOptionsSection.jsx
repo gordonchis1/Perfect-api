@@ -6,6 +6,7 @@ import { useUserConfigStore } from "../../../../stores/UserConfigStore";
 import { defaultUserConfig } from "../../../../utils/userConfiguration/defaultConfig";
 import SettingsOptionVersion from "../SettingsOption/SettingsOptionVersion/SettingsOptionVersion";
 import SettingsOptionSelector from "../SettingsOption/SettingsOptionSelector/SettingsOptionSelector";
+import SettingsOptionEditorTheme from "../SettingsOption/SettingsOptionEditorTheme/SettingsOptionEditorTheme";
 
 // ! Refactor this component to make code more reusable and clean
 export default function SettingsOptionsSection({ currentTab }) {
@@ -51,6 +52,15 @@ export default function SettingsOptionsSection({ currentTab }) {
                         key={option}
                         section={section}
                         tab={currentTab}
+                      />
+                    );
+                  case "editor-theme":
+                    return (
+                      <SettingsOptionEditorTheme
+                        key={option}
+                        option={option}
+                        tab={currentTab}
+                        section={section}
                       />
                     );
                   default:

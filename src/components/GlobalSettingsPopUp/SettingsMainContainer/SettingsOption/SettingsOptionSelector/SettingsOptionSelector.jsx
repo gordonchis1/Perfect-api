@@ -15,7 +15,6 @@ export default function SettingsOptionSelector({ option, tab, section }) {
   const config = useUserConfigStore((state) => state.config);
   const [isOpen, setIsOpen] = useState(false);
   useClickAway(optionsContainerRef, () => setIsOpen(false));
-  console.log(themeConstants[config[tab][section][option]].themePreview);
 
   const handleChangeTheme = async (theme) => {
     const newConfig = { ...config };

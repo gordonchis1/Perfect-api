@@ -46,5 +46,6 @@ export const userSettingsOptionsMap = {
     title: "Tema del editor",
     description: "Selecciona el tema de color para el editor de código.",
     type: "editor-theme",
+    themes: ["vs-custom-dark", "vs-custom-light"],
   },
 };
