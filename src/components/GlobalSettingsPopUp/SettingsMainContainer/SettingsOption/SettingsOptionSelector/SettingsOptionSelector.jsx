@@ -9,19 +9,27 @@ import { themeConstants } from "../../../../../utils/userConfiguration/themeCons
 import useClickAway from "../../../../../Hooks/useClickAway";
 import { Palette } from "lucide-react";
 
-export default function SettingsOptionSelector({ option, tab, section }) {
+export default function SettingsOptionSelector({
+  option,
+  tab,
+  section,
+  onChange,
+}) {
   const optionsContainerRef = useRef(null);
   const updateConfig = useUserConfigStore((state) => state.updateConfig);
   const config = useUserConfigStore((state) => state.config);
   const [isOpen, setIsOpen] = useState(false);
   useClickAway(optionsContainerRef, () => setIsOpen(false));
 
-  const handleChangeTheme = async (theme) => {
+  const handleSelect = async (opt) => {
     const newConfig = { ...config };
-    newConfig[tab][section][option] = theme;
-    newConfig[tab][section]["editorTheme"] = themeConstants[theme].monacoTheme;
+    newConfig[tab][section][option] = opt;
+    newConfig[tab][section]["editorTheme"] = themeConstants[opt].monacoTheme;
     await updateConfig(newConfig);
-    await setTheme(themeConstants[theme].theme);
+    await setTheme(themeConstants[opt].theme);
+    if (onChange) {
+      onChange(opt, newConfig);
+    }
   };
 
   const handleOpenOptions = () => {
@@ -40,7 +48,7 @@ export default function SettingsOptionSelector({ option, tab, section }) {
           onClick={handleOpenOptions}
         >
           <Palette size={20} />
-          <span>tema</span>
+          <span>{config[tab][section][option]}</span>
         </button>
         {isOpen && (
           <div className="option-selector_container-options">
@@ -48,7 +56,7 @@ export default function SettingsOptionSelector({ option, tab, section }) {
               <button
                 key={opt}
                 className="option-selector_button-option"
-                onClick={() => handleChangeTheme(opt)}
+                onClick={() => handleSelect(opt)}
                 style={
                   opt === config[tab][section][option]
                     ? {

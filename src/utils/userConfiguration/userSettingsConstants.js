@@ -47,5 +47,8 @@ export const userSettingsOptionsMap = {
     description: "Selecciona el tema de color para el editor de código.",
     type: "editor-theme",
     themes: ["vs-custom-dark", "vs-custom-light"],
+    onChange: (opt, newConfig) => {
+      newConfig[tab][section]["editorTheme"] = themeConstants[opt].monacoTheme;
+    },
   },
 };
