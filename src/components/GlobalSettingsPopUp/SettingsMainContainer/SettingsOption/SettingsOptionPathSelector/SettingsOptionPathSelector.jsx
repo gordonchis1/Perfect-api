@@ -1,4 +1,3 @@
-import { userSettingsOptionsMap } from "../../../../../utils/userConfiguration/userSettingsConstants";
 import "./SettingsOptionPathSelector.css";
 import { open } from "@tauri-apps/plugin-dialog";
 import { useEffect, useState } from "react";
@@ -13,6 +12,10 @@ export default function SettingsOptionPathSelector({
   tab,
   section,
   type,
+  alert,
+  title,
+  description,
+  placeholder,
 }) {
   const config = useUserConfigStore((state) => state.config);
   const updateConfig = useUserConfigStore((state) => state.updateConfig);
@@ -58,12 +61,17 @@ export default function SettingsOptionPathSelector({
 
   return (
     <SettingsOptionContainer option={option}>
-      <SettingsOptionText option={option} />
+      <SettingsOptionText
+        option={option}
+        alert={alert}
+        text={title}
+        description={description}
+      />
       <div className="settings-option_input-container">
         <input
           className="settings-option_input"
           value={config[tab][section][option] || ""}
-          placeholder={userSettingsOptionsMap[option]?.title}
+          placeholder={placeholder}
           readOnly={true}
           style={{ borderColor: isValidPath ? "var(--border)" : "red" }}
           onClick={handleOpenFolderDialog}

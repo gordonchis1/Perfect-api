@@ -2,10 +2,8 @@ import SettingsOptionContainer from "../SettingsOptionContainer/SettingsOptionCo
 import SettingsOptionText from "../SettingsOptionContainer/SettingsOptionText/SettingsOptionText";
 import "./SettingsOptionSelector.css";
 import { userSettingsOptionsMap } from "../../../../../utils/userConfiguration/userSettingsConstants";
-import { setTheme } from "@tauri-apps/api/app";
 import { useUserConfigStore } from "../../../../../stores/UserConfigStore";
 import { useRef, useState } from "react";
-import { themeConstants } from "../../../../../utils/userConfiguration/themeConstants";
 import useClickAway from "../../../../../Hooks/useClickAway";
 import { Palette } from "lucide-react";
 
@@ -14,6 +12,9 @@ export default function SettingsOptionSelector({
   tab,
   section,
   onChange,
+  title,
+  description,
+  OptionIcon,
 }) {
   const optionsContainerRef = useRef(null);
   const updateConfig = useUserConfigStore((state) => state.updateConfig);
@@ -24,12 +25,12 @@ export default function SettingsOptionSelector({
   const handleSelect = async (opt) => {
     const newConfig = { ...config };
     newConfig[tab][section][option] = opt;
-    newConfig[tab][section]["editorTheme"] = themeConstants[opt].monacoTheme;
-    await updateConfig(newConfig);
-    await setTheme(themeConstants[opt].theme);
     if (onChange) {
-      onChange(opt, newConfig);
+      onChange(opt, newConfig, tab, section);
     }
+
+    setIsOpen(false);
+    await updateConfig(newConfig);
   };
 
   const handleOpenOptions = () => {
@@ -38,7 +39,11 @@ export default function SettingsOptionSelector({
 
   return (
     <SettingsOptionContainer option={option}>
-      <SettingsOptionText option={option} />
+      <SettingsOptionText
+        option={option}
+        text={title}
+        description={description}
+      />
       <div
         className="option-selector_selector-container"
         ref={optionsContainerRef}
@@ -67,13 +72,8 @@ export default function SettingsOptionSelector({
                     : {}
                 }
               >
-                <div
-                  className="selector-theme_color-preview"
-                  style={{
-                    background: themeConstants[opt].themePreview,
-                  }}
-                ></div>
-                {opt}
+                {OptionIcon && <OptionIcon opt={opt} />}
+                <span>{opt}</span>
               </button>
             ))}
           </div>

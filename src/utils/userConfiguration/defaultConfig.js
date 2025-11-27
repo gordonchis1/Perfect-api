@@ -12,8 +12,11 @@ export const defaultUserConfig = {
   preferences: {
     appearance: {
       theme: "dark",
-      editorTheme: "vs-dark",
+    },
+    editor: {
+      editorTheme: "vs-custom-light",
+      editorFontSize: "16",
     },
   },
-  configVersion: 1,
+  configVersion: 3,
 };

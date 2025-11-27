@@ -17,7 +17,7 @@ export default function CodeGeneratorEditor({ output, language }) {
           minimap: { enabled: false },
           readOnly: true,
         }}
-        theme={config.preferences.appearance.editorTheme || "vs-dark"}
+        theme={config.preferences.editor.editorTheme || "vs-dark"}
       />
     </div>
   );

@@ -3,7 +3,13 @@ import SettingsOptionText from "../SettingsOptionContainer/SettingsOptionText/Se
 import "./SettingsOptionCheckbox.css";
 import { useUserConfigStore } from "../../../../../stores/UserConfigStore";
 
-export default function SettingsOptionCheckbox({ option, section, tab }) {
+export default function SettingsOptionCheckbox({
+  option,
+  section,
+  tab,
+  title,
+  description,
+}) {
   const config = useUserConfigStore((state) => state.config);
   const updateConfig = useUserConfigStore((state) => state.updateConfig);
 
@@ -15,7 +21,11 @@ export default function SettingsOptionCheckbox({ option, section, tab }) {
 
   return (
     <SettingsOptionContainer option={option}>
-      <SettingsOptionText option={option} />
+      <SettingsOptionText
+        option={option}
+        text={title}
+        description={description}
+      />
       <label htmlFor="checkbox" className="settings-option_label-checkbox">
         <input
           type="checkbox"

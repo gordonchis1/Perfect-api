@@ -155,7 +155,7 @@ export default function WorkSpacePreviewJson() {
             handleBeforeMount(monaco);
           }}
           line={line.startLineNumber}
-          theme={config.preferences.appearance.editorTheme || "vs-dark"}
+          theme={config.preferences.editor.editorTheme || "vs-dark"}
           options={{
             definitionLinkOpensInPeek: true,
             links: true,

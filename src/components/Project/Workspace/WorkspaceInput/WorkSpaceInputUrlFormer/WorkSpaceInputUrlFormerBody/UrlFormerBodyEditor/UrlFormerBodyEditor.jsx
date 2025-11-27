@@ -39,7 +39,7 @@ export default function UrlFormerBodyEditor({ language }) {
       value={updatedContent}
       width={"100%"}
       height={"100%"}
-      theme={config.preferences.appearance.editorTheme || "vs-dark"}
+      theme={config.preferences.editor.editorTheme || "vs-dark"}
       language={language}
       onChange={(value) => {
         handleChangeEditor(value);

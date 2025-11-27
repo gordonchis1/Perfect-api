@@ -26,6 +26,7 @@
   border-radius: 4px;
   box-shadow: 0 0 0 0.3px var(--border);
   animation: open-options-container 0.3s ease forwards;
+  width: fit-content;
 }
 
 .option-selector_button-option {
@@ -34,6 +35,8 @@
   border: none;
   background: transparent;
   cursor: pointer;
+  overflow: hidden;
+  text-wrap: nowrap;
 
   text-transform: capitalize;
   font-family: var(--regular-font);

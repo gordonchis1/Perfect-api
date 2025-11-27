@@ -57,7 +57,7 @@ export default function GalleryInfoCode({ url }) {
           readOnly: true,
         }}
         loading={<LoaderSpiner />}
-        theme={config.preferences.appearance.editorTheme || "vs-dark"}
+        theme={config.preferences.editor.editorTheme || "vs-dark"}
         height={"150px"}
       />
     </div>
