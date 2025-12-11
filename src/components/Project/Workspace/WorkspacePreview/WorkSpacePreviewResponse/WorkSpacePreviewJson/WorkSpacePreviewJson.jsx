@@ -164,7 +164,7 @@ export default function WorkSpacePreviewJson() {
             wordWrap: "on",
             wordWrapColumn: 60,
             readOnly: true,
-            fontSize: 16,
+            fontSize: config.preferences.editor.editorFontSize,
             minimap: { enabled: false },
             colorDecoratorsActivatedOn: "clickAndHover",
             colorDecorators: true,

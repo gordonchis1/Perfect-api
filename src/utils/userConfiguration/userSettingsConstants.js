@@ -5,6 +5,7 @@ import SettingsOptionSelector from "../../components/GlobalSettingsPopUp/Setting
 import SettingsOptionVersion from "../../components/GlobalSettingsPopUp/SettingsMainContainer/SettingsOption/SettingsOptionVersion/SettingsOptionVersion";
 import { themeConstants } from "./themeConstants";
 import SettingsOptionThemeSelector from "../../components/GlobalSettingsPopUp/SettingsMainContainer/SettingsOption/SettingsOptionThemeSelector/SettingsOptionThemeSelector";
+import SettingsOptionNumber from "../../components/GlobalSettingsPopUp/SettingsMainContainer/SettingsOption/SettingsOptionNumber/SettingsOptionNumber";
 
 export const userSettingsTabs = ["general", "preferences"];
 
@@ -79,5 +80,6 @@ export const userSettingsOptionsMap = {
   editorFontSize: {
     title: "Editor font size",
     description: "Selecciona el tamano de la fuente del editor.",
+    component: SettingsOptionNumber,
   },
 };
