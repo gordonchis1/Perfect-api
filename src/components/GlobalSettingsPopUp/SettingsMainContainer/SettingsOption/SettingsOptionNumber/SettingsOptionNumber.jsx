@@ -3,6 +3,7 @@ import SettingsOptionContainer from "../SettingsOptionContainer/SettingsOptionCo
 import SettingsOptionText from "../SettingsOptionContainer/SettingsOptionText/SettingsOptionText";
 import { useUserConfigStore } from "../../../../../stores/UserConfigStore";
 import { Minus, Plus } from "lucide-react";
+import "./SettingsOptionNumber.css";
 
 export default function SettingsOptionNumber({
   description,
@@ -33,12 +34,18 @@ export default function SettingsOptionNumber({
     <SettingsOptionContainer>
       <SettingsOptionText description={description} text={title} />
       <div className="settings-option-number_container">
-        <button onClick={() => handleChangeValue(-1)}>
-          <Minus size={17} />
+        <button
+          onClick={() => handleChangeValue(-1)}
+          className="option-number_change-btn"
+        >
+          <Minus size={18} strokeWidth={3} />
         </button>
-        <span>{value}</span>
-        <button onClick={() => handleChangeValue(1)}>
-          <Plus size={17} />
+        <span className="option-number_value-span">{value}</span>
+        <button
+          onClick={() => handleChangeValue(1)}
+          className="option-number_change-btn"
+        >
+          <Plus size={18} strokeWidth={3} />
         </button>
       </div>
     </SettingsOptionContainer>

@@ -1,0 +1,28 @@
+.option-number_value-span {
+  font-size: 19px;
+  margin: 0 4px;
+  font-weight: bold;
+  min-width: 22px;
+  text-align: center;
+}
+
+.option-number_change-btn {
+  background: transparent;
+  border: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--primary-text-color);
+  cursor: pointer;
+}
+
+.settings-option-number_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.option-number_change-btn:hover {
+  color: var(--primary);
+}
