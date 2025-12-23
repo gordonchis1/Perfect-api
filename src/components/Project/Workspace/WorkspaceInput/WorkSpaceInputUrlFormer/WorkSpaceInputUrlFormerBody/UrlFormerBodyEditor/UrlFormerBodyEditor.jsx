@@ -47,7 +47,9 @@ export default function UrlFormerBodyEditor({ language }) {
       }}
       options={{
         fontSize: 16,
-        minimap: false,
+        minimap: {
+          enabled: config.preferences.editor.editorMiniMap || false,
+        },
         placeholder: "// El contenido del body aqui",
       }}
     ></Editor>

@@ -82,4 +82,10 @@ export const userSettingsOptionsMap = {
     description: "Selecciona el tamano de la fuente del editor.",
     component: SettingsOptionNumber,
   },
+  editorMiniMap: {
+    title: "Minimapa del editor",
+    description:
+      "Activa o desactiva el minimapa del archivo actual en el editor.",
+    component: SettingsOptionCheckbox,
+  },
 };

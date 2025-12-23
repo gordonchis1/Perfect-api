@@ -2,6 +2,7 @@ import "./SettingsOptionsSection.css";
 import { useUserConfigStore } from "../../../../stores/UserConfigStore";
 import { defaultUserConfig } from "../../../../utils/userConfiguration/defaultConfig";
 import SettingsOption from "../SettingsOption/SettingsOption";
+import OptionsSectionCustomsComponents from "./OptionsSectionCustomsComponent/OptionsSectioncustomsComponents";
 
 // ! Refactor this component to make code more reusable and clean
 export default function SettingsOptionsSection({ currentTab }) {
@@ -24,6 +25,7 @@ export default function SettingsOptionsSection({ currentTab }) {
                   />
                 );
               })}
+              <OptionsSectionCustomsComponents section={section} />
             </div>
           );
         })}

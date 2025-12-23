@@ -55,6 +55,7 @@ export default function GalleryInfoCode({ url }) {
           minimap: { enabled: false },
           stickyScroll: { enabled: false },
           readOnly: true,
+          fontSize: config.preferences.editor.editorFontSize,
         }}
         loading={<LoaderSpiner />}
         theme={config.preferences.editor.editorTheme || "vs-dark"}

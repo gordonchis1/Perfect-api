@@ -2,7 +2,7 @@ import { userSettingsOptionsMap } from "../../../../utils/userConfiguration/user
 
 export default function SettingsOption({ option, section, tab }) {
   const optionMap = userSettingsOptionsMap[option];
-  const Component = optionMap.component;
+  const Component = optionMap?.component || null;
 
   return (
     <>

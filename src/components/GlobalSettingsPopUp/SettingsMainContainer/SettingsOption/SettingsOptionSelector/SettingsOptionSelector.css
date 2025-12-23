@@ -17,6 +17,7 @@
 }
 
 .option-selector_container-options {
+  z-index: 10000;
   display: flex;
   position: absolute;
   flex-direction: column;

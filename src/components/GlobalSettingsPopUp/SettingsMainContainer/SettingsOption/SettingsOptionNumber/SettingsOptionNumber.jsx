@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import SettingsOptionContainer from "../SettingsOptionContainer/SettingsOptionContainer";
 import SettingsOptionText from "../SettingsOptionContainer/SettingsOptionText/SettingsOptionText";
 import { useUserConfigStore } from "../../../../../stores/UserConfigStore";
+import { Minus, Plus } from "lucide-react";
 
 export default function SettingsOptionNumber({
   description,
@@ -19,7 +20,7 @@ export default function SettingsOptionNumber({
   }, []);
 
   const handleChangeValue = async (sum) => {
-    if (value <= 0 && sum == -1) return;
+    if (value <= 1 && sum == -1) return;
     const newConfig = { ...config };
 
     newConfig[tab][section][option] = value + sum;
@@ -32,9 +33,13 @@ export default function SettingsOptionNumber({
     <SettingsOptionContainer>
       <SettingsOptionText description={description} text={title} />
       <div className="settings-option-number_container">
-        <button onClick={() => handleChangeValue(-1)}>menos</button>
+        <button onClick={() => handleChangeValue(-1)}>
+          <Minus size={17} />
+        </button>
         <span>{value}</span>
-        <button onClick={() => handleChangeValue(1)}>mas</button>
+        <button onClick={() => handleChangeValue(1)}>
+          <Plus size={17} />
+        </button>
       </div>
     </SettingsOptionContainer>
   );

@@ -16,7 +16,8 @@ export const defaultUserConfig = {
     editor: {
       editorTheme: "vs-custom-light",
       editorFontSize: "16",
+      editorMiniMap: true,
     },
   },
-  configVersion: 3,
+  configVersion: 4,
 };

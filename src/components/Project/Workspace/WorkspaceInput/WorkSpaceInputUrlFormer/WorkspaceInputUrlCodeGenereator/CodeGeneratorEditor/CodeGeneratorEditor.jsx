@@ -13,8 +13,10 @@ export default function CodeGeneratorEditor({ output, language }) {
         value={output}
         language={language == "node" ? "javascript" : language}
         options={{
-          fontSize: "16px",
-          minimap: { enabled: false },
+          fontSize: config.preferences.editor.editorFontSize,
+          minimap: {
+            enabled: config.preferences.editor.editorMiniMap || false,
+          },
           readOnly: true,
         }}
         theme={config.preferences.editor.editorTheme || "vs-dark"}
