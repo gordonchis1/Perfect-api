@@ -4,7 +4,6 @@ import {
   quicktype,
 } from "quicktype-core";
 import useWorkspacePreviewContext from "../../../../../Hooks/useWorkspacePreviewContext";
-import WorkspacePreviewHeader from "../WorkspacePreviewResponse/WorkSpacePreviewHeader/WorkspacePreviewHeader";
 import "./WorkSpacePreviewTypes.css";
 import { useEffect, useRef, useState } from "react";
 import PreviewTypesCopyButton from "./PreviewTypesCopyButton/PreviewTypesCopyButton";
@@ -87,11 +86,13 @@ export default function WorkSpacePreviewTypes() {
               loading={<LoaderSpiner />}
               value={types}
               language={currentLanguage.languageSyntax}
-              theme={config.preferences.appearance.editorTheme || "vs-dark"}
+              theme={config.preferences.editor.editorTheme || "vs-dark"}
               options={{
                 fontFamily: "var(--mono-font)",
-                fontSize: 16,
-                minimap: false,
+                fontSize: config.preferences.editor.editorFontSize,
+                minimap: {
+                  enabled: config.preferences.editor.editorMiniMap || false,
+                },
                 readOnly: true,
                 readOnlyMessage: false,
               }}

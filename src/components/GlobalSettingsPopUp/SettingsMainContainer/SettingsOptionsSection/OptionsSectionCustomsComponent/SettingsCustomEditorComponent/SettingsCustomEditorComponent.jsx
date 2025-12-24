@@ -1,5 +1,6 @@
 import { Editor } from "@monaco-editor/react";
 import { useUserConfigStore } from "../../../../../../stores/UserConfigStore";
+import { addMonacoThemes } from "../../../../../../utils/monaco/monacoHover";
 
 const jsonExample = {
   name: "Perfect API",
@@ -12,6 +13,7 @@ const jsonExample = {
 
 export default function SettingsCutsomEditorComponent() {
   const config = useUserConfigStore((store) => store.config);
+  useUserConfigStore((store) => store.appVersion);
 
   return (
     <div>
@@ -21,7 +23,9 @@ export default function SettingsCutsomEditorComponent() {
         theme={config.preferences.editor.editorTheme || "vs-dark"}
         defaultLanguage="json"
         defaultValue={JSON.stringify(jsonExample, null, 2)}
+        beforeMount={addMonacoThemes}
         options={{
+          theme: config.preferences.editor.editorTheme || "vs-dark",
           fontSize: config.preferences.editor.editorFontSize,
           readOnly: true,
           minimap: {
