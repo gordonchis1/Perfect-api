@@ -211,7 +211,6 @@ export const useProjectStore = create((set, get) => ({
     if (save) {
       if (vfs instanceof VirtualFileSystem) {
         const node = vfs.getNodeById(id);
-        console.log(node);
         node.updateContent(newContent);
         await get().save();
       }

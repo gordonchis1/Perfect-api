@@ -2,6 +2,7 @@ import "./WorkSpaceInputFormUrlButtonRun.css";
 import { fetch } from "@tauri-apps/plugin-http";
 import { Play } from "lucide-react";
 import { useProjectStore } from "../../../../../../stores/ProjectStore";
+import { File } from "../../../../../../utils/ProjectFileObject";
 
 export default function WorkSpaceInputFormUrlButtonRun() {
   const content = useProjectStore(
@@ -19,6 +20,10 @@ export default function WorkSpaceInputFormUrlButtonRun() {
     if (content.isRuning) return;
 
     const node = fileManagerState.getNodeById(currnetFileId);
+    if (node instanceof File) {
+      node.run();
+      return;
+    }
 
     toggleIsRuning(node);
 

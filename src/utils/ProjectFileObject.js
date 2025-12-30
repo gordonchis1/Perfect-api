@@ -3,6 +3,9 @@
 
 import { nanoid } from "nanoid";
 import { fileContentDefault } from "./constants/ProjectFileConstants";
+import { fetch } from "@tauri-apps/plugin-http";
+import { useProjectStore } from "../stores/ProjectStore";
+import { generateResponse } from "./response/response";
 
 const defaultOnChangeFunction = () => {
   console.log("Vfs Changed");
@@ -277,6 +280,7 @@ export class File extends FSNode {
   ) {
     super(name, "file", isOpen, id);
     this.content = content;
+    this.controller = null;
   }
   toggleIsRuning() {
     this.content = { ...this.content, isRuning: !this.content.isRuning };
@@ -284,5 +288,99 @@ export class File extends FSNode {
   updateContent(newContent) {
     this.content = newContent;
     return newContent;
+  }
+  async run() {
+    const openFiles = useProjectStore.getState().openFiles;
+    const currentFile = useProjectStore.getState().currentFileId;
+    const content = openFiles[currentFile].content;
+    const { type, url, headers } = content;
+    const toggleIsRuning = useProjectStore.getState().toggleIsRuning;
+    const updateContentOfOpenFile =
+      useProjectStore.getState().updateContentOfOpenFile;
+    let time;
+    const start = performance.now();
+    let response;
+    const headersToSend = {};
+
+    headers.forEach((header) => {
+      if (header.isActive) {
+        if (header.key === "Host") {
+          try {
+            const formatedUrl = new URL(url.parseUrl);
+            headersToSend[header.key] = formatedUrl.host;
+          } catch {
+            headersToSend[header.key] = "";
+          }
+        } else {
+          headersToSend[header.key] = header.value;
+        }
+      }
+    });
+
+    try {
+      this.controller = new AbortController();
+
+      // ? Change toggle is runing
+      toggleIsRuning(this);
+
+      // ? Do the request
+      response = await fetch(url.parseUrl, {
+        method: type,
+        signal: this.controller.signal,
+        headers: headersToSend,
+      });
+
+      if (!response.ok) {
+        throw response;
+      }
+    } catch (error) {
+      if (error instanceof Response) {
+        console.log({
+          status: error.status,
+          response: error.statusText,
+          data: response.body,
+        });
+      }
+      if (error.name === "AbortError") {
+        console.log("Request abortada");
+      }
+    } finally {
+      // ? Change toggle is runing
+      time = Math.abs(performance.now() - start);
+      toggleIsRuning(this);
+    }
+
+    const newResponse = await generateResponse(
+      time,
+      response,
+      url.parseUrl,
+      url.queryParams
+    );
+
+    const responses = [newResponse, ...content.responses];
+
+    if (responses.length >= 5) {
+      // ! Agregar la logica de respuestas fijadas
+      responses.splice(5);
+    }
+
+    updateContentOfOpenFile(
+      currentFile,
+      {
+        ...content,
+        responses,
+        isRuning: false,
+      },
+      true
+    );
+  }
+
+  abort() {
+    if (this.controller) {
+      const toggleIsRuning = useProjectStore.getState().toggleIsRuning;
+      this.controller.abort();
+      toggleIsRuning(this);
+      this.controller = null;
+    }
   }
 }

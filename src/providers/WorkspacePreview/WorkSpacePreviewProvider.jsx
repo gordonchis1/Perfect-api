@@ -22,7 +22,7 @@ const workspacePreviewReducer = (state, action) => {
       };
     case WORKSPACE_PREVIEW_ACTIONS.CHANGE_RESPONSES: {
       const { responses } = action.payload;
-      const newResponses = [...responses].reverse();
+      const newResponses = [...responses];
 
       return {
         ...state,
