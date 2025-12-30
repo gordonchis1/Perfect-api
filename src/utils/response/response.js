@@ -14,7 +14,6 @@ const parseReponse = async (response) => {
 
 export const generateResponse = async (time, response, url, queryParams) => {
   const parsedResponse = (await parseReponse(response)) || undefined;
-  console.log(parsedResponse);
 
   return {
     time,
