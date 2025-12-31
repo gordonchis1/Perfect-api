@@ -2,10 +2,10 @@ export const fileContentDefault = {
   type: "GET",
   url: {
     inputUrl: "",
-    parseUrl: "",
+    finalUrl: "",
     queryParams: [],
   },
-  responses: [],
+  history: [],
   headers: [
     { key: "Accept", value: "*/*", isActive: true },
     {
@@ -16,10 +16,10 @@ export const fileContentDefault = {
     { key: "User-Agent", value: "PerfectApi/0.1", isActive: true },
   ],
   body: {
-    bodyContent: "",
-    bodyType: "",
+    raw: "",
+    type: "",
   },
-  isRuning: false,
+  isRunning: false,
 };
 
 /*

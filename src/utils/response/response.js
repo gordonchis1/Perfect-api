@@ -1,4 +1,6 @@
-const parseReponse = async (response) => {
+import { nanoid } from "nanoid";
+
+export const parseResponse = async (response) => {
   const contentType = response.headers.get("content-type") || "";
 
   if (contentType.includes("application/json")) {
@@ -12,20 +14,37 @@ const parseReponse = async (response) => {
   return await response.arrayBuffer();
 };
 
-export const generateResponse = async (time, response, url, queryParams) => {
-  const parsedResponse = (await parseReponse(response)) || undefined;
+export const generateResponse = async (
+  content,
+  time,
+  url,
+  queryParams,
+  parsedResponse
+) => {
+  console.log(content);
 
   return {
-    time,
-    status: response.status || 0,
-    response: parsedResponse,
-    headers:
-      response === undefined
-        ? {}
-        : Object.fromEntries(response.headers.entries()),
-    url,
-    queryParams,
+    id: nanoid(),
     isPinned: false,
-    inputUrl: url,
+    request: {
+      method: "GET",
+      url: url,
+      headers: [],
+      queryParams: [],
+      finalUrl: "",
+      body: { type: "json", raw: "" },
+      timestap: Date.now(),
+    },
+    response: {
+      status: 202,
+      statusText: "",
+      headers: {},
+      body: { raw: "", contentType: "json" },
+      time: time,
+    },
+    error: {
+      type: "",
+      message: "",
+    },
   };
 };

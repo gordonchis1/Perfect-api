@@ -5,7 +5,7 @@ import { nanoid } from "nanoid";
 import { fileContentDefault } from "./constants/ProjectFileConstants";
 import { fetch } from "@tauri-apps/plugin-http";
 import { useProjectStore } from "../stores/ProjectStore";
-import { generateResponse } from "./response/response";
+import { generateResponse, parseResponse } from "./response/response";
 
 const defaultOnChangeFunction = () => {
   console.log("Vfs Changed");
@@ -350,12 +350,16 @@ export class File extends FSNode {
       toggleIsRuning(this);
     }
 
+    const parsedResponse = await parseResponse(response);
+
     const newResponse = await generateResponse(
+      content,
       time,
-      response,
       url.parseUrl,
-      url.queryParams
+      url.queryParams,
+      parsedResponse
     );
+    console.log(newResponse);
 
     const responses = [newResponse, ...content.responses];
 
@@ -364,15 +368,15 @@ export class File extends FSNode {
       responses.splice(5);
     }
 
-    updateContentOfOpenFile(
-      currentFile,
-      {
-        ...content,
-        responses,
-        isRuning: false,
-      },
-      true
-    );
+    // updateContentOfOpenFile(
+    // currentFile,
+    // {
+    // ...content,
+    // responses,
+    // isRuning: false,
+    // },
+    // true
+    // );
   }
 
   abort() {
