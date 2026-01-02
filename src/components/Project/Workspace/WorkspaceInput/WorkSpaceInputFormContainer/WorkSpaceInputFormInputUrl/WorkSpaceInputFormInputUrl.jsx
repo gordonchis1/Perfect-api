@@ -15,6 +15,7 @@ export default function WorkSpaceInputFormInputUrl() {
   const updateContentOfOpenFile = useProjectStore(
     (store) => store.updateContentOfOpenFile
   );
+  console.log(content);
 
   useEffect(() => {
     if (currentFileId) {
@@ -30,11 +31,11 @@ export default function WorkSpaceInputFormInputUrl() {
     if (!currentFileId) return;
     if (inputValue === undefined) return;
 
-    let newParseUrl = inputValue;
+    let newFinalUrl = inputValue;
 
     try {
       const url = new URL(inputValue);
-      newParseUrl = url.href;
+      newFinalUrl = url.href;
 
       setIsValidUrl(true);
     } catch {
@@ -42,8 +43,8 @@ export default function WorkSpaceInputFormInputUrl() {
     }
 
     if (
-      content.url.inputUrl === inputValue &&
-      content.url.parseUrl === newParseUrl
+      content.url.finalUrl === inputValue &&
+      content.url.finalUrl === newFinalUrl
     ) {
       return;
     }
@@ -53,7 +54,7 @@ export default function WorkSpaceInputFormInputUrl() {
       url: {
         ...content.url,
         inputUrl: inputValue,
-        parseUrl: newParseUrl,
+        finalUrl: newFinalUrl,
       },
     });
   }, [inputValue]);

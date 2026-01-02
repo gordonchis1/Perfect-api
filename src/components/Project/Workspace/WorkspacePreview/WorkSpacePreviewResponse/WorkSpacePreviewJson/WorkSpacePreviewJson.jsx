@@ -47,7 +47,7 @@ export default function WorkSpacePreviewJson() {
         url: {
           ...fileContentDefault.url,
           inputUrl: callUrl,
-          parseUrl: callUrl,
+          finalUrl: callUrl,
         },
       });
     };
@@ -143,12 +143,12 @@ export default function WorkSpacePreviewJson() {
           loading={<LoaderSpiner size={"70px"} />}
           height={"100%"}
           defaultLanguage="json"
-          value={JSON.stringify(
-            workspacePreviewContext.responses[
-              workspacePreviewContext.currentResponseIdx
-            ].response,
-            null,
-            2
+          value={JSON.parse(
+            JSON.stringify(
+              workspacePreviewContext.responses[
+                workspacePreviewContext.currentResponseIdx
+              ].response.body.raw
+            )
           )}
           onMount={(editor, monaco) => handleOnEditorMount(editor, monaco)}
           beforeMount={(monaco) => {

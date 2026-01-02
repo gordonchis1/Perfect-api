@@ -11,7 +11,7 @@ export default function WorkSpaceInputFormUrlButtonRun() {
   const fileManagerState = useProjectStore((store) => store.vfs);
 
   const handleRun = async () => {
-    if (!content.url.parseUrl) return;
+    if (!content.url.finalUrl) return;
     if (content.isRuning) return;
 
     const node = fileManagerState.getNodeById(currnetFileId);

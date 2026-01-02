@@ -51,7 +51,7 @@ export default function WorkSpaceInputUrlFormerQueryParams() {
         url: {
           ...content.url,
           inputUrl: content.url.inputUrl,
-          parseUrl: url.href,
+          finalUrl: url.href,
           queryParams: querys,
         },
       });

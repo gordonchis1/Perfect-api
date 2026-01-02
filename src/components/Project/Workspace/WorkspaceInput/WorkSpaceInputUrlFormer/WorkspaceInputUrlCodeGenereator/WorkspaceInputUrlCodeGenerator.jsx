@@ -31,7 +31,7 @@ export default function WorkspaceInputUrlCodeGenerator() {
     const generateCode = async () => {
       const snippet = new HTTPSnippet({
         method: content.type,
-        url: content.url.parseUrl,
+        url: content.url.finalUrl,
         headers,
         postData: {
           mimeType: bodyType,

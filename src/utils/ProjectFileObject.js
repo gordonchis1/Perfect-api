@@ -5,7 +5,7 @@ import { nanoid } from "nanoid";
 import { fileContentDefault } from "./constants/ProjectFileConstants";
 import { fetch } from "@tauri-apps/plugin-http";
 import { useProjectStore } from "../stores/ProjectStore";
-import { generateResponse, parseResponse } from "./response/response";
+import { generateEntry } from "./entry/entry";
 
 const defaultOnChangeFunction = () => {
   console.log("Vfs Changed");
@@ -297,16 +297,18 @@ export class File extends FSNode {
     const toggleIsRuning = useProjectStore.getState().toggleIsRuning;
     const updateContentOfOpenFile =
       useProjectStore.getState().updateContentOfOpenFile;
+
     let time;
     const start = performance.now();
     let response;
     const headersToSend = {};
+    let error = null;
 
     headers.forEach((header) => {
       if (header.isActive) {
         if (header.key === "Host") {
           try {
-            const formatedUrl = new URL(url.parseUrl);
+            const formatedUrl = new URL(url.finalUrl);
             headersToSend[header.key] = formatedUrl.host;
           } catch {
             headersToSend[header.key] = "";
@@ -317,73 +319,56 @@ export class File extends FSNode {
       }
     });
 
+    // ? Change toggle is runing
+    toggleIsRuning(this);
     try {
       this.controller = new AbortController();
 
-      // ? Change toggle is runing
-      toggleIsRuning(this);
-
       // ? Do the request
-      response = await fetch(url.parseUrl, {
+      response = await fetch(url.finalUrl, {
         method: type,
         signal: this.controller.signal,
         headers: headersToSend,
       });
 
       if (!response.ok) {
-        throw response;
+        error = {
+          type: "http",
+          status: response.status,
+          message: response.statusText,
+        };
       }
-    } catch (error) {
-      if (error instanceof Response) {
-        console.log({
-          status: error.status,
-          response: error.statusText,
-          data: response.body,
-        });
-      }
-      if (error.name === "AbortError") {
-        console.log("Request abortada");
-      }
+    } catch (err) {
+      error = {
+        type: err.name === "AbortError" ? "abort" : "network",
+        message: err.message,
+      };
     } finally {
       // ? Change toggle is runing
       time = Math.abs(performance.now() - start);
       toggleIsRuning(this);
     }
 
-    const parsedResponse = await parseResponse(response);
+    const newEntry = await generateEntry(time, content, response, error);
+    console.log(newEntry);
 
-    const newResponse = await generateResponse(
-      content,
-      time,
-      url.parseUrl,
-      url.queryParams,
-      parsedResponse
-    );
-    console.log(newResponse);
+    const history = [newEntry, ...content.history];
 
-    const responses = [newResponse, ...content.responses];
-
-    if (responses.length >= 5) {
+    if (history.length >= 5) {
       // ! Agregar la logica de respuestas fijadas
-      responses.splice(5);
+      history.splice(5);
     }
 
-    // updateContentOfOpenFile(
-    // currentFile,
-    // {
-    // ...content,
-    // responses,
-    // isRuning: false,
-    // },
-    // true
-    // );
+    updateContentOfOpenFile(currentFile, {
+      ...content,
+      history,
+      isRuning: false,
+    });
   }
 
   abort() {
     if (this.controller) {
-      const toggleIsRuning = useProjectStore.getState().toggleIsRuning;
       this.controller.abort();
-      toggleIsRuning(this);
       this.controller = null;
     }
   }

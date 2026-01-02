@@ -35,7 +35,7 @@ export default function WorkspacePreviewContent() {
     <div className="workspace-preview_multiple-container">
       {isRuning ? (
         <WorkspacePreviewLoading
-          url={content.url.parseUrl}
+          url={content.url.finalUrl}
           isRuning={isRuning}
         />
       ) : (

@@ -45,11 +45,12 @@ export default function WorkSpacePreviewProvider({ children }) {
   );
 
   useEffect(() => {
+    console.log(content.history);
     dispatch({
       type: WORKSPACE_PREVIEW_ACTIONS.CHANGE_RESPONSES,
-      payload: { responses: content.responses || [] },
+      payload: { responses: content.history || [] },
     });
-  }, [content.responses]);
+  }, [content.history]);
 
   return (
     <WorkSpacePreviewContext.Provider value={[state, dispatch]}>
