@@ -6,6 +6,7 @@ import WorkspaceInputContainer from "./WorkspaceInput/WorkspaceInputContainer";
 import WorkSpacePreviewContainer from "./WorkspacePreview/WorkSpacePreviewContainer";
 import WorkSpacePreviewProvider from "../../../providers/WorkspacePreview/WorkSpacePreviewProvider";
 import { useProjectStore } from "../../../stores/ProjectStore";
+import { useHistoryStore } from "../../../stores/historyStore";
 
 // TODO: remove content from files context use filemanger content insted
 export default function WorkspaceContainer() {
@@ -15,6 +16,13 @@ export default function WorkspaceContainer() {
 
   const container = useRef(null);
   const [isMounted, setIsMounted] = useState(false);
+  const initHistoryStore = useHistoryStore((state) => state.init);
+
+  useEffect(() => {
+    if (content && content.history) {
+      initHistoryStore(content.history.order, content.history.entries);
+    }
+  }, []);
 
   useEffect(() => {
     setIsMounted(true);

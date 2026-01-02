@@ -350,20 +350,27 @@ export class File extends FSNode {
     }
 
     const newEntry = await generateEntry(time, content, response, error);
-    console.log(newEntry);
 
-    const history = [newEntry, ...content.history];
+    const updateEntries = { ...content.history.entries };
+
+    updateEntries[newEntry.id] = newEntry;
 
     if (history.length >= 5) {
       // ! Agregar la logica de respuestas fijadas
       history.splice(5);
     }
 
-    updateContentOfOpenFile(currentFile, {
-      ...content,
-      history,
-      isRuning: false,
-    });
+    updateContentOfOpenFile(
+      currentFile,
+      {
+        ...content,
+        history: {
+          entries: updateEntries,
+          order: [newEntry.id, ...content.history.order],
+        },
+      },
+      true
+    );
   }
 
   abort() {

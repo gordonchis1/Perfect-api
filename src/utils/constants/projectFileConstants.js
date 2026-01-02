@@ -5,7 +5,10 @@ export const fileContentDefault = {
     finalUrl: "",
     queryParams: [],
   },
-  history: [],
+  history: {
+    entires: {},
+    order: [],
+  },
   headers: [
     { key: "Accept", value: "*/*", isActive: true },
     {

@@ -15,7 +15,6 @@ export default function WorkSpaceInputFormInputUrl() {
   const updateContentOfOpenFile = useProjectStore(
     (store) => store.updateContentOfOpenFile
   );
-  console.log(content);
 
   useEffect(() => {
     if (currentFileId) {

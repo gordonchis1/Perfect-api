@@ -1,55 +1,48 @@
 import useWorkspacePreviewContext from "../../../../../../../Hooks/useWorkspacePreviewContext";
 import { WORKSPACE_PREVIEW_ACTIONS } from "../../../../../../../providers/WorkspacePreview/WorkSpacePreviewProvider";
+import { useHistoryStore } from "../../../../../../../stores/historyStore";
 import { determineColor } from "../../../../../../../utils/constants/statusColor";
 import "./ResponseSelectorOption.css";
 
 export default function ResponseSelectorOption({ setIsOpen }) {
-  const [workspacePreviewContext, workspacePreviewContextDispatch] =
-    useWorkspacePreviewContext();
+  const history = useHistoryStore((store) => store.history);
+  const setCurrentId = useHistoryStore((store) => store.setCurrentId);
+  console.log(history);
 
-  const handleChangeResponse = (index) => {
+  const handleChangeResponse = (id) => {
+    setCurrentId(id);
     setIsOpen(false);
-    workspacePreviewContextDispatch({
-      type: WORKSPACE_PREVIEW_ACTIONS.SET_CURRENT_RESPONSE_IDX,
-      payload: index,
-    });
   };
 
   return (
     <div className="responses-selector_options-container">
-      {workspacePreviewContext.responses.map((response, index) => {
+      {history.order.map((id, index) => {
+        const entry = history.entries[id];
         return (
           <button
             style={{
               background:
-                index === workspacePreviewContext.currentResponseIdx
-                  ? "var(--primary-transparent)"
-                  : "",
-              color:
-                index === workspacePreviewContext.currentResponseIdx
-                  ? "var(--primary)"
-                  : "",
+                id === history.currentId ? "var(--primary-transparent)" : "",
+              color: id === history.currentId ? "var(--primary)" : "",
               border:
-                index === workspacePreviewContext.currentResponseIdx
-                  ? "1px solid var(--primary)"
-                  : "",
+                id === history.currentId ? "1px solid var(--primary)" : "",
             }}
             className="responses-selector_option"
             key={index}
             onClick={() => {
-              handleChangeResponse(index);
+              handleChangeResponse(id);
             }}
           >
             <span
               className="selector_option-status"
               style={{
-                color: determineColor(response?.status).color,
-                background: determineColor(response?.status).bg,
+                color: determineColor(entry?.status).color,
+                background: determineColor(entry.status).bg,
               }}
             >
-              {response?.status !== 0 ? response?.status : "Error"}
+              {entry?.status !== 0 ? entry?.status : "Error"}
             </span>
-            <span>{response?.url}</span>
+            <span>{entry?.url}</span>
           </button>
         );
       })}
