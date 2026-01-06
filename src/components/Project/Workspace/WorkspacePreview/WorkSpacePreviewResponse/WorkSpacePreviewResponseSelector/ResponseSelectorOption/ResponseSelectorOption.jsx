@@ -7,7 +7,6 @@ import "./ResponseSelectorOption.css";
 export default function ResponseSelectorOption({ setIsOpen }) {
   const history = useHistoryStore((store) => store.history);
   const setCurrentId = useHistoryStore((store) => store.setCurrentId);
-  console.log(history);
 
   const handleChangeResponse = (id) => {
     setCurrentId(id);

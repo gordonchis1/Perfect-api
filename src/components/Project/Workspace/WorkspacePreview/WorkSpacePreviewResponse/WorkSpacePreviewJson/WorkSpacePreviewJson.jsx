@@ -1,5 +1,4 @@
 import "./WorkSpacePreviewJson.css";
-import useWorkspacePreviewContext from "../../../../../../Hooks/useWorkspacePreviewContext";
 import { Editor } from "@monaco-editor/react";
 import LoaderSpiner from "../../../../../Global/LoaderSpiner/LoaderSpiner";
 import { useEffect, useRef, useState } from "react";
@@ -10,6 +9,7 @@ import {
 import { useUserConfigStore } from "../../../../../../stores/UserConfigStore";
 import { fileContentDefault } from "../../../../../../utils/constants/ProjectFileConstants";
 import { useProjectStore } from "../../../../../../stores/ProjectStore";
+import useCurrentEntry from "../../../../../../Hooks/useCurrentEntry";
 
 export default function WorkSpacePreviewJson() {
   const [line, setLine] = useState({
@@ -18,9 +18,9 @@ export default function WorkSpacePreviewJson() {
     endLineNumber: undefined,
     endColumn: undefined,
   });
-  const [workspacePreviewContext] = useWorkspacePreviewContext();
   const addFile = useProjectStore((store) => store.addFile);
   const currentFileId = useProjectStore((store) => store.currentFileId);
+  const currentEntry = useCurrentEntry();
 
   const config = useUserConfigStore((state) => state.config);
   const editorRef = useRef(null);
@@ -138,17 +138,15 @@ export default function WorkSpacePreviewJson() {
 
   return (
     <div ref={containerRef} className="json-preview_container">
-      {workspacePreviewContext.responses.length > 0 && (
+      {currentEntry?.response?.body?.raw && (
         <Editor
           loading={<LoaderSpiner size={"70px"} />}
           height={"100%"}
           defaultLanguage="json"
-          value={JSON.parse(
-            JSON.stringify(
-              workspacePreviewContext.responses[
-                workspacePreviewContext.currentResponseIdx
-              ].response.body.raw
-            )
+          value={JSON.stringify(
+            currentEntry?.response?.body?.raw || "No Content",
+            null,
+            2
           )}
           onMount={(editor, monaco) => handleOnEditorMount(editor, monaco)}
           beforeMount={(monaco) => {

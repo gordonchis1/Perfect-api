@@ -8,6 +8,7 @@ import useWidthObserver from "../../Hooks/useWidthObserver";
 import WorkspaceContainer from "./Workspace/WorkspaceContainer";
 import { useProjectStore } from "../../stores/ProjectStore";
 import { useParams } from "react-router";
+import { useHistoryStore } from "../../stores/historyStore";
 
 export default function Project() {
   const container = useRef(null);
@@ -15,6 +16,17 @@ export default function Project() {
   const [isMounted, setIsMounted] = useState(false);
   const initProjectStore = useProjectStore((state) => state.init);
   const resetProjectStore = useProjectStore((state) => state.reset);
+  const content = useProjectStore(
+    (store) => store.openFiles[store.currentFileId]?.content
+  );
+  const initHistoryStore = useHistoryStore((state) => state.init);
+  const openFile = useProjectStore((store) => store.currentFileId);
+
+  useEffect(() => {
+    if (content && content.history && openFile) {
+      initHistoryStore(content.history.order, content.history.entries);
+    }
+  }, [openFile]);
 
   useEffect(() => {
     if (id) {

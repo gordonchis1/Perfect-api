@@ -6,6 +6,7 @@ import { detectFormat } from "../../../../../utils/detectFromatResponses";
 import { WORKSPACE_PREVIEW_ACTIONS } from "../../../../../providers/WorkspacePreview/WorkSpacePreviewProvider";
 import WorkSpacePreviewText from "./WorkSpacePreviewText/WorkSpacePreviewText";
 import WorksSpacePreviewHtml from "./WorkSpacePreviewHtml/WorkSpacePreviewHtml";
+import useCurrentEntry from "../../../../../Hooks/useCurrentEntry";
 
 const renderPreviewType = {
   json: <WorkSpacePreviewJson />,
@@ -14,30 +15,27 @@ const renderPreviewType = {
 };
 
 export default function WorkSpacePreviewContainer() {
-  const [responseType, setResponseType] = useState(undefined);
+  const [responseType, setResponseType] = useState("json");
   const [workspacePreviewContext, workspacePreviewContextDispatcher] =
     useWorkspacePreviewContext();
+
   useEffect(() => {
     workspacePreviewContextDispatcher({
       type: WORKSPACE_PREVIEW_ACTIONS.SET_CURRENT_RESPONSE_IDX,
       payload: 0,
     });
   }, [workspacePreviewContext.responses]);
+  const currentEntry = useCurrentEntry();
 
-  useEffect(() => {
-    const response =
-      workspacePreviewContext.responses[
-        workspacePreviewContext.currentResponseIdx
-      ]?.response;
-
-    if (response !== undefined) {
-      setResponseType(detectFormat(response));
-    }
-  }, [workspacePreviewContext]);
+  // useEffect(() => {
+  // if (currentEntry?.response?.body?.raw !== undefined) {
+  // setResponseType(detectFormat(currentEntry.response.body.raw));
+  // }
+  // }, []);
 
   return (
     <>
-      {workspacePreviewContext.responses.length > 0 && (
+      {currentEntry && (
         <div className="workspace-preview_response-container">
           {renderPreviewType[responseType]}
         </div>

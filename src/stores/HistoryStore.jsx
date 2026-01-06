@@ -22,6 +22,22 @@ export const useHistoryStore = create((set, get) => ({
     set({ history: { order, entries: entriesObj, currentId: latestId } });
   },
 
+  addEntry: (id, entry) => {
+    set((store) => ({
+      history: {
+        order: [id, ...store.history.order],
+        entries: {
+          ...store.history.entries,
+          [id]: {
+            url: entry.request.finalUrl,
+            status: entry.response.status,
+          },
+        },
+        currentId: id,
+      },
+    }));
+  },
+
   setCurrentId: (id) => {
     set((store) => ({
       history: {

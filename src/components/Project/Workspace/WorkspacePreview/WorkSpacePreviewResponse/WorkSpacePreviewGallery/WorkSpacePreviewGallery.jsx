@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import useWorkspacePreviewContext from "../../../../../../Hooks/useWorkspacePreviewContext";
 import {
   findLinks,
   isImageUrl,
@@ -7,16 +6,14 @@ import {
 } from "../../../../../../utils/findLinks";
 import "./WorkSpacePreviewGallery.css";
 import PreviewGalleryMedia from "./PreviewGalleryMedia/PreviewGalleryMedia";
+import useCurrentEntry from "../../../../../../Hooks/useCurrentEntry";
 
 export default function WorkSpacePreviewGallery() {
-  const [workspacePreviewContext] = useWorkspacePreviewContext();
   const [media, setMedia] = useState([]);
+  const currentEntry = useCurrentEntry();
 
   useEffect(() => {
-    const response =
-      workspacePreviewContext.responses[
-        workspacePreviewContext.currentResponseIdx
-      ];
+    const response = currentEntry?.response?.body?.raw || "{}";
 
     const links = findLinks(response);
 
@@ -29,7 +26,7 @@ export default function WorkSpacePreviewGallery() {
     });
 
     setMedia(Array.from(new Set(mediaArr)));
-  }, [workspacePreviewContext.currentResponseIdx, workspacePreviewContext]);
+  }, []);
 
   return (
     <div className="workspace-preview_gallery-container custom-scroll-bar">

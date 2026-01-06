@@ -371,6 +371,8 @@ export class File extends FSNode {
       },
       true
     );
+
+    return newEntry;
   }
 
   abort() {

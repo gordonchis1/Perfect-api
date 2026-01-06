@@ -2,6 +2,7 @@ import "./WorkSpaceInputFormUrlButtonRun.css";
 import { Play } from "lucide-react";
 import { useProjectStore } from "../../../../../../stores/ProjectStore";
 import { File } from "../../../../../../utils/ProjectFileObject";
+import { useHistoryStore } from "../../../../../../stores/historyStore";
 
 export default function WorkSpaceInputFormUrlButtonRun() {
   const content = useProjectStore(
@@ -9,6 +10,7 @@ export default function WorkSpaceInputFormUrlButtonRun() {
   );
   const currnetFileId = useProjectStore((store) => store.currentFileId);
   const fileManagerState = useProjectStore((store) => store.vfs);
+  const addEntry = useHistoryStore((store) => store.addEntry);
 
   const handleRun = async () => {
     if (!content.url.finalUrl) return;
@@ -16,7 +18,8 @@ export default function WorkSpaceInputFormUrlButtonRun() {
 
     const node = fileManagerState.getNodeById(currnetFileId);
     if (node instanceof File) {
-      node.run();
+      const entry = await node.run();
+      addEntry(entry.id, entry);
     }
   };
 

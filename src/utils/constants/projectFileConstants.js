@@ -6,7 +6,7 @@ export const fileContentDefault = {
     queryParams: [],
   },
   history: {
-    entires: {},
+    entries: {},
     order: [],
   },
   headers: [

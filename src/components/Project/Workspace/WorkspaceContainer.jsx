@@ -16,13 +16,6 @@ export default function WorkspaceContainer() {
 
   const container = useRef(null);
   const [isMounted, setIsMounted] = useState(false);
-  const initHistoryStore = useHistoryStore((state) => state.init);
-
-  useEffect(() => {
-    if (content && content.history) {
-      initHistoryStore(content.history.order, content.history.entries);
-    }
-  }, []);
 
   useEffect(() => {
     setIsMounted(true);

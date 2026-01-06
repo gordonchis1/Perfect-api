@@ -3,7 +3,6 @@ import {
   jsonInputForTargetLanguage,
   quicktype,
 } from "quicktype-core";
-import useWorkspacePreviewContext from "../../../../../Hooks/useWorkspacePreviewContext";
 import "./WorkSpacePreviewTypes.css";
 import { useEffect, useRef, useState } from "react";
 import PreviewTypesCopyButton from "./PreviewTypesCopyButton/PreviewTypesCopyButton";
@@ -12,31 +11,24 @@ import { supportedLanguages } from "../../../../../utils/constants/LanguagesSele
 import { Editor } from "@monaco-editor/react";
 import LoaderSpiner from "../../../../Global/LoaderSpiner/LoaderSpiner";
 import { useUserConfigStore } from "../../../../../stores/UserConfigStore";
+import useCurrentEntry from "../../../../../Hooks/useCurrentEntry";
 
 export default function WorkSpacePreviewTypes() {
   const syntaxHighlighterRef = useRef(null);
   const config = useUserConfigStore((state) => state.config);
   const codeBlockContainerRef = useRef(null);
-  const [workspacePreviewContext] = useWorkspacePreviewContext();
   const [types, setTypes] = useState("");
   const [currentLanguage, setCurrentLanguage] = useState(
     supportedLanguages.typescript
   );
+  const currentEntry = useCurrentEntry();
 
   const convertjsonToTypes = async (targetLanguague) => {
     const jsonInput = jsonInputForTargetLanguage(targetLanguague);
 
     await jsonInput.addSource({
       name: "Response",
-      samples: [
-        JSON.stringify(
-          workspacePreviewContext.responses[
-            workspacePreviewContext.currentResponseIdx
-          ].response,
-          null,
-          2
-        ),
-      ],
+      samples: [JSON.stringify(currentEntry?.response?.body?.raw)],
     });
 
     const inputData = new InputData();
@@ -60,7 +52,7 @@ export default function WorkSpacePreviewTypes() {
     };
 
     getTypes();
-  }, [workspacePreviewContext, currentLanguage]);
+  }, [currentEntry, currentLanguage]);
 
   useEffect(() => {
     if (syntaxHighlighterRef.current && codeBlockContainerRef.current) {
@@ -70,7 +62,7 @@ export default function WorkSpacePreviewTypes() {
 
   return (
     <>
-      {workspacePreviewContext.responses.length > 0 && (
+      {currentEntry?.response?.body?.raw && (
         <div className="workspace-preview_types-container">
           <PreviewTypesLanguagesSelector
             currentLanguage={currentLanguage}

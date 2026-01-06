@@ -21,7 +21,11 @@ async function readRawBody(response) {
   let raw;
 
   if (isBinary) {
+    // mejorar esto
+
     raw = await response.arrayBuffer();
+  } else if (contentType?.includes("application/json")) {
+    raw = await response.json();
   } else {
     raw = await response.text();
   }
