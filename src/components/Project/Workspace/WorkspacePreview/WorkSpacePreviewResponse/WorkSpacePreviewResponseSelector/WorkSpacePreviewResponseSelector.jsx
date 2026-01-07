@@ -15,7 +15,6 @@ export default function WorkSpacePreviewResponseSelector() {
   const toggleOpen = () => {
     setIsOpen(!isOpen);
   };
-  console.log(history);
 
   return (
     <div

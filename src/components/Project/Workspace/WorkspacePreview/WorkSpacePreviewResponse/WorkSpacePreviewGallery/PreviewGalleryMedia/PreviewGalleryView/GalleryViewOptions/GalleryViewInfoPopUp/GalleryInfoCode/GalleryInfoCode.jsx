@@ -1,13 +1,13 @@
 import { Editor } from "@monaco-editor/react";
 import { useUserConfigStore } from "../../../../../../../../../../../stores/UserConfigStore";
-import useWorkspacePreviewContext from "../../../../../../../../../../../Hooks/useWorkspacePreviewContext";
 import LoaderSpiner from "../../../../../../../../../../Global/LoaderSpiner/LoaderSpiner";
 import { useState } from "react";
 import "./GalleryInfoCode.css";
+import useCurrentEntry from "../../../../../../../../../../../Hooks/useCurrentEntry";
 
 export default function GalleryInfoCode({ url }) {
   const config = useUserConfigStore((state) => state.config);
-  const [content] = useWorkspacePreviewContext();
+  const currentEntry = useCurrentEntry();
   const [line, setLine] = useState({
     startLineNumber: 1,
     startColumn: undefined,
@@ -43,11 +43,7 @@ export default function GalleryInfoCode({ url }) {
       <span>Codigo:</span>
       <Editor
         onMount={handleOnEditorMount}
-        value={JSON.stringify(
-          content.responses[content.currentResponseIdx].response,
-          null,
-          2
-        )}
+        value={JSON.stringify(currentEntry?.response?.body?.raw, null, 2)}
         line={line.startLineNumber}
         language="json"
         width={"100%"}

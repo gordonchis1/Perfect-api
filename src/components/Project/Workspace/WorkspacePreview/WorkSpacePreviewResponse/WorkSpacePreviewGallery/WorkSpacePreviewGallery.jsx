@@ -26,7 +26,7 @@ export default function WorkSpacePreviewGallery() {
     });
 
     setMedia(Array.from(new Set(mediaArr)));
-  }, []);
+  }, [currentEntry]);
 
   return (
     <div className="workspace-preview_gallery-container custom-scroll-bar">

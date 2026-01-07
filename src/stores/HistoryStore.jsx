@@ -13,7 +13,7 @@ export const useHistoryStore = create((set, get) => ({
     for (const id of order) {
       entriesObj[id] = {
         url: entries[id].request.finalUrl,
-        status: entries[id].response.status,
+        status: entries[id]?.response?.status,
       };
     }
 
@@ -30,7 +30,7 @@ export const useHistoryStore = create((set, get) => ({
           ...store.history.entries,
           [id]: {
             url: entry.request.finalUrl,
-            status: entry.response.status,
+            status: entry.response?.status,
           },
         },
         currentId: id,

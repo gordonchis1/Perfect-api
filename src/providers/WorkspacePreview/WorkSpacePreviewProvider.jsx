@@ -45,7 +45,6 @@ export default function WorkSpacePreviewProvider({ children }) {
   );
 
   useEffect(() => {
-    console.log(content.history);
     dispatch({
       type: WORKSPACE_PREVIEW_ACTIONS.CHANGE_RESPONSES,
       payload: { responses: content.history || [] },
