@@ -6,6 +6,7 @@ import { fileContentDefault } from "./constants/ProjectFileConstants";
 import { fetch } from "@tauri-apps/plugin-http";
 import { useProjectStore } from "../stores/ProjectStore";
 import { generateEntry } from "./entry/entry";
+import { canHaveBody } from "./fetch/costants";
 
 const defaultOnChangeFunction = () => {
   console.log("Vfs Changed");
@@ -297,6 +298,7 @@ export class File extends FSNode {
     const toggleIsRuning = useProjectStore.getState().toggleIsRuning;
     const updateContentOfOpenFile =
       useProjectStore.getState().updateContentOfOpenFile;
+    const body = content.body;
 
     let time;
     const start = performance.now();
@@ -323,13 +325,35 @@ export class File extends FSNode {
     toggleIsRuning(this);
     try {
       this.controller = new AbortController();
-
-      // ? Do the request
-      response = await fetch(url.finalUrl, {
+      const fetchOptions = {
         method: type,
         signal: this.controller.signal,
         headers: headersToSend,
-      });
+      };
+
+      if (canHaveBody(type) && body.type !== "noBody" && body.raw !== null) {
+        switch (body.type) {
+          case "json":
+            try {
+              fetchOptions.body = JSON.stringify(JSON.parse(body.raw));
+            } catch {
+              error = {
+                type: "validation",
+                message: "Invalid JSON body",
+              };
+            }
+            break;
+          case "text":
+            fetchOptions.body = body.raw;
+            break;
+          case "form":
+            fetchOptions.body = body.raw;
+            break;
+        }
+      }
+      console.log(fetchOptions);
+      // ? Do the request
+      response = await fetch(url.finalUrl, fetchOptions);
 
       if (!response.ok) {
         error = {
@@ -350,7 +374,6 @@ export class File extends FSNode {
     }
 
     const newEntry = await generateEntry(time, content, response, error);
-    console.log(newEntry);
 
     const updateEntries = { ...content.history.entries };
 

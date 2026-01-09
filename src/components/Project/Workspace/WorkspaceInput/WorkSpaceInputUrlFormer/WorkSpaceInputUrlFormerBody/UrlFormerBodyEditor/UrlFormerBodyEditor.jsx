@@ -12,7 +12,7 @@ export default function UrlFormerBodyEditor({ language }) {
   );
 
   const [updatedContent, setUpdatedContent] = useState(
-    content?.body?.bodyContent || ""
+    content?.body?.raw || ""
   );
   const currentFileId = useProjectStore((store) => store.currentFileId);
   const updateContentOfOpenFile = useProjectStore(
@@ -20,7 +20,7 @@ export default function UrlFormerBodyEditor({ language }) {
   );
 
   useEffect(() => {
-    setUpdatedContent(content?.body?.bodyContent || "");
+    setUpdatedContent(content?.body?.raw || "");
   }, [content]);
 
   const handleChangeEditor = (value) => {
@@ -28,7 +28,7 @@ export default function UrlFormerBodyEditor({ language }) {
       ...content,
       body: {
         ...content.body,
-        bodyContent: value,
+        raw: value,
       },
     });
   };
@@ -46,7 +46,7 @@ export default function UrlFormerBodyEditor({ language }) {
         setUpdatedContent(value);
       }}
       options={{
-        fontSize: 16,
+        fontSize: config.preferences.editor.editorFontSize,
         minimap: {
           enabled: config.preferences.editor.editorMiniMap || false,
         },

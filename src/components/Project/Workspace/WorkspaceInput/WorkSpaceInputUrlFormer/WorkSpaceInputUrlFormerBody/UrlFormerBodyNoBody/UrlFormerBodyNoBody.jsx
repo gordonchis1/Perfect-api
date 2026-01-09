@@ -16,7 +16,8 @@ export default function UrlFormerBodyNoBody() {
       ...content,
       body: {
         ...content.body,
-        bodyContent: null,
+        raw: null,
+        type: "noBody",
       },
     });
   }, []);

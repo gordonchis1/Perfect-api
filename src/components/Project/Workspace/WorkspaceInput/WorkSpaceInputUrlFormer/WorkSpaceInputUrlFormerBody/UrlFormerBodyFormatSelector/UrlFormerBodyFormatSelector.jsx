@@ -50,7 +50,7 @@ export default function UrlFormerBodyFormatSelector({
       ...content,
       body: {
         ...content.body,
-        bodyType: format,
+        type: supportedBodyFormat[format].type,
       },
       headers: updatedHeaders,
     });
@@ -69,7 +69,7 @@ export default function UrlFormerBodyFormatSelector({
           setIsOpen(!isOpen);
         }}
       >
-        <span>{currentFormat}</span>
+        <span>{supportedBodyFormat[currentFormat].text}</span>
         <ChevronDown size={20} />
       </button>
       {isOpen && (
@@ -84,7 +84,7 @@ export default function UrlFormerBodyFormatSelector({
                     handleChangeFormat(format);
                   }}
                 >
-                  {format}
+                  {supportedBodyFormat[format].text}
                 </div>
               );
             }

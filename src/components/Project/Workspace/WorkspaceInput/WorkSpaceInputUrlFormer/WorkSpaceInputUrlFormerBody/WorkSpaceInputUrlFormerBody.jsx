@@ -6,22 +6,30 @@ import UrlFormerBodyNoBody from "./UrlFormerBodyNoBody/UrlFormerBodyNoBody";
 import { useProjectStore } from "../../../../../../stores/ProjectStore";
 
 const supportedBodyFormat = {
-  "Plain Text": {
+  text: {
     contentType: "text/plain",
     component: <UrlFormerBodyEditor language={"plaintext"} />,
     defaultValue: "",
+    type: "text",
+    text: "Plain Text",
   },
-  JSON: {
+  json: {
+    type: "json",
+    text: "JSON",
     contentType: "application/json",
     component: <UrlFormerBodyEditor language={"json"} />,
     defaultValue: "{\n}",
   },
-  XML: {
+  xml: {
+    type: "xml",
+    text: "XML",
     contentType: "application/xml",
     component: <UrlFormerBodyEditor language={"xml"} />,
     defaultValue: "<>",
   },
-  "No body": {
+  noBody: {
+    text: "No body",
+    type: "noBody",
     contentType: null,
     component: <UrlFormerBodyNoBody />,
     defaultValue: "",
@@ -33,18 +41,18 @@ export default function WorkSpaceInputUrlFormerBody() {
     (store) => store.openFiles[store.currentFileId]?.content
   );
   const [currentFormat, setCurrentFormat] = useState(
-    content?.body?.bodyType || "No body"
+    content?.body?.type || "noBody"
   );
 
   const currentFileId = useProjectStore((store) => store.currentFileId);
 
   useEffect(() => {
-    setCurrentFormat(content?.body?.bodyType || "No body");
-  }, [currentFileId, content.body.bodyType]);
+    setCurrentFormat(content?.body?.type || "noBody");
+  }, [currentFileId, content.body.type]);
 
   return (
     <div className="workspace-input-url-former_body-container">
-      {content?.body?.bodyContent !== undefined && (
+      {content?.body?.type !== undefined && (
         <UrlFormerBodyFormatSelector
           currentFormat={currentFormat}
           setCurrentFormat={setCurrentFormat}
