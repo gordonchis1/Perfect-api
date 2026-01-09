@@ -1,25 +1,21 @@
-import useWorkspacePreviewContext from "../../../../../../Hooks/useWorkspacePreviewContext";
 import { Editor } from "@monaco-editor/react";
 import LoaderSpiner from "../../../../../Global/LoaderSpiner/LoaderSpiner";
 import "./WorkSpacePreviewText.css";
 import { useUserConfigStore } from "../../../../../../stores/UserConfigStore";
+import useCurrentEntry from "../../../../../../Hooks/useCurrentEntry";
 
 export default function WorkSpacePreviewText() {
-  const [workspacePreviewContext] = useWorkspacePreviewContext();
+  const currentEntry = useCurrentEntry();
   const config = useUserConfigStore((state) => state.config);
 
   return (
     <div className="workspace-preview-response_text-preview-container">
-      {workspacePreviewContext.responses.length > 0 && (
+      {currentEntry && (
         <Editor
           loading={<LoaderSpiner size={"70px"} />}
           height={"100%"}
           defaultLanguage="text"
-          value={String(
-            workspacePreviewContext.responses[
-              workspacePreviewContext.currentResponseIdx
-            ].response
-          )}
+          value={String(currentEntry?.response?.body?.raw || "")}
           theme={config.preferences.editor.editorTheme || "vs-dark"}
           width={"100%"}
           options={{

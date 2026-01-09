@@ -9,21 +9,35 @@ const getResponseHeaders = (response) => {
   return headers;
 };
 
+const arrayBufferToBase64 = (buffer) => {
+  const blob = new Blob([buffer]);
+  const reader = new FileReader();
+
+  return new Promise((resolve, reject) => {
+    reader.onloadend = () => {
+      resolve(reader.result.toString().split(",")[1]);
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(blob);
+  });
+};
+
 async function readRawBody(response) {
   const contentType = response.headers.get("content-type");
 
   const isBinary =
     contentType &&
-    (contentType.includes("image/") ||
+    ((contentType.includes("image/") && !contentType.includes("xml")) ||
       contentType.includes("application/pdf") ||
       contentType.includes("application/octet-stream"));
 
   let raw;
 
   if (isBinary) {
-    // mejorar esto
+    const buffer = await response.arrayBuffer();
+    const blob = await arrayBufferToBase64(buffer);
 
-    raw = await response.arrayBuffer();
+    raw = blob;
   } else if (contentType?.includes("application/json")) {
     raw = await response.json();
   } else {

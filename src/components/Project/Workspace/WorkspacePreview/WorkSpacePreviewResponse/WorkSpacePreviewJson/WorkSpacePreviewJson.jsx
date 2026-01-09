@@ -132,9 +132,9 @@ export default function WorkSpacePreviewJson() {
     // ]);
   };
 
-  const handleBeforeMount = (monaco) => {
-    addMonacoThemes(monaco);
-  };
+  // const handleBeforeMount = (monaco) => {
+  //   addMonacoThemes(monaco);
+  // };
 
   return (
     <div ref={containerRef} className="json-preview_container">
@@ -149,9 +149,9 @@ export default function WorkSpacePreviewJson() {
             2
           )}
           onMount={(editor, monaco) => handleOnEditorMount(editor, monaco)}
-          beforeMount={(monaco) => {
-            handleBeforeMount(monaco);
-          }}
+          // beforeMount={(monaco) => {
+          // handleBeforeMount(monaco);
+          // }}
           line={line.startLineNumber}
           theme={config.preferences.editor.editorTheme || "vs-dark"}
           options={{

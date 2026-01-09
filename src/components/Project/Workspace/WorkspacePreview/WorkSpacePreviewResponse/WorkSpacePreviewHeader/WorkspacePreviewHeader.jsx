@@ -1,5 +1,8 @@
 import "./WorkspacePreviewHeader.css";
-import { determineColor } from "../../../../../../utils/constants/statusColor";
+import {
+  determineColor,
+  statusColors,
+} from "../../../../../../utils/constants/statusColor";
 import WorkSpacePreviewResponseSelector from "../WorkSpacePreviewResponseSelector/WorkSpacePreviewResponseSelector";
 import useCurrentEntry from "../../../../../../Hooks/useCurrentEntry";
 
@@ -12,16 +15,26 @@ export default function WorkspacePreviewHeader() {
         <span
           className="response-header_info-status-tag"
           style={{
-            background: determineColor(currentEntry?.response?.status).bg,
-            color: determineColor(currentEntry?.response?.status).color,
+            background: currentEntry?.error
+              ? statusColors.error.bg
+              : determineColor(currentEntry?.response?.status).bg,
+            color: currentEntry?.error
+              ? statusColors.error.color
+              : determineColor(currentEntry?.response?.status).color,
           }}
         >
           <span>
-            {currentEntry?.response?.status !== 0
-              ? currentEntry?.response?.status
-              : "Error"}
+            {currentEntry?.error && currentEntry?.error?.status
+              ? currentEntry?.error?.status
+              : currentEntry?.response?.status}
           </span>
-          <span>{currentEntry?.response?.statusText}</span>
+          <span>
+            {currentEntry?.error &&
+            currentEntry?.error?.type &&
+            !currentEntry?.response?.statusText
+              ? currentEntry?.error?.type
+              : currentEntry?.response?.statusText}
+          </span>
         </span>
         <span className="response-header_info-time-tag">
           <span className="response-header-info-time_time">Time: </span>

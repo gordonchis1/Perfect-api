@@ -341,7 +341,7 @@ export class File extends FSNode {
     } catch (err) {
       error = {
         type: err.name === "AbortError" ? "abort" : "network",
-        message: err.message,
+        message: err?.message || err,
       };
     } finally {
       // ? Change toggle is runing
@@ -350,6 +350,7 @@ export class File extends FSNode {
     }
 
     const newEntry = await generateEntry(time, content, response, error);
+    console.log(newEntry);
 
     const updateEntries = { ...content.history.entries };
 

@@ -6,7 +6,7 @@ import WorkspaceInputUrlHeadersNonEditableHeaders from "./WorkspaceInputUrlHeade
 import { Plus, Trash2 } from "lucide-react";
 import { useProjectStore } from "../../../../../../stores/ProjectStore";
 
-const nonEditableHeaders = ["Host", "Accept"];
+const nonEditableHeaders = ["Host"];
 
 export default function WorkspaceInputUrlHeaders() {
   const content = useProjectStore(
