@@ -35,11 +35,12 @@ export default function WorkspaceInputUrlCodeGenerator() {
         headers,
         postData: {
           mimeType: bodyType,
-          text: content.body.bodyContent,
+          text: content.body.raw,
         },
       });
 
       const options = { indent: "\t" };
+
       const output = await snippet.convert(
         currentTarget.key,
         client.key,

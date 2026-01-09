@@ -351,7 +351,7 @@ export class File extends FSNode {
             break;
         }
       }
-      console.log(fetchOptions);
+
       // ? Do the request
       response = await fetch(url.finalUrl, fetchOptions);
 
