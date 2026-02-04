@@ -28,7 +28,7 @@ export class VirtualFileSystem {
         node.name,
         node.isOpen,
         node.dirConfig,
-        node.id
+        node.id,
       );
       for (const child of node.children || []) {
         dir.addChild(this._buildFromJson(child));
@@ -131,7 +131,7 @@ export class VirtualFileSystem {
     const childrensOfParentNode = parentNode.children;
 
     const indexOfDeletedChildren = childrensOfParentNode.findIndex(
-      (children) => children.name === node.name
+      (children) => children.name === node.name,
     );
 
     if (indexOfDeletedChildren === -1)
@@ -277,7 +277,7 @@ export class File extends FSNode {
     name,
     content = fileContentDefault,
     isOpen = false,
-    id = nanoid()
+    id = nanoid(),
   ) {
     super(name, "file", isOpen, id);
     this.content = content;
@@ -374,15 +374,28 @@ export class File extends FSNode {
     }
 
     const newEntry = await generateEntry(time, content, response, error);
-
-    const updateEntries = { ...content.history.entries };
-
+    // const updateEntries = { ...content.history.entries };
+    const updateEntries = {};
+    let updatedOrder = [];
     updateEntries[newEntry.id] = newEntry;
 
-    if (history.length >= 5) {
-      // ! Agregar la logica de respuestas fijadas
-      history.splice(5);
+    const pinnedEntries = content.history.order.filter(
+      (id) => content.history.entries[id].isPinned == true,
+    );
+    const unPinnedEntries = content.history.order.filter(
+      (id) => content.history.entries[id].isPinned == false,
+    );
+    updatedOrder = unPinnedEntries.slice(0, 5);
+    updatedOrder.unshift(newEntry.id);
+    updatedOrder.unshift(...pinnedEntries);
+
+    for (let id of updatedOrder) {
+      if (content.history.entries[id]) {
+        updateEntries[id] = content.history.entries[id];
+      }
     }
+    console.log(updatedOrder);
+    console.log(Object.keys(updateEntries));
 
     updateContentOfOpenFile(
       currentFile,
@@ -393,7 +406,7 @@ export class File extends FSNode {
           order: [newEntry.id, ...content.history.order],
         },
       },
-      true
+      true,
     );
 
     return newEntry;
