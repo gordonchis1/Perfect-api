@@ -172,7 +172,7 @@ export const useProjectStore = create((set, get) => ({
       delete openFiles[id];
       const keys = Object.keys(openFiles);
 
-      if (keys.lenght === 0) {
+      if (keys.length === 0) {
         set({ currentFileId: null, openFiles });
         return;
       } else if (idx - 1 >= 0) {
@@ -241,7 +241,7 @@ export const useProjectStore = create((set, get) => ({
           openFiles: Object.keys(openFiles),
         },
         vfs,
-        get().projectId
+        get().projectId,
       );
     }
 

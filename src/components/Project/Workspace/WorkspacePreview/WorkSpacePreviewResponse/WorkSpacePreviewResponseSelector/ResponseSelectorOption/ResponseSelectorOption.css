@@ -11,12 +11,26 @@
   justify-content: center;
   align-items: center;
   gap: 10px;
+  min-width: 180px;
   border-radius: 4px;
+}
+
+.selector_option-url {
+  max-width: 250px;
+  overflow: hidden;
+  text-wrap: nowrap;
+  text-overflow: ellipsis;
 }
 
 .selector_option-status {
   padding: 4px 7px;
   border-radius: 5px;
+  min-width: 50px;
+  min-height: 30px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .responses-selector_option:hover {

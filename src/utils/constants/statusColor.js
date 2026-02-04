@@ -5,6 +5,7 @@ export const statusColors = {
 };
 
 export function determineColor(statusCode) {
+  if (statusCode == undefined) return statusColors.error;
   if (statusCode === 0) return statusColors.error;
   if (!statusCode) return statusColors.inactive;
   if (statusCode >= 200 && statusCode < 300) {

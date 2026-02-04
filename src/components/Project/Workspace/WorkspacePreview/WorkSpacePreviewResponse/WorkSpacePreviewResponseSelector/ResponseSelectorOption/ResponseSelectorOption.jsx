@@ -1,5 +1,4 @@
-import useWorkspacePreviewContext from "../../../../../../../Hooks/useWorkspacePreviewContext";
-import { WORKSPACE_PREVIEW_ACTIONS } from "../../../../../../../providers/WorkspacePreview/WorkSpacePreviewProvider";
+import { Pin } from "lucide-react";
 import { useHistoryStore } from "../../../../../../../stores/historyStore";
 import { determineColor } from "../../../../../../../utils/constants/statusColor";
 import "./ResponseSelectorOption.css";
@@ -13,10 +12,15 @@ export default function ResponseSelectorOption({ setIsOpen }) {
     setIsOpen(false);
   };
 
+  const handleTogglePin = (e) => {
+    e.stopPropagation();
+  };
+
   return (
-    <div className="responses-selector_options-container">
+    <div className="responses-selector_options-container custom-scroll-bar">
       {history.order.map((id, index) => {
         const entry = history.entries[id];
+
         return (
           <button
             style={{
@@ -39,9 +43,14 @@ export default function ResponseSelectorOption({ setIsOpen }) {
                 background: determineColor(entry.status).bg,
               }}
             >
-              {entry?.status !== 0 ? entry?.status : "Error"}
+              {entry?.status != undefined ? entry?.status : "Error"}
             </span>
-            <span>{entry?.url}</span>
+            <span className="selector_option-url">{entry?.url}</span>
+            <Pin
+              size={20}
+              onClick={handleTogglePin}
+              fill={entry?.isPinned ? "var(--primary-text-color)" : ""}
+            />
           </button>
         );
       })}

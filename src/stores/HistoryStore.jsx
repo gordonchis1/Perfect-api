@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-export const useHistoryStore = create((set, get) => ({
+export const useHistoryStore = create((set) => ({
   history: {
     order: [],
     entries: {},
@@ -14,6 +14,7 @@ export const useHistoryStore = create((set, get) => ({
       entriesObj[id] = {
         url: entries[id].request.finalUrl,
         status: entries[id]?.response?.status,
+        isPinned: entries[id]?.isPinned || false,
       };
     }
 
