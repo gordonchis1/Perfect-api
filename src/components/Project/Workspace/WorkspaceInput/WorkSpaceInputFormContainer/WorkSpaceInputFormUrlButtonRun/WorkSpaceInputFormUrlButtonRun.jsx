@@ -8,13 +8,15 @@ export default function WorkSpaceInputFormUrlButtonRun() {
   const content = useProjectStore(
     (store) => store.openFiles[currentFileId]?.content,
   );
+  const openFiles = useProjectStore((store) => store.openFiles);
   const fileManagerState = useProjectStore((store) => store.vfs);
 
   const handleRun = async () => {
     if (!content.url.finalUrl) return;
-    if (content.isRunning) return;
 
     const node = fileManagerState.getNodeById(currentFileId);
+    if (node.content.isRunning) return;
+
     if (node instanceof File) {
       await node.run();
     }
@@ -24,11 +26,15 @@ export default function WorkSpaceInputFormUrlButtonRun() {
     <button
       className="workspace-input-form_run-button "
       onClick={handleRun}
-      disabled={content.isRunning}
+      disabled={openFiles[currentFileId].isRunning}
       style={{
-        background: content.isRunning ? "var(--primary-transparent)" : "",
-        cursor: content.isRunning ? "not-allowed" : "",
-        color: content.isRunning ? "var(--muted-foreground)" : "",
+        background: openFiles[currentFileId].isRunning
+          ? "var(--primary-transparent)"
+          : "",
+        cursor: openFiles[currentFileId].isRunning ? "not-allowed" : "",
+        color: openFiles[currentFileId].isRunning
+          ? "var(--muted-foreground)"
+          : "",
       }}
     >
       <Play size={16} />
