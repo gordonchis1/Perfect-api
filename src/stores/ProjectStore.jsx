@@ -72,9 +72,12 @@ export const useProjectStore = create((set, get) => ({
     if (vfs instanceof VirtualFileSystem) {
       const node = vfs.getNodeById(id);
       if (node.type === "dir") {
-        node.addChild(new Directory("New directory", true));
+        const newNode = new Directory("New directory", true);
+        node.addChild(newNode);
         vfs.onChange();
         await get().save();
+
+        set({ ...get(), renameId: newNode.id });
       }
     }
   },
@@ -113,6 +116,8 @@ export const useProjectStore = create((set, get) => ({
 
       get().setCurrentFile(newNode.id);
       get().addOpenFile(newNode.id);
+
+      set({ ...get(), renameId: newNode.id });
     }
   },
 
