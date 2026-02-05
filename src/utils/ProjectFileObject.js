@@ -7,6 +7,7 @@ import { fetch } from "@tauri-apps/plugin-http";
 import { useProjectStore } from "../stores/ProjectStore";
 import { generateEntry } from "./entry/entry";
 import { canHaveBody } from "./fetch/costants";
+import { useHistoryStore } from "../stores/historyStore";
 
 const defaultOnChangeFunction = () => {
   console.log("Vfs Changed");
@@ -283,8 +284,8 @@ export class File extends FSNode {
     this.content = content;
     this.controller = null;
   }
-  toggleIsRuning() {
-    this.content = { ...this.content, isRuning: !this.content.isRuning };
+  toggleIsRunning() {
+    this.content = { ...this.content, isRunning: !this.content.isRunning };
   }
   updateContent(newContent) {
     this.content = newContent;
@@ -295,10 +296,12 @@ export class File extends FSNode {
     const currentFile = useProjectStore.getState().currentFileId;
     const content = openFiles[currentFile].content;
     const { type, url, headers } = content;
-    const toggleIsRuning = useProjectStore.getState().toggleIsRuning;
+    const toggleIsRunning = useProjectStore.getState().toggleIsRunning;
     const updateContentOfOpenFile =
       useProjectStore.getState().updateContentOfOpenFile;
     const body = content.body;
+    const updateHistory = useHistoryStore.getState().update;
+    const setCurrentHistoryId = useHistoryStore.getState().setCurrentId;
 
     let time;
     const start = performance.now();
@@ -321,8 +324,8 @@ export class File extends FSNode {
       }
     });
 
-    // ? Change toggle is runing
-    toggleIsRuning(this);
+    // ? Change toggle is running
+    toggleIsRunning(this);
     try {
       this.controller = new AbortController();
       const fetchOptions = {
@@ -368,13 +371,13 @@ export class File extends FSNode {
         message: err?.message || err,
       };
     } finally {
-      // ? Change toggle is runing
+      // ? Change toggle is running
       time = Math.abs(performance.now() - start);
-      toggleIsRuning(this);
+      toggleIsRunning(this);
     }
 
     const newEntry = await generateEntry(time, content, response, error);
-    // const updateEntries = { ...content.history.entries };
+
     const updateEntries = {};
     let updatedOrder = [];
     updateEntries[newEntry.id] = newEntry;
@@ -385,7 +388,10 @@ export class File extends FSNode {
     const unPinnedEntries = content.history.order.filter(
       (id) => content.history.entries[id].isPinned == false,
     );
-    updatedOrder = unPinnedEntries.slice(0, 5);
+
+    // ! add configuration for max entrys for each file
+    // ! replace 5 for user confiugration
+    updatedOrder = unPinnedEntries.slice(0, 20 - 1);
     updatedOrder.unshift(newEntry.id);
     updatedOrder.unshift(...pinnedEntries);
 
@@ -394,8 +400,9 @@ export class File extends FSNode {
         updateEntries[id] = content.history.entries[id];
       }
     }
-    console.log(updatedOrder);
-    console.log(Object.keys(updateEntries));
+
+    updateHistory(updatedOrder, updateEntries);
+    setCurrentHistoryId(newEntry.id);
 
     updateContentOfOpenFile(
       currentFile,
@@ -403,7 +410,7 @@ export class File extends FSNode {
         ...content,
         history: {
           entries: updateEntries,
-          order: [newEntry.id, ...content.history.order],
+          order: updatedOrder,
         },
       },
       true,

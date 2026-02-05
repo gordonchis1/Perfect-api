@@ -42,7 +42,7 @@ export const useProjectStore = create((set, get) => ({
         openFiles[fileId] = {
           content: node.content,
           name: node.name,
-          isRuning: node.content.isRuning,
+          isRunning: node.content.isRunning,
           id: node.id,
         };
       }
@@ -148,12 +148,12 @@ export const useProjectStore = create((set, get) => ({
     }
   },
 
-  toggleIsRuning: (node) => {
+  toggleIsRunning: (node) => {
     const openFiles = { ...get().openFiles };
     const vfs = get().vfs;
     if (node instanceof File && vfs instanceof VirtualFileSystem) {
-      openFiles[node.id].isRuning = !openFiles[node.id].isRuning;
-      node.toggleIsRuning();
+      openFiles[node.id].isRunning = !openFiles[node.id].isRunning;
+      node.toggleIsRunning();
       vfs.onChange();
     }
 
@@ -195,7 +195,7 @@ export const useProjectStore = create((set, get) => ({
       openFiles[id] = {
         content: node.content,
         name: node.name,
-        isRuning: node.content.isRuning,
+        isRunning: node.content.isRunning,
         id: node.id,
       };
       set({ openFiles });

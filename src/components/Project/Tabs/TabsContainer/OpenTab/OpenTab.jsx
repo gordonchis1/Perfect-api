@@ -47,7 +47,7 @@ export default function OpenTab({ file }) {
         closeContextMenu={closeContextMenu}
         setIsRename={setIsRename}
       />
-      <IsRuningIndicator isRuning={file.isRuning} size="8px" />
+      <IsRuningIndicator isRunning={file.isRunning} size="8px" />
       <File size={16} />
       {isRename ? (
         <OpenTabRenameForm

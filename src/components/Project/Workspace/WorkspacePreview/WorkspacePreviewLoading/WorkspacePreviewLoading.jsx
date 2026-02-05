@@ -4,7 +4,7 @@ import LoaderSpiner from "../../../../Global/LoaderSpiner/LoaderSpiner";
 import { useProjectStore } from "../../../../../stores/ProjectStore";
 import { File } from "../../../../../utils/ProjectFileObject";
 
-export default function WorkspacePreviewLoading({ url, isRuning }) {
+export default function WorkspacePreviewLoading({ url, isRunning }) {
   const [time, setTime] = useState(0);
   const fileManagerState = useProjectStore((store) => store.vfs);
   const currentFileId = useProjectStore((store) => store.currentFileId);
@@ -21,16 +21,16 @@ export default function WorkspacePreviewLoading({ url, isRuning }) {
   };
 
   useEffect(() => {
-    if (isRuning) {
+    if (isRunning) {
       startTimeRef.current = performance.now();
       rafRef.current = requestAnimationFrame(updateTime);
     }
 
     return () => cancelAnimationFrame(rafRef.current);
-  }, [isRuning]);
+  }, [isRunning]);
 
   const handleStop = () => {
-    if (!isRuning) return;
+    if (!isRunning) return;
 
     const node = fileManagerState.getNodeById(currentFileId);
 
@@ -47,7 +47,7 @@ export default function WorkspacePreviewLoading({ url, isRuning }) {
         <p className="preview-loading_timer">
           <span>Envinado peticion:</span> <span>{time}ms</span>
         </p>
-        {isRuning && (
+        {isRunning && (
           <button className="preview-loading_stop-btn" onClick={handleStop}>
             Stop
           </button>

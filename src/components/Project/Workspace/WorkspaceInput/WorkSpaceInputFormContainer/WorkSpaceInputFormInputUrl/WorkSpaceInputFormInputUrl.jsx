@@ -4,16 +4,16 @@ import { useProjectStore } from "../../../../../../stores/ProjectStore";
 
 export default function WorkSpaceInputFormInputUrl() {
   const content = useProjectStore(
-    (store) => store.openFiles[store.currentFileId]?.content
+    (store) => store.openFiles[store.currentFileId]?.content,
   );
   const currentFileId = useProjectStore((store) => store.currentFileId);
   const [inputValue, setInputValue] = useState(content.url.inputUrl);
   const [isValidUrl, setIsValidUrl] = useState(true);
-  const isRuning = useProjectStore(
-    (store) => store.openFiles[store.currentFileId].isRuning
+  const isRunning = useProjectStore(
+    (store) => store.openFiles[store.currentFileId].isRunning,
   );
   const updateContentOfOpenFile = useProjectStore(
-    (store) => store.updateContentOfOpenFile
+    (store) => store.updateContentOfOpenFile,
   );
 
   useEffect(() => {
@@ -64,7 +64,7 @@ export default function WorkSpaceInputFormInputUrl() {
       type="text"
       placeholder="URL"
       value={inputValue}
-      disabled={isRuning}
+      disabled={isRunning}
       className="workspace-input-form_url-input"
       style={{ border: isValidUrl ? "" : "1px solid red" }}
     />

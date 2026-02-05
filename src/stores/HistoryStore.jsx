@@ -39,6 +39,7 @@ export const useHistoryStore = create((set, get) => ({
   },
 
   addEntry: (id, entry) => {
+    // ! Deprecated - use update method instead
     set((store) => ({
       history: {
         order: [id, ...store.history.order],

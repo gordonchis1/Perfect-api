@@ -25,18 +25,18 @@ const defaultContainer = "Response";
 
 export default function WorkspacePreviewContent() {
   const content = useProjectStore(
-    (store) => store.openFiles[store.currentFileId]?.content
+    (store) => store.openFiles[store.currentFileId]?.content,
   );
-  const isRuning = useProjectStore(
-    (store) => store.openFiles[store.currentFileId].isRuning
+  const isRunning = useProjectStore(
+    (store) => store.openFiles[store.currentFileId].isRunning,
   );
 
   return (
     <div className="workspace-preview_multiple-container">
-      {isRuning ? (
+      {isRunning ? (
         <WorkspacePreviewLoading
           url={content.url.finalUrl}
-          isRuning={isRuning}
+          isRunning={isRunning}
         />
       ) : (
         <MultipleContainer

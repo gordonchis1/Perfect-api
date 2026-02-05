@@ -69,7 +69,7 @@ export default function FileManagerFileElement({
         }}
       >
         <div className="filemanager-element-content">
-          <IsRuningIndicator isRuning={node.content.isRuning} size="10px" />
+          <IsRuningIndicator isRunning={node.content.isRunning} size="10px" />
           <File size={17} />
           {renameState != null && renameState == node.id ? (
             <FileManagerRenameForm

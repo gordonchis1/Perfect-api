@@ -2,24 +2,21 @@ import "./WorkSpaceInputFormUrlButtonRun.css";
 import { Play } from "lucide-react";
 import { useProjectStore } from "../../../../../../stores/ProjectStore";
 import { File } from "../../../../../../utils/ProjectFileObject";
-import { useHistoryStore } from "../../../../../../stores/historyStore";
 
 export default function WorkSpaceInputFormUrlButtonRun() {
+  const currentFileId = useProjectStore((store) => store.currentFileId);
   const content = useProjectStore(
-    (store) => store.openFiles[store.currentFileId]?.content
+    (store) => store.openFiles[currentFileId]?.content,
   );
-  const currnetFileId = useProjectStore((store) => store.currentFileId);
   const fileManagerState = useProjectStore((store) => store.vfs);
-  const addEntry = useHistoryStore((store) => store.addEntry);
 
   const handleRun = async () => {
     if (!content.url.finalUrl) return;
-    if (content.isRuning) return;
+    if (content.isRunning) return;
 
-    const node = fileManagerState.getNodeById(currnetFileId);
+    const node = fileManagerState.getNodeById(currentFileId);
     if (node instanceof File) {
-      const entry = await node.run();
-      addEntry(entry.id, entry);
+      await node.run();
     }
   };
 
@@ -27,11 +24,11 @@ export default function WorkSpaceInputFormUrlButtonRun() {
     <button
       className="workspace-input-form_run-button "
       onClick={handleRun}
-      disabled={content.isRuning}
+      disabled={content.isRunning}
       style={{
-        background: content.isRuning ? "var(--primary-transparent)" : "",
-        cursor: content.isRuning ? "not-allowed" : "",
-        color: content.isRuning ? "var(--muted-foreground)" : "",
+        background: content.isRunning ? "var(--primary-transparent)" : "",
+        cursor: content.isRunning ? "not-allowed" : "",
+        color: content.isRunning ? "var(--muted-foreground)" : "",
       }}
     >
       <Play size={16} />
