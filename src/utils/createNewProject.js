@@ -2,7 +2,7 @@ import { readTextFile, writeTextFile } from "@tauri-apps/plugin-fs";
 import { getProjectsFile, getStorageDir } from "./createDocumentDir";
 import { join } from "@tauri-apps/api/path";
 import { nanoid } from "nanoid";
-import { VirtualFileSystem } from "./ProjectFileObject";
+import { Directory, File, VirtualFileSystem } from "./ProjectFileObject";
 
 // Function to create a new project in the projects.json file
 export async function createNewProjectInProjectsFile(newProject) {
@@ -29,15 +29,23 @@ export async function createNewProjectInProjectsFile(newProject) {
 export async function createNewProjectFile(newProject) {
   const path = await getStorageDir();
   const projectPath = await join(path, newProject.name + ".json");
+  const vfs = new VirtualFileSystem();
+  const rootDir = vfs.getDirByPath("/");
+
+  let initFile = null;
+  if (rootDir instanceof Directory) {
+    initFile = new File("New File");
+    rootDir.addChild(initFile);
+  }
 
   try {
     const projectTemplate = {
       id: newProject.id,
       name: newProject.name,
-      content: new VirtualFileSystem().toJSON(),
+      content: vfs.toJSON(),
       state: {
-        openFiles: [],
-        currentFile: "",
+        openFiles: [initFile.id],
+        currentFile: initFile.id,
       },
     };
 
@@ -61,7 +69,7 @@ async function theProjectAlredyExists(projectName) {
     const projects = JSON.parse(projectsData);
 
     const projectExists = projects.some(
-      (project) => project.name === projectName
+      (project) => project.name === projectName,
     );
     return projectExists;
   } catch (error) {
