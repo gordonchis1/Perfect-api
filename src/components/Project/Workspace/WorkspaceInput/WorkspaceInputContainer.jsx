@@ -10,6 +10,9 @@ const multipleContainerContainers = {
   URL: {
     component: <WorkSpaceInputUrlFormerContainer />,
   },
+  Auth: {
+    component: <div>Auth</div>,
+  },
   Headers: {
     component: <WorkspaceInputUrlHeaders />,
   },
