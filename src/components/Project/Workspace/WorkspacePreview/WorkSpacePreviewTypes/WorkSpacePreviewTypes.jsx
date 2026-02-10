@@ -66,42 +66,10 @@ export default function WorkSpacePreviewTypes() {
     <>
       {currentEntry?.response?.body?.raw && (
         <div className="workspace-preview_types-container">
-          {/* ! delate this div */}
-          <div style={{ display: "flex" }}>
-            <PreviewTypesLanguagesSelector
-              currentLanguage={currentLanguage}
-              setCurrentLanguage={setCurrentLanguage}
-            />
-            <Selector
-              value={currentLanguage}
-              onChange={(language) => {
-                setCurrentLanguage(language);
-              }}
-            >
-              <Selector.Trigger>
-                {({ selected, isOpen }) => (
-                  <button className="language-selector_button-selector">
-                    <span className="button-selector_language-icon">
-                      {selected.icon}
-                    </span>
-                    <span>{selected.name}</span>
-                    <ChevronDown size={20} />
-                  </button>
-                )}
-              </Selector.Trigger>
-              <Selector.Options>
-                {Object.values(supportedLanguages).map((language) => {
-                  return (
-                    <Selector.Option
-                      key={language.name}
-                      value={language}
-                      label={language.name}
-                    />
-                  );
-                })}
-              </Selector.Options>
-            </Selector>
-          </div>
+          <PreviewTypesLanguagesSelector
+            currentLanguage={currentLanguage}
+            setCurrentLanguage={setCurrentLanguage}
+          />
           <div
             className="preview-types_block-code-container"
             ref={codeBlockContainerRef}

@@ -1,19 +1,10 @@
-import { useContext, createContext, useState, useRef } from "react";
+import "./Selector.css";
+import { useState, useRef } from "react";
 import useClickAway from "../../../Hooks/useClickAway";
+import Option from "./DefaultsSelector/Option/Option";
+import { SelectorContext, useSelectorContext } from "./SelectorContext";
 
-const SelectorContext = createContext({
-  value: null,
-  onChange: () => {},
-  isOpen: false,
-});
-
-const useSelectorContext = () => {
-  const context = useContext(SelectorContext);
-  if (!context) {
-    throw new Error("useSelectorContext must be used within a Selector");
-  }
-  return context;
-};
+// ! Add: default compoenents
 
 export default function Selector({ value, onChange, children }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -39,24 +30,48 @@ export default function Selector({ value, onChange, children }) {
   );
 }
 
-Selector.Trigger = function Trigger({ children }) {
+Selector.Trigger = function Trigger({ children, label = null }) {
   const { isOpen, toggleOpen, value } = useSelectorContext();
 
+  let content;
+  if (typeof children === "function") {
+    content = children({ selected: value, isOpen });
+  } else if (children) {
+    content = children;
+  } else {
+    content = <Option label={label} />;
+  }
+
+  return <div onClick={toggleOpen}>{content}</div>;
+};
+
+Selector.Options = function Options({ children, className = "" }) {
+  const { isOpen } = useSelectorContext();
   return (
-    <button onClick={toggleOpen}>
-      {typeof children == "function"
-        ? children({ selected: value, isOpen })
-        : children}
-    </button>
+    <>
+      {isOpen && (
+        <div className={`${className} selector_options-container`}>
+          {children}
+        </div>
+      )}
+    </>
   );
 };
 
-Selector.Options = function Options({ children }) {
-  const { isOpen } = useSelectorContext();
-  return <>{isOpen && <div>{children}</div>}</>;
-};
+Selector.Option = function Option({ value, children, label = null }) {
+  const { onChange, value: selectedValue } = useSelectorContext();
 
-Selector.Option = function Option({ value, label }) {
-  const { onChange } = useSelectorContext();
-  return <button onClick={() => onChange(value)}>{label}</button>;
+  let content;
+  if (typeof children === "function") {
+    content = children({
+      selected: value,
+      isSelected: value === selectedValue,
+    });
+  } else if (children) {
+    content = children;
+  } else {
+    content = <p>Hola mundo</p>;
+  }
+
+  return <div onClick={() => onChange(value)}>{content}</div>;
 };

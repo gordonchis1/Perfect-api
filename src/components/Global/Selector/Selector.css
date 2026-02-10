@@ -1,0 +1,18 @@
+.selector_options-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  z-index: 1000000;
+
+  animation: open-options-container 0.3s ease forwards;
+}
+
+@keyframes open-options-container {
+  0% {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+  }
+}

@@ -14,9 +14,6 @@
   cursor: pointer;
   border-radius: 4px;
 }
-.preview-types_languages-selector-container {
-  width: fit-content;
-}
 
 .language-selector_button-selector:hover {
   background: var(--accent);
@@ -28,15 +25,9 @@
 }
 
 .language-selector_options-container {
-  position: absolute;
   background: var(--background);
-  display: flex;
-  flex-direction: column;
-  border: 1px solid var(--border);
-  border-radius: 4px;
   max-height: 700px;
   overflow-y: auto;
-  z-index: 500;
   padding: 5px;
 }
 
