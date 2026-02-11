@@ -3,9 +3,9 @@ import SettingsOptionText from "../SettingsOptionContainer/SettingsOptionText/Se
 import "./SettingsOptionSelector.css";
 import { userSettingsOptionsMap } from "../../../../../utils/userConfiguration/userSettingsConstants";
 import { useUserConfigStore } from "../../../../../stores/UserConfigStore";
-import { useRef, useState } from "react";
-import useClickAway from "../../../../../Hooks/useClickAway";
+import { useRef } from "react";
 import { Palette } from "lucide-react";
+import Selector from "../../../../Global/Selector/Selector";
 
 export default function SettingsOptionSelector({
   option,
@@ -19,8 +19,6 @@ export default function SettingsOptionSelector({
   const optionsContainerRef = useRef(null);
   const updateConfig = useUserConfigStore((state) => state.updateConfig);
   const config = useUserConfigStore((state) => state.config);
-  const [isOpen, setIsOpen] = useState(false);
-  useClickAway(optionsContainerRef, () => setIsOpen(false));
 
   const handleSelect = async (opt) => {
     const newConfig = { ...config };
@@ -29,12 +27,7 @@ export default function SettingsOptionSelector({
       onChange(opt, newConfig, tab, section);
     }
 
-    setIsOpen(false);
     await updateConfig(newConfig);
-  };
-
-  const handleOpenOptions = () => {
-    setIsOpen(!isOpen);
   };
 
   return (
@@ -48,36 +41,28 @@ export default function SettingsOptionSelector({
         className="option-selector_selector-container"
         ref={optionsContainerRef}
       >
-        <button
-          className="option-selector_btn-selected"
-          onClick={handleOpenOptions}
-        >
-          <Palette size={20} />
-          <span>{config[tab][section][option]}</span>
-        </button>
-        {isOpen && (
-          <div className="option-selector_container-options">
+        <Selector value={config[tab][section][option]} onChange={handleSelect}>
+          <Selector.Trigger>
+            <button className="option-selector_btn-selected">
+              <Palette size={20} />
+              <span>{config[tab][section][option]}</span>
+            </button>
+          </Selector.Trigger>
+          <Selector.Options>
             {userSettingsOptionsMap[option].options.map((opt) => (
-              <button
-                key={opt}
-                className="option-selector_button-option"
-                onClick={() => handleSelect(opt)}
-                style={
-                  opt === config[tab][section][option]
-                    ? {
-                        background: "var(--primary-transparent)",
-                        border: "1px solid var(--primary)",
-                        color: "var(--primary)",
-                      }
-                    : {}
-                }
-              >
-                {OptionIcon && <OptionIcon opt={opt} />}
-                <span>{opt}</span>
-              </button>
+              <Selector.Option key={opt} value={opt}>
+                {({ isSelected }) => (
+                  <div
+                    className={`${isSelected ? "settings-selector_option-content-selected" : ""} settings-selector_option-content`}
+                  >
+                    {OptionIcon && <OptionIcon opt={opt} />}
+                    <span>{opt}</span>
+                  </div>
+                )}
+              </Selector.Option>
             ))}
-          </div>
-        )}
+          </Selector.Options>
+        </Selector>
       </div>
     </SettingsOptionContainer>
   );

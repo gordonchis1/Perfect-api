@@ -59,12 +59,21 @@
   height: 20px;
 }
 
-@keyframes open-options-container {
-  0% {
-    transform: translateY(-50px);
-    opacity: 0;
-  }
-  100% {
-    transform: translateY(0);
-  }
+.settings-selector_option-content {
+  display: flex;
+  padding: 5px;
+  gap: 11px;
+  cursor: pointer;
+  font-size: 17px;
+  border-radius: 4px;
+}
+
+.settings-selector_option-content-selected {
+  background: var(--primary-transparent);
+  color: var(--primary);
+  border: 1px solid var(--primary);
+}
+
+.settings-selector_option-content:hover {
+  background: var(--primary-transparent);
 }
