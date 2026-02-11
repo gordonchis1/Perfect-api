@@ -3,6 +3,7 @@ import { useState, useRef } from "react";
 import useClickAway from "../../../../../../../Hooks/useClickAway";
 import { ChevronDown } from "lucide-react";
 import { useProjectStore } from "../../../../../../../stores/ProjectStore";
+import Selector from "../../../../../../Global/Selector/Selector";
 
 export default function UrlFormerBodyFormatSelector({
   currentFormat,
@@ -12,10 +13,10 @@ export default function UrlFormerBodyFormatSelector({
   const selectorContainerRef = useRef(null);
 
   const content = useProjectStore(
-    (store) => store.openFiles[store.currentFileId]?.content
+    (store) => store.openFiles[store.currentFileId]?.content,
   );
   const updateContentOfOpenFile = useProjectStore(
-    (store) => store.updateContentOfOpenFile
+    (store) => store.updateContentOfOpenFile,
   );
   const currentFileId = useProjectStore((store) => store.currentFileId);
 
@@ -25,10 +26,10 @@ export default function UrlFormerBodyFormatSelector({
 
   const handleChangeFormat = (format) => {
     const updatedHeaders = [...content.headers];
-    const contentType = supportedBodyFormat[format].contentType;
+    const contentType = format.contentType;
 
     const indexOfContentType = updatedHeaders.findIndex(
-      (header) => header.key === "Content-Type"
+      (header) => header.key === "Content-Type",
     );
     if (indexOfContentType > 0) {
       if (contentType !== null) {
@@ -50,7 +51,7 @@ export default function UrlFormerBodyFormatSelector({
       ...content,
       body: {
         ...content.body,
-        type: supportedBodyFormat[format].type,
+        type: format.type,
       },
       headers: updatedHeaders,
     });
@@ -59,38 +60,23 @@ export default function UrlFormerBodyFormatSelector({
   };
 
   return (
-    <div
-      className="url-former-body_body-format-selector-container"
-      ref={selectorContainerRef}
+    <Selector
+      value={supportedBodyFormat[currentFormat]}
+      onChange={handleChangeFormat}
     >
-      <button
-        className="format-selector_current-format-button"
-        onClick={() => {
-          setIsOpen(!isOpen);
-        }}
-      >
-        <span>{supportedBodyFormat[currentFormat].text}</span>
-        <ChevronDown size={20} />
-      </button>
-      {isOpen && (
-        <div className="format-selector_options-container">
-          {Object.keys(supportedBodyFormat).map((format) => {
-            if (format !== currentFormat) {
-              return (
-                <div
-                  key={format}
-                  className="format-selector_option"
-                  onClick={() => {
-                    handleChangeFormat(format);
-                  }}
-                >
-                  {supportedBodyFormat[format].text}
-                </div>
-              );
-            }
-          })}
-        </div>
-      )}
-    </div>
+      <Selector.Trigger label={supportedBodyFormat[currentFormat].text} />
+
+      <Selector.Options>
+        {Object.keys(supportedBodyFormat).map((format) => {
+          return (
+            <Selector.Option
+              key={format}
+              label={supportedBodyFormat[format].text}
+              value={supportedBodyFormat[format]}
+            />
+          );
+        })}
+      </Selector.Options>
+    </Selector>
   );
 }

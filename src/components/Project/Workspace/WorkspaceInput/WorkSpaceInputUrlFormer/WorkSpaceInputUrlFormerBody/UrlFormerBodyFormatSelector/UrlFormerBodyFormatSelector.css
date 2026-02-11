@@ -9,18 +9,6 @@
   z-index: 1000;
 }
 
-.format-selector_option {
-  font-family: var(--regular-font);
-
-  font-size: 16px;
-  padding: 10px 25px 10px 15px;
-  cursor: pointer;
-}
-
-.format-selector_option:hover {
-  background: var(--accent);
-}
-
 .former-body_body-content-container {
   flex: 1;
   margin-top: 10px;

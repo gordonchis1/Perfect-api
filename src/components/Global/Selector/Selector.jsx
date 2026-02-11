@@ -1,10 +1,9 @@
 import "./Selector.css";
 import { useState, useRef } from "react";
 import useClickAway from "../../../Hooks/useClickAway";
-import Option from "./DefaultsSelector/Option/Option";
+import OptionDefault from "./DefaultsSelector/OptionDefault/OptionDefault";
 import { SelectorContext, useSelectorContext } from "./SelectorContext";
-
-// ! Add: default compoenents
+import TriggerDefault from "./DefaultsSelector/TriggerDefault/TriggerDefault";
 
 export default function Selector({ value, onChange, children }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -39,7 +38,7 @@ Selector.Trigger = function Trigger({ children, label = null }) {
   } else if (children) {
     content = children;
   } else {
-    content = <Option label={label} />;
+    content = <TriggerDefault label={label} isOpen={isOpen} />;
   }
 
   return <div onClick={toggleOpen}>{content}</div>;
@@ -70,7 +69,9 @@ Selector.Option = function Option({ value, children, label = null }) {
   } else if (children) {
     content = children;
   } else {
-    content = <p>Hola mundo</p>;
+    content = (
+      <OptionDefault label={label} isSelected={value == selectedValue} />
+    );
   }
 
   return <div onClick={() => onChange(value)}>{content}</div>;

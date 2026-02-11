@@ -1,0 +1,24 @@
+.option-default_button-option {
+  font-family: var(--regular-font);
+
+  font-size: 16px;
+  padding: 10px 25px 10px 15px;
+  cursor: pointer;
+  background: transparent;
+  color: var(--primary-text-color);
+  width: 100%;
+  border: none;
+  outline: none;
+  display: flex;
+  border-radius: 4px;
+}
+
+.option-default_button-option-selected {
+  background: var(--primary-transparent);
+  border: 1px solid var(--primary);
+  color: var(--primary);
+}
+
+.option-default_button-option:hover {
+  background: var(--accent);
+}

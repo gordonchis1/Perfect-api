@@ -1,0 +1,33 @@
+.trigger-default_button {
+  display: flex;
+  gap: 5px;
+  font-family: var(--regular-font);
+  font-size: 16px;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  box-shadow: 0 0 0 0.3px var(--border);
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--primary-text-color);
+  cursor: pointer;
+}
+
+.trigger-default_button:hover {
+  background: var(--accent);
+}
+
+.trigger-icon-open {
+  animation: 0.3s rotate ease-in forwards;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(180deg);
+  }
+}

@@ -5,6 +5,10 @@
   z-index: 1000000;
 
   animation: open-options-container 0.3s ease forwards;
+
+  background: var(--background);
+  box-shadow: 0 0 0 0.2px var(--border);
+  padding: 2px;
 }
 
 @keyframes open-options-container {
