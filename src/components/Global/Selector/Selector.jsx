@@ -51,12 +51,12 @@ Selector.Trigger = function Trigger({ children, label = null }) {
   return <div onClick={toggleOpen}>{content}</div>;
 };
 
-Selector.Options = function Options({ children, className = "" }) {
+Selector.Options = function Options({ children, className = "", ...props }) {
   const { isOpen } = useSelectorContext();
   return (
     <>
       {isOpen && (
-        <div className={`${className} selector_options-container`}>
+        <div className={`${className} selector_options-container`} {...props}>
           {children}
         </div>
       )}
