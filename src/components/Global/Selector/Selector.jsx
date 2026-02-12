@@ -5,7 +5,12 @@ import OptionDefault from "./DefaultsSelector/OptionDefault/OptionDefault";
 import { SelectorContext, useSelectorContext } from "./SelectorContext";
 import TriggerDefault from "./DefaultsSelector/TriggerDefault/TriggerDefault";
 
-export default function Selector({ value, onChange, children }) {
+export default function Selector({
+  value,
+  onChange,
+  children,
+  className = "",
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef(null);
   useClickAway(containerRef, () => setIsOpen(false));
@@ -24,7 +29,9 @@ export default function Selector({ value, onChange, children }) {
         toggleOpen: () => setIsOpen(!isOpen),
       }}
     >
-      <div ref={containerRef}>{children}</div>
+      <div className={`selector_container ${className}`} ref={containerRef}>
+        {children}
+      </div>
     </SelectorContext.Provider>
   );
 }

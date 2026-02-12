@@ -3,7 +3,6 @@ import SettingsOptionText from "../SettingsOptionContainer/SettingsOptionText/Se
 import "./SettingsOptionSelector.css";
 import { userSettingsOptionsMap } from "../../../../../utils/userConfiguration/userSettingsConstants";
 import { useUserConfigStore } from "../../../../../stores/UserConfigStore";
-import { useRef } from "react";
 import { Palette } from "lucide-react";
 import Selector from "../../../../Global/Selector/Selector";
 
@@ -16,7 +15,6 @@ export default function SettingsOptionSelector({
   description,
   OptionIcon,
 }) {
-  const optionsContainerRef = useRef(null);
   const updateConfig = useUserConfigStore((state) => state.updateConfig);
   const config = useUserConfigStore((state) => state.config);
 
@@ -37,10 +35,7 @@ export default function SettingsOptionSelector({
         text={title}
         description={description}
       />
-      <div
-        className="option-selector_selector-container"
-        ref={optionsContainerRef}
-      >
+      <div className="option-selector_selector-container">
         <Selector value={config[tab][section][option]} onChange={handleSelect}>
           <Selector.Trigger>
             <button className="option-selector_btn-selected">

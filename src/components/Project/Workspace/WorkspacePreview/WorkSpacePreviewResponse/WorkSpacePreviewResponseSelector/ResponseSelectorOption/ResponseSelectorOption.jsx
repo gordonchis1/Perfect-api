@@ -6,10 +6,8 @@ import { useProjectStore } from "../../../../../../../stores/ProjectStore";
 
 // ! To improve: put the time stamp of each request and a indicator for the last request made
 // ! Order by time stamp and pinned, pinned first then order by time
-
-export default function ResponseSelectorOption({ setIsOpen }) {
+export default function ResponseSelectorOption({ id, isSelected }) {
   const history = useHistoryStore((store) => store.history);
-  const setCurrentId = useHistoryStore((store) => store.setCurrentId);
   const updateContentOfOpenFile = useProjectStore(
     (store) => store.updateContentOfOpenFile,
   );
@@ -18,11 +16,6 @@ export default function ResponseSelectorOption({ setIsOpen }) {
     (store) => store.openFiles[currentFileId]?.content,
   );
   const updateHistory = useHistoryStore((store) => store.update);
-
-  const handleChangeResponse = (id) => {
-    setCurrentId(id);
-    setIsOpen(false);
-  };
 
   const handleTogglePin = (event, id) => {
     event.stopPropagation();
@@ -62,44 +55,32 @@ export default function ResponseSelectorOption({ setIsOpen }) {
     updateHistory(newOrder, updateEntires);
   };
 
-  return (
-    <div className="responses-selector_options-container custom-scroll-bar">
-      {history.order.map((id, index) => {
-        const entry = history.entries[id];
+  const entry = history.entries[id];
 
-        return (
-          <button
-            style={{
-              background:
-                id === history.currentId ? "var(--primary-transparent)" : "",
-              color: id === history.currentId ? "var(--primary)" : "",
-              border:
-                id === history.currentId ? "1px solid var(--primary)" : "",
-            }}
-            className="responses-selector_option"
-            key={index}
-            onClick={() => {
-              handleChangeResponse(id);
-            }}
-          >
-            <span
-              className="selector_option-status"
-              style={{
-                color: determineColor(entry?.status).color,
-                background: determineColor(entry.status).bg,
-              }}
-            >
-              {entry?.status != undefined ? entry?.status : "Error"}
-            </span>
-            <span className="selector_option-url">{entry?.url}</span>
-            <Pin
-              size={20}
-              onClick={(event) => handleTogglePin(event, id)}
-              fill={entry?.isPinned ? "var(--primary-text-color)" : ""}
-            />
-          </button>
-        );
-      })}
-    </div>
+  return (
+    <button
+      style={{
+        background: isSelected ? "var(--primary-transparent)" : "",
+        color: isSelected ? "var(--primary)" : "",
+        border: isSelected ? "1px solid var(--primary)" : "",
+      }}
+      className="responses-selector_option"
+    >
+      <span
+        className="selector_option-status"
+        style={{
+          color: determineColor(entry?.status).color,
+          background: determineColor(entry.status).bg,
+        }}
+      >
+        {entry?.status != undefined ? entry?.status : "Error"}
+      </span>
+      <span className="selector_option-url">{entry?.url}</span>
+      <Pin
+        size={20}
+        onClick={(event) => handleTogglePin(event, id)}
+        fill={entry?.isPinned ? "var(--primary-text-color)" : ""}
+      />
+    </button>
   );
 }

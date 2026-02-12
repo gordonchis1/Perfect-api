@@ -1,11 +1,8 @@
-.workspace-preview-responses_selector-container {
+.responses-selector_options-container {
   display: flex;
-  height: fit-content;
-  flex-direction: row-reverse;
-  flex-grow: 1;
-  max-width: 400px;
-  flex-wrap: nowrap;
-  flex-shrink: 1;
+  margin-top: 40px;
+  max-height: 60%;
+  overflow-y: auto;
 }
 
 .responses-selector_open-button {
@@ -40,16 +37,7 @@
   background: var(--accent);
 }
 
-.responses-selector_options-container {
-  position: absolute;
-  width: auto;
+.workspace-preview-response_selector-container {
   display: flex;
-  flex-direction: column;
-  transform: translateY(43px);
-  background: var(--secondary-background);
-  border-radius: 7px;
-  box-shadow: 0 0 0 0.3px var(--border);
-  padding: 5px;
-  max-height: 800px;
-  overflow-y: auto;
+  flex-direction: row-reverse;
 }
