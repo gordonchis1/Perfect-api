@@ -5,13 +5,14 @@ import WorkSpaceInputUrlFormerContainer from "./WorkSpaceInputUrlFormer/WorkSpac
 import WorkspaceInputUrlHeaders from "./WorkSpaceInputUrlFormer/WorkspaceInputUrlHeaders/WorkspaceInputUrlHeaders";
 import WorkSpaceInputUrlFormerBody from "./WorkSpaceInputUrlFormer/WorkSpaceInputUrlFormerBody/WorkSpaceInputUrlFormerBody";
 import WorkspaceInputUrlCodeGenerator from "./WorkSpaceInputUrlFormer/WorkspaceInputUrlCodeGenereator/WorkspaceInputUrlCodeGenerator";
+import WorkSpaceInputUrlAuth from "./WorkSpaceInputUrlFormer/WorkSpaceInputUrlAuth/WorkSpaceInputUrlAuth";
 
 const multipleContainerContainers = {
   URL: {
     component: <WorkSpaceInputUrlFormerContainer />,
   },
   Auth: {
-    component: <div>Auth</div>,
+    component: <WorkSpaceInputUrlAuth />,
   },
   Headers: {
     component: <WorkspaceInputUrlHeaders />,

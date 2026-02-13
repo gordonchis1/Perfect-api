@@ -1,0 +1,9 @@
+.workspace-input_auth-container {
+  padding: 20px;
+}
+
+.auth_title {
+  font-family: var(--bold-font);
+  font-size: 20px;
+  margin-bottom: 10px;
+}

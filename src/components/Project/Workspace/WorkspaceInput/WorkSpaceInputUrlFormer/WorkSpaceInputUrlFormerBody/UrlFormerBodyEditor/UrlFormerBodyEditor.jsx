@@ -7,16 +7,16 @@ import { useProjectStore } from "../../../../../../../stores/ProjectStore";
 
 export default function UrlFormerBodyEditor({ language }) {
   const config = useUserConfigStore((state) => state.config);
+  const currentFileId = useProjectStore((store) => store.currentFileId);
   const content = useProjectStore(
-    (store) => store.openFiles[store.currentFileId]?.content
+    (store) => store.openFiles[currentFileId]?.content,
   );
 
   const [updatedContent, setUpdatedContent] = useState(
-    content?.body?.raw || ""
+    content?.body?.raw || "",
   );
-  const currentFileId = useProjectStore((store) => store.currentFileId);
   const updateContentOfOpenFile = useProjectStore(
-    (store) => store.updateContentOfOpenFile
+    (store) => store.updateContentOfOpenFile,
   );
 
   useEffect(() => {

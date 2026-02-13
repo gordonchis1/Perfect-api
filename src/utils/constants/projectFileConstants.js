@@ -22,6 +22,10 @@ export const fileContentDefault = {
     raw: "",
     type: "",
   },
+  auth: {
+    type: "none",
+    data: {},
+  },
   isRunning: false,
 };
 
