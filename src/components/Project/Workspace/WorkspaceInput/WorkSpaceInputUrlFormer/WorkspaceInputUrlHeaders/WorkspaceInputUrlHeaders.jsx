@@ -5,17 +5,18 @@ import WorkspaceInputUrlHeadersOption from "./WorkspaceInputUrlHeadersOption/Wor
 import WorkspaceInputUrlHeadersNonEditableHeaders from "./WorkspaceInputUrlHeadersNonEditableHeaders/WorkspaceInputUrlHeadersNonEditableHeaders";
 import { Plus, Trash2 } from "lucide-react";
 import { useProjectStore } from "../../../../../../stores/ProjectStore";
+import Input from "../../../../../Global/Input/Input";
 
 const nonEditableHeaders = ["Host"];
 
 export default function WorkspaceInputUrlHeaders() {
   const content = useProjectStore(
-    (store) => store.openFiles[store.currentFileId]?.content
+    (store) => store.openFiles[store.currentFileId]?.content,
   );
   const [headers, setHeaders] = useState([]);
   const currentFileId = useProjectStore((store) => store.currentFileId);
   const updateContentOfOpenFile = useProjectStore(
-    (store) => store.updateContentOfOpenFile
+    (store) => store.updateContentOfOpenFile,
   );
 
   const onHeadersChange = (index, type, value) => {
@@ -39,7 +40,7 @@ export default function WorkspaceInputUrlHeaders() {
       const updatedHeaders = content.headers.map((header) => ({ ...header }));
 
       const hostIndex = updatedHeaders.findIndex(
-        (header) => header.key === "Host"
+        (header) => header.key === "Host",
       );
 
       updatedHeaders[hostIndex].value = url.host;
@@ -134,23 +135,21 @@ export default function WorkspaceInputUrlHeaders() {
 
               return (
                 <div className="url-headers_header-container" key={index}>
-                  <input
+                  <Input
                     type="text"
-                    placeholder="key"
+                    placeholder={"Key"}
                     value={header.key}
                     onChange={(event) => {
                       onHeadersChange(index, "key", event.target.value);
                     }}
-                    className="url-headers_header-input"
                   />
-                  <input
+                  <Input
                     type="text"
-                    placeholder="value"
+                    placeholder="Value"
                     value={header.value}
                     onChange={(event) => {
                       onHeadersChange(index, "value", event.target.value);
                     }}
-                    className="url-headers_header-input"
                   />
                   <ActiveCheckbox
                     checked={header.isActive}

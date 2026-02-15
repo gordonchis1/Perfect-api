@@ -1,0 +1,19 @@
+.global-input {
+  background: transparent;
+  font-family: var(--regular-font);
+  color: var(--primary-text-color);
+  border: none;
+  box-shadow: 0 0 0 0.2px var(--border);
+  border-radius: 4px;
+  outline: none;
+  margin-right: 10px;
+  padding: 10px;
+  font-size: 17px;
+  width: 100%;
+  transition: all 0.4s ease;
+}
+
+.global-input:focus {
+  border-bottom: 1px solid var(--primary);
+  background: var(--primary-transparent);
+}
