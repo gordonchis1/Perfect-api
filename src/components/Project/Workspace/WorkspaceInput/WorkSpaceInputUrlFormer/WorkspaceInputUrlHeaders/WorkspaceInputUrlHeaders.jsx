@@ -10,11 +10,11 @@ import Input from "../../../../../Global/Input/Input";
 const nonEditableHeaders = ["Host"];
 
 export default function WorkspaceInputUrlHeaders() {
-  const content = useProjectStore(
-    (store) => store.openFiles[store.currentFileId]?.content,
-  );
   const [headers, setHeaders] = useState([]);
   const currentFileId = useProjectStore((store) => store.currentFileId);
+  const content = useProjectStore(
+    (store) => store.openFiles[currentFileId]?.content,
+  );
   const updateContentOfOpenFile = useProjectStore(
     (store) => store.updateContentOfOpenFile,
   );

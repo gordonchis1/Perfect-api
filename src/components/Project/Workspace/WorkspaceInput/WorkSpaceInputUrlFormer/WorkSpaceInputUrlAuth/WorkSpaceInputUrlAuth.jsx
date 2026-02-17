@@ -15,7 +15,10 @@ export default function WorkSpaceInputUrlAuth() {
       <h1 className="auth_title">Auth</h1>
       <AuthSelector />
       <div className="auth_form-container">
-        <AuthForm fields={AUTH_TYPES[content?.auth?.type].fields} />
+        <AuthForm
+          fields={AUTH_TYPES[content?.auth?.type]?.fields}
+          type={content?.auth?.type}
+        />
       </div>
     </div>
   );

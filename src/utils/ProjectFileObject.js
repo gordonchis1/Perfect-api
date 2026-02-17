@@ -302,6 +302,7 @@ export class File extends FSNode {
     const body = content.body;
     const updateHistory = useHistoryStore.getState().update;
     const setCurrentHistoryId = useHistoryStore.getState().setCurrentId;
+    console.log("headers fron run > ", headers);
 
     let time;
     const start = performance.now();
