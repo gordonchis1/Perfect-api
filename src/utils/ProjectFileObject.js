@@ -8,6 +8,7 @@ import { useProjectStore } from "../stores/ProjectStore";
 import { generateEntry } from "./entry/entry";
 import { canHaveBody } from "./fetch/costants";
 import { useHistoryStore } from "../stores/historyStore";
+import { AUTH_TYPES } from "./constants/AUTH_TYPES.JS";
 
 const defaultOnChangeFunction = () => {
   console.log("Vfs Changed");
@@ -302,7 +303,6 @@ export class File extends FSNode {
     const body = content.body;
     const updateHistory = useHistoryStore.getState().update;
     const setCurrentHistoryId = useHistoryStore.getState().setCurrentId;
-    console.log("headers fron run > ", headers);
 
     let time;
     const start = performance.now();
@@ -325,6 +325,15 @@ export class File extends FSNode {
       }
     });
 
+    let finalInfo = {
+      headers: headersToSend,
+      finalUrl: url.finalUrl,
+    };
+
+    if (content?.auth?.type && content?.auth?.type != "none") {
+      AUTH_TYPES[content.auth.type].apply(finalInfo);
+    }
+
     // ? Change toggle is running
     toggleIsRunning(this);
     try {
@@ -332,7 +341,7 @@ export class File extends FSNode {
       const fetchOptions = {
         method: type,
         signal: this.controller.signal,
-        headers: headersToSend,
+        headers: finalInfo.headers,
       };
 
       if (canHaveBody(type) && body.type !== "noBody" && body.raw !== null) {
@@ -357,7 +366,7 @@ export class File extends FSNode {
       }
 
       // ? Do the request
-      response = await fetch(url.finalUrl, fetchOptions);
+      response = await fetch(finalInfo.finalUrl, fetchOptions);
 
       if (!response.ok) {
         error = {
@@ -390,7 +399,6 @@ export class File extends FSNode {
       (id) => content.history.entries[id].isPinned == false,
     );
 
-    // ! add configuration for max entrys for each file
     // ! replace 5 for user confiugration
     updatedOrder = unPinnedEntries.slice(0, 20 - 1);
     updatedOrder.unshift(newEntry.id);

@@ -1,12 +1,17 @@
 import Selector from "../../../../../../../Global/Selector/Selector";
 import "./AuthFormSelector.css";
 
-export default function AuthFormSelector({ options, value, field }) {
+export default function AuthFormSelector({ options, value, field, onChange }) {
   //   console.log(field);
   return (
     <div className="auth_form-selector-container">
       <span>{field.label}</span>
-      <Selector value={value} onChange={() => {}}>
+      <Selector
+        value={value}
+        onChange={(val) => {
+          onChange(val);
+        }}
+      >
         <Selector.Trigger label={value} />
         <Selector.Options>
           {options?.map((option) => {

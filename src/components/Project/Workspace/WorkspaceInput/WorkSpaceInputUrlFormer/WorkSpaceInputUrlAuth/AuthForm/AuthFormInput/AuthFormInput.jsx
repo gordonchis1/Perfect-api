@@ -14,8 +14,7 @@ export default function AuthFormInput({ field, value, onChange }) {
         style={{ maxWidht: "92%" }}
         value={value}
         onChange={(event) => {
-          onChange(event);
-          field?.onChange?.(event.target.value);
+          onChange(event.target.value);
         }}
       />
       <div className="form-field_button-container">

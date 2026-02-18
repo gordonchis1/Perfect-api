@@ -2,7 +2,7 @@ import { useProjectStore } from "../../stores/ProjectStore";
 
 // ! Input: array of headers
 // ? if a header already exist rewrite
-export default function updateHeaders(newHeaders) {
+export function updateHeaders(newHeaders) {
   const { openFiles, currentFileId, updateContentOfOpenFile } =
     useProjectStore.getState();
   const content = openFiles[currentFileId].content;

@@ -1,5 +1,4 @@
 import { useProjectStore } from "../../stores/ProjectStore";
-import updateHeaders from "../openFile/updateHeaders";
 
 export const AUTH_TYPES = {
   none: {
@@ -14,47 +13,32 @@ export const AUTH_TYPES = {
         name: "token",
         type: "password",
         placeholder: "Enter token",
-        onChange: (value) => {
-          const { openFiles, currentFileId } = useProjectStore.getState();
-          const content = openFiles[currentFileId].content;
-
-          updateHeaders([
-            {
-              key: "Authorization",
-              value: `${content?.auth?.data?.prefix || "Bearer"} ${value}`,
-              isActive: true,
-            },
-          ]);
-        },
       },
       {
         label: "Prefix",
         name: "prefix",
         type: "text",
         placeholder: "Enter a prefix",
-        onChange: (value) => {
-          const { openFiles, currentFileId } = useProjectStore.getState();
-          const content = openFiles[currentFileId].content;
-
-          let finalPrefix = value;
-
-          if (value == "") {
-            finalPrefix = "Bearer";
-          }
-
-          updateHeaders([
-            {
-              key: "Authorization",
-              value: `${finalPrefix} ${content?.auth?.data?.token || ""}`,
-              isActive: true,
-            },
-          ]);
-        },
       },
     ],
     defaultData: {
       prefix: "",
       token: "",
+    },
+    apply: (finalInfo) => {
+      const { openFiles, currentFileId } = useProjectStore.getState();
+      const content = openFiles[currentFileId].content;
+      let prefix = content?.auth?.data?.prefix;
+      let finalPrefix;
+
+      if (prefix == "") {
+        finalPrefix = "Bearer";
+      } else {
+        finalPrefix = prefix;
+      }
+
+      finalInfo.headers["Authorization"] =
+        `${finalPrefix} ${content?.auth?.data?.token}`;
     },
   },
   apiKey: {
@@ -70,28 +54,6 @@ export const AUTH_TYPES = {
         type: "text",
         placeholder: "Enter a key",
         label: "Key",
-        onChange: (value) => {
-          const { openFiles, currentFileId } = useProjectStore.getState();
-          const content = openFiles[currentFileId].content;
-
-          let addTo;
-
-          if (content?.auth?.data?.addTo) {
-            addTo = content?.auth?.data?.addTo;
-          } else {
-            addTo = "header";
-          }
-
-          if (addTo == "header") {
-            updateHeaders([
-              {
-                key: value,
-                value: "test value",
-                isActive: true,
-              },
-            ]);
-          }
-        },
       },
       {
         name: "value",
@@ -113,6 +75,26 @@ export const AUTH_TYPES = {
         ],
       },
     ],
-    onChange: () => {},
+    apply: (finalInfo) => {
+      const { openFiles, currentFileId } = useProjectStore.getState();
+      const content = openFiles[currentFileId].content;
+
+      let key = content?.auth?.data?.key;
+      let value = content?.auth?.data?.value;
+      let addTo = content?.auth?.data?.addTo;
+
+      if (key && value) {
+        if (addTo == "header") {
+          finalInfo.headers[key] = value;
+        }
+        if (addTo == "queryParams") {
+          const url = new URL(finalInfo.finalUrl);
+          const params = new URLSearchParams(url.searchParams);
+          params.append(key, value);
+          url.search = params.toString();
+          finalInfo.finalUrl = url.toString();
+        }
+      }
+    },
   },
 };

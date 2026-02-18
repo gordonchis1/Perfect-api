@@ -20,7 +20,7 @@ export default function AuthForm({ fields, type }) {
         ...content.auth,
         data: {
           ...content?.auth?.data,
-          [fieldName]: value.target.value,
+          [fieldName]: value,
         },
       },
     });
@@ -44,6 +44,7 @@ export default function AuthForm({ fields, type }) {
       case "selector":
         return (
           <AuthFormSelector
+            onChange={(value) => handleUpdateAuthData(field.name, value)}
             field={field}
             options={field.options}
             value={
