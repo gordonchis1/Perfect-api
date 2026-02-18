@@ -2,7 +2,7 @@ import Selector from "../../../../../../../Global/Selector/Selector";
 import "./AuthFormSelector.css";
 
 export default function AuthFormSelector({ options, value, field }) {
-  console.log(field);
+  //   console.log(field);
   return (
     <div className="auth_form-selector-container">
       <span>{field.label}</span>

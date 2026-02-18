@@ -1,4 +1,5 @@
 import { useProjectStore } from "../../stores/ProjectStore";
+import updateHeaders from "../openFile/updateHeaders";
 
 export const AUTH_TYPES = {
   none: {
@@ -14,26 +15,16 @@ export const AUTH_TYPES = {
         type: "password",
         placeholder: "Enter token",
         onChange: (value) => {
-          const { openFiles, currentFileId, updateContentOfOpenFile } =
-            useProjectStore.getState();
+          const { openFiles, currentFileId } = useProjectStore.getState();
           const content = openFiles[currentFileId].content;
 
-          const headers = content.headers;
-
-          const updatedHeaders = headers.filter(
-            (header) => header.key !== "Authorization",
-          );
-
-          updatedHeaders.push({
-            key: "Authorization",
-            value: `${content?.auth?.data?.prefix || "Bearer"} ${value}`,
-            isActive: true,
-          });
-
-          updateContentOfOpenFile(currentFileId, {
-            ...content,
-            headers: updatedHeaders,
-          });
+          updateHeaders([
+            {
+              key: "Authorization",
+              value: `${content?.auth?.data?.prefix || "Bearer"} ${value}`,
+              isActive: true,
+            },
+          ]);
         },
       },
       {
@@ -42,8 +33,7 @@ export const AUTH_TYPES = {
         type: "text",
         placeholder: "Enter a prefix",
         onChange: (value) => {
-          const { openFiles, currentFileId, updateContentOfOpenFile } =
-            useProjectStore.getState();
+          const { openFiles, currentFileId } = useProjectStore.getState();
           const content = openFiles[currentFileId].content;
 
           let finalPrefix = value;
@@ -51,22 +41,14 @@ export const AUTH_TYPES = {
           if (value == "") {
             finalPrefix = "Bearer";
           }
-          const headers = content.headers;
 
-          const updatedHeaders = headers.filter(
-            (header) => header.key !== "Authorization",
-          );
-
-          updatedHeaders.push({
-            key: "Authorization",
-            value: `${finalPrefix} ${content?.auth?.data?.token || ""}`,
-            isActive: true,
-          });
-
-          updateContentOfOpenFile(currentFileId, {
-            ...content,
-            headers: updatedHeaders,
-          });
+          updateHeaders([
+            {
+              key: "Authorization",
+              value: `${finalPrefix} ${content?.auth?.data?.token || ""}`,
+              isActive: true,
+            },
+          ]);
         },
       },
     ],
@@ -88,6 +70,28 @@ export const AUTH_TYPES = {
         type: "text",
         placeholder: "Enter a key",
         label: "Key",
+        onChange: (value) => {
+          const { openFiles, currentFileId } = useProjectStore.getState();
+          const content = openFiles[currentFileId].content;
+
+          let addTo;
+
+          if (content?.auth?.data?.addTo) {
+            addTo = content?.auth?.data?.addTo;
+          } else {
+            addTo = "header";
+          }
+
+          if (addTo == "header") {
+            updateHeaders([
+              {
+                key: value,
+                value: "test value",
+                isActive: true,
+              },
+            ]);
+          }
+        },
       },
       {
         name: "value",
