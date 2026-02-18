@@ -13,7 +13,10 @@ export default function AuthFormInput({ field, value, onChange }) {
         placeholder={field?.placeholder}
         style={{ maxWidht: "92%" }}
         value={value}
-        onChange={onChange}
+        onChange={(event) => {
+          onChange(event);
+          field?.onChange?.(event.target.value);
+        }}
       />
       <div className="form-field_button-container">
         {field.type === "password" && (

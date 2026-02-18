@@ -13,50 +13,66 @@ export const AUTH_TYPES = {
         name: "token",
         type: "password",
         placeholder: "Enter token",
+        onChange: (value) => {
+          const { openFiles, currentFileId, updateContentOfOpenFile } =
+            useProjectStore.getState();
+          const content = openFiles[currentFileId].content;
+
+          const headers = content.headers;
+
+          const updatedHeaders = headers.filter(
+            (header) => header.key !== "Authorization",
+          );
+
+          updatedHeaders.push({
+            key: "Authorization",
+            value: `${content?.auth?.data?.prefix || "Bearer"} ${value}`,
+            isActive: true,
+          });
+
+          updateContentOfOpenFile(currentFileId, {
+            ...content,
+            headers: updatedHeaders,
+          });
+        },
       },
       {
         label: "Prefix",
         name: "prefix",
         type: "text",
         placeholder: "Enter a prefix",
+        onChange: (value) => {
+          const { openFiles, currentFileId, updateContentOfOpenFile } =
+            useProjectStore.getState();
+          const content = openFiles[currentFileId].content;
+
+          let finalPrefix = value;
+
+          if (value == "") {
+            finalPrefix = "Bearer";
+          }
+          const headers = content.headers;
+
+          const updatedHeaders = headers.filter(
+            (header) => header.key !== "Authorization",
+          );
+
+          updatedHeaders.push({
+            key: "Authorization",
+            value: `${finalPrefix} ${content?.auth?.data?.token || ""}`,
+            isActive: true,
+          });
+
+          updateContentOfOpenFile(currentFileId, {
+            ...content,
+            headers: updatedHeaders,
+          });
+        },
       },
     ],
     defaultData: {
       prefix: "",
       token: "",
-    },
-    onChange: (fieldName, value) => {
-      const { openFiles, currentFileId, updateContentOfOpenFile } =
-        useProjectStore.getState();
-      const content = openFiles[currentFileId].content;
-
-      let finalValue = content?.auth?.data?.token;
-      if (
-        content?.auth?.data?.prefix?.length <= 0 ||
-        content?.auth?.data?.prefix == undefined
-      ) {
-        finalValue = `Bearer ${content?.auth?.data?.token}`;
-      }
-      if (fieldName == "prefix" && value !== "") {
-        finalValue = `${value} ${content?.auth?.data?.token}`;
-      }
-
-      const headers = content.headers;
-
-      const updatedHeaders = headers.filter(
-        (header) => header.key !== "Authorization",
-      );
-
-      updatedHeaders.push({
-        key: "Authorization",
-        value: finalValue,
-        isActive: true,
-      });
-
-      updateContentOfOpenFile(currentFileId, {
-        ...content,
-        headers: updatedHeaders,
-      });
     },
   },
   apiKey: {
@@ -64,8 +80,35 @@ export const AUTH_TYPES = {
     defaultData: {
       key: "",
       value: "",
-      in: "",
+      addTo: "header",
     },
-    fields: [{}],
+    fields: [
+      {
+        name: "key",
+        type: "text",
+        placeholder: "Enter a key",
+        label: "Key",
+      },
+      {
+        name: "value",
+        type: "password",
+        label: "Value",
+        placeholder: "Enter a value",
+      },
+      {
+        name: "addTo",
+        type: "selector",
+        label: "Add to",
+        placeholder: "Add to",
+        options: [
+          {
+            label: "Query params",
+            name: "queryParams",
+          },
+          { label: "Header", name: "header" },
+        ],
+      },
+    ],
+    onChange: () => {},
   },
 };

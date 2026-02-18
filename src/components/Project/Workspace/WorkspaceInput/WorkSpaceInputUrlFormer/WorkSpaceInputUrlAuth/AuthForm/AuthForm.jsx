@@ -2,6 +2,7 @@ import "./AuthForm.css";
 import AuthFormInput from "./AuthFormInput/AuthFormInput";
 import { useProjectStore } from "../../../../../../../stores/ProjectStore";
 import { AUTH_TYPES } from "../../../../../../../utils/constants/AUTH_TYPES.JS";
+import AuthFormSelector from "./AuthFormSelector/AuthFormSelector";
 
 export default function AuthForm({ fields, type }) {
   const currentFileId = useProjectStore((store) => store.currentFileId);
@@ -23,10 +24,7 @@ export default function AuthForm({ fields, type }) {
         },
       },
     });
-
-    AUTH_TYPES[type].onChange(fieldName, value.target.value);
   };
-  console.log(content?.auth?.data);
 
   return fields?.map((field) => {
     switch (field.type) {
@@ -37,6 +35,17 @@ export default function AuthForm({ fields, type }) {
             key={field.name}
             field={field}
             onChange={(value) => handleUpdateAuthData(field.name, value)}
+            value={
+              content?.auth?.data?.[field?.name] ||
+              AUTH_TYPES[type]?.defaultData[field?.name]
+            }
+          />
+        );
+      case "selector":
+        return (
+          <AuthFormSelector
+            field={field}
+            options={field.options}
             value={
               content?.auth?.data?.[field?.name] ||
               AUTH_TYPES[type]?.defaultData[field?.name]

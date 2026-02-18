@@ -1,0 +1,15 @@
+.auth_form-selector-container {
+  margin-top: 10px;
+  font-family: var(--regular-font);
+  gap: 10px;
+  margin-top: 15px;
+  color: var(--primary-text-color);
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.auth_form-selector-container span {
+  font-size: 18px;
+  min-width: 4%;
+}
