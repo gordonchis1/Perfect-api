@@ -97,4 +97,35 @@ export const AUTH_TYPES = {
       }
     },
   },
+  basic: {
+    label: "Basic",
+    defaultData: {
+      username: "",
+      password: "",
+    },
+    fields: [
+      {
+        label: "Password",
+        type: "password",
+        placeholder: "Enter a password",
+        name: "password",
+      },
+      {
+        label: "Username",
+        type: "text",
+        placeholder: "Enter a username",
+        name: "username",
+      },
+    ],
+    apply: (finalInfo) => {
+      const { openFiles, currentFileId } = useProjectStore.getState();
+      const content = openFiles[currentFileId].content;
+
+      const base64 = btoa(
+        `${content?.auth?.data?.username}:${content?.auth?.data?.password}`,
+      );
+
+      finalInfo.headers["Authorization"] = `Basic ${base64}`;
+    },
+  },
 };
