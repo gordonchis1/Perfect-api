@@ -9,6 +9,11 @@ export const AUTH_TYPES = {
     label: "Bearer token",
     fields: [
       {
+        type: "checkbox",
+        name: "isActive",
+        label: "Active",
+      },
+      {
         label: "Token",
         name: "token",
         type: "password",
@@ -22,12 +27,14 @@ export const AUTH_TYPES = {
       },
     ],
     defaultData: {
+      isActive: true,
       prefix: "",
       token: "",
     },
     apply: (finalInfo) => {
       const { openFiles, currentFileId } = useProjectStore.getState();
       const content = openFiles[currentFileId].content;
+      if (!content.auth.data.isActive) return;
       let prefix = content?.auth?.data?.prefix;
       let finalPrefix;
 
@@ -47,8 +54,14 @@ export const AUTH_TYPES = {
       key: "",
       value: "",
       addTo: "header",
+      isActive: true,
     },
     fields: [
+      {
+        type: "checkbox",
+        name: "isActive",
+        label: "Active",
+      },
       {
         name: "key",
         type: "text",
@@ -79,6 +92,8 @@ export const AUTH_TYPES = {
       const { openFiles, currentFileId } = useProjectStore.getState();
       const content = openFiles[currentFileId].content;
 
+      if (!content.auth.data.isActive) return;
+
       let key = content?.auth?.data?.key;
       let value = content?.auth?.data?.value;
       let addTo = content?.auth?.data?.addTo;
@@ -102,8 +117,14 @@ export const AUTH_TYPES = {
     defaultData: {
       username: "",
       password: "",
+      isActive: true,
     },
     fields: [
+      {
+        type: "checkbox",
+        name: "isActive",
+        label: "Active",
+      },
       {
         label: "Password",
         type: "password",
@@ -120,6 +141,7 @@ export const AUTH_TYPES = {
     apply: (finalInfo) => {
       const { openFiles, currentFileId } = useProjectStore.getState();
       const content = openFiles[currentFileId].content;
+      if (!content.auth.data.isActive) return;
 
       const base64 = btoa(
         `${content?.auth?.data?.username}:${content?.auth?.data?.password}`,

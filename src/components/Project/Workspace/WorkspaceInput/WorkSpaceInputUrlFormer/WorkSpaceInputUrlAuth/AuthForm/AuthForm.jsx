@@ -3,6 +3,7 @@ import AuthFormInput from "./AuthFormInput/AuthFormInput";
 import { useProjectStore } from "../../../../../../../stores/ProjectStore";
 import { AUTH_TYPES } from "../../../../../../../utils/constants/AUTH_TYPES.JS";
 import AuthFormSelector from "./AuthFormSelector/AuthFormSelector";
+import AuthFormCheckbox from "./AuthFormCheckbox/AuthFormCheckbox";
 
 export default function AuthForm({ fields, type }) {
   const currentFileId = useProjectStore((store) => store.currentFileId);
@@ -49,6 +50,19 @@ export default function AuthForm({ fields, type }) {
             options={field.options}
             value={
               content?.auth?.data?.[field?.name] ||
+              AUTH_TYPES[type]?.defaultData[field?.name]
+            }
+          />
+        );
+      case "checkbox":
+        return (
+          <AuthFormCheckbox
+            onChange={(value) => {
+              handleUpdateAuthData(field.name, value);
+            }}
+            field={field}
+            value={
+              content?.auth?.data?.[field?.name] ??
               AUTH_TYPES[type]?.defaultData[field?.name]
             }
           />
