@@ -14,6 +14,43 @@
   box-shadow: 0 0 0 0.5px var(--border);
 }
 
-.workspace-input-form_url-input:focus {
+.workspace-input-form_wrapper:has(
+  .worksapce-input-form_content-editable:focus
+) {
   border: 2px solid var(--primary);
+  border-radius: 7px;
+}
+
+.workspace-input-form_wrapper {
+  transition: border 0.1s ease;
+  box-sizing: border-box;
+  border: 2px solid transparent;
+  overflow: hidden;
+  max-width: 100%;
+  position: relative;
+  font-size: 16px;
+  color: var(--primary-text-color);
+  font-family: var(--regular-font);
+  flex-grow: 4;
+}
+
+.input-form_placeholder {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
+  color: var(--primary-text-color);
+  font-family: var(--regular-font);
+  font-size: 16px;
+  padding: 8px;
+}
+
+.worksapce-input-form_content-editable {
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  max-height: 100%;
+
+  background: transparent;
+  padding: 10px;
 }

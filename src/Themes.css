@@ -244,7 +244,7 @@
   /* Neon magenta primary */
   --primary: oklch(0.65 0.28 320);
   --primary-transparent: oklch(0.65 0.28 320 / 0.1);
-  --primary-foreground: oklch(0.08 0 0);
+  --primary-foreground: oklch(0.98 0 0);
 
   /* Dark purple secondary */
   --secondary: oklch(0.15 0.08 300);

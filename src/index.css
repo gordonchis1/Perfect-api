@@ -47,3 +47,12 @@ body {
   background: var(--background);
   overflow: hidden;
 }
+
+.variable-tag {
+  background: var(--primary);
+  padding: 4px 1px 4px 1px;
+  font-family: var(--regular-font);
+  color: var(--primary-foreground);
+  border-radius: 4px;
+  word-spacing: 4px;
+}
