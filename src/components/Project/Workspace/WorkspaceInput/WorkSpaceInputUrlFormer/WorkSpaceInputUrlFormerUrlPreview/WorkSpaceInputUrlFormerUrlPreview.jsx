@@ -5,8 +5,10 @@ import { useProjectStore } from "../../../../../../stores/ProjectStore";
 
 export default function WorkSpaceInputUrlFormerUrlPreview() {
   const [isCopied, setIsCopied] = useState(false);
+
+  const currentFileId = useProjectStore((store) => store.currentFileId);
   const content = useProjectStore(
-    (store) => store.openFiles[store.currentFileId]?.content
+    (store) => store.openFiles[currentFileId]?.content,
   );
   const [isValidUrl, setIsValidUrl] = useState(true);
 

@@ -1,11 +1,16 @@
 import { TextNode } from "lexical";
 export const testDic = {
-  URL: "http://localhost:10767/",
+  URL: "http://localhost:10767",
+  PATH: "api/v1/playback/volume",
 };
 
 export function $createVariableNode(variable) {
   const node = new VariableNode(variable).setMode("token");
   return node;
+}
+
+export function $isVariableNode(node) {
+  return node instanceof VariableNode;
 }
 
 export class VariableNode extends TextNode {

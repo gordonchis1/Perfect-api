@@ -11,62 +11,17 @@ import { VariableNode } from "../../../../../../utils/lexical/variableNode";
 import VariablePlugin from "../../../../../../utils/lexical/VariablePlugin";
 import { $getRoot } from "lexical";
 import { UndefinedVariableNode } from "../../../../../../utils/lexical/undefinedVariableNode";
+import PlainTextPreviewPlugin from "../../../../../../utils/lexical/PlainTextPreviewPlugin";
 
 export default function WorkSpaceInputFormInputUrl() {
-  const content = useProjectStore(
-    (store) => store.openFiles[store.currentFileId]?.content,
-  );
   const currentFileId = useProjectStore((store) => store.currentFileId);
-  const [inputValue, setInputValue] = useState(content.url.inputUrl);
-  const [isValidUrl, setIsValidUrl] = useState(true);
-  const isRunning = useProjectStore(
-    (store) => store.openFiles[store.currentFileId].isRunning,
+  const content = useProjectStore(
+    (store) => store.openFiles[currentFileId]?.content,
   );
+  const [isValidUrl, setIsValidUrl] = useState(true);
   const updateContentOfOpenFile = useProjectStore(
     (store) => store.updateContentOfOpenFile,
   );
-
-  useEffect(() => {
-    if (currentFileId) {
-      setInputValue(content.url.inputUrl || "");
-    }
-  }, [currentFileId, content.url.inputUrl]);
-
-  const handleChangeUrl = (event) => {
-    setInputValue(event.target.value);
-  };
-
-  useEffect(() => {
-    if (!currentFileId) return;
-    if (inputValue === undefined) return;
-
-    let newFinalUrl = inputValue;
-
-    try {
-      const url = new URL(inputValue);
-      newFinalUrl = url.href;
-
-      setIsValidUrl(true);
-    } catch {
-      setIsValidUrl(false);
-    }
-
-    if (
-      content.url.finalUrl === inputValue &&
-      content.url.finalUrl === newFinalUrl
-    ) {
-      return;
-    }
-
-    updateContentOfOpenFile(currentFileId, {
-      ...content,
-      url: {
-        ...content.url,
-        inputUrl: inputValue,
-        finalUrl: newFinalUrl,
-      },
-    });
-  }, [inputValue]);
 
   function onError(error) {
     console.error(error);
@@ -99,13 +54,25 @@ export default function WorkSpaceInputFormInputUrl() {
             editorState.read(() => {
               const text = $getRoot().getTextContent();
               const json = editorState.toJSON();
-              console.log(text, json);
+              // console.log(text, json);
             });
             // console.log(editor.toJSON());
             // console.log(JSON.stringify(editorState));
           }}
         />
         <VariablePlugin />
+        <PlainTextPreviewPlugin
+          onChange={(preview) => {
+            updateContentOfOpenFile(currentFileId, {
+              ...content,
+              url: {
+                ...content.url,
+                finalUrl: preview,
+              },
+            });
+            console.log(preview);
+          }}
+        />
       </LexicalComposer>
     </div>
   );

@@ -37,3 +37,7 @@ export function $createUndefinedVariableNode(variable) {
   const node = new UndefinedVariableNode(variable).setMode("token");
   return node;
 }
+
+export function $isUndefinedVariableNode(node) {
+  return node instanceof UndefinedVariableNode;
+}
