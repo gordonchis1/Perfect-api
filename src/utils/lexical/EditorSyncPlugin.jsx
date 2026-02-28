@@ -36,6 +36,7 @@ export default function EditorSyncPlugin() {
         const updateContentOfOpenFile = store.updateContentOfOpenFile;
         const content = store.openFiles[currentFileId]?.content;
         const json = editor.toJSON();
+        if (!currentFileId) return;
 
         updateContentOfOpenFile(currentFileId, {
           ...content,
