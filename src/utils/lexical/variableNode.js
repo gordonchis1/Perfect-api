@@ -1,4 +1,7 @@
 import { TextNode } from "lexical";
+export const testDic = {
+  URL: "http://localhost:10767/",
+};
 
 export function $createVariableNode(variable) {
   const node = new VariableNode(variable).setMode("token");
@@ -38,6 +41,7 @@ export class VariableNode extends TextNode {
   exportJSON() {
     return {
       ...super.exportJSON(),
+      value: this.__variable,
     };
   }
 }

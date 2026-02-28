@@ -56,3 +56,9 @@ body {
   border-radius: 4px;
   word-spacing: 4px;
 }
+
+.undefined-variable-tag {
+  opacity: 0.8;
+  background: var(--destructive);
+  text-decoration: var(--destructive-foreground) wavy underline;
+}

@@ -1,5 +1,6 @@
-import { $createVariableNode } from "./variableNode";
+import { $createVariableNode, testDic } from "./variableNode";
 import findVariable from "./findVariable";
+import { $createUndefinedVariableNode } from "./undefinedVariableNode";
 
 export function textNodeTransform(node) {
   if (!node.isSimpleText() || node.hasFormat("code")) {
@@ -24,6 +25,11 @@ export function textNodeTransform(node) {
     targetNode = parts[1];
   }
 
-  const variableNode = $createVariableNode(variable.toUpperCase());
+  let variableNode;
+  if (testDic[variable.toUpperCase()]) {
+    variableNode = $createVariableNode(variable.toUpperCase());
+  } else {
+    variableNode = $createUndefinedVariableNode(variable.toUpperCase());
+  }
   targetNode.replace(variableNode);
 }

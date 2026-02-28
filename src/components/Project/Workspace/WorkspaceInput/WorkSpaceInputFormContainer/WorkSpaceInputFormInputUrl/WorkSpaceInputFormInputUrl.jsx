@@ -9,6 +9,8 @@ import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
 import { PlainTextPlugin } from "@lexical/react/LexicalPlainTextPlugin";
 import { VariableNode } from "../../../../../../utils/lexical/variableNode";
 import VariablePlugin from "../../../../../../utils/lexical/VariablePlugin";
+import { $getRoot } from "lexical";
+import { UndefinedVariableNode } from "../../../../../../utils/lexical/undefinedVariableNode";
 
 export default function WorkSpaceInputFormInputUrl() {
   const content = useProjectStore(
@@ -71,7 +73,6 @@ export default function WorkSpaceInputFormInputUrl() {
   }
 
   const theme = {
-    // Theme styling goes here
     //...
   };
 
@@ -79,7 +80,7 @@ export default function WorkSpaceInputFormInputUrl() {
     namespace: "MyEditor",
     theme,
     onError,
-    nodes: [VariableNode],
+    nodes: [VariableNode, UndefinedVariableNode],
   };
 
   return (
@@ -95,8 +96,13 @@ export default function WorkSpaceInputFormInputUrl() {
         <HistoryPlugin />
         <OnChangePlugin
           onChange={(editorState, editor) => {
+            editorState.read(() => {
+              const text = $getRoot().getTextContent();
+              const json = editorState.toJSON();
+              console.log(text, json);
+            });
             // console.log(editor.toJSON());
-            // console.log(editorState);
+            // console.log(JSON.stringify(editorState));
           }}
         />
         <VariablePlugin />
