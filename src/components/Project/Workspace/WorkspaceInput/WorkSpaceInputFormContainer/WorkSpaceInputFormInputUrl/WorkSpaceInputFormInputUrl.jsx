@@ -1,32 +1,19 @@
-import { useEffect, useState } from "react";
 import "./WorkSpaceInputFormInputUrl.css";
-import { useProjectStore } from "../../../../../../stores/ProjectStore";
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import { LexicalErrorBoundary } from "@lexical/react/LexicalErrorBoundary";
 import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
-import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
 import { PlainTextPlugin } from "@lexical/react/LexicalPlainTextPlugin";
 import { VariableNode } from "../../../../../../utils/lexical/variableNode";
 import VariablePlugin from "../../../../../../utils/lexical/VariablePlugin";
-import { $getRoot } from "lexical";
 import { UndefinedVariableNode } from "../../../../../../utils/lexical/undefinedVariableNode";
-import PlainTextPreviewPlugin from "../../../../../../utils/lexical/PlainTextPreviewPlugin";
+import EditorSyncPlugin from "../../../../../../utils/lexical/EditorSyncPlugin";
+import EditorInitializerPlugin from "../../../../../../utils/lexical/EditorInitializerPlugin";
 
 export default function WorkSpaceInputFormInputUrl() {
-  const currentFileId = useProjectStore((store) => store.currentFileId);
-  const content = useProjectStore(
-    (store) => store.openFiles[currentFileId]?.content,
-  );
-  const [isValidUrl, setIsValidUrl] = useState(true);
-  const updateContentOfOpenFile = useProjectStore(
-    (store) => store.updateContentOfOpenFile,
-  );
-
   function onError(error) {
     console.error(error);
   }
-
   const theme = {
     //...
   };
@@ -49,30 +36,10 @@ export default function WorkSpaceInputFormInputUrl() {
           ErrorBoundary={LexicalErrorBoundary}
         />
         <HistoryPlugin />
-        <OnChangePlugin
-          onChange={(editorState, editor) => {
-            editorState.read(() => {
-              const text = $getRoot().getTextContent();
-              const json = editorState.toJSON();
-              // console.log(text, json);
-            });
-            // console.log(editor.toJSON());
-            // console.log(JSON.stringify(editorState));
-          }}
-        />
         <VariablePlugin />
-        <PlainTextPreviewPlugin
-          onChange={(preview) => {
-            updateContentOfOpenFile(currentFileId, {
-              ...content,
-              url: {
-                ...content.url,
-                finalUrl: preview,
-              },
-            });
-            console.log(preview);
-          }}
-        />
+        {/* ? plugin for sync content */}
+        <EditorSyncPlugin />
+        <EditorInitializerPlugin />
       </LexicalComposer>
     </div>
   );

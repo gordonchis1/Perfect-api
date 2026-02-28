@@ -40,13 +40,15 @@ export class VariableNode extends TextNode {
   }
 
   static importJSON(serializedNode) {
-    return $createVariableNode(serializedNode).updateFromJSON(serializedNode);
+    return $createVariableNode(serializedNode.variable).updateFromJSON(
+      serializedNode,
+    );
   }
 
   exportJSON() {
     return {
       ...super.exportJSON(),
-      value: this.__variable,
+      variable: this.__variable,
     };
   }
 }

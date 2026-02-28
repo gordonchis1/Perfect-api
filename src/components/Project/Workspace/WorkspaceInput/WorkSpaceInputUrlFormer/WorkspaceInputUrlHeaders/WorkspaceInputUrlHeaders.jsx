@@ -36,7 +36,7 @@ export default function WorkspaceInputUrlHeaders() {
 
   useEffect(() => {
     try {
-      const url = new URL(content.url.inputUrl);
+      const url = new URL(content.url.finalUrl);
       const updatedHeaders = content.headers.map((header) => ({ ...header }));
 
       const hostIndex = updatedHeaders.findIndex(

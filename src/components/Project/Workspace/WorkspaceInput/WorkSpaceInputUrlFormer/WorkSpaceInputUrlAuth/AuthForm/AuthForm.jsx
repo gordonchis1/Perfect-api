@@ -13,6 +13,7 @@ export default function AuthForm({ fields, type }) {
   const updateContentofOpenFile = useProjectStore(
     (store) => store.updateContentOfOpenFile,
   );
+  console.log(content.auth);
 
   const handleUpdateAuthData = (fieldName, value) => {
     updateContentofOpenFile(currentFileId, {

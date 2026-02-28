@@ -15,12 +15,12 @@ const defaultQueryObject = {
 
 export default function WorkSpaceInputUrlFormerQueryParams() {
   const content = useProjectStore(
-    (store) => store.openFiles[store.currentFileId]?.content
+    (store) => store.openFiles[store.currentFileId]?.content,
   );
   const [querys, setQuerys] = useState(content.url.queryParams);
   const currentFileId = useProjectStore((store) => store.currentFileId);
   const updateContentOfOpenFile = useProjectStore(
-    (store) => store.updateContentOfOpenFile
+    (store) => store.updateContentOfOpenFile,
   );
 
   useEffect(() => {
@@ -31,7 +31,7 @@ export default function WorkSpaceInputUrlFormerQueryParams() {
 
   useEffect(() => {
     try {
-      const url = new URL(content.url.inputUrl);
+      const url = new URL(content.url.finalUrl);
       const params = new URLSearchParams(url.search);
       const updatedParams = new URLSearchParams();
 
@@ -50,7 +50,6 @@ export default function WorkSpaceInputUrlFormerQueryParams() {
         ...content,
         url: {
           ...content.url,
-          inputUrl: content.url.inputUrl,
           finalUrl: url.href,
           queryParams: querys,
         },
