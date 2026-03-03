@@ -15,6 +15,19 @@
   align-items: center;
 }
 
+.filemanager-element-dir-content {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.element-dir-content_left {
+  display: flex;
+  gap: 8px;
+}
+
 .hover-drag-and-drop {
   background: var(--accent);
 }

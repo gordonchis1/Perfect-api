@@ -1,0 +1,5 @@
+.global-settings-modal_container {
+  display: flex;
+  width: 75vw;
+  height: 100%;
+}

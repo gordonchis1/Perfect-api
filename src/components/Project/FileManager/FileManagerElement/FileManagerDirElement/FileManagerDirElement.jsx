@@ -5,6 +5,7 @@ import { useRef, useState } from "react";
 import FileManagerDraggableElement from "../FileManagerDraggableElement/FileManagerDraggableElement";
 import { Folder, FolderOpen } from "lucide-react";
 import { useProjectStore } from "../../../../../stores/ProjectStore";
+import FileManagerDirSettings from "./FileManagerDirConfig/FileManagerDirSettings";
 
 export default function FileManagerDirElement({
   node,
@@ -59,17 +60,20 @@ export default function FileManagerDirElement({
         }}
         onContextMenu={(event) => onContextMenu(event)}
       >
-        <div className="filemanager-element-content">
-          {node.isOpen ? <FolderOpen size={17} /> : <Folder size={17} />}
-          {renameState != null && renameState == node.id ? (
-            <FileManagerRenameForm
-              node={node}
-              updateNodeState={updateNodeState}
-              closeContextMenu={closeContextMenu}
-            />
-          ) : (
-            <p className="filemanager-element_name">{node.name}</p>
-          )}
+        <div className="filemanager-element-dir-content">
+          <div className="element-dir-content_left">
+            {node.isOpen ? <FolderOpen size={17} /> : <Folder size={17} />}
+            {renameState != null && renameState == node.id ? (
+              <FileManagerRenameForm
+                node={node}
+                updateNodeState={updateNodeState}
+                closeContextMenu={closeContextMenu}
+              />
+            ) : (
+              <p className="filemanager-element_name">{node.name}</p>
+            )}
+          </div>
+          <FileManagerDirSettings node={node} />
         </div>
       </FileManagerDraggableElement>
       <div className="filemanager-dir-childs-container" data-id={node.id}>

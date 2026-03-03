@@ -1,21 +1,15 @@
 import { Settings } from "lucide-react";
 import "./SettingsButton.css";
-import { useState } from "react";
-import GlobalSettingsPopUp from "../../../GlobalSettingsPopUp/GlobalSettingsPopUp";
+import useModal from "../../../../providers/ModalProvider/useModal";
 
 export default function SettingsButton() {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleOpenSettings = () => {
-    setIsOpen(true);
-  };
+  const { open } = useModal();
 
   return (
     <>
-      {isOpen && <GlobalSettingsPopUp setIsOpen={setIsOpen} />}
       <button
         className="project-header_settings-button"
-        onClick={handleOpenSettings}
+        onClick={() => open("settings")}
       >
         <Settings size={20} />
       </button>

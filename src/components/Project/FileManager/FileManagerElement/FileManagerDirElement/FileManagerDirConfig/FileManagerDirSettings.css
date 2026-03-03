@@ -1,0 +1,17 @@
+.dir-element_config-btn {
+  background: transparent;
+  border: none;
+  color: var(--primary-text-color);
+  padding: 0;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+
+  cursor: pointer;
+  padding-right: 4px;
+  transition: transform 0.3s ease;
+}
+
+.dir-element_config-btn:hover {
+  transform: scale(1.1);
+}

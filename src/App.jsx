@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router";
 import Project from "./components/Project/Project";
 import { useUserConfigStore } from "./stores/UserConfigStore";
 import Home from "./components/Home/Home";
+import ModalProvider from "./providers/ModalProvider/ModalProvider";
 
 function App() {
   const config = useUserConfigStore((state) => state.config);
@@ -18,10 +19,12 @@ function App() {
         overflow: "hidden",
       }}
     >
-      <Routes>
-        <Route index element={<Home />}></Route>
-        <Route element={<Project />} path="/project/:id"></Route>
-      </Routes>
+      <ModalProvider>
+        <Routes>
+          <Route index element={<Home />}></Route>
+          <Route element={<Project />} path="/project/:id"></Route>
+        </Routes>
+      </ModalProvider>
     </div>
   );
 }

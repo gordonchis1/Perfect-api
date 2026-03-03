@@ -1,17 +1,20 @@
 import "./HeaderSettingsButton.css";
 import { useState } from "react";
-import GlobalSettingsPopUp from "../../GlobalSettingsPopUp/GlobalSettingsPopUp";
 import { Settings } from "lucide-react";
+import useModal from "../../../providers/ModalProvider/useModal";
 
 export default function HeaderSettingsButton({ currentHeaderWidth }) {
   const [isOpen, setIsOpen] = useState(false);
+  const { open } = useModal();
 
   return (
     <>
-      {isOpen && <GlobalSettingsPopUp setIsOpen={setIsOpen} />}
       <button
         className="header-settings-button"
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => {
+          setIsOpen(!isOpen);
+          open("settings");
+        }}
         style={{
           background: isOpen ? "var(--primary-transparent)" : "",
           color: isOpen ? "var(--primary)" : "",
