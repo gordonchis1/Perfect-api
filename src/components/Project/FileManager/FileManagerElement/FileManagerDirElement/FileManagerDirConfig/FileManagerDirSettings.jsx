@@ -3,7 +3,7 @@ import "./FileManagerDirSettings.css";
 import useModal from "../../../../../../providers/ModalProvider/useModal";
 
 export default function FileManagerDirSettings({ node }) {
-  const { open, close } = useModal();
+  const { open } = useModal();
 
   return (
     <>

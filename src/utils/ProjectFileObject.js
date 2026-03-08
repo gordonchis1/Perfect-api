@@ -9,6 +9,7 @@ import { generateEntry } from "./entry/entry";
 import { canHaveBody } from "./fetch/costants";
 import { useHistoryStore } from "../stores/historyStore";
 import { AUTH_TYPES } from "./constants/AUTH_TYPES.JS";
+import { DEFAULT_DIR_CONFIG } from "./constants/DefaultDirConfig";
 
 const defaultOnChangeFunction = () => {
   console.log("Vfs Changed");
@@ -211,7 +212,12 @@ export class FSNode {
 }
 
 export class Directory extends FSNode {
-  constructor(name, isOpen = false, dirConfig = {}, id = nanoid()) {
+  constructor(
+    name,
+    isOpen = false,
+    dirConfig = DEFAULT_DIR_CONFIG,
+    id = nanoid(),
+  ) {
     super(name, "dir", isOpen, id);
     this.dirConfig = dirConfig;
     this.children = [];

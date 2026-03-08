@@ -1,0 +1,19 @@
+.dir-settings-modal_header {
+  display: flex;
+  flex-direction: column;
+}
+
+.dir-settings-modal_header h1 {
+  font-size: 30px;
+}
+
+.dir-settings-modal_header h2 {
+  font-size: 20px;
+  font-family: var(--regular-font);
+}
+
+.dir-settings-modal_header span {
+  font-family: var(--regular-font);
+  font-size: 20px;
+  color: var(--muted-foreground);
+}

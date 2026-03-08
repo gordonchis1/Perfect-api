@@ -66,6 +66,19 @@ export const useProjectStore = create((set, get) => ({
     }
   },
 
+  updateDirSettings: async (id, newConfig) => {
+    const vfs = get().vfs;
+
+    if (vfs instanceof VirtualFileSystem) {
+      const node = vfs.getNodeById(id);
+      if (node instanceof Directory) {
+        node.dirConfig = newConfig;
+        vfs.onChange();
+        await get().save();
+      }
+    }
+  },
+
   addDir: async (id) => {
     const vfs = get().vfs;
 

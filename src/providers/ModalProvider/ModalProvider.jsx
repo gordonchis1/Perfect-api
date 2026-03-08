@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import Modal from "../../components/Global/Modal/Modal";
 import GlobalSettingsModal from "../../components/Global/Modals/GlobalSettingsModal/GlobalSettingsModal";
 import DirSettingsModal from "../../components/Global/Modals/DirSettingsModal/DirSettingsModal";
@@ -18,6 +18,17 @@ export default function ModalProvider({ children }) {
   const open = (type, props = {}) => {
     setModal({ type, props });
   };
+
+  useEffect(() => {
+    const handler = (e) => {
+      if (e.key == "Escape") {
+        close();
+      }
+    };
+    window.addEventListener("keydown", handler);
+
+    return () => window.removeEventListener("keydown", handler);
+  }, []);
 
   const renderModal = () => {
     if (!modal) return;

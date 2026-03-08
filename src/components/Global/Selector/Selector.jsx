@@ -36,7 +36,7 @@ export default function Selector({
   );
 }
 
-Selector.Trigger = function Trigger({ children, label = null }) {
+Selector.Trigger = function Trigger({ children, label = null, ...props }) {
   const { isOpen, toggleOpen, value } = useSelectorContext();
 
   let content;
@@ -45,10 +45,14 @@ Selector.Trigger = function Trigger({ children, label = null }) {
   } else if (children) {
     content = children;
   } else {
-    content = <TriggerDefault label={label} isOpen={isOpen} />;
+    content = <TriggerDefault label={label} isOpen={isOpen} {...props} />;
   }
 
-  return <div onClick={toggleOpen}>{content}</div>;
+  return (
+    <div onClick={toggleOpen} {...props}>
+      {content}
+    </div>
+  );
 };
 
 Selector.Options = function Options({ children, className = "", ...props }) {
@@ -64,8 +68,9 @@ Selector.Options = function Options({ children, className = "", ...props }) {
   );
 };
 
-Selector.Option = function Option({ value, children, label = null }) {
+Selector.Option = function Option({ value, children, label = null, ...props }) {
   const { onChange, value: selectedValue } = useSelectorContext();
+  console.log(props);
 
   let content;
   if (typeof children === "function") {
@@ -77,9 +82,17 @@ Selector.Option = function Option({ value, children, label = null }) {
     content = children;
   } else {
     content = (
-      <OptionDefault label={label} isSelected={value == selectedValue} />
+      <OptionDefault
+        label={label}
+        isSelected={value == selectedValue}
+        {...props}
+      />
     );
   }
 
-  return <div onClick={() => onChange(value)}>{content}</div>;
+  return (
+    <div onClick={() => onChange(value)} {...props}>
+      {content}
+    </div>
+  );
 };

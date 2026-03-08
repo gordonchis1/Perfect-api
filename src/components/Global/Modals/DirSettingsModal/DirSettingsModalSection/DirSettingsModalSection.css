@@ -1,0 +1,37 @@
+.dir-settings-modal_section-container {
+  margin-top: 40px;
+}
+
+.section_title {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  font-family: var(--bold-font);
+  text-align: center;
+  font-size: 23px;
+  margin-bottom: 20px;
+}
+.option_text-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.option_container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 0.9px 0 0 var(--border);
+  padding-bottom: 40px;
+}
+
+.option_title {
+  font-size: 20px;
+  font-family: var(--bold-font);
+  color: var(--primary-text-color);
+}
+
+.option_description {
+  font-size: 19px;
+  font-family: var(--regular-font);
+  color: var(--muted-foreground);
+}
