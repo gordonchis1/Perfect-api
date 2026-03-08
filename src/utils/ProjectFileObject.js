@@ -166,9 +166,9 @@ export class VirtualFileSystem {
     if (node.type === "file") {
       base.content = node.content;
     } else if (node.type === "dir") {
+      base.dirConfig = node.dirConfig;
       base.children = node.children.map((child) => this.toJSON(child));
     }
-
     return base;
   }
 

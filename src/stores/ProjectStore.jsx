@@ -113,24 +113,34 @@ export const useProjectStore = create((set, get) => ({
     const vfs = get().vfs;
 
     if (vfs instanceof VirtualFileSystem) {
-      const newNode = new File("New file", content || fileContentDefault);
       const node = vfs.getNodeById(id);
+      if (node instanceof Directory) {
+        if (content == null) {
+          content = fileContentDefault;
+        }
 
-      if (node.type === "dir") {
-        node.addChild(newNode);
-        vfs.onChange();
-        await get().save();
-      } else {
-        const parent = vfs.getParentNode(node);
-        parent.addChild(newNode);
-        vfs.onChange();
-        await get().save();
+        if (node?.dirConfig?.type) {
+          content.type = node.dirConfig.type;
+        }
+
+        const newNode = new File("New file", content);
+
+        if (node.type === "dir") {
+          node.addChild(newNode);
+          vfs.onChange();
+          await get().save();
+        } else {
+          const parent = vfs.getParentNode(node);
+          parent.addChild(newNode);
+          vfs.onChange();
+          await get().save();
+        }
+
+        get().setCurrentFile(newNode.id);
+        get().addOpenFile(newNode.id);
+
+        set({ ...get(), renameId: newNode.id });
       }
-
-      get().setCurrentFile(newNode.id);
-      get().addOpenFile(newNode.id);
-
-      set({ ...get(), renameId: newNode.id });
     }
   },
 
