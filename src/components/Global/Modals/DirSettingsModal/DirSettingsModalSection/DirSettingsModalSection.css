@@ -11,27 +11,18 @@
   font-size: 23px;
   margin-bottom: 20px;
 }
-.option_text-container {
+
+.options_container {
+  width: 100%;
   display: flex;
   flex-direction: column;
+  border-bottom: 1px solid var(--border);
+  position: relative;
 }
 
-.option_container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 0.9px 0 0 var(--border);
-  padding-bottom: 40px;
-}
-
-.option_title {
-  font-size: 20px;
-  font-family: var(--bold-font);
-  color: var(--primary-text-color);
-}
-
-.option_description {
-  font-size: 19px;
-  font-family: var(--regular-font);
-  color: var(--muted-foreground);
+.default-type_selector {
+  display: inline;
+  position: absolute;
+  top: 0;
+  right: 0;
 }

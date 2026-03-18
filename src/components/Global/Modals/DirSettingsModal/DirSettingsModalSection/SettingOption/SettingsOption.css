@@ -1,0 +1,22 @@
+.option_container {
+  align-items: center;
+  box-shadow: 0 0.9px 0 0 var(--border);
+  padding-bottom: 40px;
+}
+
+.option_text-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.option_title {
+  font-size: 20px;
+  font-family: var(--bold-font);
+  color: var(--primary-text-color);
+}
+
+.option_description {
+  font-size: 19px;
+  font-family: var(--regular-font);
+  color: var(--muted-foreground);
+}

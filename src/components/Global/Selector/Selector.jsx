@@ -70,7 +70,6 @@ Selector.Options = function Options({ children, className = "", ...props }) {
 
 Selector.Option = function Option({ value, children, label = null, ...props }) {
   const { onChange, value: selectedValue } = useSelectorContext();
-  console.log(props);
 
   let content;
   if (typeof children === "function") {
