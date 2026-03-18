@@ -15,6 +15,3 @@ export default function findVariable(text) {
   }
   return keys;
 }
-
-const text = "{url}/{path}";
-console.log(findVariable(text));

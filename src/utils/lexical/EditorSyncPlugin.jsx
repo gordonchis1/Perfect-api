@@ -1,13 +1,30 @@
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { $getRoot, $isTextNode } from "lexical";
 import { useEffect } from "react";
-import { $isVariableNode, testDic } from "./variableNode";
+import { $isVariableNode } from "./variableNode";
 import { useProjectStore } from "../../stores/ProjectStore";
+import { File, VirtualFileSystem } from "../ProjectFileObject";
 
 function buildString(node) {
+  const projectState = useProjectStore.getState();
+  const currentFileId = projectState.currentFileId;
+  const vfs = projectState.vfs;
+  let variables = undefined;
+
+  if (vfs instanceof VirtualFileSystem) {
+    const currentFile = vfs.getNodeById(currentFileId);
+    if (currentFile instanceof File) {
+      const parent = vfs.getParentNode(currentFile);
+      variables = parent.dirConfig.variables;
+    }
+  }
+
   if ($isTextNode(node)) {
-    if ($isVariableNode(node)) {
-      return testDic[node.__variable];
+    if ($isVariableNode(node) && variables !== undefined) {
+      const variable = variables.find((element) => {
+        return element.key == node.__variable;
+      });
+      return variable?.value || "";
     }
     return node.getTextContent();
   }

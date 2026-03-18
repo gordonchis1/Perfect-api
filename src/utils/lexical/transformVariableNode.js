@@ -1,6 +1,8 @@
-import { $createVariableNode, testDic } from "./variableNode";
+import { $createVariableNode } from "./variableNode";
 import findVariable from "./findVariable";
 import { $createUndefinedVariableNode } from "./undefinedVariableNode";
+import { useProjectStore } from "../../stores/ProjectStore";
+import { VirtualFileSystem, File } from "../ProjectFileObject";
 
 export function textNodeTransform(node) {
   if (!node.isSimpleText() || node.hasFormat("code")) {
@@ -24,9 +26,29 @@ export function textNodeTransform(node) {
   } else {
     targetNode = parts[1];
   }
+  if (variable == "") {
+    targetNode.replace(targetNode);
+  }
+
+  const projectState = useProjectStore.getState();
+  const currentFileId = projectState.currentFileId;
+  const vfs = projectState.vfs;
+  let variables = undefined;
+
+  if (vfs instanceof VirtualFileSystem) {
+    const currentFile = vfs.getNodeById(currentFileId);
+    if (currentFile instanceof File) {
+      const parent = vfs.getParentNode(currentFile);
+      variables = parent.dirConfig.variables;
+    }
+  }
 
   let variableNode;
-  if (testDic[variable.toUpperCase()]) {
+  const variableElement = variables.find((element) => {
+    return element.key == variable.toUpperCase();
+  });
+
+  if (variables !== undefined && variableElement !== undefined) {
     variableNode = $createVariableNode(variable.toUpperCase());
   } else {
     variableNode = $createUndefinedVariableNode(variable.toUpperCase());
