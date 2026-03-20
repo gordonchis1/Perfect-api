@@ -31,3 +31,14 @@
   color: var(--primary);
   border: 1px solid var(--primary);
 }
+
+.directory-variable_delete-btn {
+  background: transparent;
+  color: var(--destructive);
+  border: none;
+  cursor: pointer;
+}
+
+.directory-variable_delete-btn:hover {
+  opacity: 0.8;
+}

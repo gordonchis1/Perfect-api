@@ -1,4 +1,4 @@
-import { Plus } from "lucide-react";
+import { Plus, Trash2 } from "lucide-react";
 import Input from "../../../../../Input/Input";
 import "./DirectoryVariables.css";
 import useDirSettingsContext from "../../../../../../../Hooks/useDirSettingsContext";
@@ -71,7 +71,12 @@ export default function DirectoryVariables() {
               value={variable.value}
               onChange={(event) => handleUpdateValue(event, variable.id)}
             />
-            <button onClick={() => handleDelete(variable.id)}>delete</button>
+            <button
+              onClick={() => handleDelete(variable.id)}
+              className="directory-variable_delete-btn"
+            >
+              <Trash2 size={24} />
+            </button>
           </div>
         );
       })}
