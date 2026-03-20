@@ -3,30 +3,20 @@ import { $getRoot, $isTextNode } from "lexical";
 import { useEffect } from "react";
 import { $isVariableNode } from "./variableNode";
 import { useProjectStore } from "../../stores/ProjectStore";
-import { File, VirtualFileSystem } from "../ProjectFileObject";
 
 function buildString(node) {
-  const projectState = useProjectStore.getState();
-  const currentFileId = projectState.currentFileId;
-  const vfs = projectState.vfs;
-  let variables = undefined;
-
-  if (vfs instanceof VirtualFileSystem) {
-    const currentFile = vfs.getNodeById(currentFileId);
-    if (currentFile instanceof File) {
-      const parent = vfs.getParentNode(currentFile);
-      variables = parent.dirConfig.variables;
-    }
-  }
-
   if ($isTextNode(node)) {
-    if ($isVariableNode(node) && variables !== undefined) {
+    if ($isVariableNode(node)) {
       return node.__value || "";
     }
     return node.getTextContent();
   }
 
   let result = "";
+  if (!node.getChildren) {
+    return "";
+  }
+
   const children = node.getChildren();
 
   for (const child of children) {
