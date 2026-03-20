@@ -1,30 +1,8 @@
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import { $getRoot, $isTextNode } from "lexical";
+import { $getRoot } from "lexical";
 import { useEffect } from "react";
-import { $isVariableNode } from "./variableNode";
 import { useProjectStore } from "../../stores/ProjectStore";
-
-function buildString(node) {
-  if ($isTextNode(node)) {
-    if ($isVariableNode(node)) {
-      return node.__value || "";
-    }
-    return node.getTextContent();
-  }
-
-  let result = "";
-  if (!node.getChildren) {
-    return "";
-  }
-
-  const children = node.getChildren();
-
-  for (const child of children) {
-    result += buildString(child);
-  }
-
-  return result;
-}
+import { buildString } from "./buildString";
 
 export default function EditorSyncPlugin() {
   const [editor] = useLexicalComposerContext();
