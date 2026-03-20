@@ -3,6 +3,7 @@ import findVariable from "./findVariable";
 import { $createUndefinedVariableNode } from "./undefinedVariableNode";
 import { useProjectStore } from "../../stores/ProjectStore";
 import { VirtualFileSystem, File } from "../ProjectFileObject";
+import { findVariableInFullPath } from "../findVariable";
 
 export function textNodeTransform(node) {
   if (!node.isSimpleText() || node.hasFormat("code")) {
@@ -18,7 +19,7 @@ export function textNodeTransform(node) {
   const testKey = variableMatch[0];
   const start = testKey[0] + 1;
   const end = testKey[1];
-  const variable = text.slice(start, end);
+  let variable = text.slice(start, end);
   const parts = node.splitText(testKey[0], testKey[1] + 1);
 
   if (testKey[0] == 0 || parts.length == 1) {
@@ -30,28 +31,16 @@ export function textNodeTransform(node) {
     targetNode.replace(targetNode);
   }
 
-  const projectState = useProjectStore.getState();
-  const currentFileId = projectState.currentFileId;
-  const vfs = projectState.vfs;
-  let variables = undefined;
+  variable = variable.toUpperCase().replace(" ", "_");
 
-  if (vfs instanceof VirtualFileSystem) {
-    const currentFile = vfs.getNodeById(currentFileId);
-    if (currentFile instanceof File) {
-      const parent = vfs.getParentNode(currentFile);
-      variables = parent.dirConfig.variables;
-    }
-  }
-
+  const variableElement = findVariableInFullPath(variable);
   let variableNode;
-  const variableElement = variables.find((element) => {
-    return element.key == variable.toUpperCase();
-  });
 
-  if (variables !== undefined && variableElement !== undefined) {
-    variableNode = $createVariableNode(variable.toUpperCase());
+  if (variableElement !== undefined) {
+    // Add value for recreate de final url
+    variableNode = $createVariableNode(variable, variableElement.value);
   } else {
-    variableNode = $createUndefinedVariableNode(variable.toUpperCase());
+    variableNode = $createUndefinedVariableNode(variable, undefined);
   }
   targetNode.replace(variableNode);
 }

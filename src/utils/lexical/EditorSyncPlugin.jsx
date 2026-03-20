@@ -21,10 +21,7 @@ function buildString(node) {
 
   if ($isTextNode(node)) {
     if ($isVariableNode(node) && variables !== undefined) {
-      const variable = variables.find((element) => {
-        return element.key == node.__variable;
-      });
-      return variable?.value || "";
+      return node.__value || "";
     }
     return node.getTextContent();
   }

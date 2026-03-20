@@ -1,11 +1,7 @@
 import { TextNode } from "lexical";
-export const testDic = {
-  URL: "http://localhost:10767",
-  PATH: "api/v1/playback/volume",
-};
 
-export function $createVariableNode(variable) {
-  const node = new VariableNode(variable).setMode("token");
+export function $createVariableNode(variable, value = undefined) {
+  const node = new VariableNode(variable, value).setMode("token");
   return node;
 }
 
@@ -19,12 +15,13 @@ export class VariableNode extends TextNode {
   }
 
   static clone(node) {
-    return new VariableNode(node.__variable, node.__key);
+    return new VariableNode(node.__variable, node.__value, node.__key);
   }
 
-  constructor(variable, key) {
+  constructor(variable, value = undefined, key) {
     super(variable, key);
     this.__variable = variable.toUpperCase();
+    this.__value = value;
   }
 
   /**
@@ -49,6 +46,7 @@ export class VariableNode extends TextNode {
     return {
       ...super.exportJSON(),
       variable: this.__variable,
+      value: this.__value,
     };
   }
 }

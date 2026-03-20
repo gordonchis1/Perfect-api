@@ -8,7 +8,7 @@ export class UndefinedVariableNode extends VariableNode {
     return new UndefinedVariableNode(node.__variable, node.__key);
   }
   constructor(variable, key) {
-    super(variable, key);
+    super(variable, undefined, key);
   }
 
   createDOM(config) {
@@ -28,7 +28,8 @@ export class UndefinedVariableNode extends VariableNode {
   exportJSON() {
     return {
       ...super.exportJSON(),
-      value: this.__variable,
+      variable: this.__variable,
+      value: this.__value,
     };
   }
 }

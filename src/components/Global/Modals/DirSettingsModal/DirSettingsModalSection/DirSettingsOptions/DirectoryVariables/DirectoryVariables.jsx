@@ -33,7 +33,7 @@ export default function DirectoryVariables() {
     const updatedVariables = [...variables];
     updatedVariables[variableIdx] = {
       ...updatedVariables[variableIdx],
-      key: value.toUpperCase(),
+      key: value.toUpperCase().replace(" ", "_"),
     };
 
     dirUpdateSettings(node.id, {
