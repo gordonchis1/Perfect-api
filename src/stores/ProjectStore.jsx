@@ -11,6 +11,7 @@ import {
   updateProjectContentAndState,
 } from "../utils/UpdateProject";
 import { fileContentDefault } from "../utils/constants/ProjectFileConstants";
+import { rebuildFullFinalString } from "../utils/lexical/buildString";
 
 const initialState = {
   vfs: null,
@@ -245,6 +246,23 @@ export const useProjectStore = create((set, get) => ({
         await get().save();
       }
     }
+  },
+
+  rebuildFinalString: () => {
+    const currentFileId = get().currentFileId;
+    const openFiles = get().openFiles;
+    const updateContentOfOpenFile = get().updateContentOfOpenFile;
+    const { content } = openFiles[currentFileId];
+    const editorState = content.url?.inputUrl?.editorState;
+    const queryParams = content.url?.queryParams;
+
+    if (!editorState || !queryParams) return;
+
+    const finalString = rebuildFullFinalString(editorState, queryParams);
+    updateContentOfOpenFile(currentFileId, {
+      ...content,
+      url: { ...content.url, finalUrl: finalString },
+    });
   },
 
   save: async () => {

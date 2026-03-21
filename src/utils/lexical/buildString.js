@@ -1,5 +1,7 @@
-import { $isTextNode } from "lexical";
-import { $isVariableNode } from "./variableNode";
+import { $getRoot, $isTextNode, createEditor } from "lexical";
+import { $isVariableNode, VariableNode } from "./variableNode";
+import { UndefinedVariableNode } from "./undefinedVariableNode";
+import { buildQueryParams } from "../buildQueryParams";
 
 export function buildString(node) {
   if ($isTextNode(node)) {
@@ -21,4 +23,30 @@ export function buildString(node) {
   }
 
   return result;
+}
+
+export function rebuildFullFinalString(node, queryParams) {
+  const editor = createEditor({
+    nodes: [VariableNode, UndefinedVariableNode],
+  });
+  const editorState = editor.parseEditorState(node);
+  let inputString;
+  let finalString;
+
+  editorState.read(() => {
+    const root = $getRoot();
+    inputString = buildString(root);
+  });
+
+  const queryParamsString = buildQueryParams(queryParams);
+
+  try {
+    const url = new URL(inputString);
+    url.search = queryParamsString;
+    finalString = url.toString();
+  } catch {
+    finalString = inputString + "?" + queryParamsString;
+  }
+
+  return finalString;
 }
