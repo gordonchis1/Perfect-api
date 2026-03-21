@@ -11,7 +11,7 @@ export class UndefinedVariableNode extends VariableNode {
     super(variable, undefined, key);
   }
 
-  createDOM(config) {
+  createDOM() {
     const dom = document.createElement("span");
     dom.className = "undefined-variable-tag";
     dom.classList.add("variable-tag");

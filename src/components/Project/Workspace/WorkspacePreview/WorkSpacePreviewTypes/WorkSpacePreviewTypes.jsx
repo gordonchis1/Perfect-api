@@ -12,8 +12,6 @@ import { Editor } from "@monaco-editor/react";
 import LoaderSpiner from "../../../../Global/LoaderSpiner/LoaderSpiner";
 import { useUserConfigStore } from "../../../../../stores/UserConfigStore";
 import useCurrentEntry from "../../../../../Hooks/useCurrentEntry";
-import Selector from "../../../../Global/Selector/Selector";
-import { ChevronDown } from "lucide-react";
 
 export default function WorkSpacePreviewTypes() {
   const syntaxHighlighterRef = useRef(null);
@@ -25,32 +23,37 @@ export default function WorkSpacePreviewTypes() {
   );
   const currentEntry = useCurrentEntry();
 
-  const convertjsonToTypes = async (targetLanguague) => {
-    const jsonInput = jsonInputForTargetLanguage(targetLanguague);
+  const convertjsonToTypes = async () => {
+    const jsonInput = jsonInputForTargetLanguage(currentLanguage.language);
 
-    await jsonInput.addSource({
-      name: "Response",
-      samples: [JSON.stringify(currentEntry?.response?.body?.raw)],
-    });
+    if (currentEntry?.response?.body?.raw !== undefined) {
+      await jsonInput.addSource({
+        name: "Response",
+        samples: [JSON.stringify(currentEntry?.response?.body?.raw)],
+      });
 
-    const inputData = new InputData();
+      const inputData = new InputData();
 
-    inputData.addInput(jsonInput);
+      inputData.addInput(jsonInput);
 
-    return await quicktype({
-      inputData,
-      lang: targetLanguague,
-      rendererOptions: {
-        "just-types": "true",
-      },
-    });
+      return await quicktype({
+        inputData,
+        lang: currentLanguage.language,
+        rendererOptions: {
+          "just-types": "true",
+        },
+      });
+    }
   };
 
   useEffect(() => {
     const getTypes = async () => {
       if (!currentLanguage.language) return;
-      const { lines } = await convertjsonToTypes(currentLanguage.language);
-      setTypes(lines.join("\n"));
+      const response = await convertjsonToTypes(currentLanguage.language);
+      const lines = response?.lines;
+      if (lines != undefined) {
+        setTypes(lines.join("\n"));
+      }
     };
 
     getTypes();

@@ -10,22 +10,22 @@ function App() {
   const config = useUserConfigStore((state) => state.config);
 
   return (
-    <div
-      className={config?.preferences?.appearance?.theme || "dark"}
-      style={{
-        maxWidth: "100vw",
-        width: "100vw",
-        height: "100vh",
-        overflow: "hidden",
-      }}
-    >
-      <ModalProvider>
+    <ModalProvider>
+      <div
+        className={config?.preferences?.appearance?.theme || "dark"}
+        style={{
+          maxWidth: "100vw",
+          width: "100vw",
+          height: "100vh",
+          overflow: "hidden",
+        }}
+      >
         <Routes>
           <Route index element={<Home />}></Route>
           <Route element={<Project />} path="/project/:id"></Route>
         </Routes>
-      </ModalProvider>
-    </div>
+      </div>
+    </ModalProvider>
   );
 }
 

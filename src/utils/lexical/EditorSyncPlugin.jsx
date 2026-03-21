@@ -28,7 +28,9 @@ export default function EditorSyncPlugin() {
           url.search = queryParamsStr;
           finalString = url.toString();
         } catch {
-          finalString = finalString + "?" + queryParamsStr;
+          if (finalString.length != 0) {
+            finalString = finalString + "?" + queryParamsStr;
+          }
         }
 
         updateContentOfOpenFile(currentFileId, {
