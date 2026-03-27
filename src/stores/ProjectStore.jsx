@@ -253,12 +253,11 @@ export const useProjectStore = create((set, get) => ({
     const openFiles = get().openFiles;
     const updateContentOfOpenFile = get().updateContentOfOpenFile;
     const { content } = openFiles[currentFileId];
-    const editorState = content.url?.inputUrl?.editorState;
     const queryParams = content.url?.queryParams;
 
-    if (!editorState || !queryParams) return;
+    if (!queryParams) return;
 
-    const finalString = rebuildFullFinalString(editorState, queryParams);
+    const finalString = rebuildFullFinalString(queryParams);
     updateContentOfOpenFile(currentFileId, {
       ...content,
       url: { ...content.url, finalUrl: finalString },

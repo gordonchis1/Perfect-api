@@ -2,14 +2,14 @@ import { $getRoot, $isTextNode, createEditor } from "lexical";
 import { $isVariableNode, VariableNode } from "./variableNode";
 import { UndefinedVariableNode } from "./undefinedVariableNode";
 import { buildQueryParams } from "../buildQueryParams";
+import { useLexicalEditorStore } from "../../stores/LexicalEditorStore";
 
-export function parseEditorState(node) {
-  const editor = createEditor({
-    nodes: [VariableNode, UndefinedVariableNode],
-  });
-  const editorState = editor.parseEditorState(node);
+export function parseEditorState() {
+  const { editor } = useLexicalEditorStore.getState();
+  if (!editor) return "";
+
   let inputString = undefined;
-  editorState.read(() => {
+  editor.read(() => {
     const root = $getRoot();
     inputString = buildString(root);
   });
@@ -39,15 +39,14 @@ export function buildString(node) {
   return result;
 }
 
-export function rebuildFullFinalString(node, queryParams) {
-  const editor = createEditor({
-    nodes: [VariableNode, UndefinedVariableNode],
-  });
-  const editorState = editor.parseEditorState(node);
+export function rebuildFullFinalString(queryParams) {
+  const { editor } = useLexicalEditorStore.getState();
+  if (!editor) return;
+
   let inputString;
   let finalString;
 
-  editorState.read(() => {
+  editor.read(() => {
     const root = $getRoot();
     inputString = buildString(root);
   });

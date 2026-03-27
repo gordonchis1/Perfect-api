@@ -7,7 +7,6 @@ import { ImportIcon, Plus, Trash2 } from "lucide-react";
 import { useProjectStore } from "../../../../../../stores/ProjectStore";
 import { nanoid } from "nanoid";
 import { parseEditorState } from "../../../../../../utils/lexical/buildString";
-import { delateAllQueryParams } from "../../../../../../utils/lexical/delateAllQueryParams";
 import { useLexicalEditorStore } from "../../../../../../stores/LexicalEditorStore";
 
 const defaultQueryObject = {
@@ -18,7 +17,6 @@ const defaultQueryObject = {
 
 export default function WorkSpaceInputUrlFormerQueryParams() {
   const currentFileId = useProjectStore((store) => store.currentFileId);
-  const lexicalEditor = useLexicalEditorStore((store) => store.editor);
   const delateAllQueryParamsFromLexicalEditor = useLexicalEditorStore(
     (store) => store.delateAllQueryParams,
   );
@@ -106,6 +104,7 @@ export default function WorkSpaceInputUrlFormerQueryParams() {
 
   const handleDelate = (idx) => {
     const updatedQuerys = [...querys];
+    console.log(idx);
 
     updatedQuerys.splice(idx, 1);
 
@@ -142,12 +141,11 @@ export default function WorkSpaceInputUrlFormerQueryParams() {
   const handleImportFromUrl = () => {
     if (!content?.url?.inputUrl?.editorState) return;
 
-    const inputUrl = parseEditorState(content.url.inputUrl?.editorState);
+    const inputUrl = parseEditorState();
 
     try {
       const url = new URL(inputUrl);
       const searchParams = url.searchParams;
-      // delateAllQueryParams(content.url.inputUrl.editorState);
       delateAllQueryParamsFromLexicalEditor();
       searchParams.forEach((value, key) => {
         updateContentOfOpenFile(currentFileId, {
@@ -156,7 +154,7 @@ export default function WorkSpaceInputUrlFormerQueryParams() {
             ...content.url,
             queryParams: [
               ...content.url.queryParams,
-              { isActive: true, key: key, value: value },
+              { isActive: true, key: key, value: value, id: nanoid() },
             ],
           },
         });
@@ -215,6 +213,7 @@ export default function WorkSpaceInputUrlFormerQueryParams() {
                       }}
                     />
                     <UrlFormerQueryParamsDeleteQueryButton
+                      idx={index}
                       onClick={handleDelate}
                     />
                   </div>
