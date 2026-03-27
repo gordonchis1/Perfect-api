@@ -21,14 +21,17 @@ export default function EditorSyncPlugin() {
         const json = editor.toJSON();
         if (!currentFileId) return;
 
-        const queryParamsStr = buildQueryParams(content?.url?.queryParams);
-
         try {
           const url = new URL(finalString);
+          const queryParamsStr = buildQueryParams(
+            content?.url?.queryParams,
+            url.searchParams,
+          );
           url.search = queryParamsStr;
           finalString = url.toString();
         } catch {
           if (finalString.length != 0) {
+            const queryParamsStr = buildQueryParams(content?.url?.queryParams);
             finalString = finalString + "?" + queryParamsStr;
           }
         }

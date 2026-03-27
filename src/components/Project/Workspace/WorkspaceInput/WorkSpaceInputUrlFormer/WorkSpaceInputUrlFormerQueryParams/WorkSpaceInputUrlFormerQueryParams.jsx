@@ -3,9 +3,12 @@ import UrlFormerQueryParamsOption from "./UrlFormerQueryParamsOption/UrlFormerQu
 import UrlFormerQueryParamsInput from "./UrlFormerQueryParamsInput/UrlFormerQueryParamsInput";
 import UrlFormerQueryParamsDeleteQueryButton from "./UrlFormerQueryParamsDeleteQueryButton/UrlFormerQueryParamsDeleteQueryButton";
 import ActiveCheckbox from "../../../../../Global/ActiveCheckbox/ActiveCheckbox";
-import { Plus, Trash2 } from "lucide-react";
+import { ImportIcon, Plus, Trash2 } from "lucide-react";
 import { useProjectStore } from "../../../../../../stores/ProjectStore";
 import { nanoid } from "nanoid";
+import { parseEditorState } from "../../../../../../utils/lexical/buildString";
+import { delateAllQueryParams } from "../../../../../../utils/lexical/delateAllQueryParams";
+import { useLexicalEditorStore } from "../../../../../../stores/LexicalEditorStore";
 
 const defaultQueryObject = {
   key: "",
@@ -15,6 +18,10 @@ const defaultQueryObject = {
 
 export default function WorkSpaceInputUrlFormerQueryParams() {
   const currentFileId = useProjectStore((store) => store.currentFileId);
+  const lexicalEditor = useLexicalEditorStore((store) => store.editor);
+  const delateAllQueryParamsFromLexicalEditor = useLexicalEditorStore(
+    (store) => store.delateAllQueryParams,
+  );
   const content = useProjectStore(
     (store) => store.openFiles[currentFileId]?.content,
   );
@@ -132,6 +139,35 @@ export default function WorkSpaceInputUrlFormerQueryParams() {
     rebuildFinalString();
   };
 
+  const handleImportFromUrl = () => {
+    if (!content?.url?.inputUrl?.editorState) return;
+
+    const inputUrl = parseEditorState(content.url.inputUrl?.editorState);
+
+    try {
+      const url = new URL(inputUrl);
+      const searchParams = url.searchParams;
+      // delateAllQueryParams(content.url.inputUrl.editorState);
+      delateAllQueryParamsFromLexicalEditor();
+      searchParams.forEach((value, key) => {
+        updateContentOfOpenFile(currentFileId, {
+          ...content,
+          url: {
+            ...content.url,
+            queryParams: [
+              ...content.url.queryParams,
+              { isActive: true, key: key, value: value },
+            ],
+          },
+        });
+      });
+      rebuildFinalString();
+    } catch (error) {
+      console.log(error);
+      return;
+    }
+  };
+
   return (
     <>
       {querys && (
@@ -139,6 +175,11 @@ export default function WorkSpaceInputUrlFormerQueryParams() {
           <div className="query-params_header">
             <span className="query-params_title">Query params</span>
             <div className="query-params-header_btn-container">
+              <UrlFormerQueryParamsOption
+                onClick={handleImportFromUrl}
+                text={"Traer de la url"}
+                icon={<ImportIcon />}
+              />
               <UrlFormerQueryParamsOption
                 icon={<Plus size={20} />}
                 text="Añadir"

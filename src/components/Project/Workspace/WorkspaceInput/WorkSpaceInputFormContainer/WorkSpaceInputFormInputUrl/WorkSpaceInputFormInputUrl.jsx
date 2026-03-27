@@ -9,6 +9,7 @@ import VariablePlugin from "../../../../../../utils/lexical/VariablePlugin";
 import { UndefinedVariableNode } from "../../../../../../utils/lexical/undefinedVariableNode";
 import EditorSyncPlugin from "../../../../../../utils/lexical/EditorSyncPlugin";
 import EditorInitializerPlugin from "../../../../../../utils/lexical/EditorInitializerPlugin";
+import EditorGlobalContextPlugin from "../../../../../../utils/lexical/EditorGlobalContextPlugin";
 
 export default function WorkSpaceInputFormInputUrl() {
   function onError(error) {
@@ -39,6 +40,7 @@ export default function WorkSpaceInputFormInputUrl() {
         <VariablePlugin />
         {/* ? plugin for sync content */}
         <EditorSyncPlugin />
+        <EditorGlobalContextPlugin />
         <EditorInitializerPlugin />
       </LexicalComposer>
     </div>

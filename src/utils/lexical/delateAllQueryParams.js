@@ -1,0 +1,1 @@
+export function delateAllQueryParams(node) {}

@@ -1,6 +1,9 @@
-export const buildQueryParams = (params = []) => {
-  if (params.length == 0) return "";
+export const buildQueryParams = (params = [], add = new URLSearchParams()) => {
   const queryParams = new URLSearchParams();
+
+  add.forEach((value, key) => {
+    queryParams.append(key, value);
+  });
 
   for (let param of params) {
     if (param.isActive) {
