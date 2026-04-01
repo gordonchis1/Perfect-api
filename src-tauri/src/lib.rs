@@ -6,9 +6,17 @@ use std::collections::HashMap;
 use reqwest::cookie::CookieStore;
 use url::Url;
 use serde::Deserialize;
+use tokio::sync::Mutex;
+use tokio::task::JoinHandle;
+use futures::future::{AbortHandle, Abortable};
 
 static COOKIE_JAR: Lazy<Arc<Jar>> =
     Lazy::new(|| Arc::new(Jar::default()));
+
+
+static ACTIVE_REQUESTS: Lazy<
+    Arc<Mutex<HashMap<String, AbortHandle>>>
+> = Lazy::new(|| Arc::new(Mutex::new(HashMap::new())));
 
 static CLIENT: Lazy<Client> = Lazy::new(|| {
     Client::builder()
@@ -32,6 +40,7 @@ pub struct SmartResponse {
 
 #[derive(Deserialize)]
 pub struct SmartRequest {
+    pub id: String,
     pub url: String,
     pub method: String,
     pub headers: Option<HashMap<String, String>>,
@@ -56,71 +65,55 @@ fn get_cookies_for_url(url: &str) -> Vec<String> {
 
 #[tauri::command]
 async fn smart_fetch(req: SmartRequest) -> Result<SmartResponse, String> {
-    let method = req.method.to_uppercase();
+    let id = req.id.clone();
 
-    let mut request = match method.as_str() {
-        "GET" => CLIENT.get(&req.url),
-        "POST" => CLIENT.post(&req.url),
-        "PUT" => CLIENT.put(&req.url),
-        "PATCH" => CLIENT.patch(&req.url),
-        "DELETE" => CLIENT.delete(&req.url),
-        _ => return Err("Unsupported method".into()),
-    };
+    let (abort_handle, abort_reg) = AbortHandle::new_pair();
 
-    // headers dinámicos
-    if let Some(headers) = req.headers {
-        for (key, value) in headers {
-            request = request.header(key, value);
-        }
+    ACTIVE_REQUESTS.lock().await.insert(id.clone(), abort_handle);
+
+    let result = Abortable::new(async move {
+        let mut request = CLIENT.get(&req.url);
+
+        let response = request.send().await.map_err(|e| e.to_string())?;
+
+        let status = response.status();
+        let final_url = response.url().to_string();
+        let body = response.text().await.map_err(|e| e.to_string())?;
+
+        Ok(SmartResponse {
+            status: status.as_u16(),
+            statusText: status.canonical_reason().unwrap_or("").to_string(),
+            url: final_url,
+            headers: HashMap::new(),
+            data: body,
+            cookies: vec![],
+            setCookies: vec![],
+        })
+    }, abort_reg)
+    .await;
+
+    match result {
+        Ok(res) => res,
+        Err(_) => Err("Request cancelled".into()),
+    }
+}
+
+#[tauri::command]
+async fn cancel_request(id: String) -> Result<(), String> {
+    let mut map = ACTIVE_REQUESTS.lock().await;
+
+    if let Some(handle) = map.remove(&id) {
+        handle.abort();
     }
 
-    // body raw
-    if let Some(body) = req.body {
-        request = request.body(body);
-    }
-
-    let response = request.send().await.map_err(|e| e.to_string())?;
-
-    let status = response.status();
-    let final_url = response.url().to_string();
-
-    // headers completos
-    let mut headers_map = HashMap::new();
-    for (key, value) in response.headers() {
-        headers_map.insert(
-            key.to_string(),
-            value.to_str().unwrap_or("").to_string(),
-        );
-    }
-
-    // set-cookie
-    let set_cookies = response
-        .headers()
-        .get_all("set-cookie")
-        .iter()
-        .map(|v| v.to_str().unwrap_or("").to_string())
-        .collect::<Vec<String>>();
-
-    let body = response.text().await.map_err(|e| e.to_string())?;
-
-    let cookies = get_cookies_for_url(&final_url);
-
-    Ok(SmartResponse {
-        status: status.as_u16(),
-        statusText: status.canonical_reason().unwrap_or("").to_string(),
-        url: final_url,
-        headers: headers_map,
-        data: body,
-        cookies,
-        setCookies: set_cookies,
-    })
+    Ok(())
 }
 
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![smart_fetch])
+        .invoke_handler(tauri::generate_handler![smart_fetch, cancel_request])
         .plugin(tauri_plugin_fs::init())
         .plugin(tauri_plugin_persisted_scope::init())
         .plugin(tauri_plugin_store::Builder::new().build())

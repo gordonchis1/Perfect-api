@@ -199,6 +199,7 @@ export class FSNode {
     this.type = type;
     this.isOpen = isOpen;
     this.id = id;
+    this.currentRunningId = null;
   }
 
   rename(newName) {
@@ -310,7 +311,7 @@ export class File extends FSNode {
     const body = content.body;
     const updateHistory = useHistoryStore.getState().update;
     const setCurrentHistoryId = useHistoryStore.getState().setCurrentId;
-
+    const id = nanoid();
     let time;
     const start = performance.now();
     let response;
@@ -343,6 +344,7 @@ export class File extends FSNode {
 
     // ? Change toggle is running
     toggleIsRunning(this);
+    this.currentRunningId = id;
     try {
       this.controller = new AbortController();
       const fetchOptions = {
@@ -375,14 +377,18 @@ export class File extends FSNode {
 
       // ? Do the request
       // response = await fetch(finalInfo.finalUrl, fetchOptions);
-      response = await invoke("smart_fetch", {
+      const requestPromise = invoke("smart_fetch", {
         req: {
+          id,
           method: "GET",
           url: finalInfo.finalUrl,
           headers: {},
           body: "",
         },
       });
+
+      response = await requestPromise;
+      console.log(response);
 
       if (!response.statusText == "ok") {
         error = {
@@ -399,10 +405,11 @@ export class File extends FSNode {
     } finally {
       // ? Change toggle is running
       time = Math.abs(performance.now() - start);
+      this.currentRunningId = null;
       toggleIsRunning(this);
     }
 
-    const newEntry = await generateEntry(time, content, response, error);
+    const newEntry = await generateEntry(time, content, response, error, id);
 
     const updateEntries = {};
     let updatedOrder = [];
@@ -444,10 +451,9 @@ export class File extends FSNode {
     return newEntry;
   }
 
-  abort() {
-    if (this.controller) {
-      this.controller.abort();
-      this.controller = null;
+  async abort() {
+    if (this.currentRunningId) {
+      await invoke("cancel_request", { id: this.currentRunningId });
     }
   }
 }

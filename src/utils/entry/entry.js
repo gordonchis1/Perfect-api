@@ -23,6 +23,7 @@ const arrayBufferToBase64 = (buffer) => {
 };
 
 async function readRawBody(response) {
+  console.log(response);
   const contentType = response.headers["content-type"];
 
   const isBinary =
@@ -41,7 +42,7 @@ async function readRawBody(response) {
   } else if (contentType?.includes("application/json")) {
     raw = JSON.parse(response.data);
   } else {
-    raw = await response.text();
+    raw = await response;
   }
 
   return {
@@ -50,12 +51,11 @@ async function readRawBody(response) {
   };
 }
 
-export const generateEntry = async (time, content, response, error) => {
-  console.log(error);
+export const generateEntry = async (time, content, response, error, id) => {
   const body = response ? await readRawBody(response) : null;
 
   return {
-    id: nanoid(),
+    id,
     isPinned: false,
     request: {
       method: content.type,
