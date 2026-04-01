@@ -10,6 +10,7 @@ import { canHaveBody } from "./fetch/costants";
 import { useHistoryStore } from "../stores/historyStore";
 import { AUTH_TYPES } from "./constants/AUTH_TYPES.JS";
 import { DEFAULT_DIR_CONFIG } from "./constants/DefaultDirConfig";
+import { invoke } from "@tauri-apps/api/core";
 
 const defaultOnChangeFunction = () => {
   console.log("Vfs Changed");
@@ -348,6 +349,7 @@ export class File extends FSNode {
         method: type,
         signal: this.controller.signal,
         headers: finalInfo.headers,
+        redirect: "manual",
       };
 
       if (canHaveBody(type) && body.type !== "noBody" && body.raw !== null) {
@@ -372,9 +374,17 @@ export class File extends FSNode {
       }
 
       // ? Do the request
-      response = await fetch(finalInfo.finalUrl, fetchOptions);
+      // response = await fetch(finalInfo.finalUrl, fetchOptions);
+      response = await invoke("smart_fetch", {
+        req: {
+          method: "GET",
+          url: finalInfo.finalUrl,
+          headers: {},
+          body: "",
+        },
+      });
 
-      if (!response.ok) {
+      if (!response.statusText == "ok") {
         error = {
           type: "http",
           status: response.status,

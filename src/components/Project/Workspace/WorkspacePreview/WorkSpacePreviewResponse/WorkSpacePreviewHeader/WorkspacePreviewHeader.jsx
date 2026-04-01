@@ -8,6 +8,7 @@ import useCurrentEntry from "../../../../../../Hooks/useCurrentEntry";
 
 export default function WorkspacePreviewHeader() {
   const currentEntry = useCurrentEntry();
+  console.log(currentEntry?.error);
 
   return (
     <div className="workspace-preview_response-header-container">

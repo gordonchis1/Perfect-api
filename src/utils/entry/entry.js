@@ -3,7 +3,7 @@ import { nanoid } from "nanoid";
 const getResponseHeaders = (response) => {
   const headers = {};
 
-  for (const [key, value] of response.headers.entries()) {
+  for (const [key, value] of Object.entries(response.headers)) {
     headers[key] = value;
   }
   return headers;
@@ -23,7 +23,7 @@ const arrayBufferToBase64 = (buffer) => {
 };
 
 async function readRawBody(response) {
-  const contentType = response.headers.get("content-type");
+  const contentType = response.headers["content-type"];
 
   const isBinary =
     contentType &&
@@ -39,7 +39,7 @@ async function readRawBody(response) {
 
     raw = blob;
   } else if (contentType?.includes("application/json")) {
-    raw = await response.json();
+    raw = JSON.parse(response.data);
   } else {
     raw = await response.text();
   }
@@ -51,6 +51,7 @@ async function readRawBody(response) {
 }
 
 export const generateEntry = async (time, content, response, error) => {
+  console.log(error);
   const body = response ? await readRawBody(response) : null;
 
   return {
