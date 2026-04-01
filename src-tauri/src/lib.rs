@@ -1,18 +1,17 @@
 use once_cell::sync::Lazy;
 use reqwest::{Client, cookie::Jar};
 use std::sync::Arc;
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 use std::collections::HashMap;
 use reqwest::cookie::CookieStore;
 use url::Url;
-use serde::Deserialize;
 use tokio::sync::Mutex;
-use tokio::task::JoinHandle;
 use futures::future::{AbortHandle, Abortable};
+
+
 
 static COOKIE_JAR: Lazy<Arc<Jar>> =
     Lazy::new(|| Arc::new(Jar::default()));
-
 
 static ACTIVE_REQUESTS: Lazy<
     Arc<Mutex<HashMap<String, AbortHandle>>>
@@ -25,6 +24,8 @@ static CLIENT: Lazy<Client> = Lazy::new(|| {
         .build()
         .unwrap()
 });
+
+
 
 
 #[derive(Serialize)]
@@ -48,6 +49,7 @@ pub struct SmartRequest {
 }
 
 
+
 fn get_cookies_for_url(url: &str) -> Vec<String> {
     let parsed = Url::parse(url).unwrap();
 
@@ -65,32 +67,83 @@ fn get_cookies_for_url(url: &str) -> Vec<String> {
 
 #[tauri::command]
 async fn smart_fetch(req: SmartRequest) -> Result<SmartResponse, String> {
+
     let id = req.id.clone();
 
     let (abort_handle, abort_reg) = AbortHandle::new_pair();
 
     ACTIVE_REQUESTS.lock().await.insert(id.clone(), abort_handle);
 
+
     let result = Abortable::new(async move {
-        let mut request = CLIENT.get(&req.url);
+
+        let mut request = match req.method.to_uppercase().as_str() {
+            "GET" => CLIENT.get(&req.url),
+            "POST" => CLIENT.post(&req.url),
+            "PUT" => CLIENT.put(&req.url),
+            "PATCH" => CLIENT.patch(&req.url),
+            "DELETE" => CLIENT.delete(&req.url),
+            _ => return Err("Unsupported method".into()),
+        };
+
+
+        if let Some(headers) = req.headers {
+            for (key, value) in headers {
+                request = request.header(key, value);
+            }
+        }
+
+
+        if let Some(body) = req.body {
+            if !body.is_empty() {
+                request = request.body(body);
+            }
+        }
+
 
         let response = request.send().await.map_err(|e| e.to_string())?;
 
         let status = response.status();
         let final_url = response.url().to_string();
+
+
+        let mut headers_map = HashMap::new();
+
+        for (key, value) in response.headers().iter() {
+            headers_map.insert(
+                key.to_string(),
+                value.to_str().unwrap_or("").to_string(),
+            );
+        }
+
+
+        let set_cookies = response
+            .headers()
+            .get_all("set-cookie")
+            .iter()
+            .map(|v| v.to_str().unwrap_or("").to_string())
+            .collect::<Vec<String>>();
+
+
         let body = response.text().await.map_err(|e| e.to_string())?;
+
+
+        let cookies = get_cookies_for_url(&final_url);
+
 
         Ok(SmartResponse {
             status: status.as_u16(),
             statusText: status.canonical_reason().unwrap_or("").to_string(),
             url: final_url,
-            headers: HashMap::new(),
+            headers: headers_map,
             data: body,
-            cookies: vec![],
-            setCookies: vec![],
+            cookies,
+            setCookies: set_cookies,
         })
+
     }, abort_reg)
     .await;
+
 
     match result {
         Ok(res) => res,
@@ -98,8 +151,12 @@ async fn smart_fetch(req: SmartRequest) -> Result<SmartResponse, String> {
     }
 }
 
+
+
+
 #[tauri::command]
 async fn cancel_request(id: String) -> Result<(), String> {
+
     let mut map = ACTIVE_REQUESTS.lock().await;
 
     if let Some(handle) = map.remove(&id) {
@@ -134,5 +191,3 @@ pub fn run() {
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
-
-

@@ -376,7 +376,6 @@ export class File extends FSNode {
       }
 
       // ? Do the request
-      // response = await fetch(finalInfo.finalUrl, fetchOptions);
       const requestPromise = invoke("smart_fetch", {
         req: {
           id,
@@ -388,7 +387,6 @@ export class File extends FSNode {
       });
 
       response = await requestPromise;
-      console.log(response);
 
       if (!response.statusText == "ok") {
         error = {
@@ -408,6 +406,7 @@ export class File extends FSNode {
       this.currentRunningId = null;
       toggleIsRunning(this);
     }
+    console.log(response);
 
     const newEntry = await generateEntry(time, content, response, error, id);
 

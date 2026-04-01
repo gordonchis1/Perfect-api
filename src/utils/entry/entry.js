@@ -1,5 +1,3 @@
-import { nanoid } from "nanoid";
-
 const getResponseHeaders = (response) => {
   const headers = {};
 
@@ -23,7 +21,6 @@ const arrayBufferToBase64 = (buffer) => {
 };
 
 async function readRawBody(response) {
-  console.log(response);
   const contentType = response.headers["content-type"];
 
   const isBinary =
@@ -42,7 +39,7 @@ async function readRawBody(response) {
   } else if (contentType?.includes("application/json")) {
     raw = JSON.parse(response.data);
   } else {
-    raw = await response;
+    raw = response.data;
   }
 
   return {
@@ -73,6 +70,7 @@ export const generateEntry = async (time, content, response, error, id) => {
           headers: getResponseHeaders(response),
           body,
           time: time,
+          cookies: response.cookies,
         }
       : null,
     error,
