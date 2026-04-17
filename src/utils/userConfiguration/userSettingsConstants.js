@@ -6,8 +6,9 @@ import SettingsOptionVersion from "../../components/GlobalSettingsPopUp/Settings
 import { themeConstants } from "./themeConstants";
 import SettingsOptionThemeSelector from "../../components/GlobalSettingsPopUp/SettingsMainContainer/SettingsOption/SettingsOptionThemeSelector/SettingsOptionThemeSelector";
 import SettingsOptionNumber from "../../components/GlobalSettingsPopUp/SettingsMainContainer/SettingsOption/SettingsOptionNumber/SettingsOptionNumber";
+import SettingsOptionInputText from "../../components/GlobalSettingsPopUp/SettingsMainContainer/SettingsOption/SettingsOptionInputText/SettingsOptionInputText";
 
-export const userSettingsTabs = ["general", "preferences"];
+export const userSettingsTabs = ["general", "preferences", "connections"];
 
 export const userSettingsOptionsMap = {
     perfectApiPath: {
@@ -88,4 +89,9 @@ export const userSettingsOptionsMap = {
             "Activa o desactiva el minimapa del archivo actual en el editor.",
         component: SettingsOptionCheckbox,
     },
+    v0: {
+        title: "V0 api key",
+        description: "Agrega tu api key de v0 para activar la generacion de previews",
+        component: SettingsOptionInputText,
+    }
 };
