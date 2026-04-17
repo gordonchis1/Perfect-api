@@ -1,299 +1,299 @@
 import { create } from "zustand";
 import {
-  Directory,
-  File,
-  FSNode,
-  VirtualFileSystem,
+    Directory,
+    File,
+    FSNode,
+    VirtualFileSystem,
 } from "../utils/ProjectFileObject";
 import { getProjectById } from "../utils/getProjects";
 import {
-  UpdateProjectContent,
-  updateProjectContentAndState,
+    UpdateProjectContent,
+    updateProjectContentAndState,
 } from "../utils/UpdateProject";
-import { fileContentDefault } from "../utils/constants/ProjectFileConstants";
+import { fileContentDefault } from "../utils/constants/projectFileConstants";
 import { rebuildFullFinalString } from "../utils/lexical/buildString";
 
 const initialState = {
-  vfs: null,
-  renameId: null,
-  version: 0,
-  openFiles: {},
-  currentFileId: null,
-  projectId: null,
+    vfs: null,
+    renameId: null,
+    version: 0,
+    openFiles: {},
+    currentFileId: null,
+    projectId: null,
 };
 
 export const useProjectStore = create((set, get) => ({
-  ...initialState,
+    ...initialState,
 
-  init: async (id) => {
-    const jsonData = await getProjectById(id);
-    const { content, state } = jsonData;
+    init: async (id) => {
+        const jsonData = await getProjectById(id);
+        const { content, state } = jsonData;
 
-    const vfs = new VirtualFileSystem(content);
+        const vfs = new VirtualFileSystem(content);
 
-    vfs.onChange = () => {
-      set((storeState) => ({ version: storeState.version + 1 }));
-    };
-
-    const openFiles = {};
-
-    state.openFiles.forEach((fileId) => {
-      const node = vfs.getNodeById(fileId);
-      if (node) {
-        openFiles[fileId] = {
-          content: node.content,
-          name: node.name,
-          isRunning: node.content.isRunning,
-          id: node.id,
+        vfs.onChange = () => {
+            set((storeState) => ({ version: storeState.version + 1 }));
         };
-      }
-    });
 
-    set({
-      vfs,
-      currentFileId: state.currentFile,
-      openFiles,
-      version: 0,
-      projectId: id,
-    });
-  },
+        const openFiles = {};
 
-  toggleIsOpen: (id) => {
-    const vfs = get().vfs;
-    if (vfs instanceof VirtualFileSystem) {
-      const node = vfs.getNodeById(id);
-      node.toggleIsOpen();
-      vfs.onChange();
-    }
-  },
+        state.openFiles.forEach((fileId) => {
+            const node = vfs.getNodeById(fileId);
+            if (node) {
+                openFiles[fileId] = {
+                    content: node.content,
+                    name: node.name,
+                    isRunning: node.content.isRunning,
+                    id: node.id,
+                };
+            }
+        });
 
-  updateDirSettings: async (id, newConfig, save = false) => {
-    const vfs = get().vfs;
+        set({
+            vfs,
+            currentFileId: state.currentFile,
+            openFiles,
+            version: 0,
+            projectId: id,
+        });
+    },
 
-    if (vfs instanceof VirtualFileSystem) {
-      const node = vfs.getNodeById(id);
-      if (node instanceof Directory) {
-        node.dirConfig = newConfig;
-        vfs.onChange();
-        if (save) {
-          await get().save();
+    toggleIsOpen: (id) => {
+        const vfs = get().vfs;
+        if (vfs instanceof VirtualFileSystem) {
+            const node = vfs.getNodeById(id);
+            node.toggleIsOpen();
+            vfs.onChange();
         }
-      }
-    }
-  },
+    },
 
-  addDir: async (id) => {
-    const vfs = get().vfs;
+    updateDirSettings: async (id, newConfig, save = false) => {
+        const vfs = get().vfs;
 
-    if (vfs instanceof VirtualFileSystem) {
-      const node = vfs.getNodeById(id);
-      if (node.type === "dir") {
-        const newNode = new Directory("New directory", true);
-        node.addChild(newNode);
-        vfs.onChange();
-        await get().save();
+        if (vfs instanceof VirtualFileSystem) {
+            const node = vfs.getNodeById(id);
+            if (node instanceof Directory) {
+                node.dirConfig = newConfig;
+                vfs.onChange();
+                if (save) {
+                    await get().save();
+                }
+            }
+        }
+    },
 
-        set({ ...get(), renameId: newNode.id });
-      }
-    }
-  },
+    addDir: async (id) => {
+        const vfs = get().vfs;
 
-  remove: async (node) => {
-    const vfs = get().vfs;
-    const openFiles = { ...get().openFiles };
+        if (vfs instanceof VirtualFileSystem) {
+            const node = vfs.getNodeById(id);
+            if (node.type === "dir") {
+                const newNode = new Directory("New directory", true);
+                node.addChild(newNode);
+                vfs.onChange();
+                await get().save();
 
-    if (openFiles[node.id]) {
-      get().closeOpenFile(node.id);
-    }
+                set({ ...get(), renameId: newNode.id });
+            }
+        }
+    },
 
-    if (node instanceof FSNode) {
-      vfs.remove(node);
-      await get().save();
-    }
-  },
+    remove: async (node) => {
+        const vfs = get().vfs;
+        const openFiles = { ...get().openFiles };
 
-  addFile: async (id, content = null) => {
-    const vfs = get().vfs;
-
-    if (vfs instanceof VirtualFileSystem) {
-      const node = vfs.getNodeById(id);
-      if (node instanceof Directory) {
-        if (content == null) {
-          content = fileContentDefault;
+        if (openFiles[node.id]) {
+            get().closeOpenFile(node.id);
         }
 
-        if (node?.dirConfig?.type) {
-          content.type = node.dirConfig.type;
+        if (node instanceof FSNode) {
+            vfs.remove(node);
+            await get().save();
+        }
+    },
+
+    addFile: async (id, content = null) => {
+        const vfs = get().vfs;
+
+        if (vfs instanceof VirtualFileSystem) {
+            const node = vfs.getNodeById(id);
+            if (node instanceof Directory) {
+                if (content == null) {
+                    content = fileContentDefault;
+                }
+
+                if (node?.dirConfig?.type) {
+                    content.type = node.dirConfig.type;
+                }
+
+                const newNode = new File("New file", content);
+
+                if (node.type === "dir") {
+                    node.addChild(newNode);
+                    vfs.onChange();
+                    await get().save();
+                } else {
+                    const parent = vfs.getParentNode(node);
+                    parent.addChild(newNode);
+                    vfs.onChange();
+                    await get().save();
+                }
+
+                get().setCurrentFile(newNode.id);
+                get().addOpenFile(newNode.id);
+
+                set({ ...get(), renameId: newNode.id });
+            }
+        }
+    },
+
+    rename: async (id, newName) => {
+        const vfs = get().vfs;
+        const openFiles = { ...get().openFiles };
+
+        if (openFiles[id]) {
+            openFiles[id].name = newName;
+            set({ openFiles });
         }
 
-        const newNode = new File("New file", content);
+        if (vfs instanceof VirtualFileSystem) {
+            const node = vfs.getNodeById(id);
+            node.rename(newName);
+            vfs.onChange();
+            await get().save();
+        }
+    },
 
-        if (node.type === "dir") {
-          node.addChild(newNode);
-          vfs.onChange();
-          await get().save();
+    setRename: (renameId) => set({ renameId }),
+
+    move: async (moveElementId, toId) => {
+        const vfs = get().vfs;
+        if (vfs instanceof VirtualFileSystem) {
+            const nodeToMove = vfs.getNodeById(moveElementId);
+            const toNode = vfs.getNodeById(toId);
+
+            if (toNode.type === "dir") {
+                vfs.move(nodeToMove, toNode);
+                await get().save();
+            }
+        }
+    },
+
+    toggleIsRunning: (node) => {
+        const openFiles = { ...get().openFiles };
+        const vfs = get().vfs;
+        if (node instanceof File && vfs instanceof VirtualFileSystem) {
+            openFiles[node.id].isRunning = !openFiles[node.id].isRunning;
+            node.toggleIsRunning();
+            vfs.onChange();
+        }
+
+        set({ openFiles });
+    },
+
+    setCurrentFile: (id) => {
+        set({ currentFileId: id });
+    },
+
+    closeOpenFile: (id) => {
+        const openFiles = { ...get().openFiles };
+
+        if (id === get().currentFileId) {
+            const idx = Object.keys(openFiles).indexOf(id);
+            delete openFiles[id];
+            const keys = Object.keys(openFiles);
+
+            if (keys.length === 0) {
+                set({ currentFileId: null, openFiles });
+                return;
+            } else if (idx - 1 >= 0) {
+                set({ currentFileId: keys[idx - 1], openFiles });
+                return;
+            } else {
+                set({ currentFileId: keys[0], openFiles });
+            }
         } else {
-          const parent = vfs.getParentNode(node);
-          parent.addChild(newNode);
-          vfs.onChange();
-          await get().save();
+            delete openFiles[id];
         }
 
-        get().setCurrentFile(newNode.id);
-        get().addOpenFile(newNode.id);
+        set({ openFiles });
+    },
+    addOpenFile: (id) => {
+        const vfs = get().vfs;
+        if (vfs instanceof VirtualFileSystem) {
+            const node = vfs.getNodeById(id);
+            const openFiles = { ...get().openFiles };
+            openFiles[id] = {
+                content: node.content,
+                name: node.name,
+                isRunning: node.content.isRunning,
+                id: node.id,
+            };
+            set({ openFiles });
+        }
+    },
+    updateContentOfOpenFile: async (id, newContent, save = false) => {
+        const openFiles = { ...get().openFiles };
+        const { vfs } = get();
 
-        set({ ...get(), renameId: newNode.id });
-      }
-    }
-  },
+        openFiles[id].content = newContent;
+        set({ openFiles });
 
-  rename: async (id, newName) => {
-    const vfs = get().vfs;
-    const openFiles = { ...get().openFiles };
+        if (save) {
+            if (vfs instanceof VirtualFileSystem) {
+                const node = vfs.getNodeById(id);
+                node.updateContent(newContent);
+                await get().save();
+            }
+        }
+    },
 
-    if (openFiles[id]) {
-      openFiles[id].name = newName;
-      set({ openFiles });
-    }
+    rebuildFinalString: () => {
+        const currentFileId = get().currentFileId;
+        const openFiles = get().openFiles;
+        const updateContentOfOpenFile = get().updateContentOfOpenFile;
+        const { content } = openFiles[currentFileId];
+        const queryParams = content.url?.queryParams;
 
-    if (vfs instanceof VirtualFileSystem) {
-      const node = vfs.getNodeById(id);
-      node.rename(newName);
-      vfs.onChange();
-      await get().save();
-    }
-  },
+        if (!queryParams) return;
 
-  setRename: (renameId) => set({ renameId }),
+        const finalString = rebuildFullFinalString(queryParams);
+        updateContentOfOpenFile(currentFileId, {
+            ...content,
+            url: { ...content.url, finalUrl: finalString },
+        });
+    },
 
-  move: async (moveElementId, toId) => {
-    const vfs = get().vfs;
-    if (vfs instanceof VirtualFileSystem) {
-      const nodeToMove = vfs.getNodeById(moveElementId);
-      const toNode = vfs.getNodeById(toId);
+    save: async () => {
+        const vfs = get().vfs;
 
-      if (toNode.type === "dir") {
-        vfs.move(nodeToMove, toNode);
-        await get().save();
-      }
-    }
-  },
+        if (vfs instanceof VirtualFileSystem) {
+            await UpdateProjectContent(vfs, get().projectId);
+        }
+    },
 
-  toggleIsRunning: (node) => {
-    const openFiles = { ...get().openFiles };
-    const vfs = get().vfs;
-    if (node instanceof File && vfs instanceof VirtualFileSystem) {
-      openFiles[node.id].isRunning = !openFiles[node.id].isRunning;
-      node.toggleIsRunning();
-      vfs.onChange();
-    }
+    reset: async () => {
+        const vfs = get().vfs;
+        const openFiles = get().openFiles;
 
-    set({ openFiles });
-  },
+        if (vfs instanceof VirtualFileSystem) {
+            Object.keys(openFiles).forEach((fileId) => {
+                const node = vfs.getNodeById(fileId);
+                node.updateContent(openFiles[fileId].content);
+            });
 
-  setCurrentFile: (id) => {
-    set({ currentFileId: id });
-  },
+            await updateProjectContentAndState(
+                {
+                    currentFile: get().currentFileId,
+                    openFiles: Object.keys(openFiles),
+                },
+                vfs,
+                get().projectId,
+            );
+        }
 
-  closeOpenFile: (id) => {
-    const openFiles = { ...get().openFiles };
-
-    if (id === get().currentFileId) {
-      const idx = Object.keys(openFiles).indexOf(id);
-      delete openFiles[id];
-      const keys = Object.keys(openFiles);
-
-      if (keys.length === 0) {
-        set({ currentFileId: null, openFiles });
-        return;
-      } else if (idx - 1 >= 0) {
-        set({ currentFileId: keys[idx - 1], openFiles });
-        return;
-      } else {
-        set({ currentFileId: keys[0], openFiles });
-      }
-    } else {
-      delete openFiles[id];
-    }
-
-    set({ openFiles });
-  },
-  addOpenFile: (id) => {
-    const vfs = get().vfs;
-    if (vfs instanceof VirtualFileSystem) {
-      const node = vfs.getNodeById(id);
-      const openFiles = { ...get().openFiles };
-      openFiles[id] = {
-        content: node.content,
-        name: node.name,
-        isRunning: node.content.isRunning,
-        id: node.id,
-      };
-      set({ openFiles });
-    }
-  },
-  updateContentOfOpenFile: async (id, newContent, save = false) => {
-    const openFiles = { ...get().openFiles };
-    const { vfs } = get();
-
-    openFiles[id].content = newContent;
-    set({ openFiles });
-
-    if (save) {
-      if (vfs instanceof VirtualFileSystem) {
-        const node = vfs.getNodeById(id);
-        node.updateContent(newContent);
-        await get().save();
-      }
-    }
-  },
-
-  rebuildFinalString: () => {
-    const currentFileId = get().currentFileId;
-    const openFiles = get().openFiles;
-    const updateContentOfOpenFile = get().updateContentOfOpenFile;
-    const { content } = openFiles[currentFileId];
-    const queryParams = content.url?.queryParams;
-
-    if (!queryParams) return;
-
-    const finalString = rebuildFullFinalString(queryParams);
-    updateContentOfOpenFile(currentFileId, {
-      ...content,
-      url: { ...content.url, finalUrl: finalString },
-    });
-  },
-
-  save: async () => {
-    const vfs = get().vfs;
-
-    if (vfs instanceof VirtualFileSystem) {
-      await UpdateProjectContent(vfs, get().projectId);
-    }
-  },
-
-  reset: async () => {
-    const vfs = get().vfs;
-    const openFiles = get().openFiles;
-
-    if (vfs instanceof VirtualFileSystem) {
-      Object.keys(openFiles).forEach((fileId) => {
-        const node = vfs.getNodeById(fileId);
-        node.updateContent(openFiles[fileId].content);
-      });
-
-      await updateProjectContentAndState(
-        {
-          currentFile: get().currentFileId,
-          openFiles: Object.keys(openFiles),
-        },
-        vfs,
-        get().projectId,
-      );
-    }
-
-    set({ ...initialState });
-  },
+        set({ ...initialState });
+    },
 }));
 
 // ! on close file save the contnet changes

@@ -1,64 +1,65 @@
 @font-face {
-  font-family: "geist";
-  src: url("./assets/fonts/Geist-Regular.woff2") format("woff2");
+    font-family: "geist";
+    src: url("./assets/fonts/Geist-Regular.woff2") format("woff2");
 }
 
 @font-face {
-  font-family: "geist-bold";
-  src: url("./assets/fonts/Geist-bold.woff2") format("woff2");
+    font-family: "geist-bold";
+    src: url("./assets/fonts/Geist-bold.woff2") format("woff2");
 }
 
 @font-face {
-  font-family: "geist-mono";
-  src: url("./assets/fonts/GeistMono-Regular.woff2") format("woff2");
+    font-family: "geist-mono";
+    src: url("./assets/fonts/GeistMono-Regular.woff2") format("woff2");
 }
 
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 :root {
-  --regular-font: "geist";
-  --bold-font: "geist-bold";
-  --mono-font: "geist-mono";
+    --regular-font: "geist";
+    --bold-font: "geist-bold";
+    --mono-font: "geist-mono";
 }
 
 /* ------------------------------------------------------------------------ */
 
 .custom-scroll-bar::-webkit-scrollbar {
-  width: 5px;
+    width: 5px;
 }
 
 .custom-scroll-bar::-webkit-scrollbar-track {
-  background: transparent;
+    background: transparent;
 }
 
 .custom-scroll-bar::-webkit-scrollbar-thumb {
-  background: var(--primary);
-  border-radius: 50px;
+    background: var(--primary);
+    border-radius: 50px;
 }
+
 .editor-sub {
-  background-color: #eaff004e;
+    background-color: #eaff004e;
 }
 
 body {
-  background: var(--background);
-  overflow: hidden;
+    background: var(--background);
+    overflow: hidden;
 }
 
 .variable-tag {
-  background: var(--primary);
-  padding: 4px 1px 4px 1px;
-  font-family: var(--regular-font);
-  color: var(--primary-foreground);
-  border-radius: 4px;
-  word-spacing: 4px;
+    background: var(--primary);
+    padding: 4px 1px 4px 1px;
+    font-family: var(--regular-font);
+    color: var(--primary-foreground);
+    border-radius: 4px;
+    word-spacing: 4px;
 }
 
 .undefined-variable-tag {
-  opacity: 0.8;
-  background: var(--destructive);
-  text-decoration: var(--destructive-foreground) wavy underline;
+    opacity: 0.8;
+    background: var(--destructive);
+    text-decoration: var(--destructive-foreground) wavy underline;
 }

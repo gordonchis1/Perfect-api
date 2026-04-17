@@ -8,72 +8,72 @@ import useWidthObserver from "../../Hooks/useWidthObserver";
 import WorkspaceContainer from "./Workspace/WorkspaceContainer";
 import { useProjectStore } from "../../stores/ProjectStore";
 import { useParams } from "react-router";
-import { useHistoryStore } from "../../stores/historyStore";
+import { useHistoryStore } from "../../stores/HistoryStore";
 
 export default function Project() {
-  const container = useRef(null);
-  const { id } = useParams();
-  const [isMounted, setIsMounted] = useState(false);
-  const initProjectStore = useProjectStore((state) => state.init);
-  const resetProjectStore = useProjectStore((state) => state.reset);
-  const content = useProjectStore(
-    (store) => store.openFiles[store.currentFileId]?.content
-  );
-  const initHistoryStore = useHistoryStore((state) => state.init);
-  const openFile = useProjectStore((store) => store.currentFileId);
+    const container = useRef(null);
+    const { id } = useParams();
+    const [isMounted, setIsMounted] = useState(false);
+    const initProjectStore = useProjectStore((state) => state.init);
+    const resetProjectStore = useProjectStore((state) => state.reset);
+    const content = useProjectStore(
+        (store) => store.openFiles[store.currentFileId]?.content
+    );
+    const initHistoryStore = useHistoryStore((state) => state.init);
+    const openFile = useProjectStore((store) => store.currentFileId);
 
-  useEffect(() => {
-    if (content && content.history && openFile) {
-      initHistoryStore(content.history.order, content.history.entries);
-    }
-  }, [openFile]);
+    useEffect(() => {
+        if (content && content.history && openFile) {
+            initHistoryStore(content.history.order, content.history.entries);
+        }
+    }, [openFile]);
 
-  useEffect(() => {
-    if (id) {
-      initProjectStore(id);
-    }
+    useEffect(() => {
+        if (id) {
+            initProjectStore(id);
+        }
 
-    return async () => {
-      await resetProjectStore();
-    };
-  }, [id]);
+        return async () => {
+            await resetProjectStore();
+        };
+    }, [id]);
 
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
 
-  const width = useWidthObserver({
-    ref: isMounted ? container : { current: null },
-  });
+    const width = useWidthObserver({
+        ref: isMounted ? container : { current: null },
+    });
 
-  return (
-    <>
-      {isMounted && (
-        <div className="project-wrapper">
-          <ProjectHeader />
-          <div className="project-container" ref={container}>
-            <ResizeContainer
-              resizeColor={"var(--border)"}
-              defaultWidth={14}
-              maxWidthOfLeftContainer={14}
-              minWidthOfLeftContainer={200}
-              containerWidth={width}
-            >
-              <ResizeContainer.LeftContainer>
-                <FileManager />
-              </ResizeContainer.LeftContainer>
-              <ResizeContainer.RightContainer>
-                <div className="workspace-wrapper">
-                  <div className="workspace-container">
-                    <TabsContainer />
-                    <WorkspaceContainer />
-                  </div>
+    return (
+        <>
+            {isMounted && (
+                <div className="project-wrapper">
+                    <ProjectHeader />
+                    <div className="project-container" ref={container}>
+                        <ResizeContainer
+                            resizeColor={"var(--border)"}
+                            defaultWidth={14}
+                            maxWidthOfLeftContainer={14}
+                            minWidthOfLeftContainer={200}
+                            containerWidth={width}
+                        >
+                            <ResizeContainer.LeftContainer>
+                                <FileManager />
+                            </ResizeContainer.LeftContainer>
+                            <ResizeContainer.RightContainer>
+                                <div className="workspace-wrapper">
+                                    <div className="workspace-container">
+                                        <TabsContainer />
+                                        <WorkspaceContainer />
+                                    </div>
+                                </div>
+                            </ResizeContainer.RightContainer>
+                        </ResizeContainer>
+                    </div>
                 </div>
-              </ResizeContainer.RightContainer>
-            </ResizeContainer>
-          </div>
-        </div>
-      )}
-    </>
-  );
+            )}
+        </>
+    );
 }

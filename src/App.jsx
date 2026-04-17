@@ -7,26 +7,26 @@ import Home from "./components/Home/Home";
 import ModalProvider from "./providers/ModalProvider/ModalProvider";
 
 function App() {
-  const config = useUserConfigStore((state) => state.config);
+    const config = useUserConfigStore((state) => state.config);
 
-  return (
-    <div
-      className={config?.preferences?.appearance?.theme || "dark"}
-      style={{
-        maxWidth: "100vw",
-        width: "100vw",
-        height: "100vh",
-        overflow: "hidden",
-      }}
-    >
-      <ModalProvider>
-        <Routes>
-          <Route index element={<Home />}></Route>
-          <Route element={<Project />} path="/project/:id"></Route>
-        </Routes>
-      </ModalProvider>
-    </div>
-  );
+    return (
+        <div
+            className={config?.preferences?.appearance?.theme || "dark"}
+            style={{
+                maxWidth: "100vw",
+                width: "100vw",
+                height: "100vh",
+                overflow: "hidden",
+            }}
+        >
+            <ModalProvider>
+                <Routes>
+                    <Route index element={<Home />}></Route>
+                    <Route element={<Project />} path="/project/:id"></Route>
+                </Routes>
+            </ModalProvider>
+        </div>
+    );
 }
 
 export default App;

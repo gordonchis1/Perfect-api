@@ -6,45 +6,45 @@ import WorkspaceInputContainer from "./WorkspaceInput/WorkspaceInputContainer";
 import WorkSpacePreviewContainer from "./WorkspacePreview/WorkSpacePreviewContainer";
 import WorkSpacePreviewProvider from "../../../providers/WorkspacePreview/WorkSpacePreviewProvider";
 import { useProjectStore } from "../../../stores/ProjectStore";
-import { useHistoryStore } from "../../../stores/historyStore";
+import { useHistoryStore } from "../../../stores/HistoryStore";
 
 // TODO: remove content from files context use filemanger content insted
 export default function WorkspaceContainer() {
-  const content = useProjectStore(
-    (store) => store.openFiles[store.currentFileId]?.content
-  );
+    const content = useProjectStore(
+        (store) => store.openFiles[store.currentFileId]?.content
+    );
 
-  const container = useRef(null);
-  const [isMounted, setIsMounted] = useState(false);
+    const container = useRef(null);
+    const [isMounted, setIsMounted] = useState(false);
 
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
 
-  const width = useWidthObserver({
-    ref: isMounted ? container : { current: null },
-  });
+    const width = useWidthObserver({
+        ref: isMounted ? container : { current: null },
+    });
 
-  return (
-    <div className="workspace_container" ref={container}>
-      {content && (
-        <ResizeContainer
-          resizeColor={"var(--border)"}
-          defaultWidth={60}
-          containerWidth={width}
-          minWidthOfLeftContainer={750}
-          maxWidthOfLeftContainer={80}
-        >
-          <ResizeContainer.LeftContainer>
-            <WorkspaceInputContainer />
-          </ResizeContainer.LeftContainer>
-          <ResizeContainer.RightContainer>
-            <WorkSpacePreviewProvider>
-              <WorkSpacePreviewContainer />
-            </WorkSpacePreviewProvider>
-          </ResizeContainer.RightContainer>
-        </ResizeContainer>
-      )}
-    </div>
-  );
+    return (
+        <div className="workspace_container" ref={container}>
+            {content && (
+                <ResizeContainer
+                    resizeColor={"var(--border)"}
+                    defaultWidth={60}
+                    containerWidth={width}
+                    minWidthOfLeftContainer={750}
+                    maxWidthOfLeftContainer={80}
+                >
+                    <ResizeContainer.LeftContainer>
+                        <WorkspaceInputContainer />
+                    </ResizeContainer.LeftContainer>
+                    <ResizeContainer.RightContainer>
+                        <WorkSpacePreviewProvider>
+                            <WorkSpacePreviewContainer />
+                        </WorkSpacePreviewProvider>
+                    </ResizeContainer.RightContainer>
+                </ResizeContainer>
+            )}
+        </div>
+    );
 }
