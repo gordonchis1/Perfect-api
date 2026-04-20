@@ -6,7 +6,7 @@
     },
     "files": [
         "dist-react",
-        "src/electron/main.js"
+        "src/electron/*"
     ],
     "mac": {
         "category": "public.app-category.utilities",
