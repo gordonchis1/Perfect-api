@@ -1,16 +1,16 @@
 @font-face {
     font-family: "geist";
-    src: url("./assets/fonts/Geist-Regular.woff2") format("woff2");
+    src: url("assets/fonts/Geist-Regular.woff2") format("woff2");
 }
 
 @font-face {
     font-family: "geist-bold";
-    src: url("./assets/fonts/Geist-bold.woff2") format("woff2");
+    src: url("assets/fonts/Geist-Bold.woff2") format("woff2");
 }
 
 @font-face {
     font-family: "geist-mono";
-    src: url("./assets/fonts/GeistMono-Regular.woff2") format("woff2");
+    src: url("assets/fonts/GeistMono-Regular.woff2") format("woff2");
 }
 
 * {

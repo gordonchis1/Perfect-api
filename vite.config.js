@@ -6,7 +6,7 @@ import { resolve } from "path"
 export default defineConfig({
     plugins: [react()],
     root: "src/ui",
-    base: "./",
+    base: "/",
     build: {
         outDir: resolve(__dirname, "dist-react"),
         rollupOptions: {
