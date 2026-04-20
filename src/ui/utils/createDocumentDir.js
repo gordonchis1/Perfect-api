@@ -1,0 +1,102 @@
+import { useUserConfigStore } from "../stores/UserConfigStore";
+
+async function createDocumentDir() {
+    const documentPath = await window.path.documentDir();
+    const path = await window.path.join(documentPath, "perfect api");
+    const existDir = await window.fs.exists(path);
+    const config = useUserConfigStore.getState().config;
+    const updateConfig = useUserConfigStore.getState().updateConfig;
+
+    // Check if the directory already exists
+
+    try {
+        if (!existDir) {
+            await window.fs.mkdir(path, { recursive: true });
+        }
+
+        if (!config?.general?.paths?.perfectApiPath) {
+            const newConfig = {
+                ...config,
+                general: {
+                    ...config.general,
+                    paths: {
+                        ...config.general.paths,
+                        perfectApiPath: path,
+                    },
+                },
+            };
+
+            await updateConfig(newConfig);
+        }
+    } catch (error) {
+        console.error("Error creating directory:", error);
+    }
+}
+
+async function createProjectsFile() {
+    const appDataPath = await window.path.appDataDir();
+    const config = useUserConfigStore.getState().config;
+    const path = await window.path.join(appDataPath, "projects.json");
+    const existFile = await window.fs.exists(path);
+    const updateConfig = useUserConfigStore.getState().updateConfig;
+
+    try {
+        // Check if the file already exists
+        if (existFile) return;
+
+        const newConfig = {
+            ...config,
+            general: {
+                ...config.general,
+                paths: {
+                    ...config.general.paths,
+                    projectFilePath: path,
+                },
+            },
+        };
+
+        await updateConfig(newConfig);
+
+        await window.fs.writeTextFile(path, JSON.stringify([]));
+    } catch (error) {
+        console.error("Error creating file:", error);
+    }
+}
+
+export async function initDocumentDir() {
+    const initConfig = useUserConfigStore.getState().initConfig;
+
+    await initConfig();
+    await createDocumentDir();
+    await createProjectsFile();
+    console.log("Document directory and projects file initialized.");
+}
+
+export async function getStorageDir() {
+    try {
+        const config = useUserConfigStore.getState().config;
+        const paths = config.general.paths;
+
+        return paths.perfectApiPath;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+export async function getProjectsFile() {
+    try {
+        const config = useUserConfigStore.getState().config;
+        const paths = config.general.paths;
+        const existFile = await window.fs.exists(paths.projectFilePath);
+
+        // Check if the file exists
+        if (!existFile) {
+            console.error("Projects file does not exist.");
+            return null;
+        }
+
+        return paths.projectFilePath;
+    } catch (error) {
+        console.error(error);
+    }
+}
