@@ -66,6 +66,9 @@ async function fetch(config, id) {
             };
         }
         else if (err.status) {
+            if (err.response) {
+                response = err.response
+            }
             error = {
                 type: "http",
                 status: err.status,

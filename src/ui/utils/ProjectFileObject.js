@@ -288,7 +288,6 @@ export class File extends FSNode {
     ) {
         super(name, "file", isOpen, id);
         this.content = content;
-        this.controller = null;
         this.runningId = null;
     }
     toggleIsRunning() {
@@ -338,26 +337,17 @@ export class File extends FSNode {
         const id = nanoid()
         toggleIsRunning(this);
         try {
-            this.controller = new AbortController();
 
             const fetchOptions = {
                 url: finalInfo.finalUrl,
                 method: type,
-                //signal: this.controller.signal,
                 headers: finalInfo.headers,
             };
 
             if (canHaveBody(type) && body.type !== "noBody" && body.raw !== null) {
                 switch (body.type) {
                     case "json":
-                        try {
-                            fetchOptions.body = JSON.stringify(JSON.parse(body.raw));
-                        } catch {
-                            error = {
-                                type: "validation",
-                                message: "Invalid JSON body",
-                            };
-                        }
+                        fetchOptions.body = JSON.stringify(JSON.parse(body.raw));
                         break;
                     case "text":
                         fetchOptions.body = body.raw;
@@ -421,10 +411,9 @@ export class File extends FSNode {
     }
 
     abort() {
-        if (this.controller) {
+        if (this.runningId) {
             window.http.abort(this.runningId)
-            this.controller.abort();
-            this.controller = null;
+            this.runningId = null;
         }
     }
 }
