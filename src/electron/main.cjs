@@ -47,16 +47,18 @@ async function fetch(config, id) {
 
 
     try {
-
         const controller = new AbortController();
         fetcherMap.set(id, controller)
         start = Date.now();
+        if (config?.body) {
+            config['data'] = config?.body
+        }
         response = await client({
             ...config,
             beforeRedirect,
             withCredentials: true,
             signal: controller.signal,
-            responseType: 'arraybuffer'
+            responseType: 'arraybuffer',
         })
     } catch (err) {
         if (err.__CANCEL__) {

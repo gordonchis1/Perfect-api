@@ -360,7 +360,6 @@ export class File extends FSNode {
 
             this.runningId = id;
             response = await window.http.fetch(fetchOptions, id)
-
         } catch (err) {
             console.log(err)
         } finally {
