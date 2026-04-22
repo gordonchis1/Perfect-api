@@ -316,16 +316,10 @@ export class File extends FSNode {
         let error = null;
 
         headers.forEach((header) => {
-            if (header.isActive) {
-                if (header.key === "Host") {
-                    try {
-                        const formatedUrl = new URL(url.finalUrl);
-                        headersToSend[header.key] = formatedUrl.host;
-                    } catch {
-                        headersToSend[header.key] = "";
-                    }
-                } else {
-                    headersToSend[header.key] = header.value;
+            // ! Fix this header host put automatic
+            if (header.key != "Host") {
+                if (header.isActive) {
+                    headersToSend[`${header.key}`] = header.value;
                 }
             }
         });
@@ -344,8 +338,9 @@ export class File extends FSNode {
         try {
             this.controller = new AbortController();
             const fetchOptions = {
+                url: finalInfo.finalUrl,
                 method: type,
-                signal: this.controller.signal,
+                // signal: this.controller.signal,
                 headers: finalInfo.headers,
             };
 
@@ -371,7 +366,7 @@ export class File extends FSNode {
             }
 
             // ? Do the request
-            response = await fetch(finalInfo.finalUrl, fetchOptions);
+            response = await window.http.fetch(fetchOptions)
 
             if (!response.ok) {
                 error = {

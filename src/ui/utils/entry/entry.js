@@ -40,7 +40,6 @@ async function readRawBody(response) {
         raw = blob;
     } else if (contentType?.includes("application/json")) {
         raw = await response.json();
-        console.log(raw)
     } else {
         raw = await response.text();
     }

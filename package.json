@@ -13,17 +13,20 @@
         "linux-dist": "npm run build && electron-builder --linux --x64"
     },
     "dependencies": {
+        "@lexical/react": "0.43.0",
         "@monaco-editor/react": "^4.7.0",
+        "axios": "^1.15.1",
+        "axios-cookiejar-support": "^6.0.5",
         "cross-env": "10.1.0",
         "httpsnippet-lite": "3.0.5",
         "lexical": "0.43.0",
-        "@lexical/react": "0.43.0",
         "lucide-react": "^1.8.0",
         "nanoid": "^5.1.9",
         "quicktype-core": "^23.2.6",
         "react": "^19.2.4",
         "react-dom": "^19.2.4",
         "react-router": "^7.14.1",
+        "tough-cookie": "^6.0.1",
         "zustand": "5.0.12"
     },
     "devDependencies": {

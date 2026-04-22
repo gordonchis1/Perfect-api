@@ -1,3 +1,4 @@
+const { default: axios } = require('axios')
 const { app, contextBridge, ipcRenderer } = require('electron')
 const fs = require('fs/promises')
 const { join } = require('path')
@@ -52,9 +53,15 @@ async function rename(oldPath, newPath) {
     return await fs.rename(oldPath, newPath)
 }
 
+
 contextBridge.exposeInMainWorld("electron", {
     setTheme: (theme) => ipcRenderer.invoke("set-theme", theme)
 })
+
+contextBridge.exposeInMainWorld("http", {
+    fetch: (options) => ipcRenderer.invoke("fetch", options),
+})
+
 
 contextBridge.exposeInMainWorld("fs", {
     readTextFile,

@@ -1,6 +1,9 @@
-const { BrowserWindow, app, ipcMain, dialog, nativeTheme } = require('electron')
+const { BrowserWindow, app, ipcMain, dialog, nativeTheme, net, session } = require('electron')
 const { isDev } = require("./utils.cjs")
 const path = require('node:path')
+const { default: axios } = require('axios')
+const { CookieJar } = require('tough-cookie')
+const { wrapper } = require('axios-cookiejar-support')
 
 
 const createWindow = () => {
@@ -20,7 +23,6 @@ const createWindow = () => {
 }
 
 async function handleOpenDialog(options) {
-    console.log(options)
     const { filePaths } = await dialog.showOpenDialog({ ...options })
 
     return filePaths
@@ -30,6 +32,27 @@ async function handleOpenDialog(options) {
 function setTheme(theme = "dark") {
     nativeTheme.themeSource = theme
 }
+async function fetch(config) {
+    const beforeRedirect = (options, data) => {
+        console.log(data)
+    }
+    const jar = new CookieJar()
+    const client = wrapper(axios.create({ jar }))
+
+    const response = await client({
+        ...config,
+        beforeRedirect,
+        withCredentials: true,
+    })
+
+    const { data } = response
+
+    const cookies = await jar.serialize()
+    console.log(cookies)
+    console.log(data)
+
+    return;
+}
 
 
 app.whenReady().then(() => {
@@ -37,6 +60,7 @@ app.whenReady().then(() => {
     ipcMain.handle('get-document-dir', () => app.getPath("documents"))
     ipcMain.handle("open:dialog", (event, args) => handleOpenDialog(args))
     ipcMain.handle("set-theme", (event, args) => setTheme(args))
+    ipcMain.handle("fetch", (event, args) => fetch(args))
 
     createWindow()
 })
