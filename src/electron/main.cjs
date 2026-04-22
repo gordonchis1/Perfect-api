@@ -4,6 +4,7 @@ const path = require('node:path')
 const { default: axios } = require('axios')
 const { CookieJar } = require('tough-cookie')
 const { wrapper } = require('axios-cookiejar-support')
+const { generateResponse } = require('./response.cjs')
 
 
 const createWindow = () => {
@@ -32,26 +33,71 @@ async function handleOpenDialog(options) {
 function setTheme(theme = "dark") {
     nativeTheme.themeSource = theme
 }
-async function fetch(config) {
+const fetcherMap = new Map()
+
+async function fetch(config, id) {
     const beforeRedirect = (options, data) => {
-        console.log(data)
     }
     const jar = new CookieJar()
     const client = wrapper(axios.create({ jar }))
+    let start;
+    let response;
+    let duration;
+    let error;
 
-    const response = await client({
-        ...config,
-        beforeRedirect,
-        withCredentials: true,
-    })
 
-    const { data } = response
+    try {
 
-    const cookies = await jar.serialize()
-    console.log(cookies)
-    console.log(data)
+        const controller = new AbortController();
+        fetcherMap.set(id, controller)
+        start = Date.now();
+        response = await client({
+            ...config,
+            beforeRedirect,
+            withCredentials: true,
+            signal: controller.signal,
+            responseType: 'arraybuffer'
+        })
+    } catch (err) {
+        if (err.__CANCEL__) {
+            error = {
+                type: "abort",
+                message: err?.message || err,
+            };
+        }
+        else if (err.status) {
+            error = {
+                type: "http",
+                status: err.status,
+                message: err.response.statusText,
+            };
 
-    return;
+        }
+        else {
+            error = {
+                type: "Network",
+                status: 0,
+                message: ""
+            }
+        }
+    }
+    finally {
+        duration = Date.now() - start;
+        fetcherMap.delete(id)
+    }
+
+    const entry = await generateResponse(response, error, duration)
+
+    return entry;
+}
+
+function handleAbort(id) {
+    if (!fetcherMap.has(id)) {
+        return
+    }
+
+    const controller = fetcherMap.get(id)
+    controller.abort()
 }
 
 
@@ -60,7 +106,8 @@ app.whenReady().then(() => {
     ipcMain.handle('get-document-dir', () => app.getPath("documents"))
     ipcMain.handle("open:dialog", (event, args) => handleOpenDialog(args))
     ipcMain.handle("set-theme", (event, args) => setTheme(args))
-    ipcMain.handle("fetch", (event, args) => fetch(args))
+    ipcMain.handle("fetch-abort", (evnet, args) => handleAbort(args))
+    ipcMain.handle("fetch", (event, args) => fetch(...args))
 
     createWindow()
 })

@@ -289,6 +289,7 @@ export class File extends FSNode {
         super(name, "file", isOpen, id);
         this.content = content;
         this.controller = null;
+        this.runningId = null;
     }
     toggleIsRunning() {
         this.content = { ...this.content, isRunning: !this.content.isRunning };
@@ -334,13 +335,15 @@ export class File extends FSNode {
         }
 
         // ? Change toggle is running
+        const id = nanoid()
         toggleIsRunning(this);
         try {
             this.controller = new AbortController();
+
             const fetchOptions = {
                 url: finalInfo.finalUrl,
                 method: type,
-                // signal: this.controller.signal,
+                //signal: this.controller.signal,
                 headers: finalInfo.headers,
             };
 
@@ -365,28 +368,17 @@ export class File extends FSNode {
                 }
             }
 
-            // ? Do the request
-            response = await window.http.fetch(fetchOptions)
+            this.runningId = id;
+            response = await window.http.fetch(fetchOptions, id)
 
-            if (!response.ok) {
-                error = {
-                    type: "http",
-                    status: response.status,
-                    message: response.statusText,
-                };
-            }
         } catch (err) {
-            error = {
-                type: err.name === "AbortError" ? "abort" : "network",
-                message: err?.message || err,
-            };
+            console.log(err)
         } finally {
-            // ? Change toggle is running
-            time = Math.abs(performance.now() - start);
             toggleIsRunning(this);
         }
 
-        const newEntry = await generateEntry(time, content, response, error);
+        const newEntry = await generateEntry(content, response, id);
+        console.log(newEntry)
 
         const updateEntries = {};
         let updatedOrder = [];
@@ -430,6 +422,7 @@ export class File extends FSNode {
 
     abort() {
         if (this.controller) {
+            window.http.abort(this.runningId)
             this.controller.abort();
             this.controller = null;
         }
