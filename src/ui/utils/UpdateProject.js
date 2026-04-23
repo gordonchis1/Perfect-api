@@ -1,7 +1,7 @@
 import { getProjectPathById } from "./getProjects";
 import { updateLastUpdateDate } from "./updateProjectsFile";
 
-export async function UpdateProjectContent(newContent, id) {
+export async function UpdateProjectContent(newContent, id, cookies) {
     if (!id) throw new Error("Invalid Id");
     try {
         const path = await getProjectPathById(id);
@@ -10,6 +10,12 @@ export async function UpdateProjectContent(newContent, id) {
 
         const updatedFile = originalParseFile;
         updatedFile.content = newContent.toJSON();
+        if (updatedFile?.cookies) {
+            updatedFile.cookies = cookies
+
+        } else {
+            updatedFile['cookies'] = cookies
+        }
 
         await window.fs.writeTextFile(path, JSON.stringify(updatedFile));
         await updateLastUpdateDate(id);

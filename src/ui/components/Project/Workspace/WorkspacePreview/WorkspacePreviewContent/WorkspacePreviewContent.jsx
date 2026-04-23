@@ -18,11 +18,11 @@ const multipleContainerContainers = {
     Headers: {
         component: <WorkSpacePreviewResponseHeaders />,
     },
-    Gallery: {
-        component: <WorkSpacePreviewGallery />,
-    },
     Cookies: {
         component: <WorkspacePreviewCookies />
+    },
+    Gallery: {
+        component: <WorkSpacePreviewGallery />,
     },
     Preview: {
         component: <h1>Hola mundo</h1>

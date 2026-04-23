@@ -59,7 +59,7 @@ contextBridge.exposeInMainWorld("electron", {
 })
 
 contextBridge.exposeInMainWorld("http", {
-    fetch: (options, id) => ipcRenderer.invoke("fetch", [options, id]),
+    fetch: (options, id, cookies) => ipcRenderer.invoke("fetch", [options, id, cookies]),
     abort: (id) => ipcRenderer.invoke("fetch-abort", id)
 })
 

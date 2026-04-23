@@ -35,14 +35,14 @@ function setTheme(theme = "dark") {
 }
 const fetcherMap = new Map()
 
-async function fetch(config, id) {
-    const jar = new CookieJar()
+async function fetch(config, id, cookies) {
+    const jar = await CookieJar.fromJSON(cookies)
     const client = wrapper(axios.create({ jar }))
     let start;
     let response;
     let duration;
     let error;
-    let cookies = null;
+    let responseCookies = null;
 
 
     try {
@@ -58,9 +58,8 @@ async function fetch(config, id) {
             signal: controller.signal,
             responseType: 'arraybuffer',
         })
-        cookies = jar.toJSON()
+        responseCookies = jar.toJSON()
     } catch (err) {
-        console.log(err)
         if (err.__CANCEL__) {
             error = {
                 type: "abort",
@@ -91,7 +90,7 @@ async function fetch(config, id) {
         fetcherMap.delete(id)
     }
 
-    const entry = await generateResponse(response, error, duration, cookies)
+    const entry = await generateResponse(response, error, duration, responseCookies)
 
     return entry;
 }

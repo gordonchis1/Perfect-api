@@ -12,6 +12,7 @@ import {
 } from "../utils/UpdateProject";
 import { fileContentDefault } from "../utils/constants/projectFileConstants";
 import { rebuildFullFinalString } from "../utils/lexical/buildString";
+import { CookieJar } from "tough-cookie";
 
 const initialState = {
     vfs: null,
@@ -20,6 +21,7 @@ const initialState = {
     openFiles: {},
     currentFileId: null,
     projectId: null,
+    cookies: null
 };
 
 export const useProjectStore = create((set, get) => ({
@@ -28,6 +30,7 @@ export const useProjectStore = create((set, get) => ({
     init: async (id) => {
         const jsonData = await getProjectById(id);
         const { content, state } = jsonData;
+
 
         const vfs = new VirtualFileSystem(content);
 
@@ -55,6 +58,7 @@ export const useProjectStore = create((set, get) => ({
             openFiles,
             version: 0,
             projectId: id,
+            cookies: jsonData?.cookies || new CookieJar().toJSON()
         });
     },
 
@@ -263,12 +267,16 @@ export const useProjectStore = create((set, get) => ({
             url: { ...content.url, finalUrl: finalString },
         });
     },
+    updateCookies: async (cookies) => {
+        set({ ...get(), cookies: cookies })
 
+    },
     save: async () => {
         const vfs = get().vfs;
+        const cookies = get().cookies
 
         if (vfs instanceof VirtualFileSystem) {
-            await UpdateProjectContent(vfs, get().projectId);
+            await UpdateProjectContent(vfs, get().projectId, cookies);
         }
     },
 

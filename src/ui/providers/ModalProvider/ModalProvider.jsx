@@ -2,50 +2,52 @@ import { createContext, useEffect, useState } from "react";
 import Modal from "../../components/Global/Modal/Modal";
 import GlobalSettingsModal from "../../components/Global/Modals/GlobalSettingsModal/GlobalSettingsModal";
 import DirSettingsModal from "../../components/Global/Modals/DirSettingsModal/DirSettingsModal";
+import CookiesModal from "../../components/Global/Modals/CookiesModal/CookiesModal";
 export const ModalContext = createContext(null);
 
 const modalRegistry = {
-  settings: GlobalSettingsModal,
-  dirSettings: DirSettingsModal,
+    settings: GlobalSettingsModal,
+    dirSettings: DirSettingsModal,
+    cookies: CookiesModal
 };
 
 export default function ModalProvider({ children }) {
-  const [modal, setModal] = useState(null);
+    const [modal, setModal] = useState(null);
 
-  const close = () => {
-    setModal(null);
-  };
-  const open = (type, props = {}) => {
-    setModal({ type, props });
-  };
-
-  useEffect(() => {
-    const handler = (e) => {
-      if (e.key == "Escape") {
-        close();
-      }
+    const close = () => {
+        setModal(null);
     };
-    window.addEventListener("keydown", handler);
+    const open = (type, props = {}) => {
+        setModal({ type, props });
+    };
 
-    return () => window.removeEventListener("keydown", handler);
-  }, []);
+    useEffect(() => {
+        const handler = (e) => {
+            if (e.key == "Escape") {
+                close();
+            }
+        };
+        window.addEventListener("keydown", handler);
 
-  const renderModal = () => {
-    if (!modal) return;
+        return () => window.removeEventListener("keydown", handler);
+    }, []);
 
-    const Component = modalRegistry[modal.type];
+    const renderModal = () => {
+        if (!modal) return;
+
+        const Component = modalRegistry[modal.type];
+
+        return (
+            <Modal>
+                <Component {...modal.props} />
+            </Modal>
+        );
+    };
 
     return (
-      <Modal>
-        <Component {...modal.props} />
-      </Modal>
+        <ModalContext.Provider value={{ open, close }}>
+            {children}
+            {renderModal()}
+        </ModalContext.Provider>
     );
-  };
-
-  return (
-    <ModalContext.Provider value={{ open, close }}>
-      {children}
-      {renderModal()}
-    </ModalContext.Provider>
-  );
 }

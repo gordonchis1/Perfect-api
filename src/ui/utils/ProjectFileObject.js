@@ -9,6 +9,7 @@ import { canHaveBody } from "./fetch/costants";
 import { useHistoryStore } from "../stores/HistoryStore";
 import { AUTH_TYPES } from "./constants/AUTH_TYPES.JS";
 import { DEFAULT_DIR_CONFIG } from "./constants/DefaultDirConfig";
+import { CookieJar } from "tough-cookie";
 
 const defaultOnChangeFunction = () => {
     console.log("Vfs Changed");
@@ -308,12 +309,11 @@ export class File extends FSNode {
         const body = content.body;
         const updateHistory = useHistoryStore.getState().update;
         const setCurrentHistoryId = useHistoryStore.getState().setCurrentId;
+        const updateCookies = useProjectStore.getState().updateCookies
+        const cookies = useProjectStore.getState().cookies
 
-        let time;
-        const start = performance.now();
         let response;
         const headersToSend = {};
-        let error = null;
 
         headers.forEach((header) => {
             // ! Fix this header host put automatic
@@ -359,7 +359,7 @@ export class File extends FSNode {
             }
 
             this.runningId = id;
-            response = await window.http.fetch(fetchOptions, id)
+            response = await window.http.fetch(fetchOptions, id, cookies)
         } catch (err) {
             console.log(err)
         } finally {
@@ -367,7 +367,15 @@ export class File extends FSNode {
         }
 
         const newEntry = await generateEntry(content, response, id);
-        console.log(newEntry)
+        if (newEntry?.response?.cookies && newEntry.response.cookies.cookies.length != 0) {
+            updateCookies(newEntry.response.cookies)
+        }
+
+        const jarOnlySendCookies = CookieJar.fromJSON(newEntry.response.cookies)
+        const sendCookies = await jarOnlySendCookies.getCookies(finalInfo.finalUrl)
+
+        const sendCookiesJson = sendCookies.map(c => c.toJSON())
+        newEntry.response.cookies = sendCookiesJson
 
         const updateEntries = {};
         let updatedOrder = [];
@@ -391,8 +399,15 @@ export class File extends FSNode {
             }
         }
 
+
+
+
         updateHistory(updatedOrder, updateEntries);
         setCurrentHistoryId(newEntry.id);
+
+
+
+
 
         updateContentOfOpenFile(
             currentFile,
