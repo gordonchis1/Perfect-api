@@ -54,7 +54,6 @@ async function fetch(config, id) {
         }
         response = await client({
             ...config,
-            beforeRedirect,
             withCredentials: true,
             signal: controller.signal,
             responseType: 'arraybuffer',

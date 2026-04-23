@@ -6,6 +6,7 @@ import WorkspacePreviewLoading from "../WorkspacePreviewLoading/WorkspacePreview
 import { useProjectStore } from "../../../../../stores/ProjectStore";
 import WorkSpacePreviewResponseHeaders from "../WorkSpacePreviewResponseHeaders/WorkSpacePreviewResponseHeaders";
 import WorkSpacePreviewGallery from "../WorkSpacePreviewResponse/WorkSpacePreviewGallery/WorkSpacePreviewGallery";
+import WorkspacePreviewCookies from "../WorkspacePreviewCookies/WorkspacePreviewCookies";
 
 const multipleContainerContainers = {
     Response: {
@@ -19,6 +20,9 @@ const multipleContainerContainers = {
     },
     Gallery: {
         component: <WorkSpacePreviewGallery />,
+    },
+    Cookies: {
+        component: <WorkspacePreviewCookies />
     },
     Preview: {
         component: <h1>Hola mundo</h1>

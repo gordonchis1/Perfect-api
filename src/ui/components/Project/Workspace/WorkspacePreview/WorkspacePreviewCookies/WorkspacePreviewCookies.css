@@ -1,0 +1,38 @@
+.preview-cookies_container {
+    padding: 20px;
+    width: 100%;
+    height: 100%;
+
+
+    display: flex;
+    flex-direction: column;
+}
+
+.cookies_subtitle-container {
+    width: 100%;
+    height: fit-content;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 4px;
+    display: flex;
+}
+
+.cookies_subtitle {
+    display: flex;
+    width: 50%;
+    font-family: var(--bold-font);
+
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.cookies_cookie-container {
+    display: flex;
+    width: 100%;
+    font-family: var(--regular-font);
+    font-size: 20px;
+    padding: 10px 5px;
+}
+
+.cookie_value-p {
+    width: 50%;
+}
