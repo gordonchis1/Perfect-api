@@ -2,7 +2,7 @@ const { BrowserWindow, app, ipcMain, dialog, nativeTheme, net, session } = requi
 const { isDev } = require("./utils.cjs")
 const path = require('node:path')
 const { default: axios } = require('axios')
-const { CookieJar } = require('tough-cookie')
+const { CookieJar, Store, fromJSON, Cookie } = require('tough-cookie')
 const { wrapper } = require('axios-cookiejar-support')
 const { generateResponse } = require('./response.cjs')
 
@@ -36,14 +36,13 @@ function setTheme(theme = "dark") {
 const fetcherMap = new Map()
 
 async function fetch(config, id) {
-    const beforeRedirect = (options, data) => {
-    }
     const jar = new CookieJar()
     const client = wrapper(axios.create({ jar }))
     let start;
     let response;
     let duration;
     let error;
+    let cookies = null;
 
 
     try {
@@ -60,7 +59,9 @@ async function fetch(config, id) {
             signal: controller.signal,
             responseType: 'arraybuffer',
         })
+        cookies = jar.toJSON()
     } catch (err) {
+        console.log(err)
         if (err.__CANCEL__) {
             error = {
                 type: "abort",
@@ -91,7 +92,7 @@ async function fetch(config, id) {
         fetcherMap.delete(id)
     }
 
-    const entry = await generateResponse(response, error, duration)
+    const entry = await generateResponse(response, error, duration, cookies)
 
     return entry;
 }

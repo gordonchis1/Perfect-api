@@ -68,12 +68,13 @@ async function readRawBody(response) {
     };
 }
 
-const generateResponse = async (response, error, time) => {
+const generateResponse = async (response, error, time, cookies) => {
     const body = response ? await readRawBody(response) : null;
 
     return {
         response: response
             ? {
+                cookies,
                 status: response.status || 0,
                 statusText: response.statusText || "",
                 headers: getResponseHeaders(response),
