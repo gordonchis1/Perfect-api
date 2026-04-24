@@ -1,0 +1,11 @@
+.cookies-header-controls_container {
+    width: 100%;
+    height: 40px;
+    margin-top: 20px;
+    display: flex;
+    gap: 20px;
+}
+
+.delate-btn {
+    box-shadow: 0 0 0 0.3px var(--border);
+}

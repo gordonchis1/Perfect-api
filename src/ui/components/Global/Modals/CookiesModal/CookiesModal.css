@@ -1,0 +1,19 @@
+.cookies-modal_container {
+    display: flex;
+    flex-direction: column;
+
+    padding: 20px;
+    width: 60vw;
+    gap: 10px;
+}
+
+.cookies-modal_title {
+    font-family: var(--bold-font);
+    font-size: 25px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    height: fit-content;
+    gap: 4px;
+
+}
