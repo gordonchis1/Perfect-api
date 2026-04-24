@@ -4,7 +4,7 @@ import Button from "../../../Button/Button"
 import "./CookiesHeaderControls.css"
 import { Plus, Trash2 } from "lucide-react"
 
-export default function CookiesHeaderControls() {
+export default function CookiesHeaderControls({ setIsAdding }) {
     const updateCookies = useProjectStore(store => store.updateCookies)
     const handleDelateAll = () => {
         const newJar = new CookieJar()
@@ -19,8 +19,8 @@ export default function CookiesHeaderControls() {
     return <div className="cookies-header-controls_container">
         <Button
             text={"Add cookie"}
-            onClick={handleAddCookie}
             icon={<Plus size={17} />}
+            onClick={() => setIsAdding(true)}
         />
         <Button
             onClick={handleDelateAll}
