@@ -1,11 +1,11 @@
-import Input from "../../../../Input/Input"
+import Input from "../../../Input/Input"
 import "./CookieField.css"
 
-export default function CookieField({ value, field, placeholder, newCookie, setNewCookie, setNewCookieRaw, type = "input" }) {
+export default function CookieField({ value, field, placeholder, cookie, setCookie, setCookieRaw, type = "input" }) {
     const handleChange = (event, input) => {
         let value = event.target.value
 
-        const updatedCookie = newCookie.clone()
+        const updatedCookie = cookie.clone()
         if (input == "expires") {
             const date = new Date(event.target.value)
 
@@ -15,9 +15,8 @@ export default function CookieField({ value, field, placeholder, newCookie, setN
 
             updatedCookie[input] = value
         }
-        setNewCookie(updatedCookie)
-        setNewCookieRaw(updatedCookie.toString())
-
+        setCookie(updatedCookie)
+        setCookieRaw(updatedCookie.toString())
     }
 
 

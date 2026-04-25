@@ -1,5 +1,7 @@
+import { Cookie } from "lucide-react";
 import useCurrentEntry from "../../../../../Hooks/useCurrentEntry"
 import useModal from "../../../../../providers/ModalProvider/useModal";
+import Button from "../../../../Global/Button/Button";
 import "./WorkspacePreviewCookies.css"
 
 export default function WorkspacePreviewCookies() {
@@ -21,7 +23,7 @@ export default function WorkspacePreviewCookies() {
                 <p className="cookie_key-p">{cookie.value}</p>
             </div>
         })}
-        <button type="" onClick={() => open('cookies')}>Cookies</button>
+        <Button icon={<Cookie />} onClick={() => open('cookies')} text={"Cookies configuration"} />
     </div>
 
 }

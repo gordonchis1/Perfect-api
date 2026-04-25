@@ -3,8 +3,9 @@ import { Cookie, CookieJar } from "tough-cookie";
 import { Plus, X } from "lucide-react";
 import "./AddCookie.css"
 import Button from "../../../Button/Button";
-import CookieField from "./CookieField/CookieField";
 import { useProjectStore } from "../../../../../stores/ProjectStore";
+import CookieField from "../CookieField/CookieField";
+import { formatDateForInput } from "../../../../../utils/cookies/formatCookies";
 
 export default function AddCookie({ setIsAdding }) {
     const [newCookie, setNewCookie] = useState(new Cookie())
@@ -14,14 +15,6 @@ export default function AddCookie({ setIsAdding }) {
     const updateCookies = useProjectStore(store => store.updateCookies)
 
 
-    const formatDateForInput = (strDate) => {
-        const date = new Date(strDate)
-        if (!date || date === "Infinity") return "";
-
-        const pad = (n) => String(n).padStart(2, "0");
-
-        return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
-    };
 
     const handleAddCookie = (event) => {
         event.preventDefault()
@@ -30,50 +23,48 @@ export default function AddCookie({ setIsAdding }) {
         jarJson.cookies.push(newCookie.toJSON())
         updateCookies(jarJson)
         setIsAdding(false)
-
-
     }
 
     return <div className="add-cookie_container" ref={containerRef}>
         <CookieField
             placeholder={"Key"}
             value={newCookie.key}
-            newCookie={newCookie}
-            setNewCookie={setNewCookie}
-            setNewCookieRaw={setNewCookieRaw}
+            cookie={newCookie}
+            setCookie={setNewCookie}
+            setCookieRaw={setNewCookieRaw}
             field={"key"}
         />
         <CookieField
             field={"value"}
             placeholder={"Value"}
             value={newCookie.value}
-            setNewCookieRaw={setNewCookieRaw}
-            setNewCookie={setNewCookie}
-            newCookie={newCookie}
+            setCookieRaw={setNewCookieRaw}
+            setCookie={setNewCookie}
+            cookie={newCookie}
         />
         <CookieField
             field={"domain"}
             placeholder={"Domain"}
             value={newCookie.domain}
-            setNewCookieRaw={setNewCookieRaw}
-            setNewCookie={setNewCookie}
-            newCookie={newCookie}
+            setCookieRaw={setNewCookieRaw}
+            setCookie={setNewCookie}
+            cookie={newCookie}
         />
         <CookieField
             field={"path"}
             placeholder={"Path"}
             value={newCookie.path}
-            setNewCookieRaw={setNewCookieRaw}
-            setNewCookie={setNewCookie}
-            newCookie={newCookie}
+            setCookieRaw={setNewCookieRaw}
+            setCookie={setNewCookie}
+            cookie={newCookie}
         />
         <CookieField
             field={"expires"}
             placeholder={"Expires"}
             value={formatDateForInput(newCookie.expires)}
-            setNewCookieRaw={setNewCookieRaw}
-            setNewCookie={setNewCookie}
-            newCookie={newCookie}
+            setCookieRaw={setNewCookieRaw}
+            setCookie={setNewCookie}
+            cookie={newCookie}
             type={"datetime-local"}
         />
 

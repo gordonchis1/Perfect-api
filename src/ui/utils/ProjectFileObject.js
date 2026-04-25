@@ -369,16 +369,18 @@ export class File extends FSNode {
         const newEntry = await generateEntry(content, response, id);
         if (newEntry?.response?.cookies && newEntry.response.cookies.cookies.length != 0) {
             updateCookies(newEntry.response.cookies)
+            const jarOnlySendCookies = CookieJar.fromJSON(newEntry.response.cookies)
+            const sendCookies = await jarOnlySendCookies.getCookies(finalInfo.finalUrl)
+
+
+            const sendCookiesJson = sendCookies.map(c => c.toJSON())
+            const sendCookiesJar = new CookieJar()
+            const sendCookiesJarJson = sendCookiesJar.toJSON()
+            sendCookiesJarJson.cookies = [...sendCookiesJson]
+            newEntry.response.cookies = sendCookiesJarJson
+
+
         }
-
-        const jarOnlySendCookies = CookieJar.fromJSON(newEntry.response.cookies)
-        const sendCookies = await jarOnlySendCookies.getCookies(finalInfo.finalUrl)
-
-        const sendCookiesJson = sendCookies.map(c => c.toJSON())
-        const sendCookiesJar = new CookieJar()
-        const sendCookiesJarJson = sendCookiesJar.toJSON()
-        sendCookiesJarJson.cookies = [...sendCookiesJson]
-        newEntry.response.cookies = sendCookiesJarJson
 
         const updateEntries = {};
         let updatedOrder = [];
