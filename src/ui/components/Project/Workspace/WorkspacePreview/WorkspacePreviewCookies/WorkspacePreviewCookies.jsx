@@ -8,13 +8,14 @@ export default function WorkspacePreviewCookies() {
     const { open } = useModal()
 
 
+    console.log(entry)
     if (!cookies) return
     return <div className="preview-cookies_container">
         <div className="cookies_subtitle-container">
             <div className="cookies_subtitle"><p>Name</p></div>
             <div className="cookies_subtitle"><p>Value</p></div>
         </div>
-        {cookies.map((cookie, index) => {
+        {cookies.cookies.map((cookie, index) => {
             return <div className="cookies_cookie-container" key={index} style={{ background: index % 2 == 0 ? "var(--primary-transparent)" : "" }}>
                 <p className="cookie_value-p">{cookie.key}</p>
                 <p className="cookie_key-p">{cookie.value}</p>

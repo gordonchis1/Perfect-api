@@ -13,7 +13,7 @@ export default function CookiesModal() {
             <p>Cookies</p><Cookie size={22} />
         </div>
         <CookiesHeaderControls setIsAdding={setIsAdding} />
-        {isAdding && <AddCookie />}
+        {isAdding && <AddCookie setIsAdding={setIsAdding} />}
         <CookiesTable />
     </div>
 }

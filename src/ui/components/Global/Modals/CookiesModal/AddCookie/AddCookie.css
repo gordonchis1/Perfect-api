@@ -1,0 +1,14 @@
+.add-cookie_container {
+    padding: 10px;
+    box-shadow: 0 0 3px 0 var(--border);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.add-cookie-form_btn-container {
+    display: flex;
+    gap: 10px;
+    margin-top: 9px;
+}

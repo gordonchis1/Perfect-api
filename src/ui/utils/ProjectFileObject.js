@@ -375,7 +375,10 @@ export class File extends FSNode {
         const sendCookies = await jarOnlySendCookies.getCookies(finalInfo.finalUrl)
 
         const sendCookiesJson = sendCookies.map(c => c.toJSON())
-        newEntry.response.cookies = sendCookiesJson
+        const sendCookiesJar = new CookieJar()
+        const sendCookiesJarJson = sendCookiesJar.toJSON()
+        sendCookiesJarJson.cookies = [...sendCookiesJson]
+        newEntry.response.cookies = sendCookiesJarJson
 
         const updateEntries = {};
         let updatedOrder = [];
