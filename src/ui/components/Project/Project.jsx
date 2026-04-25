@@ -9,6 +9,7 @@ import WorkspaceContainer from "./Workspace/WorkspaceContainer";
 import { useProjectStore } from "../../stores/ProjectStore";
 import { useParams } from "react-router";
 import { useHistoryStore } from "../../stores/HistoryStore";
+import CookieButton from "./CookieButton/CookieButton";
 
 export default function Project() {
     const container = useRef(null);
@@ -60,7 +61,12 @@ export default function Project() {
                             containerWidth={width}
                         >
                             <ResizeContainer.LeftContainer>
-                                <FileManager />
+                                <div className="left-container">
+                                    <FileManager />
+                                    <div className="cookie-btn-project_container">
+                                        <CookieButton />
+                                    </div>
+                                </div>
                             </ResizeContainer.LeftContainer>
                             <ResizeContainer.RightContainer>
                                 <div className="workspace-wrapper">

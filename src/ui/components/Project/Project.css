@@ -1,35 +1,48 @@
 .project-wrapper {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 .project-container {
-  width: 100%;
-  flex: 1;
+    width: 100%;
+    flex: 1;
 }
 
 .project_main-content-container {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  overflow: hidden;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    overflow: hidden;
 }
 
 .workspace-container {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  padding: 15px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
 }
 
 .workspace-wrapper {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.left-container {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 60px;
+    background: var(--secondary-background);
+}
+
+.cookie-btn-project_container {
+    padding: 10px;
 }

@@ -1,0 +1,23 @@
+.cookie-button {
+    width: 100%;
+    padding: 10px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--bold-font);
+    background: var(--primary);
+    color: var(--primary-foreground);
+    border: none;
+    outline: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.1s ease-in;
+    font-size: 17px;
+}
+
+.cookie-button:hover {
+    background: var(--primary-transparent);
+    color: var(--primary);
+    border: 2px solid var(--primary);
+}
