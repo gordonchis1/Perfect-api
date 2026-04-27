@@ -8,35 +8,38 @@ import WorkspaceInputUrlCodeGenerator from "./WorkSpaceInputUrlFormer/WorkspaceI
 import WorkSpaceInputUrlAuth from "./WorkSpaceInputUrlFormer/WorkSpaceInputUrlAuth/WorkSpaceInputUrlAuth";
 
 const multipleContainerContainers = {
-  URL: {
-    component: <WorkSpaceInputUrlFormerContainer />,
-  },
-  Auth: {
-    component: <WorkSpaceInputUrlAuth />,
-  },
-  Headers: {
-    component: <WorkspaceInputUrlHeaders />,
-  },
-  Body: {
-    component: <WorkSpaceInputUrlFormerBody />,
-  },
-  Code: {
-    component: <WorkspaceInputUrlCodeGenerator />,
-  },
+    URL: {
+        component: <WorkSpaceInputUrlFormerContainer />,
+    },
+    Auth: {
+        component: <WorkSpaceInputUrlAuth />,
+    },
+    Headers: {
+        component: <WorkspaceInputUrlHeaders />,
+    },
+    Body: {
+        component: <WorkSpaceInputUrlFormerBody />,
+    },
+    Code: {
+        component: <WorkspaceInputUrlCodeGenerator />,
+    },
+    Preview: {
+        component: <h1>preview</h1>
+    }
 };
 const defaultContainer = "URL";
 
 export default function WorkspaceInputContainer() {
-  return (
-    <div className="workspace-input_container">
-      <WorkSpaceInputUrlContainer />
-      <div className="workspace-input_multiple-container">
-        <MultipleContainer
-          defaultContainer={defaultContainer}
-          objectContainers={multipleContainerContainers}
-          mainContainerclassName={"workspace-input_multiple-container"}
-        />
-      </div>
-    </div>
-  );
+    return (
+        <div className="workspace-input_container">
+            <WorkSpaceInputUrlContainer />
+            <div className="workspace-input_multiple-container">
+                <MultipleContainer
+                    defaultContainer={defaultContainer}
+                    objectContainers={multipleContainerContainers}
+                    mainContainerclassName={"workspace-input_multiple-container"}
+                />
+            </div>
+        </div>
+    );
 }

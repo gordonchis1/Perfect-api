@@ -7,6 +7,7 @@ import { useProjectStore } from "../../../../../stores/ProjectStore";
 import WorkSpacePreviewResponseHeaders from "../WorkSpacePreviewResponseHeaders/WorkSpacePreviewResponseHeaders";
 import WorkSpacePreviewGallery from "../WorkSpacePreviewResponse/WorkSpacePreviewGallery/WorkSpacePreviewGallery";
 import WorkspacePreviewCookies from "../WorkspacePreviewCookies/WorkspacePreviewCookies";
+import WorkspacePreviewPreview from "../WorkspacePreviewPreview/WorkspacePreviewPreview";
 
 const multipleContainerContainers = {
     Response: {
@@ -25,7 +26,7 @@ const multipleContainerContainers = {
         component: <WorkSpacePreviewGallery />,
     },
     Preview: {
-        component: <h1>Hola mundo</h1>
+        component: <WorkspacePreviewPreview />
     }
 };
 const defaultContainer = "Response";

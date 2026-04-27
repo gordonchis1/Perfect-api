@@ -6,7 +6,6 @@ import WorkspaceInputContainer from "./WorkspaceInput/WorkspaceInputContainer";
 import WorkSpacePreviewContainer from "./WorkspacePreview/WorkSpacePreviewContainer";
 import WorkSpacePreviewProvider from "../../../providers/WorkspacePreview/WorkSpacePreviewProvider";
 import { useProjectStore } from "../../../stores/ProjectStore";
-import { useHistoryStore } from "../../../stores/HistoryStore";
 
 // TODO: remove content from files context use filemanger content insted
 export default function WorkspaceContainer() {
@@ -27,23 +26,26 @@ export default function WorkspaceContainer() {
 
     return (
         <div className="workspace_container" ref={container}>
+
             {content && (
-                <ResizeContainer
-                    resizeColor={"var(--border)"}
-                    defaultWidth={60}
-                    containerWidth={width}
-                    minWidthOfLeftContainer={750}
-                    maxWidthOfLeftContainer={80}
-                >
-                    <ResizeContainer.LeftContainer>
-                        <WorkspaceInputContainer />
-                    </ResizeContainer.LeftContainer>
-                    <ResizeContainer.RightContainer>
-                        <WorkSpacePreviewProvider>
+                <WorkSpacePreviewProvider>
+                    <ResizeContainer
+                        resizeColor={"var(--border)"}
+                        defaultWidth={60}
+                        containerWidth={width}
+                        minWidthOfLeftContainer={750}
+                        maxWidthOfLeftContainer={80}
+                    >
+
+                        <ResizeContainer.LeftContainer>
+                            <WorkspaceInputContainer />
+                        </ResizeContainer.LeftContainer>
+                        <ResizeContainer.RightContainer>
                             <WorkSpacePreviewContainer />
-                        </WorkSpacePreviewProvider>
-                    </ResizeContainer.RightContainer>
-                </ResizeContainer>
+                        </ResizeContainer.RightContainer>
+                    </ResizeContainer>
+
+                </WorkSpacePreviewProvider>
             )}
         </div>
     );

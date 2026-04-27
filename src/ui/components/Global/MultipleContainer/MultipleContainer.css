@@ -1,31 +1,32 @@
 .multiple-container_options-container {
-  height: 50px;
-  width: 100%;
-  box-shadow: 0 0.2px 0 0 var(--border);
-  display: flex;
-  gap: 10px;
-  padding: 10px 20px;
+    height: 50px;
+    width: 100%;
+    box-shadow: 0 0.2px 0 0 var(--border);
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 10px 20px;
 }
 
 .multiple-container_body-container {
-  width: 100%;
-  flex: 1;
+    width: 100%;
+    flex: 1;
 }
 
 .multiple-container_option {
-  height: 100%;
-  background: transparent;
-  color: var(--primary-text-color);
-  font-family: var(--regular-font);
-  border-radius: 7px;
-  font-size: 16px;
-  padding: 0 10px;
-  border: none;
-  cursor: pointer;
-  user-select: none;
-  outline: none;
+    height: 100%;
+    background: transparent;
+    color: var(--primary-text-color);
+    font-family: var(--regular-font);
+    border-radius: 7px;
+    font-size: 16px;
+    padding: 0 10px;
+    border: none;
+    cursor: pointer;
+    user-select: none;
+    outline: none;
 }
 
 .multiple-container_option:hover {
-  background: var(--accent);
+    background: var(--accent);
 }

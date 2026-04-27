@@ -21,7 +21,8 @@ const initialState = {
     openFiles: {},
     currentFileId: null,
     projectId: null,
-    cookies: null
+    cookies: null,
+    v0Project: null,
 };
 
 export const useProjectStore = create((set, get) => ({
@@ -29,7 +30,7 @@ export const useProjectStore = create((set, get) => ({
 
     init: async (id) => {
         const jsonData = await getProjectById(id);
-        const { content, state } = jsonData;
+        const { content, state, v0ProjectId } = jsonData;
 
 
         const vfs = new VirtualFileSystem(content);
@@ -58,8 +59,15 @@ export const useProjectStore = create((set, get) => ({
             openFiles,
             version: 0,
             projectId: id,
-            cookies: jsonData?.cookies || new CookieJar().toJSON()
+            cookies: jsonData?.cookies || new CookieJar().toJSON(),
+            v0Project: v0ProjectId
+
         });
+    },
+
+    setV0Project: (projectId) => {
+        set({ ...get(), v0Project: projectId })
+        get().save()
     },
 
     toggleIsOpen: (id) => {
@@ -276,7 +284,7 @@ export const useProjectStore = create((set, get) => ({
         const cookies = get().cookies
 
         if (vfs instanceof VirtualFileSystem) {
-            await UpdateProjectContent(vfs, get().projectId, cookies);
+            await UpdateProjectContent(vfs, get().projectId, cookies, get().v0Project);
         }
     },
 

@@ -4,12 +4,12 @@ import SettingsMainContainer from "../../../GlobalSettingsPopUp/SettingsMainCont
 import "./GlobalSettingsModal.css";
 
 export default function GlobalSettingsModal({ tab = "general" }) {
-  const [currentTab, setCurrnetTab] = useState(tab);
+    const [currentTab, setCurrnetTab] = useState(tab);
 
-  return (
-    <div className="global-settings-modal_container">
-      <SettingsNav currentTab={currentTab} setCurrentTab={setCurrnetTab} />
-      <SettingsMainContainer currentTab={currentTab} />
-    </div>
-  );
+    return (
+        <div className="global-settings-modal_container">
+            <SettingsNav currentTab={currentTab} setCurrentTab={setCurrnetTab} />
+            <SettingsMainContainer currentTab={currentTab} />
+        </div>
+    );
 }
