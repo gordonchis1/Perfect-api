@@ -5,6 +5,7 @@ import { useProjectStore } from "../../../../../../stores/ProjectStore"
 import Button from "../../../../../Global/Button/Button"
 import PreviewChatInput from "./PreviewChatInput/PreviewChatInput"
 import "./WorkSpaceInputUrlPreviewChat.css"
+import PreviewChatMessages from "./PreviewChatMessages/PreviewChatMessages"
 
 export default function WorkSpaceInputUrlPreviewChat() {
     const currentFileId = useProjectStore(store => store.currentFileId)
@@ -23,7 +24,7 @@ export default function WorkSpaceInputUrlPreviewChat() {
         }
         if (v0Client) return
         initPreviewStore()
-        if (content?.v0ChatId) {
+        if (content?.v0ChatId && previewStore?.messagesHistory) {
             load()
         }
     }, [])
@@ -40,6 +41,7 @@ export default function WorkSpaceInputUrlPreviewChat() {
 
     return (
         <div className="input-preview-chat_container">
+            <PreviewChatMessages></PreviewChatMessages>
             {content?.v0ChatId ?
                 <PreviewChatInput />
                 : <Button text={"init v0 chat"} onClick={handleInitChat} />
