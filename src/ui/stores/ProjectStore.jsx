@@ -13,6 +13,7 @@ import {
 import { fileContentDefault } from "../utils/constants/projectFileConstants";
 import { rebuildFullFinalString } from "../utils/lexical/buildString";
 import { CookieJar } from "tough-cookie";
+import { usePreviewStore } from "./PreviewStore";
 
 const initialState = {
     vfs: null,
@@ -22,7 +23,7 @@ const initialState = {
     currentFileId: null,
     projectId: null,
     cookies: null,
-    v0Project: null,
+    projectMetadata: null
 };
 
 export const useProjectStore = create((set, get) => ({
@@ -30,7 +31,7 @@ export const useProjectStore = create((set, get) => ({
 
     init: async (id) => {
         const jsonData = await getProjectById(id);
-        const { content, state, v0ProjectId } = jsonData;
+        const { content, state, v0ProjectId, name } = jsonData;
 
 
         const vfs = new VirtualFileSystem(content);
@@ -60,13 +61,22 @@ export const useProjectStore = create((set, get) => ({
             version: 0,
             projectId: id,
             cookies: jsonData?.cookies || new CookieJar().toJSON(),
-            v0Project: v0ProjectId
-
+            projectMetadata: {
+                v0ProjectId,
+                name,
+            }
         });
+
+        if (v0ProjectId) {
+            const previewStore = usePreviewStore.getState()
+            const setProjectId = previewStore.setProjectId
+
+            setProjectId(v0ProjectId)
+        }
     },
 
     setV0Project: (projectId) => {
-        set({ ...get(), v0Project: projectId })
+        set({ ...get(), projectMetadata: { ...get().projectMetadata, v0Project: projectId } })
         get().save()
     },
 
@@ -284,7 +294,7 @@ export const useProjectStore = create((set, get) => ({
         const cookies = get().cookies
 
         if (vfs instanceof VirtualFileSystem) {
-            await UpdateProjectContent(vfs, get().projectId, cookies, get().v0Project);
+            await UpdateProjectContent(vfs, get().projectId, cookies, get().projectMetadata.v0ProjectId);
         }
     },
 

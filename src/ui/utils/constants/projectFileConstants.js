@@ -28,6 +28,7 @@ export const fileContentDefault = {
         data: {},
     },
     isRunning: false,
+    v0ChatId: undefined
 };
 
 /*

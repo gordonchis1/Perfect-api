@@ -6,6 +6,7 @@ import WorkspaceInputUrlHeaders from "./WorkSpaceInputUrlFormer/WorkspaceInputUr
 import WorkSpaceInputUrlFormerBody from "./WorkSpaceInputUrlFormer/WorkSpaceInputUrlFormerBody/WorkSpaceInputUrlFormerBody";
 import WorkspaceInputUrlCodeGenerator from "./WorkSpaceInputUrlFormer/WorkspaceInputUrlCodeGenereator/WorkspaceInputUrlCodeGenerator";
 import WorkSpaceInputUrlAuth from "./WorkSpaceInputUrlFormer/WorkSpaceInputUrlAuth/WorkSpaceInputUrlAuth";
+import WorkSpaceInputUrlPreviewChat from "./WorkSpaceInputUrlFormer/WorkSpaceInputUrlPreviewChat/WorkSpaceInputUrlPreviewChat";
 
 const multipleContainerContainers = {
     URL: {
@@ -24,7 +25,7 @@ const multipleContainerContainers = {
         component: <WorkspaceInputUrlCodeGenerator />,
     },
     Preview: {
-        component: <h1>preview</h1>
+        component: <WorkSpaceInputUrlPreviewChat />
     }
 };
 const defaultContainer = "URL";
