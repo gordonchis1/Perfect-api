@@ -4,159 +4,152 @@ import { Children, useEffect } from "react";
 
 // TODO: Agregar la opcion de esconder el contenido
 function ResizeContainer({
-  children,
-  resizeColor,
-  defaultWidth,
-  minWidthOfLeftContainer,
-  maxWidthOfLeftContainer,
-  containerWidth,
+    children,
+    resizeColor,
+    defaultWidth,
+    minWidthOfLeftContainer,
+    maxWidthOfLeftContainer,
+    containerWidth,
 }) {
-  const container = useRef(null);
-  const reziseHandler = useRef(null);
-  const leftContainerRef = useRef(null);
-  const rightContainerRef = useRef(null);
+    const container = useRef(null);
+    const reziseHandler = useRef(null);
+    const leftContainerRef = useRef(null);
+    const rightContainerRef = useRef(null);
 
-  const handleReziseHandler = () => {
-    const handler = reziseHandler.current;
-    const containerDiv = container.current;
+    const handleReziseHandler = () => {
+        const handler = reziseHandler.current;
+        const containerDiv = container.current;
 
-    const drag = (event) => {
-      const diff = container.current.getBoundingClientRect().left;
+        const drag = (event) => {
+            const diff = container.current.getBoundingClientRect().left;
 
-      const leftPosition = (100 * event.pageX) / window.innerWidth;
-      const rightPosition = 100 - leftPosition;
-      const maxLeft = (containerWidth * maxWidthOfLeftContainer) / 100;
+            const leftPosition = (100 * event.pageX) / window.innerWidth;
+            const maxLeft = (containerWidth * maxWidthOfLeftContainer) / 100;
 
-      const relativeToContainerLeftPosition =
-        (100 * (event.pageX - diff)) / containerWidth;
+            const relativeToContainerLeftPosition =
+                (100 * (event.pageX - diff)) / containerWidth;
 
-      const relativeToContainerRigthPosition =
-        100 - relativeToContainerLeftPosition;
+            const relativeToContainerRigthPosition =
+                100 - relativeToContainerLeftPosition;
 
-      handler.style.left = `min(max(${
-        minWidthOfLeftContainer + diff
-      }px, ${leftPosition}%), ${maxLeft + diff}px)`;
+            handler.style.left = `min(max(${minWidthOfLeftContainer + diff
+                }px, ${leftPosition}%), ${maxLeft + diff}px)`;
 
-      containerDiv.style.gridTemplateColumns = `minmax(${minWidthOfLeftContainer}px, ${relativeToContainerLeftPosition}%) minmax(${
-        100 - maxWidthOfLeftContainer
-      }%,${relativeToContainerRigthPosition}%)`;
+            containerDiv.style.gridTemplateColumns = `minmax(${minWidthOfLeftContainer}px, ${relativeToContainerLeftPosition}%) minmax(${100 - maxWidthOfLeftContainer
+                }%,${relativeToContainerRigthPosition}%)`;
+        };
+
+        const stopDrag = () => {
+            document.removeEventListener("mousemove", drag);
+            document.removeEventListener("mouseup", stopDrag);
+            const diff = container.current.getBoundingClientRect().left;
+
+            reziseHandler.current.style.left = `${leftContainerRef.current.offsetWidth + diff
+                }px`;
+        };
+        document.addEventListener("mousemove", drag);
+        document.addEventListener("mouseup", stopDrag);
     };
 
-    const stopDrag = () => {
-      document.removeEventListener("mousemove", drag);
-      document.removeEventListener("mouseup", stopDrag);
-      const diff = container.current.getBoundingClientRect().left;
-
-      reziseHandler.current.style.left = `${
-        leftContainerRef.current.offsetWidth + diff
-      }px`;
-    };
-    document.addEventListener("mousemove", drag);
-    document.addEventListener("mouseup", stopDrag);
-  };
-
-  useEffect(() => {
-    if (reziseHandler.current) {
-      const diff = container.current.getBoundingClientRect().left;
-      reziseHandler.current.style.left = `${
-        leftContainerRef.current.offsetWidth + diff
-      }px`;
-    }
-  }, [containerWidth]);
-
-  useEffect(() => {
-    if (leftContainerRef.current) {
-      let changeHolderPositonOnResize = () => {
-        if (container.current) {
-          const diff = container.current.getBoundingClientRect().left;
-          reziseHandler.current.style.left = `${
-            leftContainerRef.current.offsetWidth + diff
-          }px`;
-          reziseHandler.current.style.height = `${container.current.offsetHeight}px`;
+    useEffect(() => {
+        if (reziseHandler.current) {
+            const diff = container.current.getBoundingClientRect().left;
+            reziseHandler.current.style.left = `${leftContainerRef.current.offsetWidth + diff
+                }px`;
         }
-      };
+    }, [containerWidth]);
 
-      let onResize = () => {
-        changeHolderPositonOnResize();
-      };
+    useEffect(() => {
+        if (leftContainerRef.current) {
+            let changeHolderPositonOnResize = () => {
+                if (container.current) {
+                    const diff = container.current.getBoundingClientRect().left;
+                    reziseHandler.current.style.left = `${leftContainerRef.current.offsetWidth + diff
+                        }px`;
+                    reziseHandler.current.style.height = `${container.current.offsetHeight}px`;
+                }
+            };
 
-      window.addEventListener("resize", onResize);
+            let onResize = () => {
+                changeHolderPositonOnResize();
+            };
 
-      return () => {
-        window.removeEventListener("resize", changeHolderPositonOnResize);
-      };
+            window.addEventListener("resize", onResize);
+
+            return () => {
+                window.removeEventListener("resize", changeHolderPositonOnResize);
+            };
+        }
+    }, [leftContainerRef]);
+
+    useEffect(() => {
+        if (container.current) {
+            const rightDefaultWidth = 100 - defaultWidth;
+            container.current.style.gridTemplateColumns = `${defaultWidth}% ${rightDefaultWidth}%`;
+        }
+        if (reziseHandler.current) {
+            const diff = container.current.getBoundingClientRect().left;
+
+            reziseHandler.current.style.left = `${leftContainerRef.current.offsetWidth + diff
+                }px`;
+
+            reziseHandler.current.style.height = `${container.current.offsetHeight}px`;
+        }
+    }, [container, defaultWidth, reziseHandler]);
+
+    if (Children.count(children) > 2) {
+        console.error("You can only have two childrens");
+        return;
     }
-  }, [leftContainerRef]);
 
-  useEffect(() => {
-    if (container.current) {
-      const rightDefaultWidth = 100 - defaultWidth;
-      container.current.style.gridTemplateColumns = `${defaultWidth}% ${rightDefaultWidth}%`;
-    }
-    if (reziseHandler.current) {
-      const diff = container.current.getBoundingClientRect().left;
+    const clonedChildrens = children.map((child, index) => {
+        const ref = index === 0 ? leftContainerRef : rightContainerRef;
 
-      reziseHandler.current.style.left = `${
-        leftContainerRef.current.offsetWidth + diff
-      }px`;
+        return cloneElement(child, { ref });
+    });
 
-      reziseHandler.current.style.height = `${container.current.offsetHeight}px`;
-    }
-  }, [container, defaultWidth, reziseHandler]);
-
-  if (Children.count(children) > 2) {
-    console.error("You can only have two childrens");
-    return;
-  }
-
-  const clonedChildrens = children.map((child, index) => {
-    const ref = index === 0 ? leftContainerRef : rightContainerRef;
-
-    return cloneElement(child, { ref });
-  });
-
-  return (
-    <div className="container" ref={container}>
-      {clonedChildrens[0]}
-      <div
-        style={{ backgroundColor: resizeColor }}
-        className="rezise-handler"
-        ref={reziseHandler}
-        onMouseDown={handleReziseHandler}
-      ></div>
-      {clonedChildrens[1]}
-    </div>
-  );
+    return (
+        <div className="container" ref={container}>
+            {clonedChildrens[0]}
+            <div
+                style={{ backgroundColor: resizeColor }}
+                className="rezise-handler"
+                ref={reziseHandler}
+                onMouseDown={handleReziseHandler}
+            ></div>
+            {clonedChildrens[1]}
+        </div>
+    );
 }
 
 const RightContainer = forwardRef(({ children, className }, ref) => {
-  return (
-    <div
-      style={{
-        width: "100%",
-        height: "100%",
-        maxHeight: "100%",
-      }}
-      ref={ref}
-      className={className}
-    >
-      {children}
-    </div>
-  );
+    return (
+        <div
+            style={{
+                width: "100%",
+                height: "100%",
+                maxHeight: "100%",
+            }}
+            ref={ref}
+            className={className}
+        >
+            {children}
+        </div>
+    );
 });
 
 ResizeContainer.RightContainer = RightContainer;
 
 const LeftContainer = forwardRef(({ children, className }, ref) => {
-  return (
-    <div
-      className={className}
-      style={{ width: "100%", height: "100%", maxHeight: "100%" }}
-      ref={ref}
-    >
-      {children}
-    </div>
-  );
+    return (
+        <div
+            className={className}
+            style={{ width: "100%", height: "100%", maxHeight: "100%", overflowY: "auto" }}
+            ref={ref}
+        >
+            {children}
+        </div>
+    );
 });
 
 ResizeContainer.LeftContainer = LeftContainer;

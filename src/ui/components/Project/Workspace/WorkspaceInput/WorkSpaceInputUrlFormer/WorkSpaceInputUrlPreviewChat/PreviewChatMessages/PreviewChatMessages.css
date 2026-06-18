@@ -1,10 +1,14 @@
 .preview-chat-messages_container {
+    max-width: 100%;
     width: 100%;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
     gap: 20px;
-    height: 100%;
+    background: red;
+    max-height: 100%;
+    min-height: 100%;
+    height: 1px;
 }
 
 .preview-chat_message-container {

@@ -1,14 +1,16 @@
 .project-wrapper {
     width: 100%;
-    height: 100%;
-    overflow: hidden;
+    height: 100vh;
+    overflow-y: auto;
+
     display: flex;
     flex-direction: column;
+    max-height: 100vh;
 }
 
 .project-container {
-    width: 100%;
     flex: 1;
+    max-height: calc(100% - 60px);
 }
 
 .project_main-content-container {
@@ -21,16 +23,19 @@
 .workspace-container {
     width: 100%;
     height: 100%;
-    display: flex;
-    flex-direction: column;
     gap: 15px;
     padding: 15px;
+    max-height: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 40px minmax(0, 1fr);
 }
 
 .workspace-wrapper {
     width: 100%;
     height: 100%;
     display: flex;
+    max-height: 100%;
     flex-direction: column;
 }
 

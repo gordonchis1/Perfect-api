@@ -6,7 +6,6 @@ export default function PreviewChatMessages() {
     const messages = usePreviewStore(store => store.messagesHistory)
     return <div className="preview-chat-messages_container">
         {messages.map(msg => {
-            console.log(msg)
             return (
                 <div
                     key={msg.id}
