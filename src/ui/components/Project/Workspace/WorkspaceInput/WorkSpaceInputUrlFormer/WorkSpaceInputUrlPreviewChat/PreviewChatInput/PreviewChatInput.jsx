@@ -3,6 +3,7 @@ import Button from "../../../../../../Global/Button/Button"
 import Input from "../../../../../../Global/Input/Input"
 import "./PreviewChatInput.css"
 import { usePreviewStore } from "../../../../../../../stores/PreviewStore"
+import { StreamingMessage } from "@v0-sdk/react"
 
 export default function PreviewChatInput() {
     const sendMessage = usePreviewStore(store => store.sendMessage)

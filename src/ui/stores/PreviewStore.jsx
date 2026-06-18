@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { createV0Client, createV0project, getV0Chat, initV0Chat } from "../utils/v0/v0Utils";
 import { useProjectStore } from "./ProjectStore";
 import { v0PromptContext } from "../utils/v0/prompt";
+import { useUserConfigStore } from "./UserConfigStore";
 
 export const usePreviewStore = create((set, get) => ({
     currentChatId: null,
@@ -56,20 +57,29 @@ export const usePreviewStore = create((set, get) => ({
     sendMessage: async (message = "") => {
         const v0Client = get().v0Client
         const chatId = get().currentChatId
-        if (!v0Client || !chatId) return
+        const apiKey = useUserConfigStore.getState().config?.connections?.apikeys?.v0;
+        if (!v0Client || !chatId || !apiKey) return
         if (message.length == 0) {
             message = "Create a page with the api endpoint"
         }
         try {
-            const result = await v0Client.chats.sendMessage({
+            const result = await window.v0.sendV0Message(message, apiKey, chatId);
+            console.log(result)
+            window.v0.onStreamData((data) => console.log(data))
+
+
+
+            /*const result = await v0Client.chats.sendMessage({
                 chatId,
-                message
+                message,
+                responseMode: "experimental_stream"
             })
+            console.log(result)
 
             if (result.id) {
                 set({ ...get(), demo: result.latestVersion.demoUrl, messagesHistory: result.messages })
                 console.log(result)
-            }
+            }*/
         } catch (error) {
             console.log(error)
         }

@@ -2,6 +2,7 @@ const { default: axios } = require('axios')
 const { app, contextBridge, ipcRenderer } = require('electron')
 const fs = require('fs/promises')
 const { join } = require('path')
+const { createClient } = require('v0-sdk')
 
 async function readTextFile(path) {
     if (!path) {
@@ -82,6 +83,14 @@ contextBridge.exposeInMainWorld("path", {
     join,
     appDataDir: () => ipcRenderer.invoke('get-data-dir'),
     documentDir: () => ipcRenderer.invoke('get-document-dir')
+})
+
+
+contextBridge.exposeInMainWorld("v0", {
+    sendV0Message: (message, apiKey, chatId) => ipcRenderer.invoke("v0-message", [message, apiKey, chatId]),
+    onStreamData: (callback) => {
+        ipcRenderer.on('stream-data', (_, data) => callback(data));
+    }
 })
 
 

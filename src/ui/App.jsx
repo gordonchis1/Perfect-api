@@ -13,10 +13,10 @@ function App() {
         <div
             className={config?.preferences?.appearance?.theme || "dark"}
             style={{
+                maxHeight: "100vh",
                 maxWidth: "100vw",
                 width: "100vw",
                 height: "100vh",
-                overflow: "hidden",
             }}
         >
             <ModalProvider>

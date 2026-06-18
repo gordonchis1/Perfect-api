@@ -34,13 +34,11 @@ export default function WorkspaceInputContainer() {
     return (
         <div className="workspace-input_container">
             <WorkSpaceInputUrlContainer />
-            <div className="workspace-input_multiple-container">
-                <MultipleContainer
-                    defaultContainer={defaultContainer}
-                    objectContainers={multipleContainerContainers}
-                    mainContainerclassName={"workspace-input_multiple-container"}
-                />
-            </div>
+            <MultipleContainer
+                defaultContainer={defaultContainer}
+                objectContainers={multipleContainerContainers}
+                mainContainerclassName={"workspace-input_multiple-container"}
+            />
         </div>
     );
 }

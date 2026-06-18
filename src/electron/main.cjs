@@ -5,6 +5,7 @@ const { default: axios } = require('axios')
 const { CookieJar, Store, fromJSON, Cookie } = require('tough-cookie')
 const { wrapper } = require('axios-cookiejar-support')
 const { generateResponse } = require('./response.cjs')
+const { createClient } = require("v0-sdk")
 
 
 const createWindow = () => {
@@ -104,6 +105,27 @@ function handleAbort(id) {
     controller.abort()
 }
 
+async function sendV0Message(message, apiKey, chatId) {
+    const v0Client = createClient({
+        apiKey
+    })
+    const responseMessage = await v0Client.chats.sendMessage({
+        chatId,
+        message,
+        responseMode: "experimental_stream"
+    })
+    const reader = responseMessage.getReader()
+    const decoder = new TextDecoder("utf-8")
+
+    let done = false
+    while (!done) {
+        const { value, done: doneReading } = await reader.read()
+        done = doneReading
+        const chunk = decoder.decode(value, { stream: true })
+        console.log(chunk)
+    }
+    return responseMessage
+}
 
 app.whenReady().then(() => {
     ipcMain.handle('get-data-dir', () => app.getPath("userData"))
@@ -112,6 +134,13 @@ app.whenReady().then(() => {
     ipcMain.handle("set-theme", (event, args) => setTheme(args))
     ipcMain.handle("fetch-abort", (evnet, args) => handleAbort(args))
     ipcMain.handle("fetch", (event, args) => fetch(...args))
+    ipcMain.handle("v0-message", (event, args) => {
+        return sendV0Message(...args)
+    })
+    ipcMain.on("start-stream", async (event, message, apiKey, chatId) => {
+        console.log(message, apiKey, chatId)
+        return "hola mundo"
+    })
 
     createWindow()
 })

@@ -1,3 +1,5 @@
+
+
 export function generateV0File(entry) {
     const fileStructure = {
         request: {
@@ -5,6 +7,7 @@ export function generateV0File(entry) {
             method: entry.request.method,
             headers: entry.request.headers,
             queryParams: entry.request.queryParams,
+            auth: entry.request?.auth,
         },
         reponse: entry.response.body
     }
@@ -12,3 +15,6 @@ export function generateV0File(entry) {
 
     return JSON.stringify(fileStructure)
 }
+
+
+
