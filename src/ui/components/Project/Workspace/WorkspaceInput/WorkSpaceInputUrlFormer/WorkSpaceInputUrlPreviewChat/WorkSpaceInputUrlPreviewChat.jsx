@@ -6,6 +6,7 @@ import Button from "../../../../../Global/Button/Button"
 import PreviewChatInput from "./PreviewChatInput/PreviewChatInput"
 import "./WorkSpaceInputUrlPreviewChat.css"
 import PreviewChatMessages from "./PreviewChatMessages/PreviewChatMessages"
+import { StreamingMessage } from "@v0-sdk/react"
 
 export default function WorkSpaceInputUrlPreviewChat() {
     const currentFileId = useProjectStore(store => store.currentFileId)
@@ -38,10 +39,9 @@ export default function WorkSpaceInputUrlPreviewChat() {
             await initV0Chat(currentEntry)
         }
     }
-
     return (
         <div className="input-preview-chat_container">
-            <PreviewChatMessages></PreviewChatMessages>
+            <PreviewChatMessages />
             {content?.v0ChatId ?
                 <PreviewChatInput />
                 : <Button text={"init v0 chat"} onClick={handleInitChat} />

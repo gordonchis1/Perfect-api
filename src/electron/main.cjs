@@ -1,5 +1,5 @@
 const { BrowserWindow, app, ipcMain, dialog, nativeTheme, net, session } = require('electron')
-const { isDev } = require("./utils.cjs")
+const { isDev, fakeStream } = require("./utils.cjs")
 const path = require('node:path')
 const { default: axios } = require('axios')
 const { CookieJar, Store, fromJSON, Cookie } = require('tough-cookie')
@@ -7,9 +7,11 @@ const { wrapper } = require('axios-cookiejar-support')
 const { generateResponse } = require('./response.cjs')
 const { createClient } = require("v0-sdk")
 
+let win = undefined;
+
 
 const createWindow = () => {
-    const win = new BrowserWindow({
+    win = new BrowserWindow({
         width: 800,
         height: 600,
         webPreferences: {
@@ -105,7 +107,14 @@ function handleAbort(id) {
     controller.abort()
 }
 
-async function sendV0Message(message, apiKey, chatId) {
+async function sendV0Message(event, message, apiKey, chatId) {
+    console.log("Send v0 message from main process electron")
+    console.log(message, apiKey, chatId);
+
+    await fakeStream(event.sender)
+
+    return;
+
     const v0Client = createClient({
         apiKey
     })
@@ -114,15 +123,22 @@ async function sendV0Message(message, apiKey, chatId) {
         message,
         responseMode: "experimental_stream"
     })
+
     const reader = responseMessage.getReader()
-    const decoder = new TextDecoder("utf-8")
 
     let done = false
     while (!done) {
         const { value, done: doneReading } = await reader.read()
-        done = doneReading
-        const chunk = decoder.decode(value, { stream: true })
-        console.log(chunk)
+        if (value) {
+            if (win instanceof BrowserWindow) {
+                win.webContents.send("v0-stream-chunk");
+                Array.from(value);
+            }
+        }
+    }
+
+    if (win instanceof BrowserWindow) {
+        win.webContents.send("v0-stream-end");
     }
     return responseMessage
 }
@@ -135,7 +151,7 @@ app.whenReady().then(() => {
     ipcMain.handle("fetch-abort", (evnet, args) => handleAbort(args))
     ipcMain.handle("fetch", (event, args) => fetch(...args))
     ipcMain.handle("v0-message", (event, args) => {
-        return sendV0Message(...args)
+        return sendV0Message(event, ...args)
     })
     ipcMain.on("start-stream", async (event, message, apiKey, chatId) => {
         console.log(message, apiKey, chatId)

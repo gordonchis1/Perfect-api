@@ -65,21 +65,7 @@ export const usePreviewStore = create((set, get) => ({
         try {
             const result = await window.v0.sendV0Message(message, apiKey, chatId);
             console.log(result)
-            window.v0.onStreamData((data) => console.log(data))
 
-
-
-            /*const result = await v0Client.chats.sendMessage({
-                chatId,
-                message,
-                responseMode: "experimental_stream"
-            })
-            console.log(result)
-
-            if (result.id) {
-                set({ ...get(), demo: result.latestVersion.demoUrl, messagesHistory: result.messages })
-                console.log(result)
-            }*/
         } catch (error) {
             console.log(error)
         }

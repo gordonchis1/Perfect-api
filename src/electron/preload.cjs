@@ -88,8 +88,11 @@ contextBridge.exposeInMainWorld("path", {
 
 contextBridge.exposeInMainWorld("v0", {
     sendV0Message: (message, apiKey, chatId) => ipcRenderer.invoke("v0-message", [message, apiKey, chatId]),
-    onStreamData: (callback) => {
-        ipcRenderer.on('stream-data', (_, data) => callback(data));
+    onV0Stream: (callback) => {
+        ipcRenderer.on('v0-stream-chunk', (_, data) => callback(data));
+    },
+    onV0StreamEnd: (callback) => {
+        ipcRenderer.on('v0-stream-end', (_, data) => callback(data))
     }
 })
 
