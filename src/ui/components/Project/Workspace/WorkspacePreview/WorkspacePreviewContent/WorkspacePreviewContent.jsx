@@ -23,9 +23,6 @@ const multipleContainerContainers = {
     },
     Gallery: {
         component: <WorkSpacePreviewGallery />,
-    },
-    Preview: {
-        component: <h1>Hola mundo</h1>
     }
 };
 const defaultContainer = "Response";
