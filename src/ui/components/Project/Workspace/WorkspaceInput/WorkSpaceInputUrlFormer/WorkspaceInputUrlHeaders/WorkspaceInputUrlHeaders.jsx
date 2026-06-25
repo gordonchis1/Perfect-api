@@ -10,7 +10,6 @@ import Input from "../../../../../Global/Input/Input";
 const nonEditableHeaders = ["Host"];
 
 export default function WorkspaceInputUrlHeaders() {
-    const [headers, setHeaders] = useState([]);
     const currentFileId = useProjectStore((store) => store.currentFileId);
     const content = useProjectStore(
         (store) => store.openFiles[currentFileId]?.content,
@@ -18,11 +17,11 @@ export default function WorkspaceInputUrlHeaders() {
     const updateContentOfOpenFile = useProjectStore(
         (store) => store.updateContentOfOpenFile,
     );
+    const headers = content?.headers;
+    const url = content.url.finalUrl;
+
 
     const onHeadersChange = (index, type, value) => {
-        if (nonEditableHeaders.includes(headers[index].key)) {
-            return;
-        }
         const updatedHeaders = [...headers];
         updatedHeaders[index][type] = value;
 
@@ -31,24 +30,24 @@ export default function WorkspaceInputUrlHeaders() {
             headers: updatedHeaders,
         });
 
-        setHeaders(updatedHeaders);
     };
 
-    /* useEffect(() => {
-      try {
-        const url = new URL(content.url.finalUrl);
-        const updatedHeaders = content.headers.map((header) => ({ ...header }));
-  
-        const hostIndex = updatedHeaders.findIndex(
-          (header) => header.key === "Host",
-        );
-  
-        updatedHeaders[hostIndex].value = url.host;
-        setHeaders(updatedHeaders);
-      } catch {
-        setHeaders(content.headers);
-      }
-    }, [content]);*/
+    useEffect(() => {
+        if (headers.length > 0) {
+            const hostIndex = headers.findIndex(element => {
+                return element?.key == "Host"
+            });
+            if (hostIndex < 0) return
+            let host = "";
+            try {
+                const urlObject = new URL(url);
+                host = urlObject.host;
+            } catch {
+                host = ""
+            }
+            onHeadersChange(hostIndex, "value", host);
+        }
+    }, [url])
 
     const handleChangeIsActive = (index) => {
         const updatedHeaders = [...headers];
@@ -59,7 +58,6 @@ export default function WorkspaceInputUrlHeaders() {
             headers: updatedHeaders,
         });
 
-        setHeaders(updatedHeaders);
     };
 
     const handleAddHeader = () => {
@@ -70,7 +68,6 @@ export default function WorkspaceInputUrlHeaders() {
             headers: updatedHeaders,
         });
 
-        setHeaders(updatedHeaders);
     };
 
     const handleDeleteHeader = (index) => {
@@ -82,7 +79,6 @@ export default function WorkspaceInputUrlHeaders() {
             headers: updatedHeaders,
         });
 
-        setHeaders(updatedHeaders);
     };
     const handleDeleteAllHeaders = () => {
         const updatedHeaders = [];
@@ -98,7 +94,6 @@ export default function WorkspaceInputUrlHeaders() {
             headers: updatedHeaders,
         });
 
-        setHeaders(updatedHeaders);
     };
 
     return (
