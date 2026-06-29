@@ -1,6 +1,3 @@
-// TODO: poner los directorios primero luego usar orden alfabetico y si es igual el nombre usar el ultimo numero
-// TODO: cambiar donde se identfica por el id
-
 import { nanoid } from "nanoid";
 import { fileContentDefault } from "./constants/projectFileConstants";
 import { useProjectStore } from "../stores/ProjectStore";
@@ -14,6 +11,7 @@ import { CookieJar } from "tough-cookie";
 const defaultOnChangeFunction = () => {
     console.log("Vfs Changed");
 };
+
 export class VirtualFileSystem {
     constructor(jsonData = null, onChange = defaultOnChangeFunction) {
         if (jsonData) {
@@ -316,7 +314,6 @@ export class File extends FSNode {
         const headersToSend = {};
 
         headers.forEach((header) => {
-            // ! Fix this header host put automatic
             if (header.key != "Host") {
                 if (header.isActive) {
                     headersToSend[`${header.key}`] = header.value;
@@ -409,11 +406,6 @@ export class File extends FSNode {
 
         updateHistory(updatedOrder, updateEntries);
         setCurrentHistoryId(newEntry.id);
-
-
-
-
-
         updateContentOfOpenFile(
             currentFile,
             {

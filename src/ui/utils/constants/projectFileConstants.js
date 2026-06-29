@@ -30,17 +30,3 @@ export const fileContentDefault = {
     isRunning: false,
 };
 
-/*
-RESPONSES
-{
-  time: number,
-  status: number,
-  reponse: JSON,
-  headers: object,
-  url: string,
-  isPinned: bool,
-  queryParams: string,
-  headers: []
-  body: object,
-}
-*/
