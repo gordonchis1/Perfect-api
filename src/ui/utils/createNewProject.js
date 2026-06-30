@@ -1,6 +1,8 @@
 import { getProjectsFile, getStorageDir } from "./createDocumentDir";
 import { nanoid } from "nanoid";
-import { Directory, File, VirtualFileSystem } from "./ProjectFileObject";
+import { Directory } from "./vfs/directory";
+import { VirtualFileSystem } from "./vfs/vfs";
+import { HTTPFile } from "./vfs/HTTPFile";
 
 // Function to create a new project in the projects.json file
 export async function createNewProjectInProjectsFile(newProject) {
@@ -32,7 +34,7 @@ export async function createNewProjectFile(newProject) {
 
     let initFile = null;
     if (rootDir instanceof Directory) {
-        initFile = new File("New File");
+        initFile = new HTTPFile("New File");
         rootDir.addChild(initFile);
     }
 

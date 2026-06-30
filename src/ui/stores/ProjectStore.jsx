@@ -1,10 +1,5 @@
 import { create } from "zustand";
-import {
-    Directory,
-    File,
-    FSNode,
-    VirtualFileSystem,
-} from "../utils/ProjectFileObject";
+import { HTTPFile } from "../utils/vfs/HTTPFile";
 import { getProjectById } from "../utils/getProjects";
 import {
     UpdateProjectContent,
@@ -13,6 +8,9 @@ import {
 import { fileContentDefault } from "../utils/constants/projectFileConstants";
 import { rebuildFullFinalString } from "../utils/lexical/buildString";
 import { CookieJar } from "tough-cookie";
+import { VirtualFileSystem } from "../utils/vfs/vfs";
+import { Directory } from "../utils/vfs/directory";
+import { FSNode } from "../utils/vfs/FSNode";
 
 const initialState = {
     vfs: null,
@@ -33,6 +31,7 @@ export const useProjectStore = create((set, get) => ({
 
 
         const vfs = new VirtualFileSystem(content);
+        console.log(vfs);
 
         vfs.onChange = () => {
             set((storeState) => ({ version: storeState.version + 1 }));
@@ -130,7 +129,7 @@ export const useProjectStore = create((set, get) => ({
                     content.type = node.dirConfig.type;
                 }
 
-                const newNode = new File("New file", content);
+                const newNode = new HTTPFile("New file", content);
 
                 if (node.type === "dir") {
                     node.addChild(newNode);
@@ -186,7 +185,7 @@ export const useProjectStore = create((set, get) => ({
     toggleIsRunning: (node) => {
         const openFiles = { ...get().openFiles };
         const vfs = get().vfs;
-        if (node instanceof File && vfs instanceof VirtualFileSystem) {
+        if (node instanceof HTTPFile && vfs instanceof VirtualFileSystem) {
             openFiles[node.id].isRunning = !openFiles[node.id].isRunning;
             node.toggleIsRunning();
             vfs.onChange();
@@ -274,6 +273,7 @@ export const useProjectStore = create((set, get) => ({
     save: async () => {
         const vfs = get().vfs;
         const cookies = get().cookies
+        console.log(vfs);
 
         if (vfs instanceof VirtualFileSystem) {
             await UpdateProjectContent(vfs, get().projectId, cookies);
