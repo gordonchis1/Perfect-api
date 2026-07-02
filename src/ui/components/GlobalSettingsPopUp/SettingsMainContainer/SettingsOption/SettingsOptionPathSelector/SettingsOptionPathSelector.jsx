@@ -51,6 +51,7 @@ export default function SettingsOptionPathSelector({
             recursive: true,
             defaultPath: config[tab][section][option] || undefined,
         });
+        console.log(file);
         if (file === null) return;
 
         updatedConfigOptions[tab][section][option] = file;
