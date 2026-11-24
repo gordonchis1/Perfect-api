@@ -1,19 +1,17 @@
-// TODO: poner los directorios primero luego usar orden alfabetico y si es igual el nombre usar el ultimo numero
-// TODO: cambiar donde se identfica por el id
-
 import { nanoid } from "nanoid";
 import { fileContentDefault } from "./constants/projectFileConstants";
 import { useProjectStore } from "../stores/ProjectStore";
 import { generateEntry } from "./entry/entry";
 import { canHaveBody } from "./fetch/costants";
 import { useHistoryStore } from "../stores/HistoryStore";
-import { AUTH_TYPES } from "./constants/AUTH_TYPES.JS";
+import { AUTH_TYPES } from "./constants/AUTH_TYPES.js";
 import { DEFAULT_DIR_CONFIG } from "./constants/DefaultDirConfig";
 import { CookieJar } from "tough-cookie";
 
 const defaultOnChangeFunction = () => {
     console.log("Vfs Changed");
 };
+
 export class VirtualFileSystem {
     constructor(jsonData = null, onChange = defaultOnChangeFunction) {
         if (jsonData) {

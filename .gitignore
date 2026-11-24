@@ -3,3 +3,5 @@ dist
 dist-react
 package-lock.json
 todo.md
+MIGRATION.md
+

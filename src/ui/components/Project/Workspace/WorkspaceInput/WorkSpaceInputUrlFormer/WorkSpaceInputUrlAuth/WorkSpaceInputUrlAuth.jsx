@@ -2,7 +2,7 @@ import AuthForm from "./AuthForm/AuthForm";
 import AuthSelector from "./AuthSelector/AuthSelector";
 import "./WorkSpaceInputUrlAuth.css";
 import { useProjectStore } from "../../../../../../stores/ProjectStore";
-import { AUTH_TYPES } from "../../../../../../utils/constants/AUTH_TYPES.JS";
+import { AUTH_TYPES } from "../../../../../../utils/constants/AUTH_TYPES.js";
 
 export default function WorkSpaceInputUrlAuth() {
   const currentFileId = useProjectStore((store) => store.currentFileId);

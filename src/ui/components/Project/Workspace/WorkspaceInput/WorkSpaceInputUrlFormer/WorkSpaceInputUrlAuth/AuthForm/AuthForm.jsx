@@ -1,7 +1,7 @@
 import "./AuthForm.css";
 import AuthFormInput from "./AuthFormInput/AuthFormInput";
 import { useProjectStore } from "../../../../../../../stores/ProjectStore";
-import { AUTH_TYPES } from "../../../../../../../utils/constants/AUTH_TYPES.JS";
+import { AUTH_TYPES } from "../../../../../../../utils/constants/AUTH_TYPES.js";
 import AuthFormSelector from "./AuthFormSelector/AuthFormSelector";
 import AuthFormCheckbox from "./AuthFormCheckbox/AuthFormCheckbox";
 

@@ -1,5 +1,5 @@
 import { useProjectStore } from "../../../../../../../stores/ProjectStore";
-import { AUTH_TYPES } from "../../../../../../../utils/constants/AUTH_TYPES.JS";
+import { AUTH_TYPES } from "../../../../../../../utils/constants/AUTH_TYPES.js";
 import Selector from "../../../../../../Global/Selector/Selector";
 
 export default function AuthSelector() {
