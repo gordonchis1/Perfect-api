@@ -17,7 +17,7 @@ const createWindow = () => {
         }
     })
     if (isDev()) {
-        win.loadURL('http://localhost:3000')
+        win.loadURL('http://localhost:3001')
     } else {
         win.loadFile(path.join(app.getAppPath(), "/dist-react/index.html"))
     }
